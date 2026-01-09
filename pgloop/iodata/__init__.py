@@ -9,7 +9,8 @@ This module handles data collection from various sources:
 """
 
 from pgloop.iodata.pdf_parser import PDFParser
+from pgloop.iodata.web_scraper import WebScraper
 from pgloop.iodata.data_standardizer import DataStandardizer
 from pgloop.iodata.api_connector import APIConnector
 
-__all__ = ["PDFParser", "DataStandardizer", "APIConnector"]
+__all__ = ["PDFParser", "WebScraper", "DataStandardizer", "APIConnector"]
