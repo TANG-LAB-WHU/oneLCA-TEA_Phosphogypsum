@@ -1,6 +1,6 @@
 # PG-LCA-TEA: Phosphogypsum Life Cycle Assessment & Techno-Economic Analysis Framework
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techno-Economic Analysis (TEA) of phosphogypsum end-of-life treatment technologies.
@@ -18,20 +18,20 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 
 ## Core Modules
 
-| Module | Description | Key Classes |
-|--------|-------------|-------------|
-| `pgloop/lca` | Life Cycle Assessment | `LCAEngine`, `ImpactAssessment`, `LifeCycleInventory` |
-| `pgloop/tea` | Techno-Economic Analysis | `TEAEngine`, `CAPEXCalculator`, `OPEXCalculator` |
-| `pgloop/pathways` | Treatment Pathways | `CementPathway`, `REEExtractionPathway`, etc. |
-| `pgloop/chemicals` | Chemical Database + MACE | `Chemical`, `PropertyPredictor`, `get_chemical()` |
-| `pgloop/equipment` | Unit Operations | `CSTR`, `FilterPress`, `Evaporator`, etc. |
-| `pgloop/risk` | Risk Assessment | `TechnicalRisk`, `PoliticalRisk`, `RiskAggregator` |
-| `pgloop/decision` | Decision Support | `PathwayRanker`, `TOPSIS`, `ScenarioAnalyzer` |
-| `pgloop/uncertainty` | Uncertainty Analysis | `MonteCarloSimulator`, `MetropolisHastings` |
-| `pgloop/knowledge` | AI & Knowledge Graph | `PhosphogypsumKG`, `RAGEngine`, `LLMExtractor` |
-| `pgloop/utils` | Utilities | `CurrencyConverter`, `UnitConverter`, `Annotation` |
-| `pgloop/visualization` | Dashboard & Reports | `Dashboard`, `ReportExporter` |
-| `pgloop/iodata` | Data Ingestion | `PDFParser`, `WebScraper`, `APIConnector` |
+| Module                   | Description              | Key Classes                                                 |
+| ------------------------ | ------------------------ | ----------------------------------------------------------- |
+| `pgloop/lca`           | Life Cycle Assessment    | `LCAEngine`, `ImpactAssessment`, `LifeCycleInventory` |
+| `pgloop/tea`           | Techno-Economic Analysis | `TEAEngine`, `CAPEXCalculator`, `OPEXCalculator`      |
+| `pgloop/pathways`      | Treatment Pathways       | `CementPathway`, `REEExtractionPathway`, etc.           |
+| `pgloop/chemicals`     | Chemical Database + MACE | `Chemical`, `PropertyPredictor`, `get_chemical()`     |
+| `pgloop/equipment`     | Unit Operations          | `CSTR`, `FilterPress`, `Evaporator`, etc.             |
+| `pgloop/risk`          | Risk Assessment          | `TechnicalRisk`, `PoliticalRisk`, `RiskAggregator`    |
+| `pgloop/decision`      | Decision Support         | `PathwayRanker`, `TOPSIS`, `ScenarioAnalyzer`         |
+| `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `MetropolisHastings`             |
+| `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `RAGEngine`, `LLMExtractor`        |
+| `pgloop/utils`         | Utilities                | `CurrencyConverter`, `UnitConverter`, `Annotation`    |
+| `pgloop/visualization` | Dashboard & Reports      | `Dashboard`, `ReportExporter`                           |
+| `pgloop/iodata`        | Data Ingestion           | `PDFParser`, `WebScraper`, `APIConnector`             |
 
 ## System Architecture
 
@@ -171,32 +171,39 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.11+
 - (Optional) Neo4j 5.0+ (for production knowledge graph)
 
 ### Setup
 
-```bash
 # Clone the repository
+
 git clone https://github.com/yourusername/PG_ucLCA-TEA.git
 cd PG_ucLCA-TEA
 
 # Create and activate virtual environment
+
 # Option A: venv (Standard)
+
 python -m venv venv
+
 # On Windows:
+
 .\venv\Scripts\activate
+
 # On Linux/macOS:
+
 source venv/bin/activate
 
 # Option B: Conda (Recommended)
+
 conda create -n pgloop python=3.11
 conda activate pgloop
 
 # Install dependencies
-pip install -e .
-pip install -r requirements.txt
-```
+
+pip install  -e  .[ai,viz,kg,dev]
+pip install  -r  requirements.txt
 
 ## Project Structure
 
@@ -267,34 +274,36 @@ print(f"Best pathway: {recommendations[0].pathway_name}")
 
 ## Treatment Pathways
 
-| Code | Pathway | Description | TRL |
-|------|---------|-------------|-----|
-| PG-Stack | Stack Disposal | Baseline: engineered stacking | 9 |
-| PG-CementProd | Cement Production | Use as cement retarder/additive | 9 |
-| PG-ConstructMat | Construction Materials | Bricks, plasterboard, road base | 8-9 |
-| PG-Soil | Soil Amendment | Direct agricultural application | 8 |
-| PG-ChemReco | Chemical Recovery | (NH₄)₂SO₄ + CaCO₃ production | 6-7 |
-| PG-REEextract | REE Extraction | Rare earth element recovery | 5-6 |
+| Code            | Pathway                | Description                      | TRL |
+| --------------- | ---------------------- | -------------------------------- | --- |
+| PG-Stack        | Stack Disposal         | Baseline: engineered stacking    | 9   |
+| PG-CementProd   | Cement Production      | Use as cement retarder/additive  | 9   |
+| PG-ConstructMat | Construction Materials | Bricks, plasterboard, road base  | 8-9 |
+| PG-Soil         | Soil Amendment         | Direct agricultural application  | 8   |
+| PG-ChemReco     | Chemical Recovery      | (NH₄)₂SO₄ + CaCO₃ production | 6-7 |
+| PG-REEextract   | REE Extraction         | Rare earth element recovery      | 5-6 |
 
 ## Regional Contexts
 
 Built-in support for regional scenario analysis:
 
-| Region | Key Parameters |
-|--------|----------------|
-| China (Yunnan) | Low-carbon grid (hydro 70%), low labor cost |
+| Region                | Key Parameters                                     |
+| --------------------- | -------------------------------------------------- |
+| China (Yunnan)        | Low-carbon grid (hydro 70%), low labor cost        |
 | Morocco (Jorf Lasfar) | Massive PG production (30 Mt/yr), high REE content |
-| USA (Florida) | Strict environmental regulations |
-| Brazil (Minas Gerais) | Ultra-low carbon grid (hydro 65%) |
+| USA (Florida)         | Strict environmental regulations                   |
+| Brazil (Minas Gerais) | Ultra-low carbon grid (hydro 65%)                  |
 
 ## Risk Assessment Framework
 
 ### Micro Risks (Project-level)
+
 - **Technical**: TRL, scale-up, complexity
 - **Operational**: Capacity, feedstock, quality
 - **Financial**: Leverage, IRR, payback
 
 ### Macro Risks (Country-level)
+
 - **Political**: Stability, regulation, corruption
 - **Economic**: Monetary policy, credit, FX volatility
 - **Market**: Price volatility, demand, competition
@@ -329,4 +338,3 @@ If you use this framework in your research, please cite:
 1. Tonini, D., Saveyn, H.G.M. & Huygens, D. (2019). Environmental and health co-benefits for advanced phosphorus recovery. *Nature Sustainability*, 2, 1093-1101.
 2. ISO 14040:2006. Environmental management — Life cycle assessment — Principles and framework.
 3. ISO 14044:2006. Environmental management — Life cycle assessment — Requirements and guidelines.
-

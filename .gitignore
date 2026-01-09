@@ -86,9 +86,12 @@ models/**/*.pkl
 chroma_db/
 
 # Logs
-*.log
+#*.log
 logs/
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# Temp files
+temp_*

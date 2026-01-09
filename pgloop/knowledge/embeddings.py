@@ -21,7 +21,12 @@ class EmbeddingModel:
         self.model_name = model_name
         self.model = None
         if SENTENCE_TRANSFORMERS_AVAILABLE:
-            self.model = SentenceTransformer(model_name)
+            try:
+                self.model = SentenceTransformer(model_name)
+                print(f"DEBUG: Successfully loaded EmbeddingModel: {model_name}")
+            except Exception as e:
+                print(f"DEBUG: Failed to load EmbeddingModel {model_name}: {e}")
+                self.model = None
     
     def encode(self, texts: Union[str, List[str]]) -> np.ndarray:
         """Generate embeddings for text."""
