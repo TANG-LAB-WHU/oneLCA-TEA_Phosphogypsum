@@ -46,10 +46,10 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 │ Local Papers  │ Open Access   │ Open LCI      │ Regulatory    │ Industry        │
 │               │ Literature    │ Databases     │ Databases     │ Reports         │
 │               │               │               │               │                 │
-│ ./References/ │ • Unpaywall   │ • ELCD        │ • EPA         │ • USGS          │
-│ • PDF papers  │ • PubMed OA   │ • USLCI       │ • EU-REG      │ • IFA           │
-│ • Parsed MD   │ • arXiv       │ • Agribalyse  │ • UN-ECE      │ • FAO           │
-│ • Excel data  │ • OpenAlex    │ • Idemat      │ • IAEA        │ • World Bank    │
+│ ./data/raw/   │ • Unpaywall   │ • ELCD        │ • EPA         │ • USGS          │
+│   papers/     │ • PubMed OA   │ • USLCI       │ • EU-REG      │ • IFA           │
+│ • unparsed/   │ • arXiv       │ • Agribalyse  │ • UN-ECE      │ • FAO           │
+│ • parsed/     │ • OpenAlex    │ • Idemat      │ • IAEA        │ • World Bank    │
 └───────┬───────┴───────┬───────┴───────┬───────┴───────┬───────┴────────┬────────┘
         │               │               │               │                │
         ▼               ▼               ▼               ▼                ▼
