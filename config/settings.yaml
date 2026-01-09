@@ -49,18 +49,85 @@ uncertainty:
   default_variation: 0.2
 
 data_sources:
+  # Local Papers
+  literature:
+    unparsed_path: "./data/raw/papers/unparsed" # Original PDF papers
+    parsed_path: "./data/raw/papers/parsed" # MinerU-converted markdown
+
+  # Open LCI Databases
   lci_databases:
     - name: "ELCD"
       path: "./data/raw/elcd"
+      url: "https://eplca.jrc.ec.europa.eu/ELCD3/"
     - name: "USLCI"
       path: "./data/raw/uslci"
-  literature:
-    path: "./data/raw/papers"
+      url: "https://www.lcacommons.gov/lca-collaboration/"
+    - name: "Agribalyse"
+      path: "./data/raw/agribalyse"
+      url: "https://agribalyse.ademe.fr/"
+    - name: "Idemat"
+      path: "./data/raw/idemat"
+      url: "https://www.intechopen.com/chapters/78082"
+
+  # Open Access Literature APIs
+  open_access:
+    unpaywall:
+      base_url: "https://api.unpaywall.org/v2/"
+      email: "${UNPAYWALL_EMAIL}" # Required for API access
+    pubmed:
+      base_url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+      api_key: "${PUBMED_API_KEY}" # Optional, increases rate limit
+    arxiv:
+      base_url: "http://export.arxiv.org/api/"
+      # No API key required
+    openalex:
+      base_url: "https://api.openalex.org/"
+      email: "${OPENALEX_EMAIL}" # Polite pool access
+
+  # Regulatory Databases
+  regulatory:
+    epa:
+      base_url: "https://enviro.epa.gov/enviro/api/"
+      # No API key required for public data
+    eu_reg:
+      base_url: "https://echa.europa.eu/api/"
+      # No API key required for public data
+    un_ece:
+      base_url: "https://data.unece.org/api/"
+      # No API key required
+    iaea:
+      base_url: "https://www.iaea.org/resources/databases/"
+      # Manual download required
+
+  # Industry Reports
+  industry:
+    usgs:
+      base_url: "https://www.usgs.gov/programs/national-minerals-information-center/"
+      # Manual download required
+    ifa:
+      base_url: "https://www.ifastat.org/"
+      api_key: "${IFA_API_KEY}" # Placeholder
+    fao:
+      base_url: "https://www.fao.org/faostat/en/"
+      # No API key required
+    world_bank:
+      base_url: "https://api.worldbank.org/v2/"
+      # No API key required
 
 ai:
   embedding_model: "all-MiniLM-L6-v2"
-  llm_provider: "openai" # or "ollama", "gemini"
-  llm_model: "gpt-4o-mini"
+  llm_provider: "gemini" # or "openai", "ollama"
+  llm_model: "gemini-2.0-flash"
+  providers:
+    gemini:
+      api_key: "${GEMINI_API_KEY}"
+      api_version: "v1beta"
+    openai:
+      api_key: "${OPENAI_API_KEY}"
+      base_url: "https://api.openai.com/v1"
+    ollama:
+      base_url: "http://localhost:11434"
+      model: "llama3"
   knowledge_graph:
     storage_path: "./data/processed/kg"
     backend: "networkx" # or "neo4j"

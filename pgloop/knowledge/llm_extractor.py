@@ -10,6 +10,7 @@ import re
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
 from pathlib import Path
+import os
 
 
 @dataclass
@@ -143,7 +144,26 @@ class LLMExtractor:
     def _get_client(self):
         """Get or create the LLM client."""
         if self._client is None:
-            if self.provider in ["openai", "gemini"]:
+            if self.provider == "gemini":
+                try:
+                    from google import genai
+                    # Check for proxy settings
+                    proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("http_proxy") or os.environ.get("https_proxy")
+                    
+                    client_kwargs = {"api_key": self.api_key}
+                    
+                    if proxy:
+                        print(f"DEBUG: Proxy detected for Gemini: {proxy}")
+                        # New SDK uses http_options for transport configuration
+                        
+                    print(f"DEBUG: Initializing google.genai Client (model={self.model})")
+                    self._client = genai.Client(**client_kwargs)
+                except ImportError:
+                    raise ImportError("google-genai package not installed. Run: pip install google-genai")
+                except Exception as e:
+                    raise RuntimeError(f"Failed to initialize Gemini client: {e}")
+            
+            elif self.provider == "openai":
                 try:
                     from openai import OpenAI
                     
@@ -195,17 +215,27 @@ class LLMExtractor:
         try:
             client = self._get_client()
             
-            response = client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are a data extraction assistant specialized in Life Cycle Assessment and Techno-Economic Analysis of phosphogypsum treatment. Extract structured data accurately."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.1,
-                max_tokens=2000
-            )
-            
-            raw_response = response.choices[0].message.content
+            if self.provider == "gemini":
+                # New google.genai SDK call
+                print(f"DEBUG: Calling google.genai generate_content (provider={self.provider})")
+                response = client.models.generate_content(
+                    model=self.model,
+                    contents=prompt
+                )
+                raw_response = response.text
+            else:
+                # OpenAI-compatible call
+                print(f"DEBUG: Calling OpenAI-compatible chat completions (provider={self.provider})")
+                response = client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are a data extraction assistant specialized in Life Cycle Assessment and Techno-Economic Analysis of phosphogypsum treatment. Extract structured data accurately."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0.1,
+                    max_tokens=2000
+                )
+                raw_response = response.choices[0].message.content
             
             # Parse JSON from response
             data, errors = self._parse_json_response(raw_response)
