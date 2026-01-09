@@ -1,0 +1,8 @@
+# PG Composition Data Template
+# Use this template to add new phosphogypsum composition data
+
+Country,Source_Name,Year,CaSO4_fraction,P2O5_fraction,F_fraction,SiO2_fraction,Fe2O3_fraction,Al2O3_fraction,Moisture_fraction,Ra226_Bq_kg,Cd_mg_kg,Pb_mg_kg,As_mg_kg,Hg_mg_kg,Reference,Notes
+China,Yunnan Phosphate,2022,0.92,0.012,0.006,0.02,0.003,0.005,0.18,500,1.2,2.5,0.8,0.02,"Zhang et al. 2023",
+Morocco,OCP Group,2021,0.88,0.018,0.008,0.03,0.005,0.006,0.22,650,0.8,1.8,1.2,0.015,"Ben Ahmed 2022",
+USA,Florida_Stack,2020,0.85,0.025,0.015,0.025,0.004,0.008,0.25,800,1.5,3.2,1.5,0.03,"EPA 2021",
+Brazil,Minas Gerais,2023,0.90,0.015,0.007,0.018,0.002,0.004,0.20,450,0.6,1.5,0.5,0.01,"Silva et al. 2024",

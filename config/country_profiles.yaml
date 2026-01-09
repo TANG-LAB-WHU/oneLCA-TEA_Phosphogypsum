@@ -1,0 +1,86 @@
+# Country-specific unit prices for OPEX calculation
+# Values in USD per unit
+
+global:
+  electricity_kwh: 0.10
+  natural_gas_mj: 0.008
+  water_m3: 2.0
+  h2so4_kg: 0.07
+  hcl_kg: 0.15
+  naoh_kg: 0.35
+  lime_kg: 0.10
+  ammonia_kg: 0.40
+  labor_hour: 25.0
+  diesel_l: 1.20
+
+China:
+  electricity_kwh: 0.08
+  natural_gas_mj: 0.015
+  water_m3: 0.5
+  h2so4_kg: 0.05
+  hcl_kg: 0.10
+  naoh_kg: 0.25
+  lime_kg: 0.04
+  ammonia_kg: 0.35
+  labor_hour: 8.0
+  diesel_l: 0.90
+
+USA:
+  electricity_kwh: 0.12
+  natural_gas_mj: 0.005
+  water_m3: 3.0
+  h2so4_kg: 0.08
+  hcl_kg: 0.18
+  naoh_kg: 0.40
+  lime_kg: 0.08
+  ammonia_kg: 0.45
+  labor_hour: 35.0
+  diesel_l: 1.00
+
+EU:
+  electricity_kwh: 0.15
+  natural_gas_mj: 0.012
+  water_m3: 4.0
+  h2so4_kg: 0.10
+  hcl_kg: 0.20
+  naoh_kg: 0.45
+  lime_kg: 0.10
+  ammonia_kg: 0.50
+  labor_hour: 40.0
+  diesel_l: 1.80
+
+Morocco:
+  electricity_kwh: 0.11
+  natural_gas_mj: 0.010
+  water_m3: 1.0
+  h2so4_kg: 0.06
+  hcl_kg: 0.12
+  naoh_kg: 0.30
+  lime_kg: 0.05
+  ammonia_kg: 0.38
+  labor_hour: 6.0
+  diesel_l: 1.10
+
+Brazil:
+  electricity_kwh: 0.09
+  natural_gas_mj: 0.012
+  water_m3: 1.5
+  h2so4_kg: 0.065
+  hcl_kg: 0.14
+  naoh_kg: 0.32
+  lime_kg: 0.06
+  ammonia_kg: 0.40
+  labor_hour: 10.0
+  diesel_l: 1.00
+
+India:
+  electricity_kwh: 0.07
+  natural_gas_mj: 0.010
+  water_m3: 0.3
+  h2so4_kg: 0.055
+  hcl_kg: 0.11
+  naoh_kg: 0.28
+  lime_kg: 0.045
+  ammonia_kg: 0.36
+  labor_hour: 5.0
+  diesel_l: 1.05

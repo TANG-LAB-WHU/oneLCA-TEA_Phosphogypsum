@@ -1,0 +1,24 @@
+# Technology LCI Template
+# Use this template to add life cycle inventory data for new technologies
+
+Process_Name,Country,Year,Functional_Unit,
+Input_1_Name,Input_1_Quantity,Input_1_Unit,
+Input_2_Name,Input_2_Quantity,Input_2_Unit,
+Input_3_Name,Input_3_Quantity,Input_3_Unit,
+Output_1_Name,Output_1_Quantity,Output_1_Unit,
+Emission_Air_1_Name,Emission_Air_1_Quantity,Emission_Air_1_Unit,
+Emission_Air_2_Name,Emission_Air_2_Quantity,Emission_Air_2_Unit,
+Emission_Water_1_Name,Emission_Water_1_Quantity,Emission_Water_1_Unit,
+Energy_Electricity_kWh,Energy_Heat_MJ,Water_m3,
+Reference,Notes
+
+PG_Cement_Example,China,2024,1 tonne PG,
+Phosphogypsum,1000,kg,
+Electricity,20,kWh,
+Natural_gas,150,MJ,
+Cement_grade_gypsum,900,kg,
+CO2,15,kg,
+Water_vapor,200,kg,
+Phosphorus,0.001,kg,
+20,150,0.5,
+"Li et al. 2024",Example dataset

@@ -1,0 +1,21 @@
+# Characterization Factors (ILCD)
+# Units: kg-eq per kg emission
+
+climate_change:
+  co2: 1.0
+  ch4: 28.0
+  n2o: 265.0
+
+acidification:
+  so2: 1.0
+  nox: 0.7
+  nh3: 1.6
+
+eutrophication_freshwater:
+  p: 1.0
+  po4: 0.33
+
+ionizing_radiation:
+  ra226: 1.0
+  rn222: 0.5
+  u238: 0.8

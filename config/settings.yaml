@@ -1,0 +1,83 @@
+# PG-LCA-TEA Configuration
+
+project:
+  name: "PG-LCA-TEA"
+  version: "0.1.0"
+  description: "Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis"
+
+functional_unit:
+  description: "1 tonne phosphogypsum treated"
+  value: 1000 # kg
+  unit: "kg"
+
+economic:
+  discount_rate: 0.05
+  lifetime_years: 20
+  base_currency: "USD"
+  base_year: 2024
+
+lca:
+  method: "ILCD"
+  normalization_reference: "EU27"
+  impact_categories:
+    - climate_change
+    - acidification
+    - eutrophication_fresh
+    - eutrophication_marine
+    - human_toxicity_cancer
+    - human_toxicity_noncancer
+    - ecotoxicity_freshwater
+    - ionizing_radiation
+    - particulate_matter
+    - resource_depletion
+
+tea:
+  include_external_costs: true
+  shadow_price_source: "CE Delft 2023"
+  cost_categories:
+    - capex_equipment
+    - capex_installation
+    - opex_materials
+    - opex_utilities
+    - opex_labor
+    - opex_maintenance
+    - revenue
+
+uncertainty:
+  monte_carlo_iterations: 1000
+  default_distribution: "triangular"
+  default_variation: 0.2
+
+data_sources:
+  lci_databases:
+    - name: "ELCD"
+      path: "./data/raw/elcd"
+    - name: "USLCI"
+      path: "./data/raw/uslci"
+  literature:
+    path: "./data/raw/papers"
+
+ai:
+  embedding_model: "all-MiniLM-L6-v2"
+  llm_provider: "openai" # or "ollama", "gemini"
+  llm_model: "gpt-4o-mini"
+  knowledge_graph:
+    storage_path: "./data/processed/kg"
+    backend: "networkx" # or "neo4j"
+
+visualization:
+  dashboard_port: 8501
+  export_formats:
+    - pdf
+    - html
+    - excel
+
+pathways:
+  enabled:
+    - PG-Stack # Stack Disposal (baseline)
+    - PG-CementProd # Cement Production
+    - PG-ConstructMat # Construction Materials
+    - PG-Soil # Soil Amendment
+    - PG-ChemReco # Chemical Recovery
+    - PG-REEextract # REE Extraction
+

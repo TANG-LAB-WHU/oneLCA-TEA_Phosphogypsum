@@ -1,0 +1,57 @@
+# Shadow Prices for External Cost Calculation
+# Based on CE Delft Environmental Prices Handbook 2023
+# Values in USD per kg (or per unit as specified)
+
+# Air emissions
+air:
+  co2: 0.055 # USD/kg (50 EUR/tonne)
+  ch4: 1.375 # Methane (25x CO2)
+  n2o: 16.4 # Nitrous oxide (298x CO2)
+  so2: 12.1 # Sulfur dioxide
+  nox: 8.8 # Nitrogen oxides
+  nh3: 11.0 # Ammonia
+  pm2.5: 40.7 # Fine particulate matter
+  pm10: 16.5 # Coarse particulate matter
+  co: 0.055 # Carbon monoxide
+  nmvoc: 2.2 # Non-methane VOC
+
+# Water emissions
+water:
+  phosphorus: 66.0 # P to freshwater
+  nitrogen: 3.3 # N to marine
+  cod: 0.55
+  bod: 0.55
+  suspended_solids: 0.10
+
+# Soil emissions - Heavy metals
+soil:
+  cadmium: 27500
+  lead: 550
+  mercury: 55000
+  arsenic: 16500
+  chromium: 1100
+  nickel: 550
+  zinc: 55
+  copper: 110
+
+# Radioactive emissions (USD/Bq)
+radioactive:
+  ra226: 0.001 # Radium-226
+  rn222: 0.0001 # Radon-222
+  u238: 0.0005 # Uranium-238
+  th232: 0.0006 # Thorium-232
+
+# Avoided production (benefits = negative values)
+avoided:
+  electricity_grid_kwh: -0.05 # Average mix
+  natural_gas_mj: -0.003
+  gypsum_kg: -0.02 # Natural gypsum mining
+  limestone_kg: -0.01
+  fertilizer_n_kg: -0.50 # Synthetic N fertilizer
+  fertilizer_p_kg: -0.30 # P fertilizer
+  aggregate_kg: -0.015 # Construction aggregate
+
+# Carbon credits (if applicable)
+carbon:
+  certified_emission_reduction: 15.0 # USD/tonne CO2-eq
+  voluntary_carbon_unit: 8.0

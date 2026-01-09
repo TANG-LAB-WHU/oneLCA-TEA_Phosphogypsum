@@ -1,0 +1,7 @@
+# Cost Template for TEA
+# Use this to input pathway-specific costs
+
+Pathway_Code,Component_Type,Item_Name,Base_Cost,Scaling_Factor,Unit,Currency,Year,Source
+PG-SD,CAPEX,Stacking_Equipment,500000,0.6,USD,2023,Tonini_2019
+PG-SD,OPEX,Electricity,0.12,1.0,kWh,USD/kWh,2023,Market
+PG-CM,CAPEX,Grinding_Mill,1200000,0.7,USD,2023,Industry_Report
