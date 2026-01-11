@@ -335,6 +335,5 @@ If you use this framework in your research, please cite:
 
 ## References
 
-1. Tonini, D., Saveyn, H.G.M. & Huygens, D. (2019). Environmental and health co-benefits for advanced phosphorus recovery. *Nature Sustainability*, 2, 1093-1101.
-2. ISO 14040:2006. Environmental management — Life cycle assessment — Principles and framework.
+1. ISO 14040:2006. Environmental management — Life cycle assessment — Principles and framework.
 3. ISO 14044:2006. Environmental management — Life cycle assessment — Requirements and guidelines.
