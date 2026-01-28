@@ -73,7 +73,7 @@ class LightRAGEngine:
     # Supported embedding models
     EMBEDDING_MODELS = {
         "bge-m3": {"dim": 1024, "type": "local", "model_name": "BAAI/bge-m3"},
-        "text-embedding-004": {"dim": 768, "type": "gemini", "model_name": "models/text-embedding-004"},
+        "text-embedding-004": {"dim": 768, "type": "gemini", "model_name": "models/embedding-001"},
         "text-embedding-3-small": {"dim": 1536, "type": "openai", "model_name": "text-embedding-3-small"},
         "text-embedding-3-large": {"dim": 3072, "type": "openai", "model_name": "text-embedding-3-large"},
     }
@@ -132,7 +132,7 @@ class LightRAGEngine:
         if self._local_embed_model is None:
             model_name = self.EMBEDDING_MODELS[self.embedding_model]["model_name"]
             print(f"Loading local embedding model: {model_name}")
-            self._local_embed_model = SentenceTransformer(model_name)
+            self._local_embed_model = SentenceTransformer(model_name, local_files_only=True)
             device = self._local_embed_model.device.type if hasattr(self._local_embed_model.device, 'type') else str(self._local_embed_model.device)
             print(f"Model loaded on: {device.upper()}")
         return self._local_embed_model
@@ -195,7 +195,7 @@ class LightRAGEngine:
         
         return llm_func
 
-    def _create_local_embed_func(self) -> EmbeddingFunc:
+    def _create_local_embed_func(self) -> Any:
         """Create embedding function for local bge-m3 model."""
         import numpy as np
         model_info = self.EMBEDDING_MODELS[self.embedding_model]
@@ -211,7 +211,7 @@ class LightRAGEngine:
             func=embed_func
         )
 
-    def _create_gemini_embed_func(self) -> EmbeddingFunc:
+    def _create_gemini_embed_func(self) -> Any:
         """Create embedding function for Gemini API."""
         import google.generativeai as genai
         import numpy as np
@@ -231,7 +231,7 @@ class LightRAGEngine:
         
         return EmbeddingFunc(embedding_dim=model_info["dim"], max_token_size=8192, func=embed_func)
 
-    def _create_openai_embed_func(self) -> EmbeddingFunc:
+    def _create_openai_embed_func(self) -> Any:
         """Create embedding function for OpenAI API."""
         from openai import OpenAI
         import numpy as np

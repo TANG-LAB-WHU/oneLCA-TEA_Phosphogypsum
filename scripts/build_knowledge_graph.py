@@ -33,6 +33,15 @@ load_dotenv(PROJECT_ROOT / ".env")
 from pgloop.iodata import PDFParser
 from pgloop.knowledge import LightRAGEngine, LLMExtractor, PhosphogypsumKG
 
+# Optional RAGAnything support
+try:
+    from pgloop.knowledge import RAGAnythingEngine, RAGANYTHING_AVAILABLE
+except ImportError:
+    RAGAnythingEngine = None
+    RAGANYTHING_AVAILABLE = False
+
+RAGANYTHING_DIR = PROCESSED_DIR / "raganything_db" if 'PROCESSED_DIR' in dir() else None
+
 # === Directory Configuration ===
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
@@ -41,11 +50,12 @@ PROCESSED_DIR = DATA_DIR / "processed"
 UNPARSED_DIR = RAW_DIR / "papers" / "unparsed"
 PARSED_DIR = RAW_DIR / "papers" / "parsed"
 LIGHTRAG_DIR = PROCESSED_DIR / "lightrag_db"
+RAGANYTHING_DIR = PROCESSED_DIR / "raganything_db"
 KG_DIR = PROCESSED_DIR / "knowledge_graph"
 EXTRACTED_DIR = PROCESSED_DIR / "extracted_data"
 
 # Ensure directories exist
-for d in [PARSED_DIR, LIGHTRAG_DIR, KG_DIR, EXTRACTED_DIR]:
+for d in [PARSED_DIR, LIGHTRAG_DIR, RAGANYTHING_DIR, KG_DIR, EXTRACTED_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
 
@@ -81,67 +91,111 @@ def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
     
     success_count = 0
     error_count = 0
+    skipped_count = 0
     
     for i, pdf_path in enumerate(pdf_files, 1):
         try:
+            # Check if already parsed (support both flat .md and subdirectory structure)
+            output_md_flat = PARSED_DIR / f"{pdf_path.stem}.md"
+            output_md_subdir = PARSED_DIR / pdf_path.stem / f"{pdf_path.stem}.md"
+            
+            if output_md_flat.exists() or output_md_subdir.exists():
+                skipped_count += 1
+                print(f"[{i}/{len(pdf_files)}] ⏭ Skipped (already parsed): {pdf_path.name[:50]}")
+                continue
+            
             print(f"\n[{i}/{len(pdf_files)}] Parsing: {pdf_path.name[:50]}...")
             doc = parser.parse_pdf(pdf_path)
             
-            # Save as markdown
-            output_path = PARSED_DIR / f"{pdf_path.stem}.md"
-            with open(output_path, "w", encoding="utf-8") as f:
-                f.write(f"# {doc.title}\n\n")
-                f.write(f"**Source**: {pdf_path.name}\n")
-                f.write(f"**Pages**: {doc.pages}\n\n")
-                f.write("---\n\n")
-                f.write(doc.text)
+            # For MinerU parser, the .md is already saved inside subdirectory by pdf_parser
+            # For PyMuPDF, save as flat .md file at top level
+            if parser_type == "pymupdf":
+                output_path = output_md_flat
+                with open(output_path, "w", encoding="utf-8") as f:
+                    f.write(f"# {doc.title}\n\n")
+                    f.write(f"**Source**: {pdf_path.name}\n")
+                    f.write(f"**Pages**: {doc.pages}\n\n")
+                    f.write("---\n\n")
+                    f.write(doc.text)
+                print(f"    ✓ Saved: {output_path.name} ({len(doc.text)} chars)")
+            else:
+                # MinerU already saved to subdirectory
+                print(f"    ✓ Saved: {pdf_path.stem}/{pdf_path.stem}.md ({len(doc.text)} chars)")
             
             success_count += 1
-            print(f"    ✓ Saved: {output_path.name} ({len(doc.text)} chars)")
             
         except Exception as e:
             error_count += 1
             print(f"    ✗ Error: {e}")
     
     print(f"\n{'=' * 40}")
-    print(f"Parsing Complete: {success_count} success, {error_count} errors")
+    print(f"Parsing Complete: {success_count} success, {skipped_count} skipped, {error_count} errors")
     return success_count
 
 
-def step2_build_rag_index(limit: int = None):
+def step2_build_rag_index(limit: int = None, engine: str = "lightrag"):
     """
-    Step 2: Build LightRAG Index (Graph + Vector)
+    Step 2: Build RAG Index (Graph + Vector)
     
-    Indexes parsed documents using LightRAG with entity-relationship extraction.
+    Indexes parsed documents using LightRAG or RAGAnything with entity-relationship extraction.
     Note: This step consumes Gemini API calls for entity extraction.
+    
+    Args:
+        limit: Max documents to process
+        engine: "lightrag" (default) or "raganything" (multimodal enhanced)
     """
     print("\n" + "=" * 60)
-    print("   STEP 2: LIGHTRAG INDEX CONSTRUCTION")
+    engine_upper = engine.upper()
+    print(f"   STEP 2: {engine_upper} INDEX CONSTRUCTION")
     print("=" * 60)
     
-    # Initialize LightRAG engine
-    rag = LightRAGEngine(
-        working_dir=LIGHTRAG_DIR,
-        llm_model="gemini-2.0-flash"
-    )
+    if engine == "raganything":
+        if not RAGANYTHING_AVAILABLE:
+            print("ERROR: RAGAnything not installed. Run: pip install 'raganything[all]'")
+            print("Falling back to LightRAG...")
+            engine = "lightrag"
     
-    print(f"LightRAG DB: {LIGHTRAG_DIR}")
+    if engine == "raganything":
+        # Use RAGAnything for multimodal processing
+        rag = RAGAnythingEngine(
+            working_dir=RAGANYTHING_DIR
+        )
+        working_dir = RAGANYTHING_DIR
+        print(f"RAGAnything DB: {RAGANYTHING_DIR}")
+        print(f"Parser:      {rag.parser}")
+    else:
+        # Use LightRAG (default)
+        rag = LightRAGEngine(
+            working_dir=LIGHTRAG_DIR
+        )
+        working_dir = LIGHTRAG_DIR
+        print(f"LightRAG DB: {LIGHTRAG_DIR}")
+    
     print(f"Source:      {PARSED_DIR}")
-    print(f"LLM Model:   gemini-2.0-flash")
+    print(f"LLM Model:   {rag.llm_model}")
     print("\n⚠️  Note: Entity extraction will consume Gemini API quota")
     
-    # Index documents with multimodal support
-    results = rag.add_documents_from_directory(
-        directory=PARSED_DIR,
-        pattern="*.md",
-        limit=limit,
-        transcribe_images=True
-    )
+    # Index documents
+    if engine == "raganything":
+        # RAGAnything can process raw PDFs directly
+        results = rag.process_documents_from_directory(
+            directory=UNPARSED_DIR,
+            pattern="*.pdf",
+            limit=limit
+        )
+    else:
+        # LightRAG uses pre-parsed markdown
+        results = rag.add_documents_from_directory(
+            directory=PARSED_DIR,
+            pattern="*.md",
+            limit=limit,
+            transcribe_images=True
+        )
     
     stats = rag.get_statistics()
     print(f"\n{'=' * 40}")
     print(f"Indexed {sum(results.values())} / {len(results)} documents")
-    print(f"Working dir: {stats.get('working_dir', 'N/A')}")
+    print(f"Working dir: {stats.get('working_dir', str(working_dir))}")
     
     return results
 
@@ -290,7 +344,7 @@ def step4_build_knowledge_graph():
     return kg_stats
 
 
-def run_pipeline(steps: list, parser_type: str = "pymupdf", limit: int = None):
+def run_pipeline(steps: list, parser_type: str = "pymupdf", limit: int = None, engine: str = "lightrag"):
     """Run the complete pipeline or specific steps."""
     
     print("\n" + "=" * 60)
@@ -298,14 +352,19 @@ def run_pipeline(steps: list, parser_type: str = "pymupdf", limit: int = None):
     print("=" * 60)
     print(f"Start time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Steps to run: {steps}")
+    print(f"RAG Engine: {engine}")
     
     results = {}
     
     if "parse" in steps or "all" in steps:
-        results["parse"] = step1_parse_pdfs(parser_type, limit)
+        # Skip STEP 1 if using RAGAnything as it handles parsing internally
+        if engine == "raganything":
+            print("\n[SKIP] Explicit Step 1 (Parse) is skipped because RAGAnything handles parsing internally.")
+        else:
+            results["parse"] = step1_parse_pdfs(parser_type, limit)
     
     if "index" in steps or "all" in steps:
-        results["index"] = step2_build_rag_index(limit)
+        results["index"] = step2_build_rag_index(limit, engine)
     
     if "extract" in steps or "all" in steps:
         results["extract"] = step3_extract_structured_data(limit)
@@ -334,8 +393,8 @@ def main():
     parser.add_argument(
         "--parser",
         choices=["pymupdf", "mineru"],
-        default="pymupdf",
-        help="PDF parser to use"
+        default="mineru",
+        help="PDF parser to use (default: mineru)"
     )
     parser.add_argument(
         "--limit",
@@ -343,11 +402,17 @@ def main():
         default=None,
         help="Limit number of documents to process (for testing)"
     )
+    parser.add_argument(
+        "--engine",
+        choices=["lightrag", "raganything"],
+        default="lightrag",
+        help="RAG engine to use (default: lightrag)"
+    )
     
     args = parser.parse_args()
     
     steps = [args.step] if args.step != "all" else ["all"]
-    run_pipeline(steps, args.parser, args.limit)
+    run_pipeline(steps, args.parser, args.limit, args.engine)
 
 
 if __name__ == "__main__":

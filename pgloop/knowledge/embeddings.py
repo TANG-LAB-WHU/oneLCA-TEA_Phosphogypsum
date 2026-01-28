@@ -20,7 +20,7 @@ class EmbeddingModel:
         self.model = None
         if SENTENCE_TRANSFORMERS_AVAILABLE:
             try:
-                self.model = SentenceTransformer(model_name)
+                self.model = SentenceTransformer(model_name, local_files_only=True)
                 print(f"DEBUG: Successfully loaded EmbeddingModel: {model_name}")
             except Exception as e:
                 print(f"DEBUG: Failed to load EmbeddingModel {model_name}: {e}")

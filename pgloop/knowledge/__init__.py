@@ -16,6 +16,16 @@ except ImportError:
     LightRAGEngine = None
     LIGHTRAG_AVAILABLE = False
 
+# RAGAnything support (optional upgrade over LightRAG)
+try:
+    from pgloop.knowledge.raganything_engine import (
+        RAGAnythingEngine,
+        RAGANYTHING_AVAILABLE
+    )
+except ImportError:
+    RAGAnythingEngine = None
+    RAGANYTHING_AVAILABLE = False
+
 # Optional Neo4j support
 try:
     from pgloop.knowledge.neo4j_adapter import Neo4jAdapter, Neo4jConfig
@@ -29,10 +39,13 @@ __all__ = [
     "PhosphogypsumKG",
     "LLMExtractor",
     "LightRAGEngine",
+    "RAGAnythingEngine",
     "GapFiller",
     "EmbeddingModel",
     "Neo4jAdapter",
     "Neo4jConfig",
     "NEO4J_AVAILABLE",
     "LIGHTRAG_AVAILABLE",
+    "RAGANYTHING_AVAILABLE",
 ]
+
