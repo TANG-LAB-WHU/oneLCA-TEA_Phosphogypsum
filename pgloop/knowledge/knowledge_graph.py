@@ -1,6 +1,4 @@
 """
-Knowledge Graph Module
-
 Builds and queries a knowledge graph for phosphogypsum LCA-TEA data.
 Uses NetworkX for lightweight local graphs, with optional Neo4j support.
 """

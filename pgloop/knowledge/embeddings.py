@@ -1,6 +1,4 @@
 """
-Embeddings Module
-
 Handles text embedding for RAG and similarity analysis.
 """
 

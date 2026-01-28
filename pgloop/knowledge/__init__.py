@@ -1,6 +1,4 @@
 """
-Knowledge Graph and AI Module
-
 Provides knowledge graph construction, LLM extraction, and RAG capabilities.
 """
 
@@ -9,7 +7,6 @@ from pgloop.knowledge.llm_extractor import LLMExtractor
 from pgloop.knowledge.gap_filler import GapFiller
 from pgloop.knowledge.embeddings import EmbeddingModel
 
-# LightRAG-based RAG engine (replaces ChromaDB)
 try:
     from pgloop.knowledge.lightrag_engine import (
         LightRAGEngine, 
