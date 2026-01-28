@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 # Import modules to test
 from pgloop.knowledge.llm_extractor import LLMExtractor
 from pgloop.knowledge.embeddings import EmbeddingModel
-from pgloop.knowledge.rag_engine import RAGEngine
+from pgloop.knowledge.lightrag_engine import LightRAGEngine
 from pgloop.knowledge.knowledge_graph import PhosphogypsumKG
 from pgloop.knowledge.gap_filler import GapFiller
 
@@ -82,33 +82,25 @@ def test_llm_extraction(setup_env):
     print(f"\nExtracted JSON: {result.data}")
 
 def test_rag_flow(setup_env, temp_test_dir):
-    """Test RAG indexing and search."""
+    """Test LightRAG indexing and search."""
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         pytest.skip("GEMINI_API_KEY not found in .env")
         
-    rag = RAGEngine(
-        collection_name="test_collection",
-        persist_directory=temp_test_dir / "chroma"
+    rag = LightRAGEngine(
+        working_dir=temp_test_dir / "lightrag"
     )
     
     # Index document
     doc_text = "The REE extraction process from phosphogypsum involves sulfuric acid leaching followed by solvent extraction using D2EHPA."
-    rag.add_document("doc_ree_01", doc_text, {"topic": "REE"})
+    rag.add_document(doc_text)
     
-    # Retrieve
+    # Query (LightRAG query already includes generation and relationship reasoning)
     query = "How to extract rare earth elements from PG?"
-    retrieval = rag.retrieve(query, n_results=1)
+    result = rag.query(query, mode="local")
     
-    assert len(retrieval.documents) > 0
-    assert "REE" in retrieval.documents[0]
-    
-    # Test generation
-    extractor = LLMExtractor(provider="gemini", model="gemini-2.0-flash", api_key=api_key)
-    gen_result = rag.query_with_generation(query, extractor)
-    
-    assert gen_result.answer is not None
-    print(f"\nRAG Answer: {gen_result.answer}")
+    assert result.answer is not None
+    print(f"\nLightRAG Answer: {result.answer}")
 
 def test_knowledge_graph(temp_test_dir):
     """Test Knowledge Graph operations."""
