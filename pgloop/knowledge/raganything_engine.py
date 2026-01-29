@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional, Union, List
 from dataclasses import dataclass
 from dotenv import load_dotenv
+import numpy as np
 
 try:
     from raganything import RAGAnything, RAGAnythingConfig
@@ -186,22 +187,30 @@ class RAGAnythingEngine:
         if self.embedding_model == "bge-m3" and SENTENCE_TRANSFORMERS_AVAILABLE:
             # Local embedding
             model = self._get_local_embed_model()
+            
+            async def local_embed(texts: list[str]):
+                return np.array(model.encode(texts, normalize_embeddings=True))
+                
             return EmbeddingFunc(
                 embedding_dim=1024,
                 max_token_size=8192,
-                func=lambda texts: model.encode(texts, normalize_embeddings=True).tolist()
+                func=local_embed
             )
         else:
             # OpenAI-compatible API embedding
-            return EmbeddingFunc(
-                embedding_dim=3072,
-                max_token_size=8192,
-                func=lambda texts: openai_embed(
+            async def remote_embed(texts: list[str]):
+                embeddings = await openai_embed(
                     texts,
                     model="text-embedding-3-large",
                     api_key=self.llm_api_key,
                     base_url=self.llm_base_url
                 )
+                return np.array(embeddings)
+                
+            return EmbeddingFunc(
+                embedding_dim=3072,
+                max_token_size=8192,
+                func=remote_embed
             )
     
     def _get_rag_instance(self) -> Any:
@@ -224,6 +233,26 @@ class RAGAnythingEngine:
             )
         return self._rag
     
+    async def aprocess_document(
+        self,
+        file_path: Union[str, Path],
+        output_dir: Optional[Union[str, Path]] = None,
+        **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Asynchronously process a document with full multimodal extraction.
+        """
+        rag = self._get_rag_instance()
+        file_path = Path(file_path)
+        output_dir = Path(output_dir) if output_dir else self.working_dir / "parsed"
+        
+        return await rag.process_document_complete(
+            file_path=str(file_path),
+            output_dir=str(output_dir),
+            parse_method=self.parse_method,
+            **kwargs
+        )
+
     def process_document(
         self,
         file_path: Union[str, Path],
@@ -231,29 +260,9 @@ class RAGAnythingEngine:
         **kwargs
     ) -> Dict[str, Any]:
         """
-        Process a document with full multimodal extraction.
-        
-        Args:
-            file_path: Path to document (PDF, Office, image)
-            output_dir: Output directory for parsed content
-            **kwargs: Additional parsing options
-            
-        Returns:
-            Processing result dictionary
+        Process a document with full multimodal extraction (Synchronous wrapper).
         """
-        rag = self._get_rag_instance()
-        file_path = Path(file_path)
-        output_dir = Path(output_dir) if output_dir else self.working_dir / "parsed"
-        
-        async def _process():
-            return await rag.process_document_complete(
-                file_path=str(file_path),
-                output_dir=str(output_dir),
-                parse_method=self.parse_method,
-                **kwargs
-            )
-        
-        return asyncio.run(_process())
+        return asyncio.run(self.aprocess_document(file_path, output_dir, **kwargs))
     
     def process_documents_from_directory(
         self,
@@ -263,16 +272,7 @@ class RAGAnythingEngine:
         **kwargs
     ) -> Dict[str, bool]:
         """
-        Process all documents in a directory.
-        
-        Args:
-            directory: Directory containing documents
-            pattern: Glob pattern for file matching
-            limit: Maximum number of documents to process
-            **kwargs: Additional processing options
-            
-        Returns:
-            Dictionary mapping filenames to success status
+        Process all documents in a directory using a single event loop.
         """
         directory = Path(directory)
         files = list(directory.glob(pattern))
@@ -280,75 +280,63 @@ class RAGAnythingEngine:
             files = files[:limit]
         
         results = {}
-        for i, filepath in enumerate(files, 1):
-            try:
-                print(f"[{i}/{len(files)}] Processing: {filepath.name[:50]}...")
-                self.process_document(filepath, **kwargs)
-                results[filepath.name] = True
-                print(f"    ✓ Processed successfully")
-            except Exception as e:
-                results[filepath.name] = False
-                print(f"    ✗ Error: {e}")
         
+        async def _process_all():
+            for i, filepath in enumerate(files, 1):
+                try:
+                    print(f"[{i}/{len(files)}] Processing: {filepath.name[:50]}...")
+                    await self.aprocess_document(filepath, **kwargs)
+                    results[filepath.name] = True
+                    print(f"    ✓ Processed successfully")
+                except Exception as e:
+                    results[filepath.name] = False
+                    print(f"    ✗ Error: {e}")
+        
+        asyncio.run(_process_all())
         return results
     
-    def query(self, query: str, mode: str = "hybrid") -> str:
-        """
-        Query the knowledge base (text-only).
-        
-        Args:
-            query: Query string
-            mode: Retrieval mode ("naive", "local", "global", "hybrid", "mix")
-            
-        Returns:
-            Query answer
-        """
+    async def aquery(self, query: str, mode: str = "hybrid") -> str:
+        """Asynchronously query the knowledge base."""
         rag = self._get_rag_instance()
-        
-        async def _query():
-            return await rag.aquery(query, mode=mode)
-        
-        return asyncio.run(_query())
+        return await rag.aquery(query, mode=mode)
+
+    def query(self, query: str, mode: str = "hybrid") -> str:
+        """Query the knowledge base (Synchronous wrapper)."""
+        return asyncio.run(self.aquery(query, mode=mode))
     
-    def multimodal_query(
+    async def amultimodal_query(
         self,
         query: str,
         multimodal_content: Optional[List[Dict]] = None,
         mode: str = "hybrid"
     ) -> MultimodalQueryResult:
-        """
-        Query with multimodal context.
-        
-        Args:
-            query: Query string
-            multimodal_content: List of multimodal content dicts, e.g.:
-                [{"type": "equation", "latex": "E=mc^2", "equation_caption": "Einstein's formula"}]
-                [{"type": "table", "content": "<table>...</table>", "table_caption": "Data table"}]
-            mode: Retrieval mode
-            
-        Returns:
-            MultimodalQueryResult with answer and context
-        """
+        """Asynchronously query with multimodal context."""
         rag = self._get_rag_instance()
         
-        async def _query():
-            if multimodal_content:
-                result = await rag.aquery_with_multimodal(
-                    query,
-                    multimodal_content=multimodal_content,
-                    mode=mode
-                )
-            else:
-                result = await rag.aquery(query, mode=mode)
-            return result
-        
-        answer = asyncio.run(_query())
+        if multimodal_content:
+            answer = await rag.aquery_with_multimodal(
+                query,
+                multimodal_content=multimodal_content,
+                mode=mode
+            )
+        else:
+            answer = await rag.aquery(query, mode=mode)
+            
         return MultimodalQueryResult(
             query=query,
             answer=answer,
             mode=mode,
             multimodal_context=multimodal_content
         )
+
+    def multimodal_query(
+        self,
+        query: str,
+        multimodal_content: Optional[List[Dict]] = None,
+        mode: str = "hybrid"
+    ) -> MultimodalQueryResult:
+        """Query with multimodal context (Synchronous wrapper)."""
+        return asyncio.run(self.amultimodal_query(query, multimodal_content, mode))
     
     def check_parser_installation(self) -> bool:
         """Check if the parser (MinerU) is properly installed."""

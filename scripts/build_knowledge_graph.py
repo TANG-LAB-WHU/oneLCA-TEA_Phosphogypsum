@@ -200,7 +200,7 @@ def step2_build_rag_index(limit: int = None, engine: str = "lightrag"):
     return results
 
 
-def step3_extract_structured_data(limit: int = None):
+def step3_extract_structured_data(limit: int = None, engine: str = "lightrag"):
     """
     Step 3: Extract Structured Data using LLM
     
@@ -223,27 +223,48 @@ def step3_extract_structured_data(limit: int = None):
     )
     
     print(f"LLM: Gemini (gemini-2.0-flash)")
-    print(f"Source: {PARSED_DIR}")
+    print(f"RAG Engine: {engine}")
+    
+    # Get parsed files based on engine
+    if engine == "raganything":
+        # RAGAnything stores parsed files in nested directories: raganything_db/parsed/{doc_name}/hybrid_auto/{doc_name}.md
+        source_dir = RAGANYTHING_DIR / "parsed"
+        md_files = list(source_dir.glob("**/hybrid_auto/*.md"))
+        print(f"Source: {source_dir} (nested)")
+    else:
+        # LightRAG uses flat directory
+        source_dir = PARSED_DIR
+        md_files = list(source_dir.glob("*.md"))
+        print(f"Source: {source_dir}")
+        
     print(f"Output: {EXTRACTED_DIR}")
     
-    # Get parsed files
-    md_files = list(PARSED_DIR.glob("*.md"))
     if limit:
         md_files = md_files[:limit]
     
     print(f"\nProcessing {len(md_files)} documents...")
     
-    extraction_types = ["composition", "technology", "lci", "cost"]
+    extraction_types = ["composition", "technology", "lci", "cost", "policy"]
     all_results = {}
     
     for i, md_path in enumerate(md_files, 1):
+        # Result file path
+        output_path = EXTRACTED_DIR / f"{md_path.stem}_extracted.json"
+        
+        # IDEMPOTENCY: Check if already extracted
+        if output_path.exists():
+            print(f"\n[{i}/{len(md_files)}] ⏭ Skipping: {md_path.name[:40]} (already extracted)")
+            try:
+                with open(output_path, "r", encoding="utf-8") as f:
+                    all_results[md_path.name] = json.load(f)
+                continue
+            except:
+                print(f"    (Failed to load existing file, re-extracting...)")
+
         print(f"\n[{i}/{len(md_files)}] Extracting from: {md_path.name[:40]}...")
         
         try:
             results = extractor.extract_from_document(md_path, extraction_types)
-            
-            # Save extraction results
-            output_path = EXTRACTED_DIR / f"{md_path.stem}_extracted.json"
             
             extracted_data = {}
             for etype, result in results.items():
@@ -337,9 +358,9 @@ def step4_build_knowledge_graph():
     kg_stats = kg.get_statistics()
     print(f"\n{'=' * 40}")
     print("Knowledge Graph Statistics:")
-    print(f"  Nodes: {kg_stats.get('node_count', 0)}")
-    print(f"  Edges: {kg_stats.get('edge_count', 0)}")
-    print(f"  Node types: {kg_stats.get('node_types', {})}")
+    print(f"  Nodes: {kg_stats.get('total_nodes', 0)}")
+    print(f"  Edges: {kg_stats.get('total_edges', 0)}")
+    print(f"  Node types: {kg_stats.get('nodes_by_type', {})}")
     
     return kg_stats
 
@@ -367,7 +388,7 @@ def run_pipeline(steps: list, parser_type: str = "pymupdf", limit: int = None, e
         results["index"] = step2_build_rag_index(limit, engine)
     
     if "extract" in steps or "all" in steps:
-        results["extract"] = step3_extract_structured_data(limit)
+        results["extract"] = step3_extract_structured_data(limit, engine)
     
     if "build" in steps or "all" in steps:
         results["build"] = step4_build_knowledge_graph()
