@@ -6,8 +6,8 @@ Main package for phosphogypsum life cycle assessment and techno-economic analysi
 
 __version__ = "1.1.0"
 
-from pgloop.lca.engine import LCAEngine
-from pgloop.tea.engine import TEAEngine
+from pgloop.lca.lca_engine import LCAEngine, LCAResult
+from pgloop.tea.tea_engine import TEAEngine, TEAResult
 from pgloop.pathways import get_pathway, list_pathways
 from pgloop.risk.aggregator import RiskAggregator
 from pgloop.decision.recommender import PathwayRanker

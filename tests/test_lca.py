@@ -1,6 +1,6 @@
 """Tests for LCA Module"""
 import pytest
-from pgloop.lca.engine import LCAEngine
+from pgloop.lca.lca_engine import LCAEngine
 from pgloop.lca.inventory import LifeCycleInventory
 
 def test_lca_engine_init():
