@@ -9,7 +9,7 @@ def test_import_modules():
     """Test that all main modules can be imported."""
     from pgloop import LCAEngine, TEAEngine
     from pgloop.iodata import PDFParser, DataStandardizer, APIConnector
-    from pgloop.knowledge import PhosphogypsumKG, LLMExtractor, RAGEngine, GapFiller
+    from pgloop.knowledge import PhosphogypsumKG, LLMExtractor, LightRAGEngine, GapFiller
     from pgloop.lca import LCAEngine, LifeCycleInventory, ImpactAssessment
     from pgloop.tea import TEAEngine, CAPEXCalculator, OPEXCalculator
     from pgloop.pathways import (

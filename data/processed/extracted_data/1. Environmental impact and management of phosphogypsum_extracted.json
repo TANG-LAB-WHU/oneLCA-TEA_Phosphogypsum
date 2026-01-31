@@ -1,0 +1,125 @@
+{
+  "composition": {
+    "CaSO4": null,
+    "P2O5": null,
+    "F": null,
+    "SiO2": null,
+    "Fe2O3": null,
+    "Al2O3": null,
+    "moisture": 0.25,
+    "Ra226": null,
+    "heavy_metals": {
+      "Ag": "<1-11",
+      "As": "40-<1-2",
+      "Au": "3-15",
+      "B": "3-<10-30",
+      "Ba": "7-20-140",
+      "Be": "1-1-2",
+      "Br": "1-2",
+      "Cd": "7-9-28",
+      "Cl": "<100-300-0.025",
+      "Co": "2-<1-1-8",
+      "Cr": "<10-70-20",
+      "Cu": "8-10-42-103-6-11.5",
+      "Hg": "<50-14000",
+      "Mn": "15-<2-10-6",
+      "Mo": "16-<1-2-5",
+      "Ni": "2-3-15-13-15",
+      "Pb": "3-7-5",
+      "Rb": "<10-20",
+      "Sb": "100-0.3-0.8",
+      "Se": "4-64",
+      "Sr": "10-610-670-1100",
+      "Th": "<1-1-2",
+      "U": "6-13",
+      "V": "19-10-40",
+      "Y": "2-100-120-50",
+      "Zn": "9-18-112-6-315",
+      "Zr": "10-<10-110-185"
+    },
+    "country": null,
+    "source": "Tayibi et al 2008"
+  },
+  "lci": {
+    "functional_unit": "Environmental impact and management of phosphogypsum",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "Phosphogypsum (PG)",
+        "quantity": "5",
+        "unit": "tons",
+        "source": "USEPA, 2002"
+      }
+    ],
+    "emissions_air": [
+      {
+        "pollutant": "Radon-222",
+        "quantity": "0.74",
+        "unit": "Bq/m²/s"
+      },
+      {
+        "pollutant": "hazardous vapours containing heavy metals, sulphates, fluorosilicates, hydrogen fluorides, phosphorus, cadmium and 226Ra",
+        "quantity": null,
+        "unit": null
+      }
+    ],
+    "emissions_water": [
+      {
+        "pollutant": "226Ra",
+        "quantity": "0.1",
+        "unit": "Bq/l"
+      },
+      {
+        "pollutant": "Ba",
+        "quantity": "6509",
+        "unit": "t"
+      },
+      {
+        "pollutant": "Zn",
+        "quantity": "6726",
+        "unit": "t"
+      },
+      {
+        "pollutant": "Ni",
+        "quantity": "232",
+        "unit": "t"
+      },
+      {
+        "pollutant": "Cu",
+        "quantity": "1158",
+        "unit": "t"
+      },
+      {
+        "pollutant": "Cd",
+        "quantity": "667",
+        "unit": "t"
+      },
+      {
+        "pollutant": "Sr",
+        "quantity": "54219",
+        "unit": "t"
+      },
+      {
+        "pollutant": "238U",
+        "quantity": "0.6",
+        "unit": "Bq/l"
+      }
+    ],
+    "emissions_soil": [],
+    "energy": {},
+    "source": "Review"
+  },
+  "cost": {
+    "capex": null,
+    "opex": null,
+    "labor_cost": null,
+    "material_costs": [],
+    "energy_costs": null,
+    "revenue": null,
+    "products": [],
+    "year": 2009,
+    "currency": null,
+    "country": "Spain, Tunisia",
+    "source": "Tayibi et al. 2009"
+  }
+}

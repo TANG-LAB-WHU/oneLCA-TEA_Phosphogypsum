@@ -73,6 +73,9 @@ venv.bak/
 data/raw/*.pdf
 data/raw/*.csv
 data/processed/*.json
+data/processed/lightrag_db/
+data/processed/raganything_db/
+data/processed/knowledge_graph/
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 

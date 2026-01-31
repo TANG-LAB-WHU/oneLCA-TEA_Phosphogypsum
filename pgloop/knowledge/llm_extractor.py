@@ -27,84 +27,87 @@ class ExtractionResult:
 # Extraction prompts for different data types
 EXTRACTION_PROMPTS = {
     "composition": """
-Extract phosphogypsum composition data from the following text.
-Return a JSON object with these fields (use null if not found):
+Extract phosphogypsum composition data from the text.
+Return JSON with these fields (use null if not found):
 - CaSO4: mass fraction (0-1)
-- P2O5: mass fraction (0-1)  
+- P2O5: mass fraction (0-1)
 - F: mass fraction (0-1)
 - SiO2: mass fraction (0-1)
 - Fe2O3: mass fraction (0-1)
 - Al2O3: mass fraction (0-1)
+- MgO: mass fraction (0-1)
+- K2O: mass fraction (0-1)
+- Na2O: mass fraction (0-1)
+- heavy_metals: object mapping element (e.g., "As", "Cd", "Cr", "Hg", "Pb") to concentration (mg/kg)
+- ra226: activity concentration (Bq/kg)
+- pH: value
 - moisture: mass fraction (0-1)
-- Ra226: radioactivity in Bq/kg
-- heavy_metals: dict of metal -> concentration in mg/kg (Cd, Pb, As, Hg, etc.)
-- country: country of origin
-- source: data source reference
+- particle_size_d50: microns
+- whiteness: index value
 
-Text:
-{text}
-
-Return ONLY valid JSON, no other text.
+Text: {text}
+Return ONLY valid JSON.
 """,
-    
     "technology": """
-Extract treatment technology data from the following text.
-Return a JSON object with these fields (use null if not found):
+Extract treatment technology data aligned with technical risk assessment criteria.
+Return JSON with these fields (use null if not found):
 - name: technology name
 - description: brief description
-- trl: technology readiness level (1-9)
-- capacity: typical capacity in tonnes/year
-- inputs: list of {material, quantity, unit}
-- outputs: list of {product, quantity, unit}
-- emissions: list of {pollutant, quantity, unit, compartment}
-- energy_consumption: in MJ/tonne PG
-- costs: {capex_usd, opex_usd_per_tonne}
-- country: where implemented
-- source: data source reference
+- type: "purification", "calcination", "crystallization", "granulation", "decomposition", "other"
+- trl: estimated Technology Readiness Level (1-9 integer)
+- scale_factor: inferred scale relative to lab/pilot (e.g., "lab scale", "pilot scale", "industrial", or ratio)
+- complexity: "low", "medium", or "high" (based on number of steps/conditions)
+- novel_technology: boolean (true if described as novel/innovative/new method)
+- input_materials: list of strings
+- output_products: list of strings
+- process_conditions: object (temp, pressure, residence_time, etc.)
 
-Text:
-{text}
-
-Return ONLY valid JSON, no other text.
+Text: {text}
+Return ONLY valid JSON.
 """,
-
     "lci": """
-Extract Life Cycle Inventory data from the following text.
-Return a JSON object with:
-- functional_unit: description of functional unit
-- inputs: list of {name, quantity, unit, source}
-- outputs: list of {name, quantity, unit, source}
-- emissions_air: list of {pollutant, quantity, unit}
-- emissions_water: list of {pollutant, quantity, unit}
-- emissions_soil: list of {pollutant, quantity, unit}
-- energy: {electricity_kwh, heat_mj, fuel_type, fuel_quantity}
-- source: reference
+Extract Life Cycle Inventory (LCI) data for environmental impact assessment.
+Return JSON with these fields (use null if not found):
+- functional_unit: e.g., "1 kg PG", "1 tonne PG"
+- energy_consumption: object mapping source (electricity, natural_gas, coal, steam) to value_with_unit
+- chemical_consumption: list of objects {{ "name": string, "amount": float, "unit": string }}
+- water_consumption: value_with_unit
+- emissions_air: list of objects {{ "substance": string, "amount": float, "unit": string }} (e.g., CO2, SO2, NOx, HF, PM)
+- emissions_water: list of objects {{ "substance": string, "amount": float, "unit": string }} (e.g., P, F, COD, heavy metals)
+- solid_waste: list of objects {{ "type": string, "amount": float, "unit": string }}
+- yield: product yield (percentage or mass/mass)
 
-Text:
-{text}
-
-Return ONLY valid JSON, no other text.
+Text: {text}
+Return ONLY valid JSON.
 """,
-
     "cost": """
-Extract cost data from the following text.
-Return a JSON object with:
-- capex: capital expenditure in USD
-- opex: operational cost in USD/year or USD/tonne
-- labor_cost: in USD/year or USD/tonne
-- material_costs: list of {material, cost, unit}
-- energy_costs: in USD/year or USD/tonne
-- revenue: from products in USD/year or USD/tonne
-- products: list of {product, price, unit}
-- year: cost data year
-- currency: original currency if not USD
-- country: country context
-- source: reference
+Extract Techno-Economic Analysis (TEA) and cost data.
+Return JSON with these fields (use null if not found):
+- capex: Capital Expenditure (value + currency + base year)
+- opex: Operating Expenditure (value + currency + unit per functional unit)
+- revenue: Product selling price/revenue (value + currency + unit)
+- payback_period: years
+- irr: Internal Rate of Return (%)
+- npv: Net Present Value (value + currency)
+- chemical_cost: value + currency + unit
+- energy_cost: value + currency + unit
+- labor_cost: value + currency + unit
 
-Text:
-{text}
+Text: {text}
+Return ONLY valid JSON.
+""",
+    "policy": """
+Extract policy, regulatory, and market context data for risk assessment.
+Return JSON with these fields (use null if not found):
+- subsidy_dependency: textual evidence of subsidies, grants, or tax incentives
+- carbon_credits: mention of carbon trading, credits, or taxes (ETS)
+- regulatory_status: "permitted", "restricted", "banned", or related description
+- standards_compliance: list of standards mentioned (e.g., "GB 8978-1996", "ASTM C1398")
+- trade_exposure: mention of import/export, international market, or local-only scope
+- market_status: "growing", "stable", "declining"
 
-Return ONLY valid JSON, no other text.
+Text: {text}
+Return ONLY valid JSON.
 """
 }
 
@@ -121,8 +124,8 @@ class LLMExtractor:
     
     def __init__(
         self,
-        provider: str = "openai",
-        model: str = "gpt-4o-mini",
+        provider: str = "gemini",
+        model: str = "gemini-2.0-flash",
         api_key: Optional[str] = None,
         base_url: Optional[str] = None
     ):
@@ -337,20 +340,3 @@ class LLMExtractor:
             result = self.extract(text, extraction_type)
             results.append(result)
         return results
-
-
-if __name__ == "__main__":
-    # Example usage (requires API key)
-    extractor = LLMExtractor(
-        provider="ollama",
-        model="llama3.1"
-    )
-    
-    sample_text = """
-    The phosphogypsum sample from China contained 92% CaSO4·2H2O,
-    with P2O5 content of 0.8-1.2% and fluoride at 0.5%. 
-    The Ra-226 activity was measured at 450 Bq/kg.
-    """
-    
-    # result = extractor.extract(sample_text, "composition")
-    # print(result.data)

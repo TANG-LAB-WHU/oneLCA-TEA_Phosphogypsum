@@ -1,6 +1,4 @@
 """
-Gap Filler Module
-
 Uses machine learning to estimate missing LCI/TEA parameters based on
 similar processes and statistical inference.
 """

@@ -28,7 +28,7 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 | `pgloop/risk`          | Risk Assessment          | `TechnicalRisk`, `PoliticalRisk`, `RiskAggregator`    |
 | `pgloop/decision`      | Decision Support         | `PathwayRanker`, `TOPSIS`, `ScenarioAnalyzer`         |
 | `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `MetropolisHastings`             |
-| `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `RAGEngine`, `LLMExtractor`        |
+| `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `LightRAGEngine`, `LLMExtractor`  |
 | `pgloop/utils`         | Utilities                | `CurrencyConverter`, `UnitConverter`, `Annotation`    |
 | `pgloop/visualization` | Dashboard & Reports      | `Dashboard`, `ReportExporter`                           |
 | `pgloop/iodata`        | Data Ingestion           | `PDFParser`, `WebScraper`, `APIConnector`             |

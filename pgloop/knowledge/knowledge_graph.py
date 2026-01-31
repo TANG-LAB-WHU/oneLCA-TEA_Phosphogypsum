@@ -1,6 +1,4 @@
 """
-Knowledge Graph Module
-
 Builds and queries a knowledge graph for phosphogypsum LCA-TEA data.
 Uses NetworkX for lightweight local graphs, with optional Neo4j support.
 """
@@ -153,7 +151,8 @@ class PhosphogypsumKG:
             "utilization_rate": utilization_rate,
             **kwargs
         }
-        return self.add_node(f"country_{name.lower()}", "Country", properties)
+        country_name = str(name or "unknown").lower()
+        return self.add_node(f"country_{country_name}", "Country", properties)
     
     def add_composition(
         self,
@@ -175,10 +174,10 @@ class PhosphogypsumKG:
             "Ra226_Bq_kg": Ra226,
             **kwargs
         }
-        node_id = self.add_node(f"comp_{name.lower()}", "Composition", properties)
+        node_id = self.add_node(f"comp_{str(name or 'unknown').lower()}", "Composition", properties)
         
         # Link to country
-        country_id = f"country_{country.lower()}"
+        country_id = f"country_{str(country or 'unknown').lower()}"
         if self.graph.has_node(country_id):
             self.add_edge(country_id, node_id, "produces")
         
@@ -200,7 +199,7 @@ class PhosphogypsumKG:
             "capacity_t_year": capacity_t_year,
             **kwargs
         }
-        return self.add_node(f"tech_{code.lower()}", "Technology", properties)
+        return self.add_node(f"tech_{str(code or 'unknown').lower()}", "Technology", properties)
     
     def add_material(
         self,
@@ -218,7 +217,8 @@ class PhosphogypsumKG:
             "unit": unit,
             **kwargs
         }
-        return self.add_node(f"mat_{name.lower().replace(' ', '_')}", "Material", properties)
+        mat_name = str(name or "unknown").lower().replace(' ', '_')
+        return self.add_node(f"mat_{mat_name}", "Material", properties)
     
     def add_source(
         self,
@@ -236,7 +236,13 @@ class PhosphogypsumKG:
             "year": year,
             **kwargs
         }
-        source_id = doi.replace("/", "_").replace(".", "_") if doi else title[:20].lower()
+        if doi:
+            source_id = doi.replace("/", "_").replace(".", "_")
+        elif title:
+            source_id = title[:20].lower()
+        else:
+            source_id = "unknown"
+            
         return self.add_node(f"src_{source_id}", "Source", properties)
     
     # ==================== Edge Operations ====================
