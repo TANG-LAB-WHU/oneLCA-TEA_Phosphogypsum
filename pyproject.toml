@@ -75,9 +75,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/ResearchGeekSQ/oneLCA-TEA_Phosphogypsum"
-Documentation = "https://github.com/ResearchGeekSQ/oneLCA-TEA_Phosphogypsum#readme"
-Repository = "https://github.com/ResearchGeekSQ/oneLCA-TEA_Phosphogypsum.git"
+Homepage = "https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum"
+Documentation = "https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum#readme"
+Repository = "https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum.git"
 
 [tool.setuptools.packages.find]
 where = ["."]

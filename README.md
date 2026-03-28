@@ -177,8 +177,8 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 ### Setup
 
 ```bash
-# Clone the repository
-git clone https://github.com/ResearchGeekSQ/oneLCA-TEA_Phosphogypsum.git
+# Clone the repository (use main — the stable branch for users and contributors)
+git clone -b main https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum.git
 cd oneLCA-TEA_Phosphogypsum
 
 # Create and activate a virtual environment (choose one)
@@ -344,7 +344,7 @@ If you use this framework in your research, please cite:
 @software{pg_lca_tea_2026,
   title = {PG-LCA-TEA: Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis Framework},
   year = {2026},
-  url = {https://github.com/ResearchGeekSQ/oneLCA-TEA_Phosphogypsum}
+  url = {https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum}
 }
 ```
 
