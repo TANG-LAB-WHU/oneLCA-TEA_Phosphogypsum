@@ -1,4 +1,6 @@
-
+"""
+This script visualizes the knowledge graph.
+"""
 import json
 import os
 from pathlib import Path

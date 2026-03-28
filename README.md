@@ -30,7 +30,7 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 | `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `MetropolisHastings`             |
 | `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `LightRAGEngine`, `LLMExtractor`  |
 | `pgloop/utils`         | Utilities                | `CurrencyConverter`, `UnitConverter`, `Annotation`    |
-| `pgloop/visualization` | Dashboard & Reports      | `Dashboard`, `ReportExporter`                           |
+| `pgloop/visualization` | Dashboard & Reports      | `run_dashboard`, `ReportExporter`, `LCAPlots`          |
 | `pgloop/iodata`        | Data Ingestion           | `PDFParser`, `WebScraper`, `APIConnector`             |
 
 ## System Architecture
@@ -176,40 +176,39 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 
 ### Setup
 
+```bash
 # Clone the repository
+git clone https://github.com/ResearchGeekSQ/oneLCA-TEA_Phosphogypsum.git
+cd oneLCA-TEA_Phosphogypsum
 
-git clone https://github.com/yourusername/PG_ucLCA-TEA.git
-cd PG_ucLCA-TEA
+# Create and activate a virtual environment (choose one)
 
-# Create and activate virtual environment
-
-# Option A: venv (Standard)
-
+# Option A: venv
 python -m venv venv
-
-# On Windows:
-
+# Windows:
 .\venv\Scripts\activate
+# Linux/macOS:
+# source venv/bin/activate
 
-# On Linux/macOS:
+# Option B: Conda
+# conda create -n pgloop python=3.11
+# conda activate pgloop
 
-source venv/bin/activate
+# Install package + optional extras (declared in pyproject.toml)
+pip install -e ".[ai,viz,kg,dev]"
 
-# Option B: Conda (Recommended)
+# Optional: advanced PDF parsing (MinerU); see optional-dependencies "pdf" in pyproject.toml
+# pip install -e ".[pdf]"
 
-conda create -n pgloop python=3.11
-conda activate pgloop
-
-# Install dependencies
-
-pip install  -e  .[ai,viz,kg,dev]
-pip install  -r  requirements.txt
+# Alternative mirror of pinned deps (see requirements.txt header)
+# pip install -r requirements.txt && pip install -e .
+```
 
 ## Project Structure
 
 ```
-PG_ucLCA-TEA/
-├── pgloop/                          # Source code (12 modules, 79 files)
+oneLCA-TEA_Phosphogypsum/
+├── pgloop/                          # Source code (12 modules, ~80 Python files)
 │   ├── chemicals/                # Chemical database + MACE property prediction
 │   ├── iodata/                   # Data ingestion layer (API, PDF, Web)
 │   ├── decision/                 # MCDA, Pareto, scenario analysis
@@ -235,8 +234,9 @@ PG_ucLCA-TEA/
 ├── models/                       # ML models
 ├── notebooks/                    # Jupyter notebooks
 ├── tests/                        # Unit tests
-├── requirements.txt              # Python dependencies
-└── README.md                     # This file
+├── pyproject.toml                  # Package metadata & dependency extras
+├── requirements.txt                # Flat dependency mirror (see file header)
+└── README.md                       # This file
 ```
 
 ## Quick Start
@@ -317,6 +317,21 @@ Built-in support for regional scenario analysis:
 - **EPA**: US Environmental Protection Agency
 - **IAEA**: International Atomic Energy Agency (radiation data)
 
+## Contributing
+
+Pull requests are welcome. MIT license applies to contributions the same as to the rest of the repository.
+
+**Branching:** Fork and base your work on **`main`**. That branch is the default for contributors. The **`dev`** branch is reserved for maintainer-side iteration and is not the recommended starting point for forks or external PRs.
+
+1. **Fork** the repository (use **`main`** as the default branch when cloning your fork) and create a branch for your changes.
+2. **Install** with dev tools: `pip install -e ".[dev]"` (or include `ai,viz,kg` if your change touches those areas).
+3. **Run checks** before opening a PR:
+   - `pytest` — unit tests under `tests/`
+   - `ruff check .` and `black --check .` — lint and format (line length 100 per `pyproject.toml`)
+4. **Open a pull request** targeting **`main`** with a short description of the change and, if relevant, how you tested it.
+
+For larger features or API changes, opening an issue first helps align on design and avoids duplicate work.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -329,11 +344,11 @@ If you use this framework in your research, please cite:
 @software{pg_lca_tea_2026,
   title = {PG-LCA-TEA: Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis Framework},
   year = {2026},
-  url = {https://github.com/yourusername/PG_ucLCA-TEA}
+  url = {https://github.com/ResearchGeekSQ/oneLCA-TEA_Phosphogypsum}
 }
 ```
 
 ## References
 
 1. ISO 14040:2006. Environmental management — Life cycle assessment — Principles and framework.
-3. ISO 14044:2006. Environmental management — Life cycle assessment — Requirements and guidelines.
+2. ISO 14044:2006. Environmental management — Life cycle assessment — Requirements and guidelines.
