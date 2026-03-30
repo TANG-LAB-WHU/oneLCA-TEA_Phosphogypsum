@@ -203,9 +203,9 @@ pip install -e ".[ai,viz,kg,dev]"
 
 # Optional: stochastic_dynamics (PyTorch PINN/VAE) with CUDA 12.9
 # Install CUDA-matched torch first:
-# pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cu129
+# pip install torch==2.8 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu129
 # Then install project extras:
-# pip install -e ".[stochastic_dynamics]"
+# pip install -e ".[stochastic_dynamics]" --no-deps
 
 # Alternative mirror of pinned deps (see requirements.txt header)
 # pip install -r requirements.txt && pip install -e .
