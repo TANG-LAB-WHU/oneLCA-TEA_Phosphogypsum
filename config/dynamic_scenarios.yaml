@@ -1,0 +1,57 @@
+dynamic_scenarios:
+  baseline:
+    description: "Reference trajectory for market and policy boundaries"
+    trajectory:
+      carbon_price_usd_t:
+        2025: 100
+        2030: 135
+        2035: 165
+        2040: 195
+      green_power_penetration:
+        2025: 0.35
+        2030: 0.45
+        2035: 0.55
+        2040: 0.65
+      phosphate_rock_price_index:
+        2025: 1.0
+        2030: 1.1
+        2035: 1.2
+        2040: 1.3
+
+  policy_push:
+    description: "High-carbon-price and high-renewable transition pathway"
+    trajectory:
+      carbon_price_usd_t:
+        2025: 120
+        2030: 170
+        2035: 220
+        2040: 280
+      green_power_penetration:
+        2025: 0.40
+        2030: 0.55
+        2035: 0.70
+        2040: 0.82
+      phosphate_rock_price_index:
+        2025: 1.0
+        2030: 1.15
+        2035: 1.28
+        2040: 1.40
+
+  market_stress:
+    description: "Low-policy support with volatile market baseline"
+    trajectory:
+      carbon_price_usd_t:
+        2025: 80
+        2030: 90
+        2035: 95
+        2040: 100
+      green_power_penetration:
+        2025: 0.32
+        2030: 0.38
+        2035: 0.44
+        2040: 0.50
+      phosphate_rock_price_index:
+        2025: 1.0
+        2030: 1.25
+        2035: 1.45
+        2040: 1.60

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pg-lca-tea"
-version = "0.2.0"
+version = "0.3.0"
 description = "Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis Framework"
 readme = "README.md"
 license = {text = "MIT"}
@@ -76,6 +76,9 @@ dev = [
     "ruff>=0.1.0",
     "bump-my-version>=0.25.0",
 ]
+stochastic_dynamics = [
+    "tensorboard>=2.15.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum"
@@ -96,6 +99,11 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:distutils Version classes are deprecated\\. Use packaging\\.version instead\\.:DeprecationWarning:thop\\.profile",
+]
 
 [tool.bumpversion]
 current_version = "0.2.0"

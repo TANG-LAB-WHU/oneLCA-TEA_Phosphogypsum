@@ -99,3 +99,6 @@ Thumbs.db
 
 # Temp files
 temp_*
+
+# Local task notes
+TODO_list/

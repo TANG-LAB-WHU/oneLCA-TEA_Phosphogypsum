@@ -9,6 +9,8 @@ import copy
 from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Optional
 
+import numpy as np
+
 
 @dataclass
 class RegionalContext:
@@ -164,15 +166,24 @@ class Scenario:
     # Time horizon
     year: int = 2024
     projection_years: int = 20
+    trajectory: Dict[str, Dict[int, float]] = field(default_factory=dict)
 
-    def apply_to(self, base_params: Dict) -> Dict:
+    def apply_to(self, base_params: Dict, year: Optional[int] = None) -> Dict:
         """Apply scenario modifications to base parameters."""
         result = copy.deepcopy(base_params)
+        apply_year = year if year is not None else self.year
 
         # Apply explicit parameters
         for key, value in self.parameters.items():
             if key in result:
                 result[key] = value
+            else:
+                # Keep explicit scenario params accessible by downstream evaluator.
+                result[key] = value
+
+        # Apply year-dependent trajectory values.
+        for key, series in self.trajectory.items():
+            result[key] = self.get_trajectory_value(key, apply_year)
 
         # Apply regional context if available
         if self.context:
@@ -195,6 +206,25 @@ class Scenario:
                     result[key] *= effective_cost_mult
 
         return result
+
+    def get_trajectory_value(self, key: str, year: int) -> float:
+        """
+        Return trajectory value for a variable at a given year.
+        Uses nearest-year fallback when exact year is absent.
+        """
+        if key not in self.trajectory:
+            return float(self.parameters.get(key, 0.0))
+
+        series = self.trajectory[key]
+        if not series:
+            return float(self.parameters.get(key, 0.0))
+
+        if year in series:
+            return float(series[year])
+
+        known_years = sorted(series.keys())
+        nearest = min(known_years, key=lambda y: abs(y - year))
+        return float(series[nearest])
 
     def with_context(self, context: RegionalContext) -> "Scenario":
         """Create new scenario with regional context."""
@@ -455,3 +485,109 @@ class ScenarioAnalyzer:
 
         best = max(results_with_context, key=lambda r: r.metrics.get(metric, 0))
         return best.context.region_name if best.context else None
+
+
+@dataclass
+class DynamicYearResult:
+    """Dynamic result for one year under one scenario."""
+
+    year: int
+    scenario_name: str
+    metrics: Dict[str, float]
+
+
+class DynamicScenarioAnalyzer:
+    """
+    Time-dynamic scenario analyzer across year ranges.
+    """
+
+    def __init__(self, lca_engine, tea_engine, propagator_cls=None):
+        self.lca_engine = lca_engine
+        self.tea_engine = tea_engine
+        if propagator_cls is None:
+            from pgloop.uncertainty.propagation import JointUncertaintyPropagator
+
+            propagator_cls = JointUncertaintyPropagator
+        self.propagator_cls = propagator_cls
+
+    def run(
+        self,
+        pathway,
+        scenario: Scenario,
+        start_year: int,
+        end_year: int,
+        n_samples: int = 500,
+        seed: int = 42,
+        boundary_distributions: Optional[Dict[str, Dict]] = None,
+    ) -> List[DynamicYearResult]:
+        """
+        Evaluate one pathway under one scenario over a year range.
+        """
+        outputs: List[DynamicYearResult] = []
+        boundary_distributions = boundary_distributions or {}
+
+        for year in range(start_year, end_year + 1):
+            dynamic_params = scenario.apply_to({}, year=year)
+            year_boundaries = self._build_year_boundaries(dynamic_params, boundary_distributions)
+
+            pathway_year = copy.deepcopy(pathway)
+            pathway_year.year = year
+
+            propagator = self.propagator_cls(
+                self.lca_engine,
+                self.tea_engine,
+                n_iterations=n_samples,
+                seed=seed + (year - start_year),
+            )
+            result = propagator.propagate(
+                pathway_year,
+                functional_unit_value=1.0,
+                boundary_distributions=year_boundaries,
+            )
+
+            outputs.append(
+                DynamicYearResult(
+                    year=year,
+                    scenario_name=scenario.name,
+                    metrics={k: v["mean"] for k, v in result.summary.items()},
+                )
+            )
+
+        return outputs
+
+    @staticmethod
+    def summarize(results: List[DynamicYearResult], metric: str) -> Dict[str, float]:
+        """Robustness statistics for one metric over time."""
+        values = [r.metrics.get(metric, 0.0) for r in results]
+        if not values:
+            return {}
+        mean = float(np.mean(values))
+        std = float(np.std(values))
+        return {
+            "mean": mean,
+            "std": std,
+            "min": float(np.min(values)),
+            "max": float(np.max(values)),
+            "range": float(np.max(values) - np.min(values)),
+            "cv": std / abs(mean) if mean else 0.0,
+        }
+
+    @staticmethod
+    def _build_year_boundaries(
+        dynamic_params: Dict[str, float], base_distributions: Dict[str, Dict]
+    ) -> Dict[str, Dict]:
+        """
+        Create per-year boundary distributions around trajectory values.
+        """
+        boundaries = copy.deepcopy(base_distributions)
+        for name, value in dynamic_params.items():
+            if isinstance(value, (int, float)):
+                center = float(value)
+                bounds = abs(center) * 0.1
+                boundaries[name] = {
+                    "type": "triangular",
+                    "min": center - bounds,
+                    "mode": center,
+                    "max": center + bounds,
+                }
+        return boundaries

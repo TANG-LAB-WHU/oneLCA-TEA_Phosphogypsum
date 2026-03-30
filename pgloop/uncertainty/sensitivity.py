@@ -7,6 +7,8 @@ One-at-a-time and global sensitivity analysis.
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, List
 
+import numpy as np
+
 
 @dataclass
 class SensitivityResult:
@@ -144,6 +146,88 @@ class SensitivityAnalyzer:
             data["parameters"][param] = outputs
 
         return data
+
+    def sobol_analysis(
+        self,
+        problem: Dict[str, Any],
+        model_eval_fn: Callable[[np.ndarray], np.ndarray],
+        n_samples: int = 512,
+        calc_second_order: bool = False,
+    ) -> Dict[str, Any]:
+        """
+        Variance-based Sobol analysis for independent inputs.
+
+        Requires SALib. Raises ImportError when SALib is unavailable.
+        """
+        try:
+            from SALib.analyze import sobol
+            from SALib.sample import sobol as sobol_sampler
+        except Exception as exc:
+            raise ImportError(
+                "SALib is required for Sobol analysis. Install via `pip install SALib`."
+            ) from exc
+
+        X = sobol_sampler.sample(problem, n_samples, calc_second_order=calc_second_order)
+        Y = model_eval_fn(X)
+        if not isinstance(Y, np.ndarray):
+            Y = np.asarray(Y, dtype=float)
+        if Y.ndim != 1:
+            raise ValueError("sobol_analysis expects model_eval_fn to return a 1D output array.")
+
+        Si = sobol.analyze(problem, Y, calc_second_order=calc_second_order, print_to_console=False)
+        return {
+            "S1": {name: float(val) for name, val in zip(problem["names"], Si.get("S1", []))},
+            "ST": {name: float(val) for name, val in zip(problem["names"], Si.get("ST", []))},
+            "S1_conf": {
+                name: float(val) for name, val in zip(problem["names"], Si.get("S1_conf", []))
+            },
+            "ST_conf": {
+                name: float(val) for name, val in zip(problem["names"], Si.get("ST_conf", []))
+            },
+        }
+
+    def delta_analysis(
+        self,
+        problem: Dict[str, Any],
+        X: np.ndarray,
+        Y: np.ndarray,
+        num_resamples: int = 100,
+        seed: int = 42,
+    ) -> Dict[str, Any]:
+        """
+        Delta moment-independent sensitivity analysis.
+        Suitable for correlated inputs when X is sampled externally.
+        """
+        try:
+            from SALib.analyze import delta
+        except Exception as exc:
+            raise ImportError(
+                "SALib is required for Delta analysis. Install via `pip install SALib`."
+            ) from exc
+
+        result = delta.analyze(
+            problem=problem,
+            X=X,
+            Y=Y,
+            num_resamples=num_resamples,
+            print_to_console=False,
+            seed=seed,
+            method="delta",
+        )
+        delta_values = result.get("delta")
+        if delta_values is None:
+            delta_values = result.get("delta_raw", [])
+        delta_conf_values = result.get("delta_conf")
+        if delta_conf_values is None:
+            delta_conf_values = result.get("delta_raw_conf", [])
+
+        return {
+            "delta": {name: float(val) for name, val in zip(problem["names"], delta_values)},
+            "delta_conf": {
+                name: float(val) for name, val in zip(problem["names"], delta_conf_values)
+            },
+            "notes": result.get("notes", []),
+        }
 
 
 def main():

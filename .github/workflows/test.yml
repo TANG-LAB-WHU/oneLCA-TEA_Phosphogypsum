@@ -14,10 +14,10 @@ jobs:
         python-version: ["3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision torchaudio
+          pip install --index-url https://download.pytorch.org/whl/cpu torch==2.9.0
           pip install -e ".[dev,ai]"
 
       - name: Check version sync
@@ -40,3 +40,28 @@ jobs:
         run: |
           # Run unit tests that don't require external API keys
           pytest tests/test_pdf_parser.py tests/test_iodata.py -v
+
+  stochastic-dynamics-smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install dependencies (CPU torch for smoke tests)
+        run: |
+          python -m pip install --upgrade pip
+          pip install --index-url https://download.pytorch.org/whl/cpu torch==2.9.0
+          pip install -e ".[dev,stochastic_dynamics]"
+
+      - name: Run stochastic dynamics smoke tests
+        run: |
+          pytest tests/test_stochastic_dynamics_baseline.py tests/test_stochastic_dynamics_pinn.py tests/test_stochastic_dynamics_vae.py -v
