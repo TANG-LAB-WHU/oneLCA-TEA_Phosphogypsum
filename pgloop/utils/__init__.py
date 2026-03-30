@@ -29,6 +29,11 @@ from pgloop.utils.units import (
     convert_temperature,
     convert_volume,
 )
+from pgloop.utils.schema import (
+    DynamicAssessmentResult,
+    PosteriorSummary,
+    TimeSeriesPoint,
+)
 
 __all__ = [
     "convert_currency",
@@ -47,4 +52,7 @@ __all__ = [
     "PHYSICAL_CONSTANTS",
     "ATOMIC_MASSES",
     "LCA_REFERENCE_VALUES",
+    "TimeSeriesPoint",
+    "PosteriorSummary",
+    "DynamicAssessmentResult",
 ]

@@ -1,0 +1,23 @@
+priors:
+  carbon_price_usd_t:
+    type: triangular
+    min: 60
+    mode: 100
+    max: 220
+
+  green_power_penetration:
+    type: triangular
+    min: 0.2
+    mode: 0.45
+    max: 0.9
+
+  phosphate_rock_price_index:
+    type: triangular
+    min: 0.8
+    mode: 1.1
+    max: 1.8
+
+  process_scaleup_error:
+    type: normal
+    mean: 1.0
+    std: 0.08

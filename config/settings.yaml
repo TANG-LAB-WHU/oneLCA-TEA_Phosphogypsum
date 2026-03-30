@@ -2,7 +2,7 @@
 
 project:
   name: "PG-LCA-TEA"
-  version: "0.2.0"
+  version: "0.3.0"
   description: "Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis"
 
 functional_unit:

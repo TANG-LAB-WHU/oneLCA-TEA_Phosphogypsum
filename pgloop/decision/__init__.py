@@ -23,7 +23,10 @@ from pgloop.decision.recommender import (
     PathwayRanker,
     Recommendation,
 )
+from pgloop.decision.dynamic_optimizer import DynamicMultiObjectiveOptimizer
 from pgloop.decision.scenario import (
+    DynamicScenarioAnalyzer,
+    DynamicYearResult,
     Scenario,
     ScenarioAnalyzer,
 )
@@ -39,6 +42,9 @@ __all__ = [
     "ParetoSolution",
     "Scenario",
     "ScenarioAnalyzer",
+    "DynamicScenarioAnalyzer",
+    "DynamicYearResult",
+    "DynamicMultiObjectiveOptimizer",
     "PathwayRanker",
     "Recommendation",
 ]

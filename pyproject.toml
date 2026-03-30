@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pg-lca-tea"
-version = "0.2.0"
+version = "0.3.0"
 description = "Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis Framework"
 readme = "README.md"
 license = {text = "MIT"}
@@ -75,6 +75,10 @@ dev = [
     "pre-commit>=3.7.0",
     "ruff>=0.1.0",
     "bump-my-version>=0.25.0",
+]
+stochastic_dynamics = [
+    "torch==2.8.0",
+    "tensorboard>=2.15.0",
 ]
 
 [project.urls]

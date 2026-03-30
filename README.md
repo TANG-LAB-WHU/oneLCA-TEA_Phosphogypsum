@@ -201,6 +201,12 @@ pip install -e ".[ai,viz,kg,dev]"
 # Optional: advanced PDF parsing (MinerU); see optional-dependencies "pdf" in pyproject.toml
 # pip install -e ".[pdf]"
 
+# Optional: stochastic_dynamics (PyTorch PINN/VAE) with CUDA 12.9
+# Install CUDA-matched torch first:
+# pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cu129
+# Then install project extras:
+# pip install -e ".[stochastic_dynamics]"
+
 # Alternative mirror of pinned deps (see requirements.txt header)
 # pip install -r requirements.txt && pip install -e .
 ```
@@ -301,6 +307,45 @@ The uncertainty module follows a staged workflow designed for transparent and re
 - Chain sampling and diagnostics: `pgloop.uncertainty.chain_sampling`
 - Sensitivity analysis: `pgloop.uncertainty.sensitivity.SensitivityAnalyzer`
 - Discernibility analysis: `pgloop.uncertainty.discernibility.DiscernibilityAnalyzer`
+
+## Dynamic Uncertainty-Aware Assessment
+
+The framework now supports a dynamic joint LCA-TEA workflow where scenario trajectories
+(e.g., carbon price, green power penetration, and phosphate-rock price index) are propagated
+through a unified uncertainty loop.
+
+### Run dynamic assessment
+
+```bash
+python scripts/run_dynamic_assessment.py \
+  --pathways PG-CementProd PG-REEextract \
+  --scenario baseline \
+  --start-year 2025 \
+  --end-year 2040 \
+  --samples 500
+```
+
+Optional Bayesian posterior update (closed-loop):
+
+```bash
+python scripts/run_dynamic_assessment.py \
+  --pathways PG-CementProd \
+  --scenario baseline \
+  --enable-bayes-update
+```
+
+### Dynamic output artifacts
+
+- `data/processed/dynamic_assessment/dynamic_assessment.json`
+- `data/processed/dynamic_assessment/dynamic_assessment_timeseries.csv`
+- `data/processed/dynamic_assessment/dynamic_assessment_ranking.json`
+
+### New core modules
+
+- `pgloop/uncertainty/propagation.py`: synchronized LCA+TEA uncertainty propagation
+- `pgloop/decision/scenario.py`: trajectory-aware `Scenario` + `DynamicScenarioAnalyzer`
+- `pgloop/decision/dynamic_optimizer.py`: entropy-proxy/LCOP/GWP multi-objective ranking
+- `pgloop/uncertainty/bayesian_update.py`: posterior updates with discrepancy-aware loop
 
 ## Treatment Pathways
 

@@ -12,6 +12,7 @@ from pgloop.pathways import get_pathway, list_pathways
 from pgloop.risk.aggregator import RiskAggregator
 from pgloop.tea.tea_engine import TEAEngine, TEAResult
 from pgloop.uncertainty.direct_sampling import MonteCarloSimulator
+from pgloop.uncertainty.propagation import JointUncertaintyPropagator
 
 __all__ = [
     "LCAEngine",
@@ -23,4 +24,5 @@ __all__ = [
     "RiskAggregator",
     "PathwayRanker",
     "MonteCarloSimulator",
+    "JointUncertaintyPropagator",
 ]
