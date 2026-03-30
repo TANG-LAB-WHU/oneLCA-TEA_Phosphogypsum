@@ -40,8 +40,6 @@ except ImportError:
     RAGAnythingEngine = None
     RAGANYTHING_AVAILABLE = False
 
-RAGANYTHING_DIR = PROCESSED_DIR / "raganything_db" if 'PROCESSED_DIR' in dir() else None
-
 # === Directory Configuration ===
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
