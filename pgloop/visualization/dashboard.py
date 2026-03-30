@@ -97,7 +97,7 @@ def run_dashboard():
         st.pyplot(fig=None)  # Placeholder
     
     st.sidebar.markdown("---")
-    st.sidebar.markdown("**PG-LCA-TEA v0.1.0**")
+    st.sidebar.markdown("**PG-LCA-TEA v0.2.0**")
     st.sidebar.markdown("[GitHub](https://github.com/yourusername/PG_ucLCA-TEA)")
 
 
