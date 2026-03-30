@@ -5,15 +5,15 @@ Contains characterization factors for LCIA calculations.
 Based on ILCD recommendations and open-source data.
 """
 
-from typing import Any, Dict, Optional
-from pathlib import Path
 import json
+from pathlib import Path
+from typing import Dict, Optional
 
 
 class CharacterizationFactors:
     """
     Characterization factors for Life Cycle Impact Assessment.
-    
+
     Categories (ILCD recommended):
     - climate_change: kg CO2-eq (IPCC GWP100)
     - acidification: mol H+-eq
@@ -26,7 +26,7 @@ class CharacterizationFactors:
     - particulate_matter: disease incidence
     - resource_depletion: kg Sb-eq
     """
-    
+
     CATEGORIES = [
         "climate_change",
         "acidification",
@@ -39,7 +39,7 @@ class CharacterizationFactors:
         "particulate_matter",
         "resource_depletion",
     ]
-    
+
     # Default characterization factors (subset of common substances)
     # Units are per kg emission unless otherwise noted
     DEFAULT_FACTORS = {
@@ -172,12 +172,12 @@ class CharacterizationFactors:
             "zinc ore": 9.0e-4,
         },
     }
-    
+
     # Normalization factors (per person per year)
     NORMALIZATION_FACTORS = {
         "EU27": {
             "climate_change": 8100,  # kg CO2-eq
-            "acidification": 47.3,   # mol H+-eq
+            "acidification": 47.3,  # mol H+-eq
             "eutrophication_fresh": 1.61,  # kg P-eq
             "eutrophication_marine": 21.1,  # kg N-eq
             "human_toxicity_cancer": 3.4e-5,  # CTUh
@@ -198,30 +198,31 @@ class CharacterizationFactors:
             "ionizing_radiation": 850,
             "particulate_matter": 4.7e-4,
             "resource_depletion": 0.030,
-        }
+        },
     }
-    
+
     def __init__(self, config_path: Optional[Path] = None):
         """
         Initialize characterization factors.
-        
+
         Args:
             config_path: Path to custom factors configuration
         """
         self.factors = self.DEFAULT_FACTORS.copy()
         self.normalization = self.NORMALIZATION_FACTORS.copy()
-        
+
         # Load custom factors if provided
         if config_path:
             self._load_custom_factors(config_path)
-    
+
     def _load_custom_factors(self, config_path: Path) -> None:
         """Load custom characterization factors from config."""
         factors_file = config_path / "impact_factors.yaml"
-        
+
         if factors_file.exists():
             try:
                 import yaml
+
                 with open(factors_file, "r") as f:
                     custom = yaml.safe_load(f)
                     if custom:
@@ -237,75 +238,67 @@ class CharacterizationFactors:
                         for category, factors in custom.items():
                             if category in self.factors:
                                 self.factors[category].update(factors)
-    
+
     def get_factors(self, category: str) -> Dict[str, float]:
         """
         Get characterization factors for a category.
-        
+
         Args:
             category: Impact category name
-            
+
         Returns:
             Dict of substance -> characterization factor
         """
         return self.factors.get(category, {})
-    
-    def get_factor(
-        self,
-        category: str,
-        substance: str
-    ) -> float:
+
+    def get_factor(self, category: str, substance: str) -> float:
         """
         Get specific characterization factor.
-        
+
         Args:
             category: Impact category
             substance: Substance name
-            
+
         Returns:
             Characterization factor value
         """
         return self.factors.get(category, {}).get(substance.lower(), 0)
-    
-    def get_normalization_factors(
-        self,
-        reference: str = "EU27"
-    ) -> Dict[str, float]:
+
+    def get_normalization_factors(self, reference: str = "EU27") -> Dict[str, float]:
         """
         Get normalization factors.
-        
+
         Args:
             reference: Reference region (EU27, World)
-            
+
         Returns:
             Dict of category -> normalization factor
         """
         return self.normalization.get(reference, {})
-    
-    def add_factor(
-        self,
-        category: str,
-        substance: str,
-        value: float
-    ) -> None:
+
+    def add_factor(self, category: str, substance: str, value: float) -> None:
         """Add or update a characterization factor."""
         if category not in self.factors:
             self.factors[category] = {}
         self.factors[category][substance.lower()] = value
-    
+
     def save(self, filepath: Path) -> None:
         """Save factors to JSON file."""
         with open(filepath, "w") as f:
             json.dump(self.factors, f, indent=2)
 
 
-if __name__ == "__main__":
+def main():
     cf = CharacterizationFactors()
-    
+
     print("Climate Change factors:")
     for substance, value in cf.get_factors("climate_change").items():
         print(f"  {substance}: {value}")
-    
+
     print("\nIonizing Radiation factors (important for PG):")
     for substance, value in cf.get_factors("ionizing_radiation").items():
         print(f"  {substance}: {value}")
+
+
+if __name__ == "__main__":
+    main()

@@ -3,10 +3,12 @@ Handles text embedding for RAG and similarity analysis.
 """
 
 from typing import List, Union
+
 import numpy as np
 
 try:
     from sentence_transformers import SentenceTransformer
+
     SENTENCE_TRANSFORMERS_AVAILABLE = True
 except ImportError:
     SENTENCE_TRANSFORMERS_AVAILABLE = False
@@ -14,7 +16,7 @@ except ImportError:
 
 class EmbeddingModel:
     """Wrapper for text embedding models."""
-    
+
     def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
         self.model_name = model_name
         self.model = None
@@ -25,7 +27,7 @@ class EmbeddingModel:
             except Exception as e:
                 print(f"DEBUG: Failed to load EmbeddingModel {model_name}: {e}")
                 self.model = None
-    
+
     def encode(self, texts: Union[str, List[str]]) -> np.ndarray:
         """Generate embeddings for text."""
         if not self.model:
@@ -33,9 +35,9 @@ class EmbeddingModel:
             dim = 384
             count = 1 if isinstance(texts, str) else len(texts)
             return np.random.rand(count, dim).astype(np.float32)
-        
+
         return self.model.encode(texts)
-    
+
     def similarity(self, emb1: np.ndarray, emb2: np.ndarray) -> float:
         """Compute cosine similarity."""
         dot = np.dot(emb1, emb2.T)

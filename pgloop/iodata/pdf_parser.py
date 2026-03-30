@@ -5,26 +5,31 @@ Extracts text and data from scientific papers using PyMuPDF or MinerU.
 """
 
 import os
-import json
 import subprocess
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Union
-from dataclasses import dataclass
 
 try:
     import fitz  # PyMuPDF
+
     PYMUPDF_AVAILABLE = True
 except ImportError:
     PYMUPDF_AVAILABLE = False
 
 # Check for MinerU availability
 try:
+    from mineru.backend.pipeline.model_json_to_middle_json import (
+        result_to_middle_json as pipeline_result_to_middle_json,
+    )
+    from mineru.backend.pipeline.pipeline_analyze import doc_analyze as pipeline_doc_analyze
+    from mineru.backend.pipeline.pipeline_middle_json_mkcontent import (
+        union_make as pipeline_union_make,
+    )
     from mineru.cli.common import prepare_env, read_fn
     from mineru.data.data_reader_writer import FileBasedDataWriter
-    from mineru.backend.pipeline.pipeline_analyze import doc_analyze as pipeline_doc_analyze
-    from mineru.backend.pipeline.pipeline_middle_json_mkcontent import union_make as pipeline_union_make
-    from mineru.backend.pipeline.model_json_to_middle_json import result_to_middle_json as pipeline_result_to_middle_json
     from mineru.utils.enum_class import MakeMode
+
     MINERU_AVAILABLE = True
 except ImportError:
     MINERU_AVAILABLE = False
@@ -33,7 +38,7 @@ except ImportError:
 @dataclass
 class ParsedDocument:
     """Represents a parsed PDF document."""
-    
+
     filepath: str
     title: str
     text: str
@@ -45,23 +50,23 @@ class ParsedDocument:
 class PDFParser:
     """
     PDF Parser for extracting text and tables from scientific papers.
-    
+
     Supports:
     - PyMuPDF (fitz) for basic parsing
     - MinerU for advanced parsing with OCR and table extraction
     - MinerU CLI for command-line based parsing
     - Pre-parsed MinerU markdown output
     """
-    
+
     def __init__(
-        self, 
+        self,
         parser_type: str = "pymupdf",
         output_dir: Optional[Union[str, Path]] = None,
-        language: str = "en"
+        language: str = "en",
     ):
         """
         Initialize the PDF parser.
-        
+
         Args:
             parser_type: Type of parser to use:
                 - "pymupdf": Basic text extraction (default)
@@ -75,32 +80,32 @@ class PDFParser:
         self.parser_type = parser_type
         self.output_dir = Path(output_dir) if output_dir else Path("./data/raw/papers/parsed")
         self.language = language
-        
+
         if parser_type == "pymupdf" and not PYMUPDF_AVAILABLE:
             raise ImportError("PyMuPDF not installed. Run: pip install PyMuPDF")
-        
+
         if parser_type == "mineru" and not MINERU_AVAILABLE:
             raise ImportError(
                 "MinerU not installed. Run: pip install -U 'mineru[all]'\n"
                 "Also ensure model weights are downloaded.\n"
                 "See: https://github.com/opendatalab/MinerU"
             )
-    
+
     def parse_pdf(self, filepath: Union[str, Path]) -> ParsedDocument:
         """
         Parse a PDF file and extract text content.
-        
+
         Args:
             filepath: Path to the PDF file
-            
+
         Returns:
             ParsedDocument with extracted content
         """
         filepath = Path(filepath)
-        
+
         if not filepath.exists():
             raise FileNotFoundError(f"PDF not found: {filepath}")
-        
+
         if self.parser_type == "pymupdf":
             return self._parse_with_pymupdf(filepath)
         elif self.parser_type == "mineru":
@@ -111,90 +116,92 @@ class PDFParser:
             return self._parse_mineru_output(filepath)
         else:
             raise ValueError(f"Unknown parser type: {self.parser_type}")
-    
+
     def _parse_with_pymupdf(self, filepath: Path) -> ParsedDocument:
         """Parse PDF using PyMuPDF."""
         doc = fitz.open(filepath)
-        
+
         text_content = []
         for page in doc:
             text_content.append(page.get_text())
-        
+
         full_text = "\n".join(text_content)
-        
+
         # Extract metadata
         metadata = doc.metadata or {}
         title = metadata.get("title", filepath.stem)
-        
+
         doc.close()
-        
+
         return ParsedDocument(
             filepath=str(filepath),
             title=title,
             text=full_text,
             pages=len(text_content),
             tables=[],  # Table extraction requires additional processing
-            metadata=metadata
+            metadata=metadata,
         )
-    
+
     def _parse_with_mineru(self, filepath: Path) -> ParsedDocument:
         """
         Parse PDF using MinerU Python API for advanced extraction.
-        
+
         Features:
         - Structure-aware text extraction
         - Table extraction (HTML format)
         - Formula extraction (LaTeX format)
         - OCR for scanned documents
-        
+
         Requires: pip install -U "mineru[all]"
         """
         if not MINERU_AVAILABLE:
             raise ImportError("MinerU not available. Install with: pip install -U 'mineru[all]'")
-        
+
         # Create output directory
         pdf_name = filepath.stem
         output_path = self.output_dir / pdf_name
         output_path.mkdir(parents=True, exist_ok=True)
-        
+
         # Read PDF bytes
         pdf_bytes = read_fn(str(filepath))
-        
+
         # Prepare environment directories
         local_image_dir, local_md_dir = prepare_env(str(output_path), pdf_name, "auto")
         image_writer = FileBasedDataWriter(local_image_dir)
         md_writer = FileBasedDataWriter(local_md_dir)
-        
+
         # Run pipeline analysis
-        infer_results, all_image_lists, all_pdf_docs, lang_list, ocr_enabled_list = pipeline_doc_analyze(
-            [pdf_bytes], 
-            [self.language],
-            parse_method="auto",
-            formula_enable=True,
-            table_enable=True
+        infer_results, all_image_lists, all_pdf_docs, lang_list, ocr_enabled_list = (
+            pipeline_doc_analyze(
+                [pdf_bytes],
+                [self.language],
+                parse_method="auto",
+                formula_enable=True,
+                table_enable=True,
+            )
         )
-        
+
         # Process results
         model_list = infer_results[0]
         images_list = all_image_lists[0]
         pdf_doc = all_pdf_docs[0]
         _lang = lang_list[0]
         _ocr_enable = ocr_enabled_list[0]
-        
+
         # Convert to middle JSON format
         middle_json = pipeline_result_to_middle_json(
             model_list, images_list, pdf_doc, image_writer, _lang, _ocr_enable, True
         )
-        
+
         pdf_info = middle_json["pdf_info"]
         image_dir_name = os.path.basename(local_image_dir)
-        
+
         # Generate markdown content
         md_content = pipeline_union_make(pdf_info, MakeMode.MM_MD, image_dir_name)
-        
+
         # Save markdown file
         md_writer.write_string(f"{pdf_name}.md", md_content)
-        
+
         # Extract tables from content list
         tables = []
         try:
@@ -202,20 +209,19 @@ class PDFParser:
             if isinstance(content_list, list):
                 for item in content_list:
                     if isinstance(item, dict) and item.get("type") == "table":
-                        tables.append({
-                            "html": item.get("content", ""),
-                            "page": item.get("page_idx", -1)
-                        })
+                        tables.append(
+                            {"html": item.get("content", ""), "page": item.get("page_idx", -1)}
+                        )
         except Exception:
             pass  # Tables extraction is optional
-        
+
         # Extract title from markdown
         title = pdf_name
         for line in md_content.split("\n"):
             if line.startswith("# "):
                 title = line[2:].strip()
                 break
-        
+
         return ParsedDocument(
             filepath=str(filepath),
             title=title,
@@ -226,46 +232,41 @@ class PDFParser:
                 "source": "mineru",
                 "output_path": str(local_md_dir),
                 "mode": "ocr" if _ocr_enable else "text",
-                "language": _lang
-            }
+                "language": _lang,
+            },
         )
-    
+
     def _parse_with_mineru_cli(self, filepath: Path, backend: str = "pipeline") -> ParsedDocument:
         """
         Parse PDF using MinerU command line interface.
-        
+
         This method uses the 'mineru' CLI command which may be more stable
         in some environments.
-        
+
         Args:
             filepath: Path to the PDF file
             backend: MinerU backend to use:
                 - "pipeline": General purpose, CPU-friendly
                 - "hybrid-auto-engine": High accuracy (requires GPU)
                 - "vlm-auto-engine": Vision-Language Model based
-            
+
         Returns:
             ParsedDocument with extracted content
         """
         pdf_name = filepath.stem
         output_path = self.output_dir / pdf_name
         output_path.mkdir(parents=True, exist_ok=True)
-        
+
         # Build command
-        cmd = [
-            "mineru",
-            "-p", str(filepath),
-            "-o", str(output_path),
-            "-b", backend
-        ]
-        
+        cmd = ["mineru", "-p", str(filepath), "-o", str(output_path), "-b", backend]
+
         try:
-            result = subprocess.run(
-                cmd, 
-                capture_output=True, 
-                text=True, 
+            subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
                 check=True,
-                timeout=600  # 10 minute timeout
+                timeout=600,  # 10 minute timeout
             )
         except subprocess.CalledProcessError as e:
             raise RuntimeError(f"MinerU CLI failed: {e.stderr}")
@@ -275,42 +276,38 @@ class PDFParser:
             )
         except subprocess.TimeoutExpired:
             raise RuntimeError(f"MinerU parsing timed out for: {filepath}")
-        
+
         # Find output markdown file
         md_files = list(output_path.rglob("*.md"))
         if not md_files:
             raise FileNotFoundError(f"No markdown output found in {output_path}")
-        
+
         # Use the first .md file found (typically named after the PDF)
         md_path = md_files[0]
         with open(md_path, "r", encoding="utf-8") as f:
             text = f.read()
-        
+
         # Extract title
         title = pdf_name
         for line in text.split("\n"):
             if line.startswith("# "):
                 title = line[2:].strip()
                 break
-        
+
         return ParsedDocument(
             filepath=str(filepath),
             title=title,
             text=text,
             pages=-1,
             tables=[],
-            metadata={
-                "source": "mineru_cli",
-                "output_path": str(output_path),
-                "backend": backend
-            }
+            metadata={"source": "mineru_cli", "output_path": str(output_path), "backend": backend},
         )
-    
+
     def _parse_mineru_output(self, filepath: Path) -> ParsedDocument:
         """Parse pre-existing MinerU markdown output."""
         # Look for corresponding .md file
         md_path = filepath.with_suffix(".md")
-        
+
         if not md_path.exists():
             # Try common MinerU output patterns
             stem = filepath.stem
@@ -319,51 +316,49 @@ class PDFParser:
                 self.output_dir / stem / f"{stem}.md",
                 self.output_dir / stem / "auto" / f"{stem}.md",
             ]
-            
+
             for pattern in patterns:
                 if pattern.exists():
                     md_path = pattern
                     break
             else:
                 raise FileNotFoundError(f"MinerU output not found for: {filepath}")
-        
+
         with open(md_path, "r", encoding="utf-8") as f:
             text = f.read()
-        
+
         # Extract title from first heading
         title = filepath.stem
         for line in text.split("\n"):
             if line.startswith("# "):
                 title = line[2:].strip()
                 break
-        
+
         return ParsedDocument(
             filepath=str(filepath),
             title=title,
             text=text,
             pages=-1,
             tables=[],
-            metadata={"source": "mineru_output"}
+            metadata={"source": "mineru_output"},
         )
-    
+
     def parse_directory(
-        self, 
-        directory: Union[str, Path],
-        pattern: str = "*.pdf"
+        self, directory: Union[str, Path], pattern: str = "*.pdf"
     ) -> List[ParsedDocument]:
         """
         Parse all PDF files in a directory.
-        
+
         Args:
             directory: Directory containing PDF files
             pattern: Glob pattern for file matching
-            
+
         Returns:
             List of ParsedDocument objects
         """
         directory = Path(directory)
         documents = []
-        
+
         for pdf_path in directory.glob(pattern):
             try:
                 doc = self.parse_pdf(pdf_path)
@@ -371,21 +366,21 @@ class PDFParser:
                 print(f"✓ Parsed: {pdf_path.name}")
             except Exception as e:
                 print(f"✗ Error parsing {pdf_path.name}: {e}")
-        
+
         return documents
-    
+
     @staticmethod
     def is_mineru_available() -> bool:
         """Check if MinerU is available for use."""
         return MINERU_AVAILABLE
-    
+
     @staticmethod
     def is_pymupdf_available() -> bool:
         """Check if PyMuPDF is available for use."""
         return PYMUPDF_AVAILABLE
 
 
-if __name__ == "__main__":
+def main():
     print("PDF Parser Module")
     print("-" * 40)
     print(f"PyMuPDF available: {PYMUPDF_AVAILABLE}")
@@ -404,3 +399,7 @@ if __name__ == "__main__":
     print("# CLI-based parsing with MinerU")
     print("parser = PDFParser(parser_type='mineru_cli')")
     print("doc = parser.parse_pdf('paper.pdf')")
+
+
+if __name__ == "__main__":
+    main()

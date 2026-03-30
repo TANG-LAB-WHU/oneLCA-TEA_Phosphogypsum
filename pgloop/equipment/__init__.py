@@ -6,27 +6,27 @@ Equipment classes provide standardized interfaces for LCI, CAPEX, and OPEX.
 """
 
 from pgloop.equipment.base_equipment import BaseEquipment
+from pgloop.equipment.heat_exchange import (
+    CoolingTower,
+    ShellTubeExchanger,
+)
+from pgloop.equipment.material_handling import (
+    Conveyor,
+    Crusher,
+    Dryer,
+    StorageSilo,
+)
 from pgloop.equipment.reactors import (
-    CSTRReactor,
     BatchReactor,
+    CSTRReactor,
     LeachingTank,
     MixingTank,
 )
 from pgloop.equipment.separations import (
-    FilterPress,
     Centrifuge,
     Evaporator,
+    FilterPress,
     SolventExtractor,
-)
-from pgloop.equipment.material_handling import (
-    Crusher,
-    Dryer,
-    Conveyor,
-    StorageSilo,
-)
-from pgloop.equipment.heat_exchange import (
-    ShellTubeExchanger,
-    CoolingTower,
 )
 
 __all__ = [

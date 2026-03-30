@@ -6,26 +6,26 @@ Integrates LCA, TEA, and risk assessments.
 """
 
 from pgloop.decision.criteria import (
-    Criterion,
     CriteriaSet,
+    Criterion,
     create_default_criteria,
 )
 from pgloop.decision.mcda import (
-    TOPSIS,
     AHP,
+    TOPSIS,
     WeightedSum,
 )
 from pgloop.decision.pareto import (
     ParetoAnalyzer,
     ParetoSolution,
 )
-from pgloop.decision.scenario import (
-    Scenario,
-    ScenarioAnalyzer,
-)
 from pgloop.decision.recommender import (
     PathwayRanker,
     Recommendation,
+)
+from pgloop.decision.scenario import (
+    Scenario,
+    ScenarioAnalyzer,
 )
 
 __all__ = [

@@ -16,6 +16,7 @@ SALib>=1.4.0
 python-dotenv>=1.0.0
 requests>=2.31.0
 tqdm>=4.66.0
+googletrans>=4.0.0  # Added Google Translate API for Python
 
 # AI/ML & Data
 openai>=1.0.0

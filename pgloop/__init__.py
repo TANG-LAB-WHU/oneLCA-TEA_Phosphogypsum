@@ -6,20 +6,21 @@ Main package for phosphogypsum life cycle assessment and techno-economic analysi
 
 __version__ = "1.1.0"
 
+from pgloop.decision.recommender import PathwayRanker
 from pgloop.lca.lca_engine import LCAEngine, LCAResult
-from pgloop.tea.tea_engine import TEAEngine, TEAResult
 from pgloop.pathways import get_pathway, list_pathways
 from pgloop.risk.aggregator import RiskAggregator
-from pgloop.decision.recommender import PathwayRanker
+from pgloop.tea.tea_engine import TEAEngine, TEAResult
 from pgloop.uncertainty.direct_sampling import MonteCarloSimulator
 
 __all__ = [
     "LCAEngine",
+    "LCAResult",
     "TEAEngine",
+    "TEAResult",
     "get_pathway",
     "list_pathways",
     "RiskAggregator",
     "PathwayRanker",
     "MonteCarloSimulator",
 ]
-

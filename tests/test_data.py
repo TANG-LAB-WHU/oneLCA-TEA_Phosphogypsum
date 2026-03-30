@@ -1,11 +1,13 @@
 """Tests for Data Layer"""
-import pytest
-from pgloop.iodata.pdf_parser import PDFParser
+
 from pgloop.iodata.data_standardizer import DataStandardizer
+from pgloop.iodata.pdf_parser import PDFParser
+
 
 def test_pdf_parser_init():
     parser = PDFParser()
     assert parser is not None
+
 
 def test_standardizer_units():
     ds = DataStandardizer()

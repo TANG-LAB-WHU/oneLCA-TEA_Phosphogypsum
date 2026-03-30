@@ -5,13 +5,14 @@ Data source tracking, assumption documentation, and metadata management.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any
 from datetime import datetime
 from enum import Enum
+from typing import Any, Dict, List, Optional
 
 
 class SourceType(Enum):
     """Type of data source."""
+
     LITERATURE = "literature"
     DATABASE = "database"
     CALCULATION = "calculation"
@@ -22,9 +23,10 @@ class SourceType(Enum):
 
 class UncertaintyLevel(Enum):
     """Uncertainty classification."""
-    LOW = "low"           # CV < 10%
-    MEDIUM = "medium"     # 10% < CV < 30%
-    HIGH = "high"         # 30% < CV < 50%
+
+    LOW = "low"  # CV < 10%
+    MEDIUM = "medium"  # 10% < CV < 30%
+    HIGH = "high"  # 30% < CV < 50%
     VERY_HIGH = "very_high"  # CV > 50%
 
 
@@ -33,14 +35,14 @@ class DataSource:
     """
     Data source metadata for traceability.
     """
-    
+
     source_type: SourceType
     reference: str  # Citation or database name
     year: int = 2024
     url: Optional[str] = None
     doi: Optional[str] = None
     notes: str = ""
-    
+
     def to_citation(self) -> str:
         """Generate citation string."""
         if self.doi:
@@ -56,12 +58,12 @@ class Assumption:
     """
     Assumption documentation.
     """
-    
+
     description: str
     justification: str = ""
     impact: str = ""  # High/Medium/Low impact on results
     alternatives: List[str] = field(default_factory=list)
-    
+
     def to_dict(self) -> Dict:
         return {
             "description": self.description,
@@ -76,7 +78,7 @@ class Annotation:
     """
     Complete annotation for a data value.
     """
-    
+
     value: Any
     unit: str = ""
     source: Optional[DataSource] = None
@@ -85,7 +87,7 @@ class Annotation:
     uncertainty_level: Optional[UncertaintyLevel] = None
     timestamp: datetime = field(default_factory=datetime.now)
     metadata: Dict[str, Any] = field(default_factory=dict)
-    
+
     def __post_init__(self):
         """Auto-classify uncertainty level."""
         if self.uncertainty is not None and self.uncertainty_level is None:
@@ -98,7 +100,7 @@ class Annotation:
                 self.uncertainty_level = UncertaintyLevel.HIGH
             else:
                 self.uncertainty_level = UncertaintyLevel.VERY_HIGH
-    
+
     def to_dict(self) -> Dict:
         """Serialize to dictionary."""
         return {
@@ -118,11 +120,11 @@ def annotate(
     source_type: SourceType = SourceType.DEFAULT,
     year: int = 2024,
     uncertainty: float = None,
-    **metadata
+    **metadata,
 ) -> Annotation:
     """
     Quick annotation helper function.
-    
+
     Args:
         value: The data value
         unit: Unit of measurement
@@ -131,7 +133,7 @@ def annotate(
         year: Source year
         uncertainty: Coefficient of variation
         **metadata: Additional metadata
-        
+
     Returns:
         Annotation object
     """
@@ -142,7 +144,7 @@ def annotate(
             reference=source,
             year=year,
         )
-    
+
     return Annotation(
         value=value,
         unit=unit,

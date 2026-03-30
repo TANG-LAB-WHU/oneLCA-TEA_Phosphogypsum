@@ -4,17 +4,18 @@ Web Scraper Module
 Scrapes phosphogypsum related data from regulatory and news sites.
 """
 
+from typing import List, Optional
+
 import requests
 from bs4 import BeautifulSoup
-from typing import List, Dict, Optional
 
 
 class WebScraper:
     """Scraper for public phosphogypsum data."""
-    
+
     def __init__(self, user_agent: str = "Mozilla/5.0"):
         self.headers = {"User-Agent": user_agent}
-    
+
     def scrape_url(self, url: str) -> Optional[str]:
         """Fetch content from a URL."""
         try:
@@ -24,7 +25,7 @@ class WebScraper:
         except Exception as e:
             print(f"Error scraping {url}: {e}")
             return None
-    
+
     def extract_text(self, html: str) -> str:
         """Extract plain text from HTML."""
         soup = BeautifulSoup(html, "html.parser")
@@ -32,7 +33,7 @@ class WebScraper:
         for script in soup(["script", "style"]):
             script.extract()
         return soup.get_text(separator=" ", strip=True)
-    
+
     def find_links(self, html: str, keyword: str = "phosphogypsum") -> List[str]:
         """Find links containing a keyword."""
         soup = BeautifulSoup(html, "html.parser")
@@ -43,8 +44,13 @@ class WebScraper:
         return list(set(links))
 
 
-if __name__ == "__main__":
-    scraper = WebScraper()
+def main():
+    WebScraper()
     # Example: scrape EPA news (if allowed)
+    # scraper = WebScraper()
     # text = scraper.scrape_url("https://www.epa.gov/radiation/phosphogypsum-stack-free-rules")
     pass
+
+
+if __name__ == "__main__":
+    main()

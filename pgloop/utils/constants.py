@@ -4,28 +4,22 @@ Constants Module
 Physical constants, atomic masses, and LCA reference values.
 """
 
-from typing import Dict
-
-
 # Physical constants
 PHYSICAL_CONSTANTS = {
     # Fundamental constants
-    "R": 8.314,           # J/(mol·K) - Universal gas constant
-    "Na": 6.022e23,       # /mol - Avogadro's number
-    "k_B": 1.381e-23,     # J/K - Boltzmann constant
-    "h": 6.626e-34,       # J·s - Planck constant
-    "c": 2.998e8,         # m/s - Speed of light
-    "e": 1.602e-19,       # C - Elementary charge
-    
+    "R": 8.314,  # J/(mol·K) - Universal gas constant
+    "Na": 6.022e23,  # /mol - Avogadro's number
+    "k_B": 1.381e-23,  # J/K - Boltzmann constant
+    "h": 6.626e-34,  # J·s - Planck constant
+    "c": 2.998e8,  # m/s - Speed of light
+    "e": 1.602e-19,  # C - Elementary charge
     # Thermodynamic
-    "T_ref": 298.15,      # K - Standard temperature
-    "P_ref": 101325,      # Pa - Standard pressure
-    
+    "T_ref": 298.15,  # K - Standard temperature
+    "P_ref": 101325,  # Pa - Standard pressure
     # Conversion
     "cal_to_J": 4.184,
     "BTU_to_J": 1055.06,
     "atm_to_Pa": 101325,
-    
     # Environmental
     "CO2_C_ratio": 44.01 / 12.01,  # CO2 per C
     "CH4_C_ratio": 16.04 / 12.01,  # CH4 per C
@@ -113,7 +107,6 @@ EMISSION_FACTORS = {
     "natural_gas_kg_co2_per_m3": 1.93,
     "coal_kg_co2_per_kg": 2.42,
     "lpg_kg_co2_per_kg": 3.03,
-    
     # Electricity (kg CO2 per kWh)
     "electricity_world_avg": 0.475,
     "electricity_us": 0.386,
@@ -126,7 +119,7 @@ EMISSION_FACTORS = {
 
 # Shadow prices for external costs (USD per unit, 2024)
 SHADOW_PRICES = {
-    "co2_usd_per_t": 100.0,        # Social cost of carbon
+    "co2_usd_per_t": 100.0,  # Social cost of carbon
     "so2_usd_per_kg": 5.0,
     "nox_usd_per_kg": 8.0,
     "pm25_usd_per_kg": 30.0,
@@ -141,22 +134,22 @@ SHADOW_PRICES = {
 def get_molecular_weight(formula: str) -> float:
     """
     Calculate molecular weight from formula.
-    
+
     Simple parser for formulas like H2O, H2SO4, Ca(OH)2.
     """
     import re
-    
+
     # Handle parentheses by expansion (simplified)
     # This is a basic implementation
     total = 0.0
-    
+
     # Pattern: element followed by optional number
-    pattern = r'([A-Z][a-z]?)(\d*)'
+    pattern = r"([A-Z][a-z]?)(\d*)"
     matches = re.findall(pattern, formula)
-    
+
     for element, count in matches:
         if element and element in ATOMIC_MASSES:
             n = int(count) if count else 1
             total += ATOMIC_MASSES[element] * n
-    
+
     return total
