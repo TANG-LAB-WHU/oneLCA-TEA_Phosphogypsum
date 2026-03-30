@@ -53,4 +53,3 @@ class FP_PINN(nn.Module):
 
         fp = p_t + f * p_x - 0.5 * g2 * p_xx
         return fp
-

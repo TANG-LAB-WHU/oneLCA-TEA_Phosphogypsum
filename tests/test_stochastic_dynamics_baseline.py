@@ -43,4 +43,3 @@ def test_fp_2d_baseline_runs():
     assert np.all(p_final >= 0.0)
     mass = np.trapezoid(np.trapezoid(p_final, solver.y, axis=1), solver.x)
     assert abs(mass - 1.0) < 1e-3
-

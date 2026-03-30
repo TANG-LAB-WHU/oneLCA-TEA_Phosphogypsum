@@ -15,7 +15,12 @@ except Exception:  # pragma: no cover - optional dependency
     torch = None
     F = None
 
-from pgloop.stochastic_dynamics.losses import kl_loss, normalization_loss, pde_residual_loss, weighted_sum
+from pgloop.stochastic_dynamics.losses import (
+    kl_loss,
+    normalization_loss,
+    pde_residual_loss,
+    weighted_sum,
+)
 
 
 def train_pinn(
@@ -107,7 +112,9 @@ def train_vae(
             t0 = torch.zeros((mu.shape[0], 1), dtype=mu.dtype, device=mu.device)
             drift = latent_sde.drift(mu, t0)
             diff = latent_sde.diffusion(mu, t0)
-            fp_loss = torch.mean(drift**2) + torch.mean((diff - diff.mean(dim=0, keepdim=True)) ** 2)
+            fp_loss = torch.mean(drift**2) + torch.mean(
+                (diff - diff.mean(dim=0, keepdim=True)) ** 2
+            )
         loss = recon_loss + kl + fp_weight * fp_loss
         loss.backward()
         opt.step()
@@ -122,7 +129,9 @@ def train_vae(
             torch.save(
                 {
                     "vae_state_dict": model.state_dict(),
-                    "latent_sde_state_dict": latent_sde.state_dict() if latent_sde is not None else {},
+                    "latent_sde_state_dict": (
+                        latent_sde.state_dict() if latent_sde is not None else {}
+                    ),
                 },
                 ckpt,
             )
@@ -141,4 +150,3 @@ def train_vae(
         with open(lp, "w", encoding="utf-8") as fh:
             json.dump(payload, fh, indent=2)
     return payload
-

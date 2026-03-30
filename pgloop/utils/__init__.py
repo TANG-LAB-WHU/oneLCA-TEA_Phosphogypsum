@@ -22,17 +22,17 @@ from pgloop.utils.currency import (
     convert_currency,
     get_exchange_rate,
 )
+from pgloop.utils.schema import (
+    DynamicAssessmentResult,
+    PosteriorSummary,
+    TimeSeriesPoint,
+)
 from pgloop.utils.units import (
     UnitConverter,
     convert_energy,
     convert_mass,
     convert_temperature,
     convert_volume,
-)
-from pgloop.utils.schema import (
-    DynamicAssessmentResult,
-    PosteriorSummary,
-    TimeSeriesPoint,
 )
 
 __all__ = [

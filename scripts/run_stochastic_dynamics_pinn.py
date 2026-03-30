@@ -45,8 +45,8 @@ def main():
         n_epochs=50,
         lr=2e-3,
         dx=float(x[1] - x[0]),
-        checkpoint_path="data/processed/dynamic_assessment/phase4_pinn.ckpt",
-        log_path="data/processed/dynamic_assessment/phase4_pinn_log.json",
+        checkpoint_path="data/processed/dynamic_assessment/stochastic_pinn.ckpt",
+        log_path="data/processed/dynamic_assessment/stochastic_pinn_log.json",
     )
 
     # Compare PINN density at final time vs finite-difference baseline
@@ -79,11 +79,10 @@ def main():
         "kl_vs_baseline": kl_err,
         "history_head": train_out["loss"][:10],
     }
-    with open(out_dir / "phase4_pinn_smoke.json", "w", encoding="utf-8") as fh:
+    with open(out_dir / "stochastic_pinn_smoke.json", "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=2)
     print(json.dumps(payload, indent=2))
 
 
 if __name__ == "__main__":
     main()
-

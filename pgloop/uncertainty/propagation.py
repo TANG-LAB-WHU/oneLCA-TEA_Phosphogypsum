@@ -48,10 +48,7 @@ class JointUncertaintyPropagator:
         boundary_distributions = boundary_distributions or {}
         all_distributions = {**distributions, **boundary_distributions}
 
-        sampled = {
-            name: self.mc.sample_from_spec(spec)
-            for name, spec in all_distributions.items()
-        }
+        sampled = {name: self.mc.sample_from_spec(spec) for name, spec in all_distributions.items()}
 
         metrics = {
             "gwp": [],
@@ -125,4 +122,3 @@ class JointUncertaintyPropagator:
         if phosphorus_output <= 0:
             return clcc
         return clcc / phosphorus_output
-

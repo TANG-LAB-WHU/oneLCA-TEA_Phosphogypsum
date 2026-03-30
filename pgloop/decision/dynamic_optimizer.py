@@ -101,4 +101,3 @@ class DynamicMultiObjectiveOptimizer:
         avg_gap = sum(abs(s - c) for s, c in zip(slcc_vals, clcc_vals)) / n
         avg_carbon = sum(max(0.0, x) for x in carbon_cost_vals) / n
         return avg_gap + 0.2 * avg_carbon
-

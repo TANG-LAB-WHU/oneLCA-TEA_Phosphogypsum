@@ -12,8 +12,8 @@ from pgloop.stochastic_dynamics.eval import (
     conservation_error,
     kl_divergence,
     l2_pdf_error,
-    phase4_density_summary_from_timeseries,
     prediction_interval_coverage,
+    stochastic_density_summary_from_timeseries,
 )
 from pgloop.stochastic_dynamics.fokker_planck import FokkerPlanck1DSolver, FokkerPlanck2DSolver
 
@@ -25,6 +25,5 @@ __all__ = [
     "conservation_error",
     "benchmark_callable",
     "prediction_interval_coverage",
-    "phase4_density_summary_from_timeseries",
+    "stochastic_density_summary_from_timeseries",
 ]
-

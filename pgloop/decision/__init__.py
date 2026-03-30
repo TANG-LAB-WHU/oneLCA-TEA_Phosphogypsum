@@ -10,6 +10,7 @@ from pgloop.decision.criteria import (
     Criterion,
     create_default_criteria,
 )
+from pgloop.decision.dynamic_optimizer import DynamicMultiObjectiveOptimizer
 from pgloop.decision.mcda import (
     AHP,
     TOPSIS,
@@ -23,7 +24,6 @@ from pgloop.decision.recommender import (
     PathwayRanker,
     Recommendation,
 )
-from pgloop.decision.dynamic_optimizer import DynamicMultiObjectiveOptimizer
 from pgloop.decision.scenario import (
     DynamicScenarioAnalyzer,
     DynamicYearResult,

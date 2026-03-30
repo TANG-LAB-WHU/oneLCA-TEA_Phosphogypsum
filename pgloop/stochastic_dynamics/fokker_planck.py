@@ -223,4 +223,3 @@ def monte_carlo_histogram(
     hist, edges = np.histogram(x, bins=bins, density=True)
     centers = 0.5 * (edges[:-1] + edges[1:])
     return centers, hist
-

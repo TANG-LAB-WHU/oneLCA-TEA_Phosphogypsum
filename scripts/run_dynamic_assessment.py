@@ -14,7 +14,7 @@ import yaml
 from pgloop import LCAEngine, TEAEngine, get_pathway
 from pgloop.decision.dynamic_optimizer import DynamicMultiObjectiveOptimizer
 from pgloop.decision.scenario import DynamicScenarioAnalyzer, Scenario
-from pgloop.stochastic_dynamics import phase4_density_summary_from_timeseries
+from pgloop.stochastic_dynamics import stochastic_density_summary_from_timeseries
 from pgloop.uncertainty.bayesian_update import BayesianUpdater
 from pgloop.utils.schema import DynamicAssessmentResult, PosteriorSummary, TimeSeriesPoint
 
@@ -158,7 +158,9 @@ def main():
             time_series_metrics=time_series,
             posterior_summary=posterior,
             robustness_stats=robustness,
-            phase4_density_summary=phase4_density_summary_from_timeseries([asdict(ts) for ts in time_series]),
+            stochastic_density_summary=stochastic_density_summary_from_timeseries(
+                [asdict(ts) for ts in time_series]
+            ),
         )
         all_results.append(dyn_result)
 
@@ -217,4 +219,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

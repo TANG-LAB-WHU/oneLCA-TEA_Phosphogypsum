@@ -25,4 +25,3 @@ def test_sobol_analysis_runs_or_skips_without_salib():
     assert "S1" in result
     assert "x1" in result["S1"]
     assert "ST" in result
-

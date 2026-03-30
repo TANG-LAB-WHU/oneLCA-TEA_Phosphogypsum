@@ -19,4 +19,3 @@ def test_joint_propagation_summary_keys():
     assert "clcc" in result.summary
     assert "slcc" in result.summary
     assert "lcop" in result.summary
-

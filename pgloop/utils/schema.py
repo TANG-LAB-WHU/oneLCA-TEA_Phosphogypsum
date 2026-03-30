@@ -37,5 +37,4 @@ class DynamicAssessmentResult:
     posterior_summary: Dict[str, PosteriorSummary] = field(default_factory=dict)
     robustness_stats: Dict[str, float] = field(default_factory=dict)
     sobol_indices: Dict[str, Dict[str, float]] = field(default_factory=dict)
-    phase4_density_summary: Dict[str, float] = field(default_factory=dict)
-
+    stochastic_density_summary: Dict[str, float] = field(default_factory=dict)

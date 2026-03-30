@@ -29,4 +29,3 @@ def test_bayesian_closed_loop_structure():
     )
     assert "first_pass" in result
     assert "second_pass" in result
-

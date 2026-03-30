@@ -23,4 +23,3 @@ def test_delta_analysis_runs_or_skips_without_salib():
 
     assert "delta" in result
     assert "x1" in result["delta"]
-

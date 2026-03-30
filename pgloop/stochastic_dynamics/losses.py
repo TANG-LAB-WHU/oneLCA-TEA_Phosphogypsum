@@ -50,4 +50,3 @@ def weighted_sum(
     if kl is not None:
         total = total + w_kl * kl
     return total
-

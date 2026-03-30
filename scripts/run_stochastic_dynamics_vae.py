@@ -48,8 +48,8 @@ def main():
         lr=2e-3,
         beta=5e-3,
         fp_weight=0.05,
-        checkpoint_path="data/processed/dynamic_assessment/phase4_vae.ckpt",
-        log_path="data/processed/dynamic_assessment/phase4_vae_log.json",
+        checkpoint_path="data/processed/dynamic_assessment/stochastic_vae.ckpt",
+        log_path="data/processed/dynamic_assessment/stochastic_vae_log.json",
     )
 
     out_dir = Path("data/processed/dynamic_assessment")
@@ -65,11 +65,10 @@ def main():
         "latent_dim": int(mu.shape[-1]),
         "data_source": "dynamic_assessment_timeseries.csv" if data_file.exists() else "synthetic",
     }
-    with open(out_dir / "phase4_vae_smoke.json", "w", encoding="utf-8") as fh:
+    with open(out_dir / "stochastic_vae_smoke.json", "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=2)
     print(json.dumps(payload, indent=2))
 
 
 if __name__ == "__main__":
     main()
-

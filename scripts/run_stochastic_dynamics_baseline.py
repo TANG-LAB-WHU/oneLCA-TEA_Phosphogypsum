@@ -55,11 +55,10 @@ def main():
         "n_steps": n_steps,
         "dt": dt,
     }
-    with open(out_dir / "phase4_baseline_metrics.json", "w", encoding="utf-8") as fh:
+    with open(out_dir / "stochastic_baseline_metrics.json", "w", encoding="utf-8") as fh:
         json.dump(metrics, fh, indent=2)
     print(json.dumps(metrics, indent=2))
 
 
 if __name__ == "__main__":
     main()
-

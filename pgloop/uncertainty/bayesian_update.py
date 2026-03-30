@@ -3,7 +3,7 @@ Bayesian posterior update utilities for uncertainty priors.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List
+from typing import Dict
 
 import numpy as np
 
@@ -82,7 +82,11 @@ class BayesianUpdater:
         predictions = {name: stats["mean"] for name, stats in first_pass.summary.items()}
         global_sensitivity = self._compute_global_sensitivity(first_pass)
 
-        updated = self.update_priors(priors=priors, observations=observations, predictions=predictions)
+        updated = self.update_priors(
+            priors=priors,
+            observations=observations,
+            predictions=predictions,
+        )
         second_pass = propagator.propagate(pathway, boundary_distributions=updated.posterior)
 
         return {
@@ -170,4 +174,3 @@ class BayesianUpdater:
             "mode": mean,
             "max": mean + span,
         }
-

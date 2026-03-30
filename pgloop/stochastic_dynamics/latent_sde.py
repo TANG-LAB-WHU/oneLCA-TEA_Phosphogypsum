@@ -44,4 +44,3 @@ class LatentSDE(nn.Module):
         diff = self.diffusion(z, t)
         noise = torch.randn_like(z)
         return z + drift * dt + diff * torch.sqrt(torch.tensor(dt, dtype=z.dtype)) * noise
-

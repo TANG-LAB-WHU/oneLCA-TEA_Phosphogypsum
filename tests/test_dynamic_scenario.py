@@ -29,4 +29,3 @@ def test_dynamic_analyzer_runs_yearly():
     assert len(results) == 2
     assert results[0].year == 2025
     assert "clcc" in results[0].metrics
-

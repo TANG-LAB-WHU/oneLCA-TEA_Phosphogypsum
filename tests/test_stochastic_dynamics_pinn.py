@@ -1,14 +1,17 @@
 """PINN smoke tests for stochastic_dynamics."""
 
+import importlib.util
+
 import pytest
-
-torch = pytest.importorskip("torch")
-
-from pgloop.stochastic_dynamics.pinn import FP_PINN
-from pgloop.stochastic_dynamics.trainer import train_pinn
+import torch
 
 
 def test_pinn_smoke_training_runs():
+    if importlib.util.find_spec("torch") is None:
+        pytest.skip("torch is not installed in test environment.")
+    from pgloop.stochastic_dynamics.pinn import FP_PINN
+    from pgloop.stochastic_dynamics.trainer import train_pinn
+
     torch.set_default_dtype(torch.float64)
     model = FP_PINN(hidden=[16, 16])
     x = torch.linspace(-1.5, 1.5, 64).reshape(-1, 1)
@@ -33,4 +36,3 @@ def test_pinn_smoke_training_runs():
     assert out["epochs"] == 5
     assert len(out["loss"]) == 5
     assert out["final_loss"] >= 0.0
-
