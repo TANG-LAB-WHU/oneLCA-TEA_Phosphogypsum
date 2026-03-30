@@ -12,7 +12,7 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 - **AI-Enhanced Data Collection**: LLM-RAG pipeline with Knowledge Graph database
 - **Multi-Criteria Decision Analysis**: TOPSIS, AHP, Pareto analysis for pathway selection
 - **Risk Assessment**: Micro (technical/operational/financial) and macro (political/economic/market/policy) risk evaluation
-- **Uncertainty Quantification**: Monte Carlo, MCMC, and sensitivity analysis
+- **Uncertainty Quantification**: Monte Carlo simulation, Markov chain Monte Carlo (MCMC), sensitivity analysis, and pathway discernibility analysis
 - **Open Source Only**: No commercial databases required
 - **Modular Design**: Easy to extend with new pathways, chemicals, and equipment
 
@@ -27,7 +27,7 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 | `pgloop/equipment`     | Unit Operations          | `CSTR`, `FilterPress`, `Evaporator`, etc.             |
 | `pgloop/risk`          | Risk Assessment          | `TechnicalRisk`, `PoliticalRisk`, `RiskAggregator`    |
 | `pgloop/decision`      | Decision Support         | `PathwayRanker`, `TOPSIS`, `ScenarioAnalyzer`         |
-| `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `MetropolisHastings`             |
+| `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `MetropolisHastings`, `HamiltonianMC`, `GibbsSampler`, `MCMCDiagnostics`, `SensitivityAnalyzer`, `DiscernibilityAnalyzer` |
 | `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `LightRAGEngine`, `LLMExtractor`  |
 | `pgloop/utils`         | Utilities                | `CurrencyConverter`, `UnitConverter`, `Annotation`    |
 | `pgloop/visualization` | Dashboard & Reports      | `run_dashboard`, `ReportExporter`, `LCAPlots`          |
@@ -138,7 +138,8 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 │                                                                                 │
 │  ┌─────────────────────────────────────────────────────────────────────────┐   │
 │  │                    UNCERTAINTY ENGINE                                   │   │
-│  │  Parameter Sensitivity │ Monte Carlo Simulation │ Discernibility      │   │
+│  │  Sensitivity Screening │ Monte Carlo Propagation │ MCMC Inference      │   │
+│  │  Pathway Discernibility │ Convergence Diagnostics (ESS, R-hat, AR)     │   │
 │  └─────────────────────────────────────────────────────────────────────────┘   │
 └────────────────────────────────────┬────────────────────────────────────────────┘
                                      ▼
@@ -220,7 +221,7 @@ oneLCA-TEA_Phosphogypsum/
 │   │   ├── micro/                # Technical, operational, financial
 │   │   └── macro/                # Political, economic, market, policy
 │   ├── tea/                      # TEA calculation module
-│   ├── uncertainty/              # MC, MCMC, sensitivity analysis
+│   ├── uncertainty/              # MC, MCMC, sensitivity, discernibility, diagnostics
 │   ├── utils/                    # Currency, units, annotations, constants
 │   └── visualization/            # Dashboard & reporting
 ├── config/                       # Configuration files
@@ -271,6 +272,35 @@ recommendations = ranker.rank({
 })
 print(f"Best pathway: {recommendations[0].pathway_name}")
 ```
+
+## Uncertainty Analysis Workflow
+
+The uncertainty module follows a staged workflow designed for transparent and reproducible inference:
+
+1. **Deterministic baseline evaluation**  
+   Define a baseline `calculation_func(params)` for target indicators (for example, cost, emissions, or net present value).
+
+2. **Sensitivity screening**  
+   Apply one-at-a-time sensitivity analysis with `SensitivityAnalyzer` to identify high-influence parameters using elasticity-based ranking.
+
+3. **Uncertainty propagation**  
+   Use `MonteCarloSimulator` with explicit distributional assumptions (`triangular`, `normal`, `uniform`, `lognormal`, or `fixed`) to propagate input uncertainty to model outputs.
+
+4. **Pathway discernibility assessment**  
+   Compare pathway output distributions with `DiscernibilityAnalyzer` through (i) the probability that one pathway outperforms another and (ii) distribution overlap.
+
+5. **Posterior and correlation-aware inference (optional)**  
+   For correlated parameters or Bayesian-style calibration, use MCMC samplers (`MetropolisHastings`, `HamiltonianMC`, or `GibbsSampler`).
+
+6. **Diagnostic evaluation and reporting**  
+   Assess sample quality with `MCMCDiagnostics` (effective sample size, acceptance behavior, and R-hat under multi-chain settings), then report interval-based uncertainty summaries (such as P5-P95).
+
+### Minimal API Map
+
+- Direct sampling: `pgloop.uncertainty.direct_sampling.MonteCarloSimulator`
+- Chain sampling and diagnostics: `pgloop.uncertainty.chain_sampling`
+- Sensitivity analysis: `pgloop.uncertainty.sensitivity.SensitivityAnalyzer`
+- Discernibility analysis: `pgloop.uncertainty.discernibility.DiscernibilityAnalyzer`
 
 ## Treatment Pathways
 
