@@ -5,9 +5,6 @@ Currency exchange rates and inflation adjustment for TEA calculations.
 """
 
 from dataclasses import dataclass
-from typing import Dict, Optional
-from datetime import datetime
-
 
 # Exchange rates (relative to USD, 2024 baseline)
 EXCHANGE_RATES_2024 = {
@@ -47,19 +44,15 @@ REGIONAL_FACTORS = {
 }
 
 
-def get_exchange_rate(
-    from_currency: str,
-    to_currency: str,
-    year: int = 2024
-) -> float:
+def get_exchange_rate(from_currency: str, to_currency: str, year: int = 2024) -> float:
     """
     Get exchange rate between two currencies.
-    
+
     Args:
         from_currency: Source currency code (e.g., 'USD')
         to_currency: Target currency code (e.g., 'EUR')
         year: Year for rate (currently only 2024 supported)
-        
+
     Returns:
         Exchange rate (to_currency per from_currency)
     """
@@ -67,29 +60,26 @@ def get_exchange_rate(
         raise ValueError(f"Unknown currency: {from_currency}")
     if to_currency not in EXCHANGE_RATES_2024:
         raise ValueError(f"Unknown currency: {to_currency}")
-    
+
     # Convert via USD
     usd_per_from = 1.0 / EXCHANGE_RATES_2024[from_currency]
     to_per_usd = EXCHANGE_RATES_2024[to_currency]
-    
+
     return usd_per_from * to_per_usd
 
 
 def convert_currency(
-    amount: float,
-    from_currency: str,
-    to_currency: str,
-    year: int = 2024
+    amount: float, from_currency: str, to_currency: str, year: int = 2024
 ) -> float:
     """
     Convert amount between currencies.
-    
+
     Args:
         amount: Amount in source currency
         from_currency: Source currency code
         to_currency: Target currency code
         year: Year for exchange rate
-        
+
     Returns:
         Amount in target currency
     """
@@ -97,21 +87,16 @@ def convert_currency(
     return amount * rate
 
 
-def adjust_inflation(
-    amount: float,
-    from_year: int,
-    to_year: int,
-    currency: str = "USD"
-) -> float:
+def adjust_inflation(amount: float, from_year: int, to_year: int, currency: str = "USD") -> float:
     """
     Adjust amount for inflation between years.
-    
+
     Args:
         amount: Original amount
         from_year: Original year
         to_year: Target year
         currency: Currency for inflation rate
-        
+
     Returns:
         Inflation-adjusted amount
     """
@@ -120,10 +105,10 @@ def adjust_inflation(
         inflation_rate = INFLATION_RATES["USD"]
     else:
         inflation_rate = INFLATION_RATES[currency]
-    
+
     years_diff = to_year - from_year
     adjustment_factor = (1 + inflation_rate) ** years_diff
-    
+
     return amount * adjustment_factor
 
 
@@ -147,41 +132,36 @@ class CurrencyConverter:
     """
     Currency converter with caching and regional adjustments.
     """
-    
+
     base_currency: str = "USD"
     base_year: int = 2024
     target_region: str = "US"
-    
-    def convert(
-        self,
-        amount: float,
-        from_currency: str = None,
-        from_year: int = None
-    ) -> float:
+
+    def convert(self, amount: float, from_currency: str = None, from_year: int = None) -> float:
         """
         Convert and adjust amount to base currency and year.
-        
+
         Args:
             amount: Original amount
             from_currency: Source currency (default: base_currency)
             from_year: Source year (default: base_year)
-            
+
         Returns:
             Converted and adjusted amount
         """
         from_currency = from_currency or self.base_currency
         from_year = from_year or self.base_year
-        
+
         # Currency conversion
         if from_currency != self.base_currency:
             amount = convert_currency(amount, from_currency, self.base_currency)
-        
+
         # Inflation adjustment
         if from_year != self.base_year:
             amount = adjust_inflation(amount, from_year, self.base_year, self.base_currency)
-        
+
         return amount
-    
+
     def apply_regional_factor(self, amount: float, region: str = None) -> float:
         """Apply regional cost adjustment."""
         region = region or self.target_region

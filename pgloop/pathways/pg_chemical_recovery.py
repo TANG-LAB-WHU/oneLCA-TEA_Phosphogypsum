@@ -1,22 +1,26 @@
 """Chemical Recovery Pathway (PG-CR)"""
 
 from typing import Dict, List
-from pgloop.pathways.base_pathway import BasePathway
+
 from pgloop.lca.inventory import LifeCycleInventory
+from pgloop.pathways.base_pathway import BasePathway
 
 
 class ChemicalRecoveryPathway(BasePathway):
     """PG converted to ammonium sulfate and calcium carbonate."""
-    
+
     @property
-    def code(self) -> str: return "PG-ChemReco"
-    
+    def code(self) -> str:
+        return "PG-ChemReco"
+
     @property
-    def name(self) -> str: return "Chemical Recovery"
-    
+    def name(self) -> str:
+        return "Chemical Recovery"
+
     @property
-    def trl(self) -> int: return 7
-    
+    def trl(self) -> int:
+        return 7
+
     def _default_parameters(self) -> Dict[str, float]:
         return {
             "ammonia_kg_per_t": 200,
@@ -25,7 +29,7 @@ class ChemicalRecoveryPathway(BasePathway):
             "ammonium_sulfate_yield": 0.8,
             "caco3_yield": 0.6,
         }
-    
+
     def _build_inventory(self) -> LifeCycleInventory:
         p = self.parameters
         lci = LifeCycleInventory("PG Chemical Recovery", "1 kg PG", 1.0)
@@ -36,19 +40,31 @@ class ChemicalRecoveryPathway(BasePathway):
         lci.add_output("Ammonium sulfate", p["ammonium_sulfate_yield"], "kg")
         lci.add_output("Calcium carbonate", p["caco3_yield"], "kg")
         return lci
-    
+
     def get_capex_data(self) -> Dict:
         return {"equipment": [{"name": "Reactor system", "cost": 5000000}]}
-    
+
     def get_opex_data(self) -> Dict:
         return {
-            "materials": [{"name": "Ammonia", "quantity": 200, "per_kg_input": 1000, "price": 0.40}],
+            "materials": [
+                {"name": "Ammonia", "quantity": 200, "per_kg_input": 1000, "price": 0.40}
+            ],
             "utilities": {"electricity_kwh": 100},
         }
-    
+
     def get_products(self) -> List[Dict]:
         p = self.parameters
         return [
-            {"name": "Ammonium sulfate", "quantity": p["ammonium_sulfate_yield"], "unit": "kg", "price": 0.20},
-            {"name": "Calcium carbonate", "quantity": p["caco3_yield"], "unit": "kg", "price": 0.08},
+            {
+                "name": "Ammonium sulfate",
+                "quantity": p["ammonium_sulfate_yield"],
+                "unit": "kg",
+                "price": 0.20,
+            },
+            {
+                "name": "Calcium carbonate",
+                "quantity": p["caco3_yield"],
+                "unit": "kg",
+                "price": 0.08,
+            },
         ]

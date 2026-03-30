@@ -2,7 +2,6 @@ import re
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -16,7 +15,9 @@ def extract_first(pattern: str, text: str, file_label: str) -> str:
 def main() -> int:
     pyproject_text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     settings_text = (ROOT / "config" / "settings.yaml").read_text(encoding="utf-8")
-    dashboard_text = (ROOT / "pgloop" / "visualization" / "dashboard.py").read_text(encoding="utf-8")
+    dashboard_text = (ROOT / "pgloop" / "visualization" / "dashboard.py").read_text(
+        encoding="utf-8"
+    )
 
     pyproject_version = extract_first(
         r'^version\s*=\s*"([^"]+)"',

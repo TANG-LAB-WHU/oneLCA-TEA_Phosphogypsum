@@ -32,16 +32,9 @@ jobs:
         run: |
           python scripts/check_version_sync.py
 
-      - name: Lint with ruff
+      - name: Run pre-commit checks
         run: |
-          # stop the build if there are Python syntax errors or undefined names
-          ruff check . --select=E9,F63,F7,F82
-          # exit-zero treats all errors as warnings.
-          ruff check . --exit-zero
-
-      - name: Check formatting with black
-        run: |
-          black --check .
+          pre-commit run --all-files
 
       - name: Test with pytest
         run: |

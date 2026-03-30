@@ -33,11 +33,12 @@ Notes:
 - Files prefixed with `translated_` are skipped automatically.
 """
 
-import os
-import pandas as pd
-import asyncio
-import aiohttp
 import argparse
+import asyncio
+import os
+
+import aiohttp
+import pandas as pd
 from dotenv import load_dotenv
 from googletrans import Translator
 
@@ -54,6 +55,7 @@ LLM_MODEL = os.getenv("LLM_MODEL", "gemini-3-flash")
 DEFAULT_MAX_CONCURRENCY = 3
 DEFAULT_MAX_RETRIES = 4
 DEFAULT_BACKOFF_BASE_SECONDS = 1.5
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Translate Agribalyse Excel files to English")
@@ -94,6 +96,7 @@ def resolve_translator(cli_translator):
         return cli_translator
     return "gemini" if os.getenv("USE_GEMINI_API", "false").lower() == "true" else "googletrans"
 
+
 async def _translate_text_gemini_request(session, text, src_lang="fr", dest_lang="en"):
     url = f"{LLM_BASE_URL.rstrip('/')}/chat/completions"
     headers = {"Authorization": f"Bearer {LLM_API_KEY}", "Content-Type": "application/json"}
@@ -125,7 +128,9 @@ async def _translate_text_gemini_request(session, text, src_lang="fr", dest_lang
 
         # Bubble up transient errors for retry logic.
         if response.status in {429, 500, 502, 503, 504}:
-            raise RuntimeError(f"Transient translation error {response.status}: {response_text[:300]}")
+            raise RuntimeError(
+                f"Transient translation error {response.status}: {response_text[:300]}"
+            )
 
         print(f"Translation failed: {response.status}, {response_text[:300]}")
         return text
@@ -145,13 +150,16 @@ async def translate_text_gemini(
     for attempt in range(max_retries + 1):
         try:
             async with semaphore:
-                return await _translate_text_gemini_request(session, text, src_lang=src_lang, dest_lang=dest_lang)
+                return await _translate_text_gemini_request(
+                    session, text, src_lang=src_lang, dest_lang=dest_lang
+                )
         except Exception as exc:
             if attempt >= max_retries:
                 print(f"Translation failed after retries: {exc}")
                 return text
-            backoff_seconds = DEFAULT_BACKOFF_BASE_SECONDS * (2 ** attempt)
+            backoff_seconds = DEFAULT_BACKOFF_BASE_SECONDS * (2**attempt)
             await asyncio.sleep(backoff_seconds)
+
 
 # Function to translate text using googletrans
 def translate_text_googletrans(translator, text, src_lang="fr", dest_lang="en"):
@@ -162,8 +170,14 @@ def translate_text_googletrans(translator, text, src_lang="fr", dest_lang="en"):
         print(f"Googletrans translation failed: {e}")
         return text
 
+
 # Function to translate a DataFrame
-async def translate_dataframe(df, use_gemini_api=False, max_concurrency=DEFAULT_MAX_CONCURRENCY, max_retries=DEFAULT_MAX_RETRIES):
+async def translate_dataframe(
+    df,
+    use_gemini_api=False,
+    max_concurrency=DEFAULT_MAX_CONCURRENCY,
+    max_retries=DEFAULT_MAX_RETRIES,
+):
     translated_df = df.copy()
 
     if use_gemini_api:
@@ -184,15 +198,18 @@ async def translate_dataframe(df, use_gemini_api=False, max_concurrency=DEFAULT_
 
             # Translate cell values if they are strings
             for col in df.columns:
-                if df[col].dtype == 'object':
+                if df[col].dtype == "object":
                     cell_tasks = [
-                        translate_text_gemini(
-                            session,
-                            semaphore,
-                            str(value),
-                            max_retries=max_retries,
+                        (
+                            translate_text_gemini(
+                                session,
+                                semaphore,
+                                str(value),
+                                max_retries=max_retries,
+                            )
+                            if isinstance(value, str)
+                            else value
                         )
-                        if isinstance(value, str) else value
                         for value in df[col]
                     ]
                     translated_df[col] = await asyncio.gather(*cell_tasks)
@@ -204,10 +221,13 @@ async def translate_dataframe(df, use_gemini_api=False, max_concurrency=DEFAULT_
 
         # Translate cell values if they are strings
         for col in df.columns:
-            if df[col].dtype == 'object':
-                translated_df[col] = df[col].apply(lambda x: translate_text_googletrans(translator, x) if isinstance(x, str) else x)
+            if df[col].dtype == "object":
+                translated_df[col] = df[col].apply(
+                    lambda x: translate_text_googletrans(translator, x) if isinstance(x, str) else x
+                )
 
     return translated_df
+
 
 # Main async function to process files
 async def _main_async(folder_path, output_dir, use_gemini_api, max_concurrency, max_retries):
@@ -248,6 +268,7 @@ async def _main_async(folder_path, output_dir, use_gemini_api, max_concurrency, 
             except Exception as e:
                 print(f"Failed to save translated file for {file_name}: {e}")
 
+
 def main():
     args = parse_args()
     selected_translator = resolve_translator(args.translator)
@@ -262,7 +283,9 @@ def main():
     print(f"Output folder: {output_dir}")
     print(f"Max concurrency: {max_concurrency}")
     print(f"Max retries: {max_retries}")
-    asyncio.run(_main_async(target_folder, output_dir, use_gemini_api, max_concurrency, max_retries))
+    asyncio.run(
+        _main_async(target_folder, output_dir, use_gemini_api, max_concurrency, max_retries)
+    )
 
 
 # Run the main function

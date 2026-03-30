@@ -2,26 +2,20 @@
 Provides knowledge graph construction, LLM extraction, and RAG capabilities.
 """
 
+from pgloop.knowledge.embeddings import EmbeddingModel
+from pgloop.knowledge.gap_filler import GapFiller
 from pgloop.knowledge.knowledge_graph import PhosphogypsumKG
 from pgloop.knowledge.llm_extractor import LLMExtractor
-from pgloop.knowledge.gap_filler import GapFiller
-from pgloop.knowledge.embeddings import EmbeddingModel
 
 try:
-    from pgloop.knowledge.lightrag_engine import (
-        LightRAGEngine, 
-        LIGHTRAG_AVAILABLE
-    )
+    from pgloop.knowledge.lightrag_engine import LIGHTRAG_AVAILABLE, LightRAGEngine
 except ImportError:
     LightRAGEngine = None
     LIGHTRAG_AVAILABLE = False
 
 # RAGAnything support (optional upgrade over LightRAG)
 try:
-    from pgloop.knowledge.raganything_engine import (
-        RAGAnythingEngine,
-        RAGANYTHING_AVAILABLE
-    )
+    from pgloop.knowledge.raganything_engine import RAGANYTHING_AVAILABLE, RAGAnythingEngine
 except ImportError:
     RAGAnythingEngine = None
     RAGANYTHING_AVAILABLE = False
@@ -29,6 +23,7 @@ except ImportError:
 # Optional Neo4j support
 try:
     from pgloop.knowledge.neo4j_adapter import Neo4jAdapter, Neo4jConfig
+
     NEO4J_AVAILABLE = True
 except ImportError:
     Neo4jAdapter = None
@@ -48,4 +43,3 @@ __all__ = [
     "LIGHTRAG_AVAILABLE",
     "RAGANYTHING_AVAILABLE",
 ]
-

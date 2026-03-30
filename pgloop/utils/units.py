@@ -4,9 +4,7 @@ Unit Conversion Module
 Standard unit conversions for mass, energy, volume, and temperature.
 """
 
-from typing import Dict, Tuple
 from dataclasses import dataclass
-
 
 # Mass conversion factors (to kg)
 MASS_TO_KG = {
@@ -14,7 +12,7 @@ MASS_TO_KG = {
     "g": 0.001,
     "mg": 1e-6,
     "t": 1000.0,  # metric tonne
-    "Mt": 1e9,    # megatonne
+    "Mt": 1e9,  # megatonne
     "lb": 0.453592,
     "oz": 0.0283495,
     "ton": 907.185,  # US short ton
@@ -75,12 +73,12 @@ PRESSURE_TO_PA = {
 def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
     """
     Convert mass between units.
-    
+
     Args:
         value: Value to convert
         from_unit: Source unit (kg, g, t, lb, etc.)
         to_unit: Target unit
-        
+
     Returns:
         Converted value
     """
@@ -88,7 +86,7 @@ def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
         raise ValueError(f"Unknown mass unit: {from_unit}")
     if to_unit not in MASS_TO_KG:
         raise ValueError(f"Unknown mass unit: {to_unit}")
-    
+
     kg_value = value * MASS_TO_KG[from_unit]
     return kg_value / MASS_TO_KG[to_unit]
 
@@ -96,12 +94,12 @@ def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
 def convert_energy(value: float, from_unit: str, to_unit: str) -> float:
     """
     Convert energy between units.
-    
+
     Args:
         value: Value to convert
         from_unit: Source unit (MJ, kWh, BTU, etc.)
         to_unit: Target unit
-        
+
     Returns:
         Converted value
     """
@@ -109,7 +107,7 @@ def convert_energy(value: float, from_unit: str, to_unit: str) -> float:
         raise ValueError(f"Unknown energy unit: {from_unit}")
     if to_unit not in ENERGY_TO_MJ:
         raise ValueError(f"Unknown energy unit: {to_unit}")
-    
+
     mj_value = value * ENERGY_TO_MJ[from_unit]
     return mj_value / ENERGY_TO_MJ[to_unit]
 
@@ -117,12 +115,12 @@ def convert_energy(value: float, from_unit: str, to_unit: str) -> float:
 def convert_volume(value: float, from_unit: str, to_unit: str) -> float:
     """
     Convert volume between units.
-    
+
     Args:
         value: Value to convert
         from_unit: Source unit (m3, L, gal, etc.)
         to_unit: Target unit
-        
+
     Returns:
         Converted value
     """
@@ -130,7 +128,7 @@ def convert_volume(value: float, from_unit: str, to_unit: str) -> float:
         raise ValueError(f"Unknown volume unit: {from_unit}")
     if to_unit not in VOLUME_TO_M3:
         raise ValueError(f"Unknown volume unit: {to_unit}")
-    
+
     m3_value = value * VOLUME_TO_M3[from_unit]
     return m3_value / VOLUME_TO_M3[to_unit]
 
@@ -138,12 +136,12 @@ def convert_volume(value: float, from_unit: str, to_unit: str) -> float:
 def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
     """
     Convert temperature between units.
-    
+
     Args:
         value: Temperature value
         from_unit: Source unit (C, K, F)
         to_unit: Target unit
-        
+
     Returns:
         Converted temperature
     """
@@ -153,17 +151,17 @@ def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
     elif from_unit == "C":
         kelvin = value + 273.15
     elif from_unit == "F":
-        kelvin = (value - 32) * 5/9 + 273.15
+        kelvin = (value - 32) * 5 / 9 + 273.15
     else:
         raise ValueError(f"Unknown temperature unit: {from_unit}")
-    
+
     # Convert from Kelvin
     if to_unit == "K":
         return kelvin
     elif to_unit == "C":
         return kelvin - 273.15
     elif to_unit == "F":
-        return (kelvin - 273.15) * 9/5 + 32
+        return (kelvin - 273.15) * 9 / 5 + 32
     else:
         raise ValueError(f"Unknown temperature unit: {to_unit}")
 
@@ -174,7 +172,7 @@ def convert_pressure(value: float, from_unit: str, to_unit: str) -> float:
         raise ValueError(f"Unknown pressure unit: {from_unit}")
     if to_unit not in PRESSURE_TO_PA:
         raise ValueError(f"Unknown pressure unit: {to_unit}")
-    
+
     pa_value = value * PRESSURE_TO_PA[from_unit]
     return pa_value / PRESSURE_TO_PA[to_unit]
 
@@ -184,30 +182,24 @@ class UnitConverter:
     """
     Unified unit converter with automatic unit detection.
     """
-    
-    def convert(
-        self,
-        value: float,
-        from_unit: str,
-        to_unit: str,
-        unit_type: str = None
-    ) -> float:
+
+    def convert(self, value: float, from_unit: str, to_unit: str, unit_type: str = None) -> float:
         """
         Convert value between units.
-        
+
         Args:
             value: Value to convert
             from_unit: Source unit
             to_unit: Target unit
             unit_type: Optional type hint (mass, energy, volume, temperature)
-            
+
         Returns:
             Converted value
         """
         # Auto-detect unit type if not specified
         if unit_type is None:
             unit_type = self._detect_unit_type(from_unit)
-        
+
         if unit_type == "mass":
             return convert_mass(value, from_unit, to_unit)
         elif unit_type == "energy":
@@ -220,7 +212,7 @@ class UnitConverter:
             return convert_pressure(value, from_unit, to_unit)
         else:
             raise ValueError(f"Unknown unit type: {unit_type}")
-    
+
     def _detect_unit_type(self, unit: str) -> str:
         """Detect unit type from unit string."""
         if unit in MASS_TO_KG:

@@ -5,8 +5,8 @@ Database of common chemicals with properties and LCA data.
 """
 
 from typing import Dict, List, Optional
-from pgloop.chemicals.base_chemical import Chemical
 
+from pgloop.chemicals.base_chemical import Chemical
 
 # Main chemical database
 CHEMICAL_DATABASE: Dict[str, Chemical] = {
@@ -62,7 +62,6 @@ CHEMICAL_DATABASE: Dict[str, Chemical] = {
         price_usd_per_kg=0.50,
         hazard_class="Corrosive",
     ),
-    
     # === Bases ===
     "NaOH": Chemical(
         name="Sodium Hydroxide",
@@ -126,7 +125,6 @@ CHEMICAL_DATABASE: Dict[str, Chemical] = {
         price_usd_per_kg=0.60,
         hazard_class="Irritant",
     ),
-    
     # === Solvents/Extractants ===
     "D2EHPA": Chemical(
         name="Di-(2-ethylhexyl)phosphoric Acid",
@@ -152,7 +150,6 @@ CHEMICAL_DATABASE: Dict[str, Chemical] = {
         price_usd_per_kg=3.50,
         hazard_class="Irritant",
     ),
-    
     # === Common Reagents ===
     "CO2": Chemical(
         name="Carbon Dioxide",
@@ -186,17 +183,17 @@ CHEMICAL_DATABASE: Dict[str, Chemical] = {
 def get_chemical(identifier: str) -> Optional[Chemical]:
     """
     Get chemical by name, formula, or CAS number.
-    
+
     Args:
         identifier: Chemical name, formula, or CAS number
-        
+
     Returns:
         Chemical object or None if not found
     """
     # Direct lookup by formula
     if identifier in CHEMICAL_DATABASE:
         return CHEMICAL_DATABASE[identifier]
-    
+
     # Search by name or CAS
     identifier_lower = identifier.lower()
     for chem in CHEMICAL_DATABASE.values():
@@ -204,7 +201,7 @@ def get_chemical(identifier: str) -> Optional[Chemical]:
             return chem
         if chem.cas_number == identifier:
             return chem
-    
+
     return None
 
 

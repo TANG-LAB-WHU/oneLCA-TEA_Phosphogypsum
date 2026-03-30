@@ -5,13 +5,14 @@ Strictly aligned with the Implementation Plan.
 """
 
 from typing import Dict, List, Type
+
 from pgloop.pathways.base_pathway import BasePathway
-from pgloop.pathways.pg_stack_disposal import StackDisposalPathway
 from pgloop.pathways.pg_cement import CementPathway
-from pgloop.pathways.pg_construction import ConstructionMaterialsPathway
-from pgloop.pathways.pg_soil_amendment import SoilAmendmentPathway
 from pgloop.pathways.pg_chemical_recovery import ChemicalRecoveryPathway
+from pgloop.pathways.pg_construction import ConstructionMaterialsPathway
 from pgloop.pathways.pg_ree_extraction import REEExtractionPathway
+from pgloop.pathways.pg_soil_amendment import SoilAmendmentPathway
+from pgloop.pathways.pg_stack_disposal import StackDisposalPathway
 
 # Registry of available pathways
 PATHWAYS: Dict[str, Type[BasePathway]] = {
@@ -22,7 +23,6 @@ PATHWAYS: Dict[str, Type[BasePathway]] = {
     "PG-ChemReco": ChemicalRecoveryPathway,
     "PG-REEextract": REEExtractionPathway,
 }
-
 
 
 def get_pathway(code: str, **kwargs) -> BasePathway:
