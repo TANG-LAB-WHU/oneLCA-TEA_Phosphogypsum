@@ -110,4 +110,52 @@ LLM_API_KEY=ollama
 LLM_MODEL=qwen3.5:35b
 EMBEDDING_MODEL=bge-m3:567m
 EMBEDDING_DIM=1024
+LLM_CONTEXT_LENGTH=32768
+LLM_JSON_MODE=1
+# Optional MinerU overrides (used by RAGAnythingEngine when set)
+# RAGANYTHING_MINERU_BACKEND=pipeline
+# RAGANYTHING_MINERU_DEVICE=cpu
 ```
+
+### Ollama Stability Checklist (Windows)
+
+For local `qwen3.5:35b` + `bge-m3:567m`, set these as **OS-level environment variables**, then restart Ollama:
+
+```powershell
+setx OLLAMA_FLASH_ATTENTION 0
+setx OLLAMA_CONTEXT_LENGTH 32768
+setx OLLAMA_NUM_PARALLEL 1
+setx OLLAMA_MAX_LOADED_MODELS 1
+```
+
+Then fully quit Ollama from tray icon and launch it again.
+
+### Optional: create a 32k model alias via Modelfile
+
+If your Ollama version ignores request-level context hints, create a model alias with explicit `num_ctx`:
+
+```text
+# Modelfile.qwen35-32k
+FROM qwen3.5:35b
+PARAMETER num_ctx 32768
+```
+
+```powershell
+ollama create qwen3.5:35b-32k -f Modelfile.qwen35-32k
+```
+
+Then set `LLM_MODEL=qwen3.5:35b-32k` in `.env`.
+
+### MinerU preflight (recommended before RAGAnything)
+
+Run a single-file parse before full pipeline:
+
+```bash
+mineru -p "<path-to-one-small-pdf>" -o "<output-dir>" -m auto
+```
+
+If model fetching fails:
+
+- set `MINERU_MODEL_SOURCE=modelscope` (or use local model cache)
+- set `HF_TOKEN` if your environment requires authentication
+- on Windows, enabling Developer Mode avoids symlink-related cache limitations

@@ -29,6 +29,19 @@ except ImportError:
 load_dotenv()
 
 
+def _read_env_int(*names: str, default: int = 0) -> int:
+    """Read first valid integer environment variable."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        try:
+            return int(raw)
+        except ValueError:
+            continue
+    return default
+
+
 @dataclass
 class MultimodalQueryResult:
     """Result from RAGAnything multimodal query."""
@@ -99,25 +112,80 @@ class RAGAnythingEngine:
         # Embedding configuration — model name must match `ollama list`
         self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
         self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "1024"))
+        self.llm_context_length = _read_env_int(
+            "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
+        )
 
         # Parser configuration
         self.parser = parser
         self.parse_method = parse_method
+        # Optional parser knobs for MinerU. Only applied when explicitly configured.
+        self.mineru_backend = os.getenv("RAGANYTHING_MINERU_BACKEND")
+        self.mineru_device = os.getenv("RAGANYTHING_MINERU_DEVICE")
 
         self._rag = None
+        self._loop: Optional[asyncio.AbstractEventLoop] = None
+
+    def _get_or_create_loop(self) -> asyncio.AbstractEventLoop:
+        """Return a dedicated loop for this engine instance."""
+        if self._loop is None or self._loop.is_closed():
+            self._loop = asyncio.new_event_loop()
+        return self._loop
+
+    def _run_coroutine(self, coro):
+        """Run coroutine with a stable, instance-scoped event loop."""
+        try:
+            running_loop = asyncio.get_running_loop()
+        except RuntimeError:
+            running_loop = None
+
+        if running_loop and running_loop.is_running():
+            raise RuntimeError(
+                "RAGAnythingEngine sync API called from an active event loop. "
+                "Use async methods in this context."
+            )
+
+        loop = self._get_or_create_loop()
+        return loop.run_until_complete(coro)
+
+    def _build_extra_body(self, existing: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+        """Attach Ollama context hints without discarding caller-provided extra_body."""
+        extra_body: Dict[str, Any] = dict(existing or {})
+        if self.llm_context_length > 0:
+            options = dict(extra_body.get("options") or {})
+            options.setdefault("num_ctx", self.llm_context_length)
+            extra_body["options"] = options
+        return extra_body or None
+
+    @staticmethod
+    def _sanitize_embedding_text(text: str) -> str:
+        """Normalize text for retry when embedding request fails."""
+        cleaned = (text or "").replace("\x00", " ").replace("\ufeff", " ")
+        cleaned = " ".join(cleaned.split())
+        return cleaned if cleaned else " "
+
+    def close(self):
+        """Close resources owned by this engine instance."""
+        if self._loop is not None and not self._loop.is_closed():
+            self._loop.close()
+        self._loop = None
 
     def _create_llm_func(self):
         """Create LLM function for RAGAnything."""
 
-        def llm_model_func(prompt, system_prompt=None, history_messages=[], **kwargs):
+        def llm_model_func(prompt, system_prompt=None, history_messages=None, **kwargs):
+            request_kwargs = dict(kwargs)
+            extra_body = self._build_extra_body(request_kwargs.get("extra_body"))
+            if extra_body:
+                request_kwargs["extra_body"] = extra_body
             return openai_complete_if_cache(
                 self.llm_model,
                 prompt,
                 system_prompt=system_prompt,
-                history_messages=history_messages,
+                history_messages=history_messages or [],
                 api_key=self.llm_api_key,
                 base_url=self.llm_base_url,
-                **kwargs,
+                **request_kwargs,
             )
 
         return llm_model_func
@@ -129,11 +197,16 @@ class RAGAnythingEngine:
         def vision_model_func(
             prompt,
             system_prompt=None,
-            history_messages=[],
+            history_messages=None,
             image_data=None,
             messages=None,
             **kwargs,
         ):
+            request_kwargs = dict(kwargs)
+            extra_body = self._build_extra_body(request_kwargs.get("extra_body"))
+            if extra_body:
+                request_kwargs["extra_body"] = extra_body
+
             # Multimodal VLM query with messages format
             if messages:
                 return openai_complete_if_cache(
@@ -144,55 +217,89 @@ class RAGAnythingEngine:
                     messages=messages,
                     api_key=self.llm_api_key,
                     base_url=self.llm_base_url,
-                    **kwargs,
+                    **request_kwargs,
                 )
             # Single image format
             elif image_data:
+                mm_messages = []
+                if system_prompt:
+                    mm_messages.append({"role": "system", "content": system_prompt})
+                mm_messages.append(
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                            {
+                                "type": "image_url",
+                                "image_url": {"url": f"data:image/jpeg;base64,{image_data}"},
+                            },
+                        ],
+                    }
+                )
                 return openai_complete_if_cache(
                     self.llm_model,
                     "",
                     system_prompt=None,
                     history_messages=[],
-                    messages=[
-                        {"role": "system", "content": system_prompt} if system_prompt else None,
-                        (
-                            {
-                                "role": "user",
-                                "content": [
-                                    {"type": "text", "text": prompt},
-                                    {
-                                        "type": "image_url",
-                                        "image_url": {
-                                            "url": f"data:image/jpeg;base64,{image_data}"
-                                        },
-                                    },
-                                ],
-                            }
-                            if image_data
-                            else {"role": "user", "content": prompt}
-                        ),
-                    ],
+                    messages=mm_messages,
                     api_key=self.llm_api_key,
                     base_url=self.llm_base_url,
-                    **kwargs,
+                    **request_kwargs,
                 )
             # Pure text
             else:
-                return llm_func(prompt, system_prompt, history_messages, **kwargs)
+                return llm_func(prompt, system_prompt, history_messages or [], **request_kwargs)
 
         return vision_model_func
 
     def _create_embedding_func(self):
         """Create embedding function via Ollama's /v1/embeddings."""
 
-        async def embed_func(texts: list[str]):
+        async def _embed_batch(batch_texts: list[str]) -> np.ndarray:
             embeddings = await openai_embed(
-                texts,
+                batch_texts,
                 model=self.embedding_model,
                 api_key=self.llm_api_key,
                 base_url=self.llm_base_url,
             )
-            return np.array(embeddings)
+            vectors = np.array(embeddings, dtype=np.float32)
+            if vectors.ndim == 1:
+                vectors = np.expand_dims(vectors, axis=0)
+            if vectors.shape[0] != len(batch_texts):
+                raise ValueError(
+                    f"Embedding response size mismatch: expected {len(batch_texts)}, got {vectors.shape[0]}"
+                )
+            if not np.isfinite(vectors).all():
+                raise ValueError("Embedding response contains non-finite values (NaN/Inf).")
+            return vectors
+
+        async def embed_func(texts: list[str]):
+            try:
+                return await _embed_batch(texts)
+            except Exception as batch_error:
+                cleaned_texts = [self._sanitize_embedding_text(t) for t in texts]
+                if cleaned_texts != texts:
+                    try:
+                        return await _embed_batch(cleaned_texts)
+                    except Exception:
+                        pass
+
+                vectors: list[np.ndarray] = []
+                failures: list[str] = []
+                for idx, text in enumerate(cleaned_texts):
+                    try:
+                        vectors.append((await _embed_batch([text]))[0])
+                    except Exception as single_error:
+                        failures.append(f"idx={idx}: {single_error}")
+
+                if failures:
+                    raise RuntimeError(
+                        "Embedding failed after batch retry. "
+                        f"Failed inputs: {len(failures)}/{len(cleaned_texts)}; "
+                        + " | ".join(failures[:5])
+                    ) from batch_error
+
+                return np.vstack(vectors).astype(np.float32)
 
         return EmbeddingFunc(
             embedding_dim=self.embedding_dim, max_token_size=8192, func=embed_func
@@ -227,12 +334,17 @@ class RAGAnythingEngine:
         rag = self._get_rag_instance()
         file_path = Path(file_path)
         output_dir = Path(output_dir) if output_dir else self.working_dir / "parsed"
+        process_kwargs = dict(kwargs)
+        if self.mineru_backend and "backend" not in process_kwargs:
+            process_kwargs["backend"] = self.mineru_backend
+        if self.mineru_device and "device" not in process_kwargs:
+            process_kwargs["device"] = self.mineru_device
 
         return await rag.process_document_complete(
             file_path=str(file_path),
             output_dir=str(output_dir),
             parse_method=self.parse_method,
-            **kwargs,
+            **process_kwargs,
         )
 
     def process_document(
@@ -241,7 +353,7 @@ class RAGAnythingEngine:
         """
         Process a document with full multimodal extraction (Synchronous wrapper).
         """
-        return asyncio.run(self.aprocess_document(file_path, output_dir, **kwargs))
+        return self._run_coroutine(self.aprocess_document(file_path, output_dir, **kwargs))
 
     def process_documents_from_directory(
         self,
@@ -271,7 +383,7 @@ class RAGAnythingEngine:
                     results[filepath.name] = False
                     print(f"    ✗ Error: {e}")
 
-        asyncio.run(_process_all())
+        self._run_coroutine(_process_all())
         return results
 
     async def aquery(self, query: str, mode: str = "hybrid") -> str:
@@ -281,7 +393,7 @@ class RAGAnythingEngine:
 
     def query(self, query: str, mode: str = "hybrid") -> str:
         """Query the knowledge base (Synchronous wrapper)."""
-        return asyncio.run(self.aquery(query, mode=mode))
+        return self._run_coroutine(self.aquery(query, mode=mode))
 
     async def amultimodal_query(
         self, query: str, multimodal_content: Optional[List[Dict]] = None, mode: str = "hybrid"
@@ -304,7 +416,7 @@ class RAGAnythingEngine:
         self, query: str, multimodal_content: Optional[List[Dict]] = None, mode: str = "hybrid"
     ) -> MultimodalQueryResult:
         """Query with multimodal context (Synchronous wrapper)."""
-        return asyncio.run(self.amultimodal_query(query, multimodal_content, mode))
+        return self._run_coroutine(self.amultimodal_query(query, multimodal_content, mode))
 
     def check_parser_installation(self) -> bool:
         """Check if the parser (MinerU) is properly installed."""
@@ -319,7 +431,17 @@ class RAGAnythingEngine:
             "parse_method": self.parse_method,
             "llm_model": self.llm_model,
             "embedding_model": self.embedding_model,
+            "llm_context_length": self.llm_context_length,
+            "mineru_backend": self.mineru_backend,
+            "mineru_device": self.mineru_device,
         }
+
+    def __del__(self):
+        try:
+            self.close()
+        except Exception:
+            # Avoid destructor-time exceptions.
+            pass
 
 
 def main():

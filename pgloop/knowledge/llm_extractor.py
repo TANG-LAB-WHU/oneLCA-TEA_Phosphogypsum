@@ -16,6 +16,19 @@ _DEFAULT_BASE_URL = "http://127.0.0.1:11434/v1"
 _DEFAULT_MODEL = "qwen3.5:35b"
 
 
+def _read_env_int(*names: str, default: int = 0) -> int:
+    """Read first valid integer environment variable."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        try:
+            return int(raw)
+        except ValueError:
+            continue
+    return default
+
+
 @dataclass
 class ExtractionResult:
     """Result of LLM extraction."""
@@ -144,6 +157,10 @@ class LLMExtractor:
         self.model = model or os.getenv("LLM_MODEL", _DEFAULT_MODEL)
         self.base_url = base_url or os.getenv("LLM_BASE_URL", _DEFAULT_BASE_URL)
         self.api_key = api_key or os.getenv("LLM_API_KEY", "ollama")
+        self.llm_context_length = _read_env_int(
+            "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
+        )
+        self.prefer_json_mode = os.getenv("LLM_JSON_MODE", "1").lower() not in {"0", "false", "off"}
         self._client = None
 
     def _get_client(self):
@@ -153,6 +170,15 @@ class LLMExtractor:
 
             self._client = OpenAI(base_url=self.base_url, api_key=self.api_key)
         return self._client
+
+    def _build_extra_body(self, existing: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+        """Attach optional Ollama context hints without discarding caller data."""
+        extra_body: Dict[str, Any] = dict(existing or {})
+        if self.llm_context_length > 0:
+            options = dict(extra_body.get("options") or {})
+            options.setdefault("num_ctx", self.llm_context_length)
+            extra_body["options"] = options
+        return extra_body or None
 
     def extract(
         self, text: str, extraction_type: str, custom_prompt: Optional[str] = None
@@ -178,7 +204,7 @@ class LLMExtractor:
             client = self._get_client()
 
             print(f"DEBUG: LLM extraction (model={self.model}, base_url={self.base_url})")
-            response = client.chat.completions.create(
+            request_kwargs: Dict[str, Any] = dict(
                 model=self.model,
                 messages=[
                     {
@@ -186,7 +212,8 @@ class LLMExtractor:
                         "content": (
                             "You are a data extraction assistant specialized in Life Cycle "
                             "Assessment and Techno-Economic Analysis of phosphogypsum "
-                            "treatment. Extract structured data accurately."
+                            "treatment. Extract structured data accurately. "
+                            "Return only a valid JSON object. No markdown, no explanations."
                         ),
                     },
                     {"role": "user", "content": prompt},
@@ -194,6 +221,24 @@ class LLMExtractor:
                 temperature=0.1,
                 max_tokens=2000,
             )
+            extra_body = self._build_extra_body()
+            if extra_body:
+                request_kwargs["extra_body"] = extra_body
+
+            # Prefer strict JSON mode when supported. If backend does not support
+            # response_format, transparently retry without it.
+            if self.prefer_json_mode:
+                request_kwargs["response_format"] = {"type": "json_object"}
+
+            try:
+                response = client.chat.completions.create(**request_kwargs)
+            except Exception:
+                if "response_format" in request_kwargs:
+                    request_kwargs.pop("response_format", None)
+                    response = client.chat.completions.create(**request_kwargs)
+                else:
+                    raise
+
             raw_response = response.choices[0].message.content
 
             data, errors = self._parse_json_response(raw_response)

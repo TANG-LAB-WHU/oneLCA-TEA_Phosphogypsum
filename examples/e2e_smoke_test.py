@@ -63,6 +63,8 @@ def _run_ollama_command(args: list[str]) -> subprocess.CompletedProcess | None:
             check=False,
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
         )
     except FileNotFoundError:
         return None
@@ -141,6 +143,21 @@ def _print_query_answers(engine_name: str, query_func):
         print(f"\nQ: {q}\nA: {answer[:500]}")
 
 
+def _has_index_success(results: dict) -> bool:
+    """
+    Check whether pipeline index step contains at least one successful document.
+
+    Expected structure:
+        {"index": {"file_a.md": True, "file_b.md": False, ...}, ...}
+    """
+    if not isinstance(results, dict):
+        return False
+    index_results = results.get("index")
+    if not isinstance(index_results, dict) or not index_results:
+        return False
+    return any(bool(ok) for ok in index_results.values())
+
+
 def run_lightrag_smoke(limit: int):
     """Run LightRAG end-to-end smoke test."""
     lightrag_dir = PROJECT_ROOT / "data" / "processed" / "lightrag_db"
@@ -157,11 +174,18 @@ def run_lightrag_smoke(limit: int):
     print("\nLightRAG pipeline results:")
     print(json.dumps(results, ensure_ascii=False, indent=2, default=str))
 
-    rag = LightRAGEngine(working_dir=lightrag_dir)
-    _print_query_answers("LightRAG", lambda q: rag.query(q, mode="mix").answer)
+    if not _has_index_success(results):
+        print("\n[SKIP] LightRAG index failed. Skipping LightRAG query smoke.")
+        return
 
-    # Drop Python reference before memory barrier.
-    del rag
+    rag = LightRAGEngine(working_dir=lightrag_dir)
+    try:
+        _print_query_answers("LightRAG", lambda q: rag.query(q, mode="mix").answer)
+    finally:
+        if hasattr(rag, "close"):
+            rag.close()
+        # Drop Python reference before memory barrier.
+        del rag
 
 
 def run_raganything_smoke(limit: int):
@@ -184,11 +208,18 @@ def run_raganything_smoke(limit: int):
     print("\nRAGAnything index results:")
     print(json.dumps(results, ensure_ascii=False, indent=2, default=str))
 
-    rag = RAGAnythingEngine(working_dir=raganything_dir)
-    _print_query_answers("RAGAnything", lambda q: rag.query(q, mode="hybrid"))
+    if not _has_index_success(results):
+        print("\n[SKIP] RAGAnything index failed. Skipping RAGAnything query smoke.")
+        return
 
-    # Drop Python reference before memory barrier.
-    del rag
+    rag = RAGAnythingEngine(working_dir=raganything_dir)
+    try:
+        _print_query_answers("RAGAnything", lambda q: rag.query(q, mode="hybrid"))
+    finally:
+        if hasattr(rag, "close"):
+            rag.close()
+        # Drop Python reference before memory barrier.
+        del rag
 
 
 def main():

@@ -34,6 +34,19 @@ except ImportError:
     QueryParam = None
 
 
+def _read_env_int(*names: str, default: int = 0) -> int:
+    """Read the first valid integer env var from names."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        try:
+            return int(raw)
+        except ValueError:
+            continue
+    return default
+
+
 @dataclass
 class RetrievalResult:
     """Result from LightRAG retrieval."""
@@ -108,8 +121,62 @@ class LightRAGEngine:
         # Embedding configuration — model name must match `ollama list`
         self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
         self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "1024"))
+        # Request-level context length override for Ollama (/v1 compatible path).
+        # Prefer explicit LLM_CONTEXT_LENGTH and fallback to OLLAMA_CONTEXT_LENGTH.
+        self.llm_context_length = _read_env_int(
+            "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
+        )
 
         self._rag = None
+        self._loop: Optional[asyncio.AbstractEventLoop] = None
+
+    def _get_or_create_loop(self) -> asyncio.AbstractEventLoop:
+        """
+        Return a dedicated loop for this engine instance.
+
+        Reusing one loop avoids cross-loop object binding issues in LightRAG workers.
+        """
+        if self._loop is None or self._loop.is_closed():
+            self._loop = asyncio.new_event_loop()
+        return self._loop
+
+    def _run_coroutine(self, coro):
+        """Run coroutine on the engine's dedicated event loop."""
+        try:
+            running_loop = asyncio.get_running_loop()
+        except RuntimeError:
+            running_loop = None
+
+        if running_loop and running_loop.is_running():
+            raise RuntimeError(
+                "LightRAGEngine sync API called from an active event loop. "
+                "Use async methods in this context."
+            )
+
+        loop = self._get_or_create_loop()
+        return loop.run_until_complete(coro)
+
+    def _build_extra_body(self, existing: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+        """Merge request extra_body with Ollama context hints when configured."""
+        extra_body: Dict[str, Any] = dict(existing or {})
+        if self.llm_context_length > 0:
+            options = dict(extra_body.get("options") or {})
+            options.setdefault("num_ctx", self.llm_context_length)
+            extra_body["options"] = options
+        return extra_body or None
+
+    @staticmethod
+    def _sanitize_embedding_text(text: str) -> str:
+        """Normalize problematic characters before embedding retry."""
+        cleaned = (text or "").replace("\x00", " ").replace("\ufeff", " ")
+        cleaned = " ".join(cleaned.split())
+        return cleaned if cleaned else " "
+
+    def close(self):
+        """Close dedicated resources held by this engine instance."""
+        if self._loop is not None and not self._loop.is_closed():
+            self._loop.close()
+        self._loop = None
 
     def _get_rag_instance(self) -> LightRAG:
         """Create or return the LightRAG instance."""
@@ -132,6 +199,18 @@ class LightRAGEngine:
         from openai import OpenAI
 
         client = OpenAI(base_url=self.llm_base_url, api_key=self.llm_api_key)
+        passthrough_keys = {
+            "temperature",
+            "max_tokens",
+            "top_p",
+            "stop",
+            "seed",
+            "response_format",
+            "timeout",
+            "stream",
+            "tools",
+            "tool_choice",
+        }
 
         async def llm_func(
             prompt: str, system_prompt: str = None, history_messages: list = None, **kwargs
@@ -143,7 +222,15 @@ class LightRAGEngine:
                 messages.extend(history_messages)
             messages.append({"role": "user", "content": prompt})
 
-            response = client.chat.completions.create(model=self.llm_model, messages=messages)
+            request_kwargs: Dict[str, Any] = {"model": self.llm_model, "messages": messages}
+            for key in passthrough_keys:
+                if key in kwargs and kwargs[key] is not None:
+                    request_kwargs[key] = kwargs[key]
+            extra_body = self._build_extra_body(kwargs.get("extra_body"))
+            if extra_body:
+                request_kwargs["extra_body"] = extra_body
+
+            response = client.chat.completions.create(**request_kwargs)
             return response.choices[0].message.content
 
         return llm_func
@@ -155,9 +242,45 @@ class LightRAGEngine:
 
         client = OpenAI(base_url=self.llm_base_url, api_key=self.llm_api_key)
 
+        def _embed_batch(batch_texts: list[str]) -> np.ndarray:
+            response = client.embeddings.create(model=self.embedding_model, input=batch_texts)
+            vectors = np.array([d.embedding for d in response.data], dtype=np.float32)
+            if vectors.shape[0] != len(batch_texts):
+                raise ValueError(
+                    f"Embedding response size mismatch: expected {len(batch_texts)}, got {vectors.shape[0]}"
+                )
+            if not np.isfinite(vectors).all():
+                raise ValueError("Embedding response contains non-finite values (NaN/Inf).")
+            return vectors
+
         async def embed_func(texts: list[str]) -> np.ndarray:
-            response = client.embeddings.create(model=self.embedding_model, input=texts)
-            return np.array([d.embedding for d in response.data])
+            try:
+                return _embed_batch(texts)
+            except Exception as batch_error:
+                # Retry once with normalized text, then isolate problematic inputs.
+                cleaned_texts = [self._sanitize_embedding_text(t) for t in texts]
+                if cleaned_texts != texts:
+                    try:
+                        return _embed_batch(cleaned_texts)
+                    except Exception:
+                        pass
+
+                vectors: list[np.ndarray] = []
+                failures: list[str] = []
+                for idx, text in enumerate(cleaned_texts):
+                    try:
+                        vectors.append(_embed_batch([text])[0])
+                    except Exception as single_error:
+                        failures.append(f"idx={idx}: {single_error}")
+
+                if failures:
+                    raise RuntimeError(
+                        "Embedding failed after batch retry. "
+                        f"Failed inputs: {len(failures)}/{len(cleaned_texts)}; "
+                        + " | ".join(failures[:5])
+                    ) from batch_error
+
+                return np.vstack(vectors).astype(np.float32)
 
         return EmbeddingFunc(
             embedding_dim=self.embedding_dim, max_token_size=8192, func=embed_func
@@ -181,9 +304,9 @@ class LightRAGEngine:
                 suffix.lstrip("."), "image/jpeg"
             )
 
-            response = client.chat.completions.create(
-                model=self.llm_model,
-                messages=[
+            request_kwargs: Dict[str, Any] = {
+                "model": self.llm_model,
+                "messages": [
                     {
                         "role": "user",
                         "content": [
@@ -202,7 +325,12 @@ class LightRAGEngine:
                         ],
                     }
                 ],
-            )
+            }
+            extra_body = self._build_extra_body()
+            if extra_body:
+                request_kwargs["extra_body"] = extra_body
+
+            response = client.chat.completions.create(**request_kwargs)
             return (
                 f"\n\n[Image Analysis: {image_path.name}]\n{response.choices[0].message.content}\n"
             )
@@ -218,7 +346,7 @@ class LightRAGEngine:
             rag = await self._get_initialized_rag()
             await rag.ainsert(text)
 
-        asyncio.run(_work())
+        self._run_coroutine(_work())
 
     def add_documents_from_directory(
         self,
@@ -263,7 +391,7 @@ class LightRAGEngine:
                     results[filepath.name] = False
                     print(f"    ✗ Error: {e}")
 
-        asyncio.run(_work())
+        self._run_coroutine(_work())
         return results
 
     def query(self, query: str, mode: str = "mix") -> QueryResult:
@@ -274,7 +402,7 @@ class LightRAGEngine:
             answer = await rag.aquery(query, param=QueryParam(mode=mode))
             return answer
 
-        answer = asyncio.run(_work())
+        answer = self._run_coroutine(_work())
         return QueryResult(query=query, answer=answer, mode=mode)
 
     def retrieve(self, query: str, mode: str = "mix") -> RetrievalResult:
@@ -290,6 +418,7 @@ class LightRAGEngine:
             "llm_base_url": self.llm_base_url,
             "embedding_model": self.embedding_model,
             "embedding_dim": self.embedding_dim,
+            "llm_context_length": self.llm_context_length,
             "available": LIGHTRAG_AVAILABLE,
         }
 
@@ -300,6 +429,14 @@ class LightRAGEngine:
         if self.working_dir.exists():
             shutil.rmtree(self.working_dir)
         self._rag = None
+        self.close()
+
+    def __del__(self):
+        try:
+            self.close()
+        except Exception:
+            # Avoid destructor-time exceptions.
+            pass
 
 
 def main():
