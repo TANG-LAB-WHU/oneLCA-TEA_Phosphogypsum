@@ -8,7 +8,7 @@ import os
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
 try:
     import fitz  # PyMuPDF
@@ -17,22 +17,59 @@ try:
 except ImportError:
     PYMUPDF_AVAILABLE = False
 
-# Check for MinerU availability
+# MinerU: probe pipeline-only imports. Do NOT import mineru.cli.common here — it pulls
+# VLM/office backends and optional deps; a partial env then looked like "MinerU not installed".
+_MINERU_IMPORT_ERROR: Optional[BaseException] = None
+pipeline_doc_analyze_streaming: Optional[Callable[..., None]] = None
+pipeline_doc_analyze: Optional[Callable[..., Any]] = None
+pipeline_result_to_middle_json: Optional[Callable[..., Any]] = None
+pipeline_union_make: Optional[Callable[..., Any]] = None
+FileBasedDataWriter: Any = None
+MakeMode: Any = None
+
 try:
     from mineru.backend.pipeline.model_json_to_middle_json import (
         result_to_middle_json as pipeline_result_to_middle_json,
     )
-    from mineru.backend.pipeline.pipeline_analyze import doc_analyze as pipeline_doc_analyze
     from mineru.backend.pipeline.pipeline_middle_json_mkcontent import (
         union_make as pipeline_union_make,
     )
-    from mineru.cli.common import prepare_env, read_fn
     from mineru.data.data_reader_writer import FileBasedDataWriter
     from mineru.utils.enum_class import MakeMode
-
-    MINERU_AVAILABLE = True
-except ImportError:
+except Exception as _e:
+    _MINERU_IMPORT_ERROR = _e
     MINERU_AVAILABLE = False
+else:
+    try:
+        from mineru.backend.pipeline import pipeline_analyze as _pipeline_analyze
+    except Exception as _e:
+        _MINERU_IMPORT_ERROR = _e
+        pipeline_doc_analyze_streaming = None
+        pipeline_doc_analyze = None
+    else:
+        pipeline_doc_analyze_streaming = getattr(_pipeline_analyze, "doc_analyze_streaming", None)
+        pipeline_doc_analyze = getattr(_pipeline_analyze, "doc_analyze", None)
+
+    if pipeline_doc_analyze_streaming is not None:
+        MINERU_AVAILABLE = True
+    elif pipeline_doc_analyze is not None and pipeline_result_to_middle_json is not None:
+        MINERU_AVAILABLE = True
+    else:
+        MINERU_AVAILABLE = False
+        if _MINERU_IMPORT_ERROR is None:
+            _MINERU_IMPORT_ERROR = ImportError(
+                "MinerU pipeline API not found: need doc_analyze_streaming (MinerU 3.x) or "
+                "doc_analyze + result_to_middle_json. Upgrade: pip install -U 'mineru[all]'"
+            )
+
+
+def _mineru_prepare_env(output_dir: str, pdf_file_name: str, parse_method: str) -> tuple[str, str]:
+    """Same layout as mineru.cli.common.prepare_env without importing cli.common."""
+    local_md_dir = str(os.path.join(output_dir, pdf_file_name, parse_method))
+    local_image_dir = os.path.join(str(local_md_dir), "images")
+    os.makedirs(local_image_dir, exist_ok=True)
+    os.makedirs(local_md_dir, exist_ok=True)
+    return local_image_dir, local_md_dir
 
 
 @dataclass
@@ -85,11 +122,14 @@ class PDFParser:
             raise ImportError("PyMuPDF not installed. Run: pip install PyMuPDF")
 
         if parser_type == "mineru" and not MINERU_AVAILABLE:
-            raise ImportError(
-                "MinerU not installed. Run: pip install -U 'mineru[all]'\n"
-                "Also ensure model weights are downloaded.\n"
-                "See: https://github.com/opendatalab/MinerU"
+            msg = (
+                "MinerU Python pipeline could not be loaded (import/API mismatch or missing "
+                "optional deps). Install or upgrade: pip install -U 'mineru[all]'\n"
+                "Ensure model weights are available. See: https://github.com/opendatalab/MinerU"
             )
+            if _MINERU_IMPORT_ERROR is not None:
+                raise ImportError(msg) from _MINERU_IMPORT_ERROR
+            raise ImportError(msg)
 
     def parse_pdf(self, filepath: Union[str, Path]) -> ParsedDocument:
         """
@@ -155,54 +195,71 @@ class PDFParser:
         Requires: pip install -U "mineru[all]"
         """
         if not MINERU_AVAILABLE:
-            raise ImportError("MinerU not available. Install with: pip install -U 'mineru[all]'")
+            raise ImportError(
+                "MinerU not available. Install with: pip install -U 'mineru[all]'"
+            ) from _MINERU_IMPORT_ERROR
 
-        # Create output directory
         pdf_name = filepath.stem
-        output_path = self.output_dir / pdf_name
-        output_path.mkdir(parents=True, exist_ok=True)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        pdf_bytes = filepath.read_bytes()
 
-        # Read PDF bytes
-        pdf_bytes = read_fn(str(filepath))
-
-        # Prepare environment directories
-        local_image_dir, local_md_dir = prepare_env(str(output_path), pdf_name, "auto")
+        # Keep output layout aligned with the rest of the pipeline:
+        # <parsed>/<pdf_name>/auto/<pdf_name>.md
+        local_image_dir, local_md_dir = _mineru_prepare_env(str(self.output_dir), pdf_name, "auto")
         image_writer = FileBasedDataWriter(local_image_dir)
         md_writer = FileBasedDataWriter(local_md_dir)
 
-        # Run pipeline analysis
-        infer_results, all_image_lists, all_pdf_docs, lang_list, ocr_enabled_list = (
-            pipeline_doc_analyze(
+        if pipeline_doc_analyze_streaming is not None:
+            state: Dict[str, object] = {}
+
+            def on_doc_ready(_doc_index, model_list, middle_json, ocr_enable):
+                state["model_list"] = model_list
+                state["middle_json"] = middle_json
+                state["ocr_enable"] = ocr_enable
+
+            pipeline_doc_analyze_streaming(
                 [pdf_bytes],
+                [image_writer],
                 [self.language],
+                on_doc_ready,
                 parse_method="auto",
                 formula_enable=True,
                 table_enable=True,
             )
-        )
-
-        # Process results
-        model_list = infer_results[0]
-        images_list = all_image_lists[0]
-        pdf_doc = all_pdf_docs[0]
-        _lang = lang_list[0]
-        _ocr_enable = ocr_enabled_list[0]
-
-        # Convert to middle JSON format
-        middle_json = pipeline_result_to_middle_json(
-            model_list, images_list, pdf_doc, image_writer, _lang, _ocr_enable, True
-        )
+            middle_json = state.get("middle_json")
+            if middle_json is None:
+                raise RuntimeError(
+                    "MinerU doc_analyze_streaming finished without emitting a document "
+                    "(empty PDF or pipeline error)."
+                )
+            _ocr_enable = bool(state.get("ocr_enable", False))
+            _lang = self.language
+        else:
+            assert pipeline_doc_analyze is not None and pipeline_result_to_middle_json is not None
+            infer_results, all_image_lists, all_pdf_docs, lang_list, ocr_enabled_list = (
+                pipeline_doc_analyze(
+                    [pdf_bytes],
+                    [self.language],
+                    parse_method="auto",
+                    formula_enable=True,
+                    table_enable=True,
+                )
+            )
+            model_list = infer_results[0]
+            images_list = all_image_lists[0]
+            pdf_doc = all_pdf_docs[0]
+            _lang = lang_list[0]
+            _ocr_enable = ocr_enabled_list[0]
+            middle_json = pipeline_result_to_middle_json(
+                model_list, images_list, pdf_doc, image_writer, _lang, _ocr_enable, True
+            )
 
         pdf_info = middle_json["pdf_info"]
         image_dir_name = os.path.basename(local_image_dir)
 
-        # Generate markdown content
         md_content = pipeline_union_make(pdf_info, MakeMode.MM_MD, image_dir_name)
-
-        # Save markdown file
         md_writer.write_string(f"{pdf_name}.md", md_content)
 
-        # Extract tables from content list
         tables = []
         try:
             content_list = pipeline_union_make(pdf_info, MakeMode.CONTENT_LIST, image_dir_name)
@@ -213,9 +270,8 @@ class PDFParser:
                             {"html": item.get("content", ""), "page": item.get("page_idx", -1)}
                         )
         except Exception:
-            pass  # Tables extraction is optional
+            pass
 
-        # Extract title from markdown
         title = pdf_name
         for line in md_content.split("\n"):
             if line.startswith("# "):
@@ -257,7 +313,6 @@ class PDFParser:
         output_path = self.output_dir / pdf_name
         output_path.mkdir(parents=True, exist_ok=True)
 
-        # Build command
         cmd = ["mineru", "-p", str(filepath), "-o", str(output_path), "-b", backend]
 
         try:
@@ -266,7 +321,7 @@ class PDFParser:
                 capture_output=True,
                 text=True,
                 check=True,
-                timeout=600,  # 10 minute timeout
+                timeout=600,
             )
         except subprocess.CalledProcessError as e:
             raise RuntimeError(f"MinerU CLI failed: {e.stderr}")
@@ -277,17 +332,14 @@ class PDFParser:
         except subprocess.TimeoutExpired:
             raise RuntimeError(f"MinerU parsing timed out for: {filepath}")
 
-        # Find output markdown file
         md_files = list(output_path.rglob("*.md"))
         if not md_files:
             raise FileNotFoundError(f"No markdown output found in {output_path}")
 
-        # Use the first .md file found (typically named after the PDF)
         md_path = md_files[0]
         with open(md_path, "r", encoding="utf-8") as f:
             text = f.read()
 
-        # Extract title
         title = pdf_name
         for line in text.split("\n"):
             if line.startswith("# "):
@@ -305,16 +357,15 @@ class PDFParser:
 
     def _parse_mineru_output(self, filepath: Path) -> ParsedDocument:
         """Parse pre-existing MinerU markdown output."""
-        # Look for corresponding .md file
         md_path = filepath.with_suffix(".md")
 
         if not md_path.exists():
-            # Try common MinerU output patterns
             stem = filepath.stem
             patterns = [
                 filepath.parent / f"{stem}.md",
                 self.output_dir / stem / f"{stem}.md",
                 self.output_dir / stem / "auto" / f"{stem}.md",
+                self.output_dir / stem / stem / "auto" / f"{stem}.md",
             ]
 
             for pattern in patterns:
@@ -327,7 +378,6 @@ class PDFParser:
         with open(md_path, "r", encoding="utf-8") as f:
             text = f.read()
 
-        # Extract title from first heading
         title = filepath.stem
         for line in text.split("\n"):
             if line.startswith("# "):

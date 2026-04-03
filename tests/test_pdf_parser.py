@@ -394,6 +394,29 @@ This paper discusses phosphogypsum processing.
         assert result.title == "Nested Paper Title"
         assert "phosphogypsum" in result.text
 
+    def test_mineru_output_with_legacy_double_nested_structure(self, tmp_path):
+        """Test parsing legacy MinerU output from double-nested directory structure."""
+        pdf_name = "legacy_nested_paper"
+        legacy_dir = tmp_path / pdf_name / pdf_name / "auto"
+        legacy_dir.mkdir(parents=True)
+
+        md_content = """# Legacy Nested Paper Title
+
+## Background
+
+This legacy MinerU layout should still be supported.
+"""
+        (legacy_dir / f"{pdf_name}.md").write_text(md_content, encoding="utf-8")
+
+        pdf_path = tmp_path / f"{pdf_name}.pdf"
+        pdf_path.write_bytes(b"dummy pdf")
+
+        parser = PDFParser(parser_type="mineru_output", output_dir=tmp_path)
+        result = parser.parse_pdf(pdf_path)
+
+        assert result.title == "Legacy Nested Paper Title"
+        assert "legacy mineru layout" in result.text.lower()
+
 
 class TestMinerUErrorHandling:
     """Tests for MinerU error handling."""

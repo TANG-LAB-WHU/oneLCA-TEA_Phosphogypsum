@@ -42,7 +42,7 @@ dependencies = [
     "requests>=2.31.0",
     "tqdm>=4.66.0",
     "googletrans>=4.0.0",  # Google Translate API for Python
-    "mineru[all]",  # Advanced PDF parsing (OCR, tables, figures); models download on first use
+    "mineru[all]>=3.0.0",  # Pipeline API (doc_analyze_streaming); models download on first use
 ]
 
 [project.optional-dependencies]

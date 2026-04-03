@@ -58,6 +58,30 @@ for d in [PARSED_DIR, LIGHTRAG_DIR, RAGANYTHING_DIR, KG_DIR, EXTRACTED_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
 
+def _parsed_markdown_candidates(pdf_stem: str, parser_type: str | None = None) -> list[Path]:
+    """Known parsed markdown layouts for each parser and legacy MinerU runs."""
+    pymupdf_candidates = [PARSED_DIR / f"{pdf_stem}.md"]
+    mineru_candidates = [
+        PARSED_DIR / pdf_stem / f"{pdf_stem}.md",
+        PARSED_DIR / pdf_stem / "auto" / f"{pdf_stem}.md",
+        PARSED_DIR / pdf_stem / pdf_stem / "auto" / f"{pdf_stem}.md",
+    ]
+
+    if parser_type == "pymupdf":
+        return pymupdf_candidates
+    if parser_type == "mineru":
+        return mineru_candidates
+    return pymupdf_candidates + mineru_candidates
+
+
+def _find_existing_parsed_markdown(pdf_stem: str, parser_type: str | None = None) -> Path | None:
+    """Return the first parsed markdown file found for a paper stem."""
+    for candidate in _parsed_markdown_candidates(pdf_stem, parser_type=parser_type):
+        if candidate.exists():
+            return candidate
+    return None
+
+
 def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
     """
     Step 1: Parse PDFs to Markdown
@@ -90,11 +114,9 @@ def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
 
     for i, pdf_path in enumerate(pdf_files, 1):
         try:
-            # Check if already parsed (support both flat .md and subdirectory structure)
-            output_md_flat = PARSED_DIR / f"{pdf_path.stem}.md"
-            output_md_subdir = PARSED_DIR / pdf_path.stem / f"{pdf_path.stem}.md"
-
-            if output_md_flat.exists() or output_md_subdir.exists():
+            # Check if already parsed (supports flat, nested, and legacy double-nested layouts)
+            existing_md = _find_existing_parsed_markdown(pdf_path.stem, parser_type=parser_type)
+            if existing_md is not None:
                 skipped_count += 1
                 print(f"[{i}/{len(pdf_files)}] ⏭ Skipped (already parsed): {pdf_path.name[:50]}")
                 continue
@@ -105,7 +127,7 @@ def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
             # For MinerU parser, the .md is already saved inside subdirectory by pdf_parser
             # For PyMuPDF, save as flat .md file at top level
             if parser_type == "pymupdf":
-                output_path = output_md_flat
+                output_path = PARSED_DIR / f"{pdf_path.stem}.md"
                 with open(output_path, "w", encoding="utf-8") as f:
                     f.write(f"# {doc.title}\n\n")
                     f.write(f"**Source**: {pdf_path.name}\n")
@@ -114,8 +136,17 @@ def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
                     f.write(doc.text)
                 print(f"    ✓ Saved: {output_path.name} ({len(doc.text)} chars)")
             else:
-                # MinerU already saved to subdirectory
-                print(f"    ✓ Saved: {pdf_path.stem}/{pdf_path.stem}.md ({len(doc.text)} chars)")
+                saved_md = _find_existing_parsed_markdown(pdf_path.stem, parser_type="mineru")
+                if saved_md is None and "output_path" in doc.metadata:
+                    saved_md = Path(doc.metadata["output_path"]) / f"{pdf_path.stem}.md"
+                if saved_md is not None:
+                    try:
+                        saved_display = saved_md.relative_to(PARSED_DIR)
+                    except ValueError:
+                        saved_display = saved_md
+                else:
+                    saved_display = Path(pdf_path.stem) / "auto" / f"{pdf_path.stem}.md"
+                print(f"    ✓ Saved: {saved_display} ({len(doc.text)} chars)")
 
             success_count += 1
 
@@ -214,10 +245,10 @@ def step3_extract_structured_data(limit: int = None, engine: str = "lightrag"):
         md_files = list(source_dir.glob("**/hybrid_auto/*.md"))
         print(f"Source: {source_dir} (nested)")
     else:
-        # LightRAG uses flat directory
+        # LightRAG reads Markdown recursively because MinerU outputs nested auto/ directories.
         source_dir = PARSED_DIR
-        md_files = list(source_dir.glob("*.md"))
-        print(f"Source: {source_dir}")
+        md_files = sorted(source_dir.rglob("*.md"))
+        print(f"Source: {source_dir} (recursive)")
 
     print(f"Output: {EXTRACTED_DIR}")
 
@@ -402,7 +433,10 @@ def main():
         help="PDF parser to use (default: mineru)",
     )
     parser.add_argument(
-        "--limit", type=int, default=None, help="Limit number of documents to process (for testing)"
+        "--limit",
+        type=int,
+        default=None,
+        help="Limit number of documents to process (for testing)",
     )
     parser.add_argument(
         "--engine",

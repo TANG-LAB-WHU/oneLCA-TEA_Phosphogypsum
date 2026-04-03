@@ -4,12 +4,13 @@ End-to-end smoke test for the knowledge-graph pipeline.
 This script validates both RAG engines (LightRAG and RAGAnything, if installed)
 on a small PDF subset in data/raw/papers/unparsed.
 
-LightRAG stage uses MinerU for PDF→Markdown by default (figures/tables; requires
-`pip install -U "mineru[all]"` and model assets). Use `--lightrag-parser pymupdf`
-for a faster text-only parse.
+LightRAG stage always uses MinerU for PDF→Markdown (figures/tables; requires
+`pip install -U "mineru[all]"` and model assets). This smoke test does not offer a
+PyMuPDF shortcut.
 
-If `data/raw/papers/parsed/<stem>.md` already exists from an older PyMuPDF run,
-`build_knowledge_graph` step 1 will skip parsing; delete that file to force MinerU.
+If MinerU output already exists under `data/raw/papers/parsed/`,
+`build_knowledge_graph` step 1 may skip parsing; delete it to force re-parse.
+Old flat PyMuPDF markdown is ignored for MinerU runs.
 
 Run from any working directory:
     python examples/e2e_smoke_test.py
@@ -177,8 +178,8 @@ def _has_index_success(results: dict) -> bool:
     return any(bool(ok) for ok in index_results.values())
 
 
-def run_lightrag_smoke(limit: int, parser_type: str = "mineru"):
-    """Run LightRAG end-to-end smoke test (`parser_type`: mineru or pymupdf)."""
+def run_lightrag_smoke(limit: int):
+    """Run LightRAG end-to-end smoke test (PDF step 1 always uses MinerU)."""
     lightrag_dir = PROJECT_ROOT / "data" / "processed" / "lightrag_db"
     _clean_dir(lightrag_dir)
 
@@ -186,7 +187,7 @@ def run_lightrag_smoke(limit: int, parser_type: str = "mineru"):
     # Full pipeline for LightRAG: parse -> index -> extract -> build
     results = run_pipeline(
         steps=["all"],
-        parser_type=parser_type,
+        parser_type="mineru",
         limit=limit,
         engine="lightrag",
     )
@@ -259,12 +260,6 @@ def main():
         action="store_true",
         help="Do not call `ollama stop` between stages",
     )
-    parser.add_argument(
-        "--lightrag-parser",
-        choices=["mineru", "pymupdf"],
-        default="mineru",
-        help="PDF parser for LightRAG pipeline step 1 (default: mineru for images/tables)",
-    )
     args = parser.parse_args()
 
     unparsed_dir = PROJECT_ROOT / "data" / "raw" / "papers" / "unparsed"
@@ -278,7 +273,7 @@ def main():
 
     # Engines are executed sequentially in one process.
     # Memory protection: clear Python refs + optional `ollama stop` between stages.
-    run_lightrag_smoke(limit, parser_type=args.lightrag_parser)
+    run_lightrag_smoke(limit)
     _memory_barrier(unload_between_stages)
 
     if not args.skip_raganything:
