@@ -42,6 +42,7 @@ dependencies = [
     "requests>=2.31.0",
     "tqdm>=4.66.0",
     "googletrans>=4.0.0",  # Google Translate API for Python
+    "mineru[all]",  # Advanced PDF parsing (OCR, tables, figures); models download on first use
 ]
 
 [project.optional-dependencies]
@@ -53,9 +54,6 @@ ai = [
     "xgboost>=2.0.0",
     "PyMuPDF>=1.23.0",
     "beautifulsoup4>=4.12.0",
-]
-pdf = [
-    "mineru[all]",  # Advanced PDF parsing with OCR and table extraction
 ]
 viz = [
     "streamlit>=1.28.0",

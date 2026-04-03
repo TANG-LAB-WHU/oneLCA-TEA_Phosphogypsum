@@ -95,7 +95,7 @@ data/processed/knowledge_graph/ ← Domain knowledge graph (NetworkX/Neo4j)
 
 ## Dependencies
 
-- **Project extras (recommended)**: `pip install -e ".[rag,pdf]"`
+- **Project extras (recommended)**: `pip install -e ".[rag]"` (MinerU is a core dependency)
 - **MinerU**: Advanced PDF parsing with OCR (`pip install -U "mineru[all]"`)
 - **LightRAG**: Graph-enhanced RAG (`pip install lightrag-hku`)
 - **RAGAnything**: Multimodal RAG (optional, `pip install "raganything[all]"`)
@@ -112,6 +112,8 @@ EMBEDDING_MODEL=bge-m3:567m
 EMBEDDING_DIM=1024
 LLM_CONTEXT_LENGTH=32768
 LLM_JSON_MODE=1
+MINERU_MODEL_SOURCE=huggingface
+HF_ENDPOINT=https://huggingface.co
 # Optional MinerU overrides (used by RAGAnythingEngine when set)
 # RAGANYTHING_MINERU_BACKEND=pipeline
 # RAGANYTHING_MINERU_DEVICE=cpu
@@ -156,6 +158,9 @@ mineru -p "<path-to-one-small-pdf>" -o "<output-dir>" -m auto
 
 If model fetching fails:
 
-- set `MINERU_MODEL_SOURCE=modelscope` (or use local model cache)
+- this repo defaults to Hugging Face official source:
+  - `MINERU_MODEL_SOURCE=huggingface`
+  - `HF_ENDPOINT=https://huggingface.co`
+- set `MINERU_MODEL_SOURCE=modelscope` only when HF is blocked/slow
 - set `HF_TOKEN` if your environment requires authentication
 - on Windows, enabling Developer Mode avoids symlink-related cache limitations

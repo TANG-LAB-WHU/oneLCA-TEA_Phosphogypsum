@@ -197,13 +197,9 @@ python -m venv venv
 # conda activate pgloop
 
 # Install package + optional extras (declared in pyproject.toml)
-pip install -e ".[ai,viz,kg,dev]"
-
-# Optional: advanced PDF parsing (MinerU); see optional-dependencies "pdf" in pyproject.toml
-# pip install -e ".[pdf]"
-
+# Core install includes MinerU (mineru[all]); first run may download model weights.
 # Optional: RAG engines (LightRAG + RAGAnything)
-# pip install -e ".[rag]"
+pip install -e ".[ai,viz,kg,dev,rag]"
 
 # Optional: stochastic_dynamics (PyTorch PINN/VAE) with CUDA 12.9
 # Install CUDA-matched torch first:
