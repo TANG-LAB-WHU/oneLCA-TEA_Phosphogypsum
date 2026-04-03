@@ -1,0 +1,496 @@
+(oneLCA-TEA) PS C:\Github\oneLCA-TEA_Phosphogypsum> python examples/e2e_smoke_test.py
+Found 72 PDFs in C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed
+Removing old directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db
+
+=== LightRAG smoke run ===
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-04-04 00:59:51
+Steps to run: ['all']
+RAG Engine: lightrag
+
+============================================================
+   STEP 1: PDF PARSING
+============================================================
+Parser type: pymupdf
+Input:  C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed
+Output: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed
+
+Found 1 PDF files to process
+
+[1/1] Parsing: 1. Environmental impact and management of phosphog...
+    ✓ Saved: 1. Environmental impact and management of phosphogypsum.md (69362 chars)
+
+========================================
+Parsing Complete: 1 success, 0 skipped, 0 errors
+
+============================================================
+   STEP 2: LIGHTRAG INDEX CONSTRUCTION
+============================================================
+LightRAG DB: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db
+Source:      C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed
+LLM Model:   qwen3.5:35b
+
+Note: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).
+INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db\graph_chunk_entity_relation.graphml
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
+INFO: [] Process 6984 KV load full_docs with 0 records
+INFO: [] Process 6984 KV load text_chunks with 0 records
+INFO: [] Process 6984 KV load full_entities with 0 records
+INFO: [] Process 6984 KV load full_relations with 0 records
+INFO: [] Process 6984 KV load entity_chunks with 0 records
+INFO: [] Process 6984 KV load relation_chunks with 0 records
+INFO: [] Process 6984 KV load llm_response_cache with 0 records
+INFO: [] Process 6984 doc status load doc_status with 0 records
+[1/1] Processing: 1. Environmental impact and management of phosphog...
+INFO: Processing 1 document(s)
+INFO: Extracting stage 1/1: unknown_source
+INFO: Processing d-id: doc-347f68b590c62149df8a9399e61a9225
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
+INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
+INFO:  == LLM cache == saving: default:extract:6ff81616359ffd2433c2b5071c72fecb
+INFO:  == LLM cache == saving: default:extract:d6788df5b688f9176017a98b7c1c54ce
+INFO:  == LLM cache == saving: default:extract:bbbad89f383134255049243c02c911c0
+WARNING: chunk-1e1af861bcdba69e6718294357572188: Complete delimiter can not be found in extraction result
+INFO:  == LLM cache == saving: default:extract:ccd97dfef0cddfd3b59a33985136532d
+WARNING: chunk-1e1af861bcdba69e6718294357572188: LLM output format error; found 2/4 fields on ENTITY `COMPLETE|` @ `N/A`
+INFO:  == LLM cache == saving: default:extract:556c5300776b61af4d325eb168e13639
+INFO:  == LLM cache == saving: default:extract:a40eef7e66e000f1758c6ae8c572db44
+INFO:  == LLM cache == saving: default:extract:91b6ee233e09bb8c7d2545c885521626
+INFO:  == LLM cache == saving: default:extract:29c1461ca9916d106ff1cb1bfbf48733
+WARNING: chunk-e57e9d95337b9b6a0f1730953eb2f0e8: Complete delimiter can not be found in extraction result
+INFO: Chunk 1 of 18 extracted 41 Ent + 14 Rel chunk-1e1af861bcdba69e6718294357572188
+INFO: Chunk 2 of 18 extracted 27 Ent + 18 Rel chunk-2c94b50294b9f4c9fe9a8677df084aba
+WARNING: chunk-5bb72b7ff3498ff996c2c412b15bf458: LLM output format error; found 4/5 fields on RELATION `EPA`~`National Emission Standards for Radon Emission from PG Stacks<|#`
+WARNING: chunk-e57e9d95337b9b6a0f1730953eb2f0e8: LLM output format error; found 2/4 fields on ENTITY `COMPLETE|` @ `N/A`
+INFO: Chunk 3 of 18 extracted 46 Ent + 30 Rel chunk-5bb72b7ff3498ff996c2c412b15bf458
+INFO:  == LLM cache == saving: default:extract:db5e431c465ffd41120cf0d0d130b102
+INFO:  == LLM cache == saving: default:extract:ac2b9398efff1a499a7596c81fbd058b
+INFO: Chunk 4 of 18 extracted 76 Ent + 31 Rel chunk-e57e9d95337b9b6a0f1730953eb2f0e8
+INFO:  == LLM cache == saving: default:extract:7d8025a815faea5dd1a6b7af60cb368a
+INFO:  == LLM cache == saving: default:extract:a4e68a777bf4920f2d76d7b7c2d0c6ff
+INFO:  == LLM cache == saving: default:extract:63fdaf08b917638801203c2cc1cd1353
+INFO:  == LLM cache == saving: default:extract:b1aae5d1bdbf27d97c527df13c502045
+INFO:  == LLM cache == saving: default:extract:5effff3ae548342b101d1fe7abc6522e
+INFO: Chunk 5 of 18 extracted 35 Ent + 29 Rel chunk-7cacef5117baea7f2c163ced2db4ed9d
+INFO: Chunk 6 of 18 extracted 40 Ent + 17 Rel chunk-5d4b16809ec28bbd0397c3b6977407b7
+INFO:  == LLM cache == saving: default:extract:b0e19071cbf23cd8a37bed4d06b06aec
+INFO: Chunk 7 of 18 extracted 44 Ent + 26 Rel chunk-603259b8dc55fdcb997268e8b805a77d
+INFO: Chunk 8 of 18 extracted 41 Ent + 27 Rel chunk-30a7f45367a6bd72b514978fdfd21b84
+INFO:  == LLM cache == saving: default:extract:6030057dcbe8bb8955fc561cdac1e3ac
+INFO:  == LLM cache == saving: default:extract:09b93259c0035e11aaae8453000cf15b
+INFO:  == LLM cache == saving: default:extract:973c90ab62ef930c31c54b5082a983b8
+INFO:  == LLM cache == saving: default:extract:9b867e616f3581757db06ab9d874ed1e
+INFO:  == LLM cache == saving: default:extract:6c08338cc74c796d778f54cf25d13962
+INFO:  == LLM cache == saving: default:extract:de5eadedecfa66cc43e7a497fcb2ba35
+INFO:  == LLM cache == saving: default:extract:c843183b9f7ddf6d34ce2b14c9a61852
+INFO: Chunk 9 of 18 extracted 30 Ent + 17 Rel chunk-8b347c58ce13be9b416ef3eaaad5cea2
+INFO:  == LLM cache == saving: default:extract:76de0cd541bba9f7204c53a95c153efe
+INFO: Chunk 10 of 18 extracted 20 Ent + 12 Rel chunk-6ffe1dab87736c4a0548e4662534b11c
+WARNING: chunk-f3f3c1d61a4bf0fc84ca1868e77f1dc8: LLM output format error; found 5/4 fields on ENTITY `H. Tayibi` @ `Journal of Environmental Management`       
+WARNING: chunk-f3f3c1d61a4bf0fc84ca1868e77f1dc8: LLM output format error; found 5/4 fields on ENTITY `Taher` @ `Portland Slag Cement`
+WARNING: chunk-f3f3c1d61a4bf0fc84ca1868e77f1dc8: LLM output format error; found 5/4 fields on ENTITY `Valenti` @ `Calcium Carbonate`
+INFO: Chunk 11 of 18 extracted 36 Ent + 28 Rel chunk-ef69f8584477aa58431de67042033ffa
+WARNING: chunk-f3f3c1d61a4bf0fc84ca1868e77f1dc8: LLM output format error; found 5/4 fields on ENTITY `Valenti` @ `Calcium Sulfate Dihydrate`
+WARNING: chunk-f3f3c1d61a4bf0fc84ca1868e77f1dc8: LLM output format error; found 5/4 fields on ENTITY `Valenti` @ `3CaO.3Al2O3.CaSO4`
+INFO: Chunk 12 of 18 extracted 27 Ent + 11 Rel chunk-f3f3c1d61a4bf0fc84ca1868e77f1dc8
+INFO:  == LLM cache == saving: default:extract:9462b69456966ae2c60d8550c3d90ba9
+INFO:  == LLM cache == saving: default:extract:ee93af9a6345c5799b64cf1f33fdba2a
+INFO:  == LLM cache == saving: default:extract:d2d8ba32283dd31bf24d9662496f711f
+INFO:  == LLM cache == saving: default:extract:f5c924346096dec04065d8cea9afebea
+WARNING: chunk-7ab6b96b36cb2fab105eeabef346b075: LLM output format error; found 4/5 fields on RELATION `Journal of Environmental Management`~`Hanan Tayibi`    
+INFO:  == LLM cache == saving: default:extract:98b92e48b673afa7c59f53dd6ce19e2b
+INFO:  == LLM cache == saving: default:extract:16fdcbdfdbcd6b1a7c190807fa91e456
+INFO: Chunk 13 of 18 extracted 34 Ent + 20 Rel chunk-36319995eb55998c7ff83840355c8492
+INFO: Chunk 14 of 18 extracted 15 Ent + 10 Rel chunk-7ab6b96b36cb2fab105eeabef346b075
+INFO:  == LLM cache == saving: default:extract:a9e2f50ecfbe8e1775be0bf410def2b5
+INFO:  == LLM cache == saving: default:extract:534922fc2cbbacc47a64f4558a55257e
+WARNING: chunk-c86d88ef1ef4ad2ac5ef286d351d210c: LLM output format error; found 4/5 fields on RELATION `Rakesh, K.<|#Manjit, S.`~`co-authorship, joint research`
+INFO:  == LLM cache == saving: default:extract:66bc96e9d2f6c7ef828a8a869b90095e
+INFO: Chunk 15 of 18 extracted 53 Ent + 32 Rel chunk-c86d88ef1ef4ad2ac5ef286d351d210c
+INFO:  == LLM cache == saving: default:extract:b7925d309fb1f15dbb876cb238b576ec
+INFO: Chunk 16 of 18 extracted 77 Ent + 44 Rel chunk-613760f8b67f90c7662fd2936538cad3
+INFO:  == LLM cache == saving: default:extract:751b6d399a59fdc2dae42e1f1af22156
+INFO:  == LLM cache == saving: default:extract:7e22340f7793b0c2e64dd2eb6c399268
+INFO: Chunk 17 of 18 extracted 31 Ent + 15 Rel chunk-aca85e98da2e04b5e8a104708448c4ba
+INFO: Chunk 18 of 18 extracted 31 Ent + 28 Rel chunk-fa6e4a7942c1792477331d3307e13bb0
+INFO: Merging stage 1/1: unknown_source
+INFO: Phase 1: Processing 544 entities from doc-347f68b590c62149df8a9399e61a9225 (async: 8)
+INFO:openai._base_client:Retrying request to /embeddings in 0.481004 seconds
+INFO:openai._base_client:Retrying request to /embeddings in 0.805743 seconds
+ERROR: Embedding func: Error in decorated function for task 2355222884032_12812.421: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+WARNING: VDB entity_upsert attempt 1 failed for Kochi, India: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}, retrying...
+INFO:openai._base_client:Retrying request to /embeddings in 0.400231 seconds
+INFO:openai._base_client:Retrying request to /embeddings in 0.864849 seconds
+ERROR: Embedding func: Error in decorated function for task 2355222887296_12814.453: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+WARNING: VDB entity_upsert attempt 2 failed for Kochi, India: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}, retrying...
+INFO:  == LLM cache == saving: default:summary:3ce5c9e8fe71f4b6b09b4722e1982fce
+INFO:openai._base_client:Retrying request to /embeddings in 0.493401 seconds
+INFO:openai._base_client:Retrying request to /embeddings in 0.779779 seconds
+INFO: LLMmrg: `Journal of Environmental Management` | 0+10
+ERROR: Embedding func: Error in decorated function for task 2355223497600_12829.437: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+WARNING: VDB entity_upsert failed for Kochi, India after 3 attempts: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+ERROR: Error processing entity `Kochi, India`: VDB entity_upsert failed for Kochi, India after 3 attempts: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+ERROR: Traceback (most recent call last):
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\utils.py", line 162, in safe_vdb_operation_with_exception
+    await operation()
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\kg\nano_vector_db_impl.py", line 124, in upsert
+    embeddings_list = await asyncio.gather(*embedding_tasks)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\utils.py", line 513, in __call__
+    result = await self.func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\utils.py", line 1026, in wait_func
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\utils.py", line 730, in worker
+    result = await asyncio.wait_for(
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\asyncio\tasks.py", line 489, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\pgloop\knowledge\lightrag_engine.py", line 159, in embed_func
+    response = client.embeddings.create(model=self.embedding_model, input=texts)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\openai\resources\embeddings.py", line 136, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\openai\_base_client.py", line 1297, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\openai\_base_client.py", line 1070, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.InternalServerError: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\operate.py", line 2606, in _locked_process_entity_name
+    entity_data = await _merge_nodes_then_upsert(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\operate.py", line 1932, in _merge_nodes_then_upsert
+    await safe_vdb_operation_with_exception(
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\utils.py", line 168, in safe_vdb_operation_with_exception
+    raise Exception(error_msg) from e
+Exception: VDB entity_upsert failed for Kochi, India after 3 attempts: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\lightrag.py", line 2140, in process_document
+    await merge_nodes_and_edges(
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\operate.py", line 2683, in merge_nodes_and_edges
+    raise first_exception
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\operate.py", line 2663, in merge_nodes_and_edges
+    result = task.result()
+             ^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\lightrag\operate.py", line 2642, in _locked_process_entity_name
+    raise prefixed_exception from e
+Exception: `Kochi, India`: VDB entity_upsert failed for Kochi, India after 3 attempts: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+
+ERROR: Merging stage failed in document 1/1: unknown_source
+INFO: Enqueued document processing pipeline stopped
+    ✓ Indexed successfully
+
+========================================
+Indexed 1 / 1 documents
+Working dir: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db
+
+============================================================
+   STEP 3: LLM DATA EXTRACTION
+============================================================
+LLM: http://127.0.0.1:11434/v1 (model=qwen3.5:35b)
+RAG Engine: lightrag
+Source: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed
+Output: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\extracted_data
+
+Processing 1 documents...
+
+[1/1] Extracting from: 1. Environmental impact and management o...
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+========================================
+Extracted data from 1 documents
+
+============================================================
+   STEP 4: KNOWLEDGE GRAPH CONSTRUCTION
+============================================================
+KG Storage: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\knowledge_graph
+Extracted Data: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\extracted_data
+
+Loading 1 extraction files...
+
+========================================
+Knowledge Graph Statistics:
+  Nodes: 1
+  Edges: 0
+  Node types: {'Source': 1}
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-04-04 01:39:51
+
+LightRAG pipeline results:
+{
+  "parse": 1,
+  "index": {
+    "1. Environmental impact and management of phosphogypsum.md": true
+  },
+  "extract": {
+    "1. Environmental impact and management of phosphogypsum.md": {
+      "cost": {
+        "capex": null,
+        "opex": null,
+        "revenue": null,
+        "payback_period": null,
+        "irr": null,
+        "npv": null,
+        "chemical_cost": null,
+        "energy_cost": null,
+        "labor_cost": null
+      }
+    }
+  },
+  "build": {
+    "total_nodes": 1,
+    "total_edges": 0,
+    "nodes_by_type": {
+      "Source": 1
+    },
+    "edges_by_relation": {}
+  }
+}
+
+LightRAG query smoke test:
+INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db\graph_chunk_entity_relation.graphml
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
+INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
+INFO:  == LLM cache == saving: mix:keywords:b1da5513d6f5c7582b38e17f341664b0
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
+INFO: Query nodes: Phosphogypsum, Disposal methods, Processing techniques, Waste recovery (top_k:40, cosine:0.2)
+INFO: Query edges: Phosphogypsum treatment, Treatment pathways, Industrial waste management (top_k:40, cosine:0.2)
+INFO: Naive query: 0 chunks (chunk_top_k:20 cosine:0.2)
+INFO: Raw search results: 0 entities, 0 relations, 0 vector chunks
+INFO: [kg_query] No query context could be built; returning no-result.
+
+Q: What are common phosphogypsum treatment pathways?
+A: Sorry, I'm not able to provide an answer to that question.[no-context]
+WARNING: LLM func: Reinitializing system (count: 2)
+INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000> is bound to a different event loop
+INFO:  == LLM cache == saving: mix:keywords:4f254cf24050d2304a8f0208292f6de1
+WARNING: Embedding func: Reinitializing system (count: 2)
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000 tasks=1> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000 tasks=1> is bound to a different event loop
+INFO: Query nodes: Rare earth elements, Phosphogypsum (top_k:40, cosine:0.2)
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000> is bound to a different event loop
+ERROR: Embedding func: Critical error in worker: <PriorityQueue at 0x2245e43aa90 maxsize=1000> is bound to a different event loop
+ERROR: LLM func: Critical error in worker: <PriorityQueue at 0x2245ea0f290 maxsize=1000> is bound to a different event loop
+INFO: Query edges: Rare earth extraction, Phosphogypsum processing (top_k:40, cosine:0.2)
+INFO: Naive query: 0 chunks (chunk_top_k:20 cosine:0.2)
+INFO: Raw search results: 0 entities, 0 relations, 0 vector chunks
+INFO: [kg_query] No query context could be built; returning no-result.
+
+Q: How to extract rare earth elements from phosphogypsum?
+A: Sorry, I'm not able to provide an answer to that question.[no-context]
+Exception in thread Thread-2 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x99 in position 20: illegal multibyte sequence
+[INFO] Stopped Ollama model: qwen3.5:35b
+Exception in thread Thread-4 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x99 in position 20: illegal multibyte sequence
+[INFO] Stopped Ollama model: bge-m3:567m
+
+Current Ollama loaded models:
+NAME           ID              SIZE      PROCESSOR    CONTEXT    UNTIL
+bge-m3:567m    790764642607    1.3 GB    100% GPU     8192       Stopping...
+Removing old directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db
+
+=== RAGAnything smoke run ===
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-04-04 01:41:10
+Steps to run: ['index']
+RAG Engine: raganything
+
+============================================================
+   STEP 2: RAGANYTHING INDEX CONSTRUCTION
+============================================================
+RAGAnything DB: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db
+Parser:      mineru
+Source:      C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed
+LLM Model:   qwen3.5:35b
+
+Note: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).
+[1/1] Processing: 1. Environmental impact and management of phosphog...
+INFO: RAGAnything initialized with config:
+INFO:   Working directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db
+INFO:   Parser: mineru
+INFO:   Parse method: auto
+INFO:   Multimodal processing - Image: True, Table: True, Equation: True
+INFO:   Max concurrent files: 1
+INFO: Parser 'mineru' installation verified
+INFO: Initializing LightRAG with parameters: {'working_dir': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db'}
+INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db\graph_chunk_entity_relation.graphml
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_entities.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_relationships.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_chunks.json'} 0 data
+INFO: [] Process 6984 KV load parse_cache with 0 records
+INFO: Multimodal processors initialized with context support
+INFO: Available processors: ['image', 'table', 'equation', 'generic']
+INFO: Context configuration: ContextConfig(context_window=1, context_mode='page', max_context_tokens=2000, include_headers=True, include_captions=True, filter_content_types=['text'])
+INFO: LightRAG, parse cache, and multimodal processors initialized
+INFO: Starting complete document processing: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed\1. Environmental impact and management of phosphogypsum.pdf
+INFO: Starting document parsing: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed\1. Environmental impact and management of phosphogypsum.pdf       
+INFO: Using mineru parser with method: auto
+INFO: Detected PDF file, using parser for PDF...
+INFO:raganything.parser:Executing mineru command: mineru -p C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed\1. Environmental impact and management of phosphogypsum.pdf -o C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db\parsed\1. Environmental impact and management of phosphogypsum_ee349ce3 -m auto
+INFO:raganything.parser:[MinerU] 2026-04-04 01:41:16.241 | INFO     | mineru.cli.client:run_orchestrated_cli:867 - Started local mineru-api at http://127.0.0.1:56784
+INFO:raganything.parser:[MinerU] 2026-04-04 01:41:18.850 | INFO     | __main__:create_app:212 - Request concurrency limited to 3
+INFO:raganything.parser:[MinerU] INFO:     Started server process [29176]
+INFO:raganything.parser:[MinerU] INFO:     Waiting for application startup.
+INFO:raganything.parser:[MinerU] INFO:     Application startup complete.
+INFO:raganything.parser:[MinerU] INFO:     Uvicorn running on http://127.0.0.1:56784 (Press CTRL+C to quit)
+INFO:raganything.parser:[MinerU] 2026-04-04 01:41:20.234 | INFO     | mineru.cli.client:run_planned_task:769 - Submitting batch 1/1 | 1 document, 10 pages in this batch | 10 pages total | task#1 [1. Environmental impact and management of phosphogypsum]
+INFO:raganything.parser:[MinerU] 2026-04-04 01:41:20.342 | INFO     | mineru.utils.engine_utils:get_vlm_engine:34 - Using transformers as the inference engine for VLM.
+INFO:raganything.parser:[MinerU] Start MinerU FastAPI Service: http://127.0.0.1:56784
+INFO:raganything.parser:[MinerU] API documentation: http://127.0.0.1:56784/docs
+WARNING:raganything.parser:[MinerU] Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\huggingface_hub\file_download.py:143: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\Win11\.cache\huggingface\hub\models--opendatalab--MinerU2.5-2509-1.2B. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+INFO:raganything.parser:[MinerU] To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+WARNING:raganything.parser:[MinerU] warnings.warn(message)
+INFO:raganything.parser:[MinerU] Fetching 14 files:   7%|         | 1/14 [00:00<00:08,  1.57it/s]
+INFO:raganything.parser:[MinerU] Fetching 14 files:  50%|     | 7/14 [00:00<00:00, 10.52it/s]
+ERROR:raganything.parser:[MinerU] Fetching 14 files:  50%|     | 7/14 [00:20<00:00, 10.52it/s]Error: 1 task(s) failed while processing documents:
+INFO:raganything.parser:[MinerU] - task#1 (1. Environmental impact and management of phosphogypsum):
+INFO:raganything.parser:[MinerU] Command executed failed
+ERROR: Mineru command failed: Mineru command failed with return code 1: ['Fetching 14 files:  50%|     | 7/14 [00:20<00:00, 10.52it/s]Error: 1 task(s) failed while processing documents:']
+    ✗ Error: Mineru command failed with return code 1: ['Fetching 14 files:  50%|     | 7/14 [00:20<00:00, 10.52it/s]Error: 1 task(s) failed while processing documents:']
+
+========================================
+Indexed 0 / 1 documents
+Working dir: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-04-04 01:42:20
+
+RAGAnything index results:
+{
+  "index": {
+    "1. Environmental impact and management of phosphogypsum.pdf": false
+  }
+}
+
+RAGAnything query smoke test:
+INFO: RAGAnything initialized with config:
+INFO:   Working directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db
+INFO:   Parser: mineru
+INFO:   Parse method: auto
+INFO:   Multimodal processing - Image: True, Table: True, Equation: True
+INFO:   Max concurrent files: 1
+Exception in thread Thread-13 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x99 in position 20: illegal multibyte sequence
+[INFO] Stopped Ollama model: qwen3.5:35b
+[INFO] Stopped Ollama model: bge-m3:567m
+
+Current Ollama loaded models:
+NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL
+Traceback (most recent call last):
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\examples\e2e_smoke_test.py", line 244, in <module>
+    main()
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\examples\e2e_smoke_test.py", line 230, in main
+    run_raganything_smoke(limit)
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\examples\e2e_smoke_test.py", line 188, in run_raganything_smoke
+    _print_query_answers("RAGAnything", lambda q: rag.query(q, mode="hybrid"))
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\examples\e2e_smoke_test.py", line 140, in _print_query_answers
+    answer = query_func(q)
+             ^^^^^^^^^^^^^
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\examples\e2e_smoke_test.py", line 188, in <lambda>
+    _print_query_answers("RAGAnything", lambda q: rag.query(q, mode="hybrid"))
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\pgloop\knowledge\raganything_engine.py", line 284, in query
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\pgloop\knowledge\raganything_engine.py", line 284, in query
+    return asyncio.run(self.aquery(query, mode=mode))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Github\oneLCA-TEA_Phosphogypsum\pgloop\knowledge\raganything_engine.py", line 280, in aquery
+    return await rag.aquery(query, mode=mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA\Lib\site-packages\raganything\query.py", line 120, in aquery
+    raise ValueError(
+ValueError: No LightRAG instance available. Please process documents first or provide a pre-initialized LightRAG instance.
+INFO: Successfully finalized 12 storages
+INFO: Successfully finalized all RAGAnything storages
+(oneLCA-TEA) PS C:\Github\oneLCA-TEA_Phosphogypsum>
