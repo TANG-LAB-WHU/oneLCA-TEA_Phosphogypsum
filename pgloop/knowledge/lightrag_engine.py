@@ -101,7 +101,8 @@ class LightRAGEngine:
         Args:
             working_dir: Directory for storing graph and vector data
             llm_model: Chat model name (default: LLM_MODEL env or "qwen3.5:35b")
-            embedding_model: Embedding model name (default: EMBEDDING_MODEL env or "qwen3-embedding:4b")
+            embedding_model: Embedding model name
+                (default: EMBEDDING_MODEL env or "qwen3-embedding:4b")
             embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 2560)
             llm_base_url: OpenAI-compatible API base URL (default: LLM_BASE_URL env)
             llm_api_key: API key (default: LLM_API_KEY env or "ollama")
