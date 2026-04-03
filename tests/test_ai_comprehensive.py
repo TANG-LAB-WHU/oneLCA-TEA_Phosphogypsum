@@ -56,7 +56,7 @@ def test_embeddings():
     emb2 = model.encode(text2)
     emb3 = model.encode(text3)
 
-    expected_dim = int(os.getenv("EMBEDDING_DIM", "1024"))
+    expected_dim = int(os.getenv("EMBEDDING_DIM", "2560"))
     assert emb1.shape == (expected_dim,), f"Expected ({expected_dim},), got {emb1.shape}"
 
     sim12 = model.similarity(emb1, emb2)

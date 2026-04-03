@@ -67,7 +67,7 @@ class RAGAnythingEngine:
     LLM_TEMPERATURE (default 0.1) is applied when callers omit temperature, matching
     LightRAGEngine so delimiter-structured LightRAG/RAGAnything extractions stay stable.
 
-    NOTE: EMBEDDING_MODEL must match `ollama list` output (e.g. "bge-m3:567m").
+    NOTE: EMBEDDING_MODEL must match `ollama list` output (e.g. "qwen3-embedding:4b").
     Adjust EMBEDDING_DIM if your model outputs a different vector size.
     """
 
@@ -88,8 +88,8 @@ class RAGAnythingEngine:
         Args:
             working_dir: Directory for storing RAG data
             llm_model: Chat model name (default: LLM_MODEL env or "qwen3.5:35b")
-            embedding_model: Embedding model name (default: EMBEDDING_MODEL env or "bge-m3:567m")
-            embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 1024)
+            embedding_model: Embedding model name (default: EMBEDDING_MODEL env or "qwen3-embedding:4b")
+            embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 2560)
             llm_base_url: API base URL (default: LLM_BASE_URL env)
             llm_api_key: API key (default: LLM_API_KEY env or "ollama")
             parser: Document parser ("mineru" or "docling")
@@ -109,8 +109,8 @@ class RAGAnythingEngine:
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
 
         # Embedding configuration — model name must match `ollama list`
-        self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
-        self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "1024"))
+        self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
+        self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "2560"))
         self.llm_context_length = _read_env_int(
             "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
         )

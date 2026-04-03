@@ -36,8 +36,8 @@ def test_embedding_connection():
         pytest.skip("LLM_BASE_URL not set")
 
     api_key = os.getenv("LLM_API_KEY", "ollama")
-    model = os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
-    expected_dim = int(os.getenv("EMBEDDING_DIM", "1024"))
+    model = os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
+    expected_dim = int(os.getenv("EMBEDDING_DIM", "2560"))
 
     from openai import OpenAI
 

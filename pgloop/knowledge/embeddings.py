@@ -23,10 +23,10 @@ class EmbeddingModel:
         base_url: str = None,
         api_key: str = None,
     ):
-        self.model_name = model_name or os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
+        self.model_name = model_name or os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
         self.base_url = base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
         self.api_key = api_key or os.getenv("LLM_API_KEY", "ollama")
-        self.dim = int(os.getenv("EMBEDDING_DIM", "1024"))
+        self.dim = int(os.getenv("EMBEDDING_DIM", "2560"))
         self._client = None
 
     def _get_client(self):

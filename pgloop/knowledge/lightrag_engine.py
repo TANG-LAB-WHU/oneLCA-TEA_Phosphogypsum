@@ -13,7 +13,7 @@ Configuration via environment variables (.env):
 - LLM_TEMPERATURE: Sampling temperature for chat (default: 0.1). LightRAG entity
   extraction does not pass temperature; without this, the OpenAI client defaults
   to ~1.0 and often breaks strict tuple-delimited output (warnings like 5/4 fields).
-- EMBEDDING_MODEL: Embedding model name (default: bge-m3:567m)
+- EMBEDDING_MODEL: Embedding model name (default: qwen3-embedding:4b)
 """
 
 import asyncio
@@ -81,7 +81,7 @@ class LightRAGEngine:
     - All calls via Ollama's OpenAI-compatible /v1 endpoint (chat + embeddings)
 
     NOTE: EMBEDDING_MODEL must match the exact name shown by `ollama list`,
-    e.g. "bge-m3:567m". The embedding dimension (default 1024) must also
+    e.g. "qwen3-embedding:4b". The embedding dimension (default 2560) must also
     match the model's actual output dimension; adjust EMBEDDING_DIM if you
     switch to a different embedding model.
     """
@@ -101,8 +101,8 @@ class LightRAGEngine:
         Args:
             working_dir: Directory for storing graph and vector data
             llm_model: Chat model name (default: LLM_MODEL env or "qwen3.5:35b")
-            embedding_model: Embedding model name (default: EMBEDDING_MODEL env or "bge-m3:567m")
-            embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 1024)
+            embedding_model: Embedding model name (default: EMBEDDING_MODEL env or "qwen3-embedding:4b")
+            embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 2560)
             llm_base_url: OpenAI-compatible API base URL (default: LLM_BASE_URL env)
             llm_api_key: API key (default: LLM_API_KEY env or "ollama")
         """
@@ -118,8 +118,8 @@ class LightRAGEngine:
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
 
         # Embedding configuration — model name must match `ollama list`
-        self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
-        self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "1024"))
+        self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
+        self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "2560"))
         # Request-level context length override for Ollama (/v1 compatible path).
         # Prefer explicit LLM_CONTEXT_LENGTH and fallback to OLLAMA_CONTEXT_LENGTH.
         self.llm_context_length = _read_env_int(
@@ -463,7 +463,7 @@ def main():
     print(f"  LLM_BASE_URL:     {os.getenv('LLM_BASE_URL', '(not set)')}")
     print(f"  LLM_MODEL:        {os.getenv('LLM_MODEL', '(not set)')}")
     print(f"  EMBEDDING_MODEL:  {os.getenv('EMBEDDING_MODEL', '(not set)')}")
-    print(f"  EMBEDDING_DIM:    {os.getenv('EMBEDDING_DIM', '1024')}")
+    print(f"  EMBEDDING_DIM:    {os.getenv('EMBEDDING_DIM', '2560')}")
 
 
 if __name__ == "__main__":

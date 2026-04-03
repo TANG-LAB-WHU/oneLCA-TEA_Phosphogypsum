@@ -108,8 +108,8 @@ Configure in `.env`:
 LLM_BASE_URL=http://127.0.0.1:11434/v1
 LLM_API_KEY=ollama
 LLM_MODEL=qwen3.5:35b
-EMBEDDING_MODEL=bge-m3:567m
-EMBEDDING_DIM=1024
+EMBEDDING_MODEL=qwen3-embedding:4b
+EMBEDDING_DIM=2560
 LLM_CONTEXT_LENGTH=32768
 LLM_JSON_MODE=1
 MINERU_MODEL_SOURCE=huggingface
@@ -119,9 +119,17 @@ HF_ENDPOINT=https://huggingface.co
 # RAGANYTHING_MINERU_DEVICE=cpu
 ```
 
+On your deployed Windows desktop, verify embedding dimension once after pulling the model:
+
+```powershell
+python -c "from openai import OpenAI; import os; from dotenv import load_dotenv; load_dotenv(); c=OpenAI(base_url=os.getenv('LLM_BASE_URL'), api_key=os.getenv('LLM_API_KEY','ollama')); v=c.embeddings.create(model=os.getenv('EMBEDDING_MODEL'), input=['hello']).data[0].embedding; print('dim=',len(v))"
+```
+
+If this prints a value other than `2560`, set `.env` `EMBEDDING_DIM` to that value.
+
 ### Ollama Stability Checklist (Windows)
 
-For local `qwen3.5:35b` + `bge-m3:567m`, set these as **OS-level environment variables**, then restart Ollama:
+For local `qwen3.5:35b` + `qwen3-embedding:4b`, set these as **OS-level environment variables**, then restart Ollama:
 
 ```powershell
 setx OLLAMA_FLASH_ATTENTION 0
