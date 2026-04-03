@@ -196,15 +196,19 @@ python -m venv venv
 # conda create -n pgloop python=3.11
 # conda activate pgloop
 
-# Install package + optional extras (declared in pyproject.toml)
-# Core install includes MinerU (mineru[all]); first run may download model weights.
-# Optional: RAG engines (LightRAG + RAGAnything)
+# Optional: stochastic_dynamics (PyTorch PINN/VAE) with CUDA 12.9. if having cuda device, recommend the 
+# installation of GPU-versioned Pytorch first:
+# pip install torch==2.8 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu129
+
+# After that, install the core module with editable mode suggested for further development
+pip install -e .
+
+# Then, install package + optional extras (declared in pyproject.toml)
+# including the core of  MinerU (mineru[all]) in which first run may download model weights, as well as
+# another core of RAG engines (LightRAG + RAGAnything libraries)
 pip install -e ".[ai,viz,kg,dev,rag]"
 
-# Optional: stochastic_dynamics (PyTorch PINN/VAE) with CUDA 12.9
-# Install CUDA-matched torch first:
-# pip install torch==2.8 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu129
-# Then install project extras:
+# Then install project extras: (TODO feature)
 # pip install -e ".[stochastic_dynamics]" --no-deps
 
 # Alternative mirror of pinned deps (see requirements.txt header)
