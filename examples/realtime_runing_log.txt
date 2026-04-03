@@ -1,0 +1,52 @@
+(oneLCA-TEA) PS C:\Github\oneLCA-TEA_Phosphogypsum> python examples/e2e_smoke_test.py --limit 1 --skip-raganything
+Found 72 PDFs in C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed
+Removing old directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db
+
+=== LightRAG smoke run ===
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-04-04 03:02:45
+Steps to run: ['all']
+RAG Engine: lightrag
+
+============================================================
+   STEP 1: PDF PARSING
+============================================================
+Parser type: pymupdf
+Input:  C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed
+Output: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed
+
+Found 1 PDF files to process
+[1/1] ⏭ Skipped (already parsed): 1. Environmental impact and management of phosphog
+
+========================================
+Parsing Complete: 0 success, 1 skipped, 0 errors
+
+============================================================
+   STEP 2: LIGHTRAG INDEX CONSTRUCTION
+============================================================
+LightRAG DB: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db
+Source:      C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed
+LLM Model:   qwen3.5:35b
+
+Note: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).
+INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db\graph_chunk_entity_relation.graphml
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
+INFO: [] Process 27384 KV load full_docs with 0 records
+INFO: [] Process 27384 KV load text_chunks with 0 records
+INFO: [] Process 27384 KV load full_entities with 0 records
+INFO: [] Process 27384 KV load full_relations with 0 records
+INFO: [] Process 27384 KV load entity_chunks with 0 records
+INFO: [] Process 27384 KV load relation_chunks with 0 records
+INFO: [] Process 27384 KV load llm_response_cache with 0 records
+INFO: [] Process 27384 doc status load doc_status with 0 records
+[1/1] Processing: 1. Environmental impact and management of phosphog...
+INFO: Processing 1 document(s)
+INFO: Extracting stage 1/1: unknown_source
+INFO: Processing d-id: doc-347f68b590c62149df8a9399e61a9225
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
+INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
