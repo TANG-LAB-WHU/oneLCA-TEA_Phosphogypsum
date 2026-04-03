@@ -4,7 +4,7 @@ This script processes PDF papers and builds a knowledge graph for PG-LCA-TEA.
 Workflow:
 1. Parse PDFs from data/raw/papers/unparsed/ → data/raw/papers/parsed/
 2. Build LightRAG index (Graph + Vector) in data/processed/lightrag_db/
-3. Extract structured data using Gemini LLM
+3. Extract structured data using OpenAI-compatible LLM (e.g. Ollama)
 4. Construct knowledge graph in data/processed/knowledge_graph/
 
 Usage:
@@ -135,7 +135,7 @@ def step2_build_rag_index(limit: int = None, engine: str = "lightrag"):
     Step 2: Build RAG Index (Graph + Vector)
 
     Indexes parsed documents using LightRAG or RAGAnything with entity-relationship extraction.
-    Note: This step consumes Gemini API calls for entity extraction.
+    Note: This step calls the configured LLM (OpenAI-compatible API) for entity extraction.
 
     Args:
         limit: Max documents to process
@@ -166,7 +166,7 @@ def step2_build_rag_index(limit: int = None, engine: str = "lightrag"):
 
     print(f"Source:      {PARSED_DIR}")
     print(f"LLM Model:   {rag.llm_model}")
-    print("\n⚠️  Note: Entity extraction will consume Gemini API quota")
+    print("\nNote: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).")
 
     # Index documents
     if engine == "raganything":
@@ -192,21 +192,18 @@ def step3_extract_structured_data(limit: int = None, engine: str = "lightrag"):
     """
     Step 3: Extract Structured Data using LLM
 
-    Uses Gemini to extract composition, technology, LCI, and cost data.
+    Uses the configured OpenAI-compatible LLM to extract composition, technology, LCI, and cost data.
     """
     print("\n" + "=" * 60)
     print("   STEP 3: LLM DATA EXTRACTION")
     print("=" * 60)
 
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        print("ERROR: GEMINI_API_KEY not found in .env file")
-        return {}
+    extractor = LLMExtractor()
 
-    # Initialize LLM extractor
-    extractor = LLMExtractor(provider="gemini", model="gemini-2.0-flash", api_key=api_key)
-
-    print("LLM: Gemini (gemini-2.0-flash)")
+    print(
+        f"LLM: {os.getenv('LLM_BASE_URL', 'http://127.0.0.1:11434/v1')} "
+        f"(model={extractor.model})"
+    )
     print(f"RAG Engine: {engine}")
 
     # Get parsed files based on engine

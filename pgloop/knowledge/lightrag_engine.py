@@ -4,11 +4,13 @@ LightRAG Engine Module
 Graph-enhanced Retrieval Augmented Generation engine for phosphogypsum literature.
 Uses LightRAG for entity-relationship extraction and knowledge graph-based retrieval.
 
+All LLM and embedding calls go through Ollama's OpenAI-compatible /v1 endpoint.
+
 Configuration via environment variables (.env):
-- LLM_BASE_URL: OpenAI-compatible API endpoint (default: proxy for Gemini)
-- LLM_API_KEY: API key for the LLM service
-- LLM_MODEL: Model name (e.g., gemini-3-flash, gpt-4o)
-- EMBEDDING_MODEL: bge-m3 (local, free) or text-embedding-004 (API)
+- LLM_BASE_URL: OpenAI-compatible API endpoint (default: http://127.0.0.1:11434/v1)
+- LLM_API_KEY: API key (default: "ollama")
+- LLM_MODEL: Chat model name (default: qwen3.5:35b)
+- EMBEDDING_MODEL: Embedding model name (default: bge-m3:567m)
 """
 
 import asyncio
@@ -19,7 +21,6 @@ from typing import Any, Dict, List, Optional, Union
 
 from dotenv import load_dotenv
 
-# Load environment variables
 load_dotenv()
 
 try:
@@ -31,15 +32,6 @@ except ImportError:
     LIGHTRAG_AVAILABLE = False
     LightRAG = None
     QueryParam = None
-
-# Check for local embedding model availability
-try:
-    from sentence_transformers import SentenceTransformer
-
-    SENTENCE_TRANSFORMERS_AVAILABLE = True
-except ImportError:
-    SENTENCE_TRANSFORMERS_AVAILABLE = False
-    SentenceTransformer = None
 
 
 @dataclass
@@ -69,32 +61,21 @@ class LightRAGEngine:
     - Entity-relationship extraction during indexing
     - Knowledge graph-based retrieval
     - Multiple query modes: local, global, hybrid, mix
-    - Multimodal support: automatic image transcription
-    - Unified OpenAI-compatible LLM interface (supports Gemini via proxy)
-    - Dual embedding: local bge-m3 (free) or API-based
-    """
+    - Multimodal support: automatic image transcription (qwen3.5 vision)
+    - All calls via Ollama's OpenAI-compatible /v1 endpoint (chat + embeddings)
 
-    # Supported embedding models
-    EMBEDDING_MODELS = {
-        "bge-m3": {"dim": 1024, "type": "local", "model_name": "BAAI/bge-m3"},
-        "text-embedding-004": {"dim": 768, "type": "gemini", "model_name": "models/embedding-001"},
-        "text-embedding-3-small": {
-            "dim": 1536,
-            "type": "openai",
-            "model_name": "text-embedding-3-small",
-        },
-        "text-embedding-3-large": {
-            "dim": 3072,
-            "type": "openai",
-            "model_name": "text-embedding-3-large",
-        },
-    }
+    NOTE: EMBEDDING_MODEL must match the exact name shown by `ollama list`,
+    e.g. "bge-m3:567m". The embedding dimension (default 1024) must also
+    match the model's actual output dimension; adjust EMBEDDING_DIM if you
+    switch to a different embedding model.
+    """
 
     def __init__(
         self,
         working_dir: Optional[Path] = None,
         llm_model: Optional[str] = None,
         embedding_model: Optional[str] = None,
+        embedding_dim: Optional[int] = None,
         llm_base_url: Optional[str] = None,
         llm_api_key: Optional[str] = None,
     ):
@@ -103,10 +84,11 @@ class LightRAGEngine:
 
         Args:
             working_dir: Directory for storing graph and vector data
-            llm_model: LLM model name (default: from LLM_MODEL env var)
-            embedding_model: Embedding model (default: from EMBEDDING_MODEL env var or "bge-m3")
-            llm_base_url: OpenAI-compatible API base URL (default: from LLM_BASE_URL env var)
-            llm_api_key: API key for LLM service (default: from LLM_API_KEY env var)
+            llm_model: Chat model name (default: LLM_MODEL env or "qwen3.5:35b")
+            embedding_model: Embedding model name (default: EMBEDDING_MODEL env or "bge-m3:567m")
+            embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 1024)
+            llm_base_url: OpenAI-compatible API base URL (default: LLM_BASE_URL env)
+            llm_api_key: API key (default: LLM_API_KEY env or "ollama")
         """
         if not LIGHTRAG_AVAILABLE:
             raise ImportError("lightrag not installed. Run: pip install lightrag-hku")
@@ -114,69 +96,28 @@ class LightRAGEngine:
         self.working_dir = working_dir or Path("./data/processed/lightrag_db")
         self.working_dir.mkdir(parents=True, exist_ok=True)
 
-        # LLM configuration (environment-driven with overrides)
-        self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:8045/v1")
-        self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY")
-        self.llm_model = llm_model or os.getenv("LLM_MODEL", "gemini-3-flash")
+        # LLM configuration
+        self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
+        self.llm_api_key = (
+            llm_api_key
+            or os.getenv("LLM_API_KEY")
+            or "ollama"
+        )
+        self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
 
-        # Embedding configuration
-        self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "bge-m3")
+        # Embedding configuration — model name must match `ollama list`
+        self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
+        self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "1024"))
 
-        # Validate embedding model
-        if self.embedding_model not in self.EMBEDDING_MODELS:
-            available = list(self.EMBEDDING_MODELS.keys())
-            raise ValueError(
-                f"Unknown embedding model: {self.embedding_model}. Choose from: {available}"
-            )
-
-        model_info = self.EMBEDDING_MODELS[self.embedding_model]
-        if model_info["type"] == "local" and not SENTENCE_TRANSFORMERS_AVAILABLE:
-            raise ImportError(
-                "sentence-transformers not installed. Run: pip install sentence-transformers"
-            )
-
-        # For API-based embeddings (Gemini)
-        self.gemini_api_key = os.getenv("GEMINI_API_KEY")
-
-        # Local embedding model instance (lazy loaded)
-        self._local_embed_model = None
-
-        # LightRAG instance
         self._rag = None
-
-    def _get_local_embed_model(self) -> "SentenceTransformer":
-        """Lazy load the local embedding model."""
-        if self._local_embed_model is None:
-            model_name = self.EMBEDDING_MODELS[self.embedding_model]["model_name"]
-            print(f"Loading local embedding model: {model_name}")
-            self._local_embed_model = SentenceTransformer(model_name, local_files_only=True)
-            device = (
-                self._local_embed_model.device.type
-                if hasattr(self._local_embed_model.device, "type")
-                else str(self._local_embed_model.device)
-            )
-            print(f"Model loaded on: {device.upper()}")
-        return self._local_embed_model
 
     def _get_rag_instance(self) -> LightRAG:
         """Create or return the LightRAG instance."""
         if self._rag is None:
-            # LLM function (OpenAI-compatible)
-            llm_func = self._create_openai_compatible_llm_func()
-
-            # Embedding function
-            model_info = self.EMBEDDING_MODELS[self.embedding_model]
-            if model_info["type"] == "local":
-                embed_func = self._create_local_embed_func()
-            elif model_info["type"] == "gemini":
-                embed_func = self._create_gemini_embed_func()
-            else:
-                embed_func = self._create_openai_embed_func()
-
             self._rag = LightRAG(
                 working_dir=str(self.working_dir),
-                llm_model_func=llm_func,
-                embedding_func=embed_func,
+                llm_model_func=self._create_llm_func(),
+                embedding_func=self._create_embedding_func(),
             )
         return self._rag
 
@@ -186,8 +127,8 @@ class LightRAGEngine:
         await rag.initialize_storages()
         return rag
 
-    def _create_openai_compatible_llm_func(self):
-        """Create LLM function using OpenAI-compatible interface."""
+    def _create_llm_func(self):
+        """Create LLM function via Ollama's /v1/chat/completions."""
         from openai import OpenAI
 
         client = OpenAI(base_url=self.llm_base_url, api_key=self.llm_api_key)
@@ -207,52 +148,20 @@ class LightRAGEngine:
 
         return llm_func
 
-    def _create_local_embed_func(self) -> Any:
-        """Create embedding function for local bge-m3 model."""
-        import numpy as np
-
-        model_info = self.EMBEDDING_MODELS[self.embedding_model]
-
-        async def embed_func(texts: list[str]) -> np.ndarray:
-            model = self._get_local_embed_model()
-            embeddings = model.encode(texts, normalize_embeddings=True)
-            return np.array(embeddings)
-
-        return EmbeddingFunc(embedding_dim=model_info["dim"], max_token_size=8192, func=embed_func)
-
-    def _create_gemini_embed_func(self) -> Any:
-        """Create embedding function for Gemini API."""
-        import google.generativeai as genai
-        import numpy as np
-
-        if not self.gemini_api_key:
-            raise ValueError("GEMINI_API_KEY required for text-embedding-004")
-
-        genai.configure(api_key=self.gemini_api_key)
-        model_info = self.EMBEDDING_MODELS[self.embedding_model]
-
-        async def embed_func(texts: list[str]) -> np.ndarray:
-            embeddings = []
-            for text in texts:
-                result = genai.embed_content(model=model_info["model_name"], content=text)
-                embeddings.append(result["embedding"])
-            return np.array(embeddings)
-
-        return EmbeddingFunc(embedding_dim=model_info["dim"], max_token_size=8192, func=embed_func)
-
-    def _create_openai_embed_func(self) -> Any:
-        """Create embedding function for OpenAI API."""
+    def _create_embedding_func(self) -> Any:
+        """Create embedding function via Ollama's /v1/embeddings."""
         import numpy as np
         from openai import OpenAI
 
         client = OpenAI(base_url=self.llm_base_url, api_key=self.llm_api_key)
-        model_info = self.EMBEDDING_MODELS[self.embedding_model]
 
         async def embed_func(texts: list[str]) -> np.ndarray:
-            response = client.embeddings.create(model=model_info["model_name"], input=texts)
+            response = client.embeddings.create(model=self.embedding_model, input=texts)
             return np.array([d.embedding for d in response.data])
 
-        return EmbeddingFunc(embedding_dim=model_info["dim"], max_token_size=8192, func=embed_func)
+        return EmbeddingFunc(
+            embedding_dim=self.embedding_dim, max_token_size=8192, func=embed_func
+        )
 
     async def _transcribe_image(self, image_path: Path) -> str:
         """Transcribe an image using the LLM with vision capability."""
@@ -380,8 +289,7 @@ class LightRAGEngine:
             "llm_model": self.llm_model,
             "llm_base_url": self.llm_base_url,
             "embedding_model": self.embedding_model,
-            "embedding_type": self.EMBEDDING_MODELS[self.embedding_model]["type"],
-            "embedding_dim": self.EMBEDDING_MODELS[self.embedding_model]["dim"],
+            "embedding_dim": self.embedding_dim,
             "available": LIGHTRAG_AVAILABLE,
         }
 
@@ -395,16 +303,13 @@ class LightRAGEngine:
 
 
 def main():
-    print("LightRAG Multimodal Engine")
+    print("LightRAG Engine (Ollama-only)")
     print(f"  LightRAG available: {LIGHTRAG_AVAILABLE}")
-    print(f"  Local embeddings available: {SENTENCE_TRANSFORMERS_AVAILABLE}")
-    print("\nSupported embedding models:")
-    for name, info in LightRAGEngine.EMBEDDING_MODELS.items():
-        print(f"  - {name}: {info['dim']}d ({info['type']})")
     print("\nConfiguration from .env:")
-    print(f"  LLM_BASE_URL: {os.getenv('LLM_BASE_URL', '(not set)')}")
-    print(f"  LLM_MODEL: {os.getenv('LLM_MODEL', '(not set)')}")
-    print(f"  EMBEDDING_MODEL: {os.getenv('EMBEDDING_MODEL', '(not set)')}")
+    print(f"  LLM_BASE_URL:     {os.getenv('LLM_BASE_URL', '(not set)')}")
+    print(f"  LLM_MODEL:        {os.getenv('LLM_MODEL', '(not set)')}")
+    print(f"  EMBEDDING_MODEL:  {os.getenv('EMBEDDING_MODEL', '(not set)')}")
+    print(f"  EMBEDDING_DIM:    {os.getenv('EMBEDDING_DIM', '1024')}")
 
 
 if __name__ == "__main__":

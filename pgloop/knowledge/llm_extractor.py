@@ -2,7 +2,7 @@
 LLM Extractor Module
 
 Uses Large Language Models to extract structured LCA/TEA data from text.
-Supports multiple LLM backends (Gemini, OpenAI-compatible, local models).
+Calls Ollama's OpenAI-compatible /v1/chat/completions endpoint.
 """
 
 import json
@@ -11,6 +11,9 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
+
+_DEFAULT_BASE_URL = "http://127.0.0.1:11434/v1"
+_DEFAULT_MODEL = "qwen3.5:35b"
 
 
 @dataclass
@@ -120,16 +123,13 @@ class LLMExtractor:
     """
     Extracts structured data from text using LLMs.
 
-    Supports:
-    - OpenAI API compatible endpoints
-    - Google Gemini
-    - Local models via Ollama
+    Uses an OpenAI-compatible Chat Completions API (Ollama, OpenAI, vLLM, etc.).
+    Configure via LLM_BASE_URL, LLM_API_KEY, LLM_MODEL or constructor arguments.
     """
 
     def __init__(
         self,
-        provider: str = "gemini",
-        model: str = "gemini-2.0-flash",
+        model: Optional[str] = None,
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
     ):
@@ -137,71 +137,21 @@ class LLMExtractor:
         Initialize the LLM extractor.
 
         Args:
-            provider: LLM provider (openai, gemini, ollama)
-            model: Model name
-            api_key: API key (if required)
-            base_url: Custom API base URL
+            model: Model name (default: LLM_MODEL env or qwen3.5:35b)
+            api_key: API key (default: LLM_API_KEY env or "ollama")
+            base_url: API base URL (default: LLM_BASE_URL env or http://127.0.0.1:11434/v1)
         """
-        self.provider = provider
-        self.model = model
-        self.api_key = api_key
-        self.base_url = base_url
+        self.model = model or os.getenv("LLM_MODEL", _DEFAULT_MODEL)
+        self.base_url = base_url or os.getenv("LLM_BASE_URL", _DEFAULT_BASE_URL)
+        self.api_key = api_key or os.getenv("LLM_API_KEY", "ollama")
         self._client = None
 
     def _get_client(self):
-        """Get or create the LLM client."""
+        """Get or create the OpenAI-compatible client."""
         if self._client is None:
-            if self.provider == "gemini":
-                try:
-                    from google import genai
+            from openai import OpenAI
 
-                    # Check for proxy settings
-                    proxy = (
-                        os.environ.get("HTTPS_PROXY")
-                        or os.environ.get("http_proxy")
-                        or os.environ.get("https_proxy")
-                    )
-
-                    client_kwargs = {"api_key": self.api_key}
-
-                    if proxy:
-                        print(f"DEBUG: Proxy detected for Gemini: {proxy}")
-                        # New SDK uses http_options for transport configuration
-
-                    print(f"DEBUG: Initializing google.genai Client (model={self.model})")
-                    self._client = genai.Client(**client_kwargs)
-                except ImportError:
-                    raise ImportError(
-                        "google-genai package not installed. Run: pip install google-genai"
-                    )
-                except Exception as e:
-                    raise RuntimeError(f"Failed to initialize Gemini client: {e}")
-
-            elif self.provider == "openai":
-                try:
-                    from openai import OpenAI
-
-                    kwargs = {}
-                    if self.api_key:
-                        kwargs["api_key"] = self.api_key
-                    if self.base_url:
-                        kwargs["base_url"] = self.base_url
-
-                    self._client = OpenAI(**kwargs)
-                except ImportError:
-                    raise ImportError("openai package not installed. Run: pip install openai")
-
-            elif self.provider == "ollama":
-                try:
-                    from openai import OpenAI
-
-                    self._client = OpenAI(
-                        base_url="http://localhost:11434/v1",
-                        api_key="ollama",  # Required but not used
-                    )
-                except ImportError:
-                    raise ImportError("openai package not installed. Run: pip install openai")
-
+            self._client = OpenAI(base_url=self.base_url, api_key=self.api_key)
         return self._client
 
     def extract(
@@ -227,35 +177,25 @@ class LLMExtractor:
         try:
             client = self._get_client()
 
-            if self.provider == "gemini":
-                # New google.genai SDK call
-                print(f"DEBUG: Calling google.genai generate_content (provider={self.provider})")
-                response = client.models.generate_content(model=self.model, contents=prompt)
-                raw_response = response.text
-            else:
-                # OpenAI-compatible call
-                print(
-                    f"DEBUG: Calling OpenAI-compatible chat completions (provider={self.provider})"
-                )
-                response = client.chat.completions.create(
-                    model=self.model,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": (
-                                "You are a data extraction assistant specialized in Life Cycle "
-                                "Assessment and Techno-Economic Analysis of phosphogypsum "
-                                "treatment. Extract structured data accurately."
-                            ),
-                        },
-                        {"role": "user", "content": prompt},
-                    ],
-                    temperature=0.1,
-                    max_tokens=2000,
-                )
-                raw_response = response.choices[0].message.content
+            print(f"DEBUG: LLM extraction (model={self.model}, base_url={self.base_url})")
+            response = client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are a data extraction assistant specialized in Life Cycle "
+                            "Assessment and Techno-Economic Analysis of phosphogypsum "
+                            "treatment. Extract structured data accurately."
+                        ),
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                temperature=0.1,
+                max_tokens=2000,
+            )
+            raw_response = response.choices[0].message.content
 
-            # Parse JSON from response
             data, errors = self._parse_json_response(raw_response)
 
             return ExtractionResult(
@@ -275,14 +215,12 @@ class LLMExtractor:
         """Parse JSON from LLM response."""
         errors = []
 
-        # Try direct JSON parsing
         try:
             data = json.loads(response)
             return data, errors
         except json.JSONDecodeError:
             pass
 
-        # Try to extract JSON from markdown code blocks
         json_match = re.search(r"```(?:json)?\s*\n?(.*?)\n?```", response, re.DOTALL)
         if json_match:
             try:
@@ -291,7 +229,6 @@ class LLMExtractor:
             except json.JSONDecodeError:
                 pass
 
-        # Try to find JSON object in response
         json_match = re.search(r"\{.*\}", response, re.DOTALL)
         if json_match:
             try:

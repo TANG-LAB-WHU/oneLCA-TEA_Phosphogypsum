@@ -1,46 +1,58 @@
 """
 Handles text embedding for RAG and similarity analysis.
+
+Calls Ollama's OpenAI-compatible /v1/embeddings endpoint.
+Configure EMBEDDING_MODEL (must match `ollama list`) and EMBEDDING_DIM in .env.
 """
 
+import os
 from typing import List, Union
 
 import numpy as np
+from dotenv import load_dotenv
 
-try:
-    from sentence_transformers import SentenceTransformer
-
-    SENTENCE_TRANSFORMERS_AVAILABLE = True
-except ImportError:
-    SENTENCE_TRANSFORMERS_AVAILABLE = False
+load_dotenv()
 
 
 class EmbeddingModel:
-    """Wrapper for text embedding models."""
+    """Wrapper around Ollama's /v1/embeddings endpoint."""
 
-    def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
-        self.model_name = model_name
-        self.model = None
-        if SENTENCE_TRANSFORMERS_AVAILABLE:
-            try:
-                self.model = SentenceTransformer(model_name, local_files_only=True)
-                print(f"DEBUG: Successfully loaded EmbeddingModel: {model_name}")
-            except Exception as e:
-                print(f"DEBUG: Failed to load EmbeddingModel {model_name}: {e}")
-                self.model = None
+    def __init__(
+        self,
+        model_name: str = None,
+        base_url: str = None,
+        api_key: str = None,
+    ):
+        self.model_name = model_name or os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
+        self.base_url = base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
+        self.api_key = api_key or os.getenv("LLM_API_KEY", "ollama")
+        self.dim = int(os.getenv("EMBEDDING_DIM", "1024"))
+        self._client = None
+
+    def _get_client(self):
+        if self._client is None:
+            from openai import OpenAI
+
+            self._client = OpenAI(base_url=self.base_url, api_key=self.api_key)
+        return self._client
 
     def encode(self, texts: Union[str, List[str]]) -> np.ndarray:
-        """Generate embeddings for text."""
-        if not self.model:
-            # Fallback to random if model not loaded (for dev)
-            dim = 384
-            count = 1 if isinstance(texts, str) else len(texts)
-            return np.random.rand(count, dim).astype(np.float32)
+        """Generate embeddings via Ollama /v1/embeddings."""
+        single = isinstance(texts, str)
+        if single:
+            texts = [texts]
 
-        return self.model.encode(texts)
+        client = self._get_client()
+        response = client.embeddings.create(model=self.model_name, input=texts)
+        embeddings = np.array([d.embedding for d in response.data], dtype=np.float32)
+
+        if single:
+            return embeddings[0]
+        return embeddings
 
     def similarity(self, emb1: np.ndarray, emb2: np.ndarray) -> float:
         """Compute cosine similarity."""
         dot = np.dot(emb1, emb2.T)
         norm1 = np.linalg.norm(emb1)
         norm2 = np.linalg.norm(emb2)
-        return dot / (norm1 * norm2) if norm1 > 0 and norm2 > 0 else 0.0
+        return float(dot / (norm1 * norm2)) if norm1 > 0 and norm2 > 0 else 0.0

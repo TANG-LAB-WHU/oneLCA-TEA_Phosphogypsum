@@ -8,29 +8,30 @@ What this script does:
 
 Translator backend priority:
 1) CLI argument `--translator` (highest priority)
-2) Environment variable `USE_GEMINI_API=true|false` (fallback)
+2) Environment variable `USE_LLM_API=true|false` (fallback)
 3) Default backend: `googletrans`
 
 Usage examples:
-- Use Gemini backend:
-  python translate_excel_to_english.py --translator gemini
+- Use OpenAI-compatible LLM backend (e.g. Ollama):
+  python translate_excel_to_english.py --translator llm
 
 - Use googletrans backend:
   python translate_excel_to_english.py --translator googletrans
 
 - Use custom folder:
-  python translate_excel_to_english.py --translator gemini --input-folder .
+  python translate_excel_to_english.py --translator llm --input-folder .
 
 - Use custom output folder:
-  python translate_excel_to_english.py --translator gemini --output-dir output
+  python translate_excel_to_english.py --translator llm --output-dir output
 
-- Use safer Gemini settings under rate limit pressure:
-  python translate_excel_to_english.py --translator gemini --max-concurrency 1 --max-retries 6
+- Use safer LLM settings under rate limit pressure:
+  python translate_excel_to_english.py --translator llm --max-concurrency 1 --max-retries 6
 
 Notes:
 - `--input-folder` defaults to the script directory.
 - `--output-dir` defaults to the script directory.
 - Files prefixed with `translated_` are skipped automatically.
+- LLM mode uses LLM_BASE_URL, LLM_API_KEY, and LLM_MODEL from the environment.
 """
 
 import argparse
@@ -48,10 +49,10 @@ load_dotenv()
 # Default folder containing the Excel files (script directory)
 DEFAULT_FOLDER_PATH = os.path.dirname(os.path.abspath(__file__))
 
-# Gemini API configuration
+# OpenAI-compatible API (e.g. Ollama /v1)
 LLM_BASE_URL = os.getenv("LLM_BASE_URL")
 LLM_API_KEY = os.getenv("LLM_API_KEY")
-LLM_MODEL = os.getenv("LLM_MODEL", "gemini-3-flash")
+LLM_MODEL = os.getenv("LLM_MODEL", "qwen3.5:35b")
 DEFAULT_MAX_CONCURRENCY = 3
 DEFAULT_MAX_RETRIES = 4
 DEFAULT_BACKOFF_BASE_SECONDS = 1.5
@@ -61,7 +62,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Translate Agribalyse Excel files to English")
     parser.add_argument(
         "--translator",
-        choices=["gemini", "googletrans"],
+        choices=["llm", "googletrans"],
         default=None,
         help="Translation backend to use (CLI takes priority over environment variable)",
     )
@@ -80,13 +81,13 @@ def parse_args():
         "--max-concurrency",
         type=int,
         default=DEFAULT_MAX_CONCURRENCY,
-        help=f"Maximum concurrent Gemini requests (default: {DEFAULT_MAX_CONCURRENCY})",
+        help=f"Maximum concurrent LLM requests (default: {DEFAULT_MAX_CONCURRENCY})",
     )
     parser.add_argument(
         "--max-retries",
         type=int,
         default=DEFAULT_MAX_RETRIES,
-        help=f"Maximum retries for transient Gemini errors (default: {DEFAULT_MAX_RETRIES})",
+        help=f"Maximum retries for transient LLM errors (default: {DEFAULT_MAX_RETRIES})",
     )
     return parser.parse_args()
 
@@ -94,12 +95,16 @@ def parse_args():
 def resolve_translator(cli_translator):
     if cli_translator:
         return cli_translator
-    return "gemini" if os.getenv("USE_GEMINI_API", "false").lower() == "true" else "googletrans"
+    return "llm" if os.getenv("USE_LLM_API", "false").lower() == "true" else "googletrans"
 
 
-async def _translate_text_gemini_request(session, text, src_lang="fr", dest_lang="en"):
-    url = f"{LLM_BASE_URL.rstrip('/')}/chat/completions"
-    headers = {"Authorization": f"Bearer {LLM_API_KEY}", "Content-Type": "application/json"}
+async def _translate_text_llm_request(session, text, src_lang="fr", dest_lang="en"):
+    base = (LLM_BASE_URL or "http://127.0.0.1:11434/v1").rstrip("/")
+    url = f"{base}/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {LLM_API_KEY or 'ollama'}",
+        "Content-Type": "application/json",
+    }
     payload = {
         "model": LLM_MODEL,
         "messages": [
@@ -126,7 +131,6 @@ async def _translate_text_gemini_request(session, text, src_lang="fr", dest_lang
                 print(f"Unexpected response schema: {response_text[:300]}")
                 return text
 
-        # Bubble up transient errors for retry logic.
         if response.status in {429, 500, 502, 503, 504}:
             raise RuntimeError(
                 f"Transient translation error {response.status}: {response_text[:300]}"
@@ -136,7 +140,7 @@ async def _translate_text_gemini_request(session, text, src_lang="fr", dest_lang
         return text
 
 
-async def translate_text_gemini(
+async def translate_text_llm(
     session,
     semaphore,
     text,
@@ -150,7 +154,7 @@ async def translate_text_gemini(
     for attempt in range(max_retries + 1):
         try:
             async with semaphore:
-                return await _translate_text_gemini_request(
+                return await _translate_text_llm_request(
                     session, text, src_lang=src_lang, dest_lang=dest_lang
                 )
         except Exception as exc:
@@ -161,7 +165,6 @@ async def translate_text_gemini(
             await asyncio.sleep(backoff_seconds)
 
 
-# Function to translate text using googletrans
 def translate_text_googletrans(translator, text, src_lang="fr", dest_lang="en"):
     try:
         translated = translator.translate(text, src=src_lang, dest=dest_lang)
@@ -171,21 +174,19 @@ def translate_text_googletrans(translator, text, src_lang="fr", dest_lang="en"):
         return text
 
 
-# Function to translate a DataFrame
 async def translate_dataframe(
     df,
-    use_gemini_api=False,
+    use_llm_api=False,
     max_concurrency=DEFAULT_MAX_CONCURRENCY,
     max_retries=DEFAULT_MAX_RETRIES,
 ):
     translated_df = df.copy()
 
-    if use_gemini_api:
+    if use_llm_api:
         semaphore = asyncio.Semaphore(max_concurrency)
         async with aiohttp.ClientSession() as session:
-            # Translate column names
             column_tasks = [
-                translate_text_gemini(
+                translate_text_llm(
                     session,
                     semaphore,
                     str(col),
@@ -196,12 +197,11 @@ async def translate_dataframe(
             translated_columns = await asyncio.gather(*column_tasks)
             translated_df.columns = translated_columns
 
-            # Translate cell values if they are strings
             for col in df.columns:
                 if df[col].dtype == "object":
                     cell_tasks = [
                         (
-                            translate_text_gemini(
+                            translate_text_llm(
                                 session,
                                 semaphore,
                                 str(value),
@@ -215,11 +215,9 @@ async def translate_dataframe(
                     translated_df[col] = await asyncio.gather(*cell_tasks)
     else:
         translator = Translator()
-        # Translate column names
         translated_columns = [translate_text_googletrans(translator, col) for col in df.columns]
         translated_df.columns = translated_columns
 
-        # Translate cell values if they are strings
         for col in df.columns:
             if df[col].dtype == "object":
                 translated_df[col] = df[col].apply(
@@ -229,8 +227,7 @@ async def translate_dataframe(
     return translated_df
 
 
-# Main async function to process files
-async def _main_async(folder_path, output_dir, use_gemini_api, max_concurrency, max_retries):
+async def _main_async(folder_path, output_dir, use_llm_api, max_concurrency, max_retries):
     os.makedirs(output_dir, exist_ok=True)
     for file_name in os.listdir(folder_path):
         if file_name.endswith(".xlsx"):
@@ -240,18 +237,16 @@ async def _main_async(folder_path, output_dir, use_gemini_api, max_concurrency, 
             file_path = os.path.join(folder_path, file_name)
             print(f"Processing file: {file_name}")
 
-            # Read the Excel file
             try:
                 df = pd.read_excel(file_path)
             except Exception as e:
                 print(f"Failed to read {file_name}: {e}")
                 continue
 
-            # Translate the DataFrame
             try:
                 translated_df = await translate_dataframe(
                     df,
-                    use_gemini_api=use_gemini_api,
+                    use_llm_api=use_llm_api,
                     max_concurrency=max_concurrency,
                     max_retries=max_retries,
                 )
@@ -259,7 +254,6 @@ async def _main_async(folder_path, output_dir, use_gemini_api, max_concurrency, 
                 print(f"Failed to translate {file_name}: {e}")
                 continue
 
-            # Save the translated DataFrame to a new Excel file
             translated_file_name = f"translated_{file_name}"
             translated_file_path = os.path.join(output_dir, translated_file_name)
             try:
@@ -272,7 +266,7 @@ async def _main_async(folder_path, output_dir, use_gemini_api, max_concurrency, 
 def main():
     args = parse_args()
     selected_translator = resolve_translator(args.translator)
-    use_gemini_api = selected_translator == "gemini"
+    use_llm_api = selected_translator == "llm"
     target_folder = args.input_folder if args.input_folder else DEFAULT_FOLDER_PATH
     output_dir = args.output_dir if args.output_dir else DEFAULT_FOLDER_PATH
     max_concurrency = max(1, args.max_concurrency)
@@ -284,10 +278,9 @@ def main():
     print(f"Max concurrency: {max_concurrency}")
     print(f"Max retries: {max_retries}")
     asyncio.run(
-        _main_async(target_folder, output_dir, use_gemini_api, max_concurrency, max_retries)
+        _main_async(target_folder, output_dir, use_llm_api, max_concurrency, max_retries)
     )
 
 
-# Run the main function
 if __name__ == "__main__":
     main()

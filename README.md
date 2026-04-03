@@ -78,12 +78,12 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 │  │                     LLM-RAG EXTRACTION ENGINE                           │   │
 │  │  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐            │   │
 │  │  │ Text Chunking  │─▶│ Embedding      │─▶│ Vector Store   │            │   │
-│  │  │ (LangChain)    │  │ (BGE/E5)       │  │ (ChromaDB)     │            │   │
+│  │  │ (LangChain)    │  │ (Ollama API)   │  │ (ChromaDB)     │            │   │
 │  │  └────────────────┘  └────────────────┘  └────────────────┘            │   │
 │  │                                                  │                      │   │
 │  │  ┌────────────────┐  ┌────────────────┐  ┌──────▼─────────┐            │   │
 │  │  │ Query Engine   │◀─│ RAG Retriever  │◀─│ LLM Extractor  │            │   │
-│  │  │ (LightRAG)     │  │                │  │ (Gemini/Qwen)  │            │   │
+│  │  │ (LightRAG)     │  │                │  │ (LLM extractor)│            │   │
 │  │  └────────────────┘  └────────────────┘  └────────────────┘            │   │
 │  └─────────────────────────────────────────────────────────────────────────┘   │
 │                                     │                                          │

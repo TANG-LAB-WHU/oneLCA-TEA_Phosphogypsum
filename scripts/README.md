@@ -44,12 +44,9 @@ python scripts/build_knowledge_graph.py --step parse --limit 3
 # Build index using RAGAnything (multimodal enhanced)
 python scripts/build_knowledge_graph.py --step index --engine raganything
 
-# Troubleshoot: Run RAGAnything with mirror and offline fix (Windows)
-$env:HF_ENDPOINT = "https://hf-mirror.com"; $env:TRANSFORMERS_OFFLINE = 0; $env:HF_HUB_OFFLINE = 0; python scripts/build_knowledge_graph.py --engine raganything --limit 2
+# Run RAGAnything on 2 PDFs for testing
+python scripts/build_knowledge_graph.py --engine raganything --limit 2
 ```
-
-> [!TIP]
-> **Windows Developer Mode**: Keep "Developer Mode" enabled in Windows settings to avoid 0-byte symlink issues with Hugging Face models. If you prefer to keep it off, consider copying the model files directly to the project directory.
 
 ---
 
@@ -107,9 +104,9 @@ data/processed/knowledge_graph/ ← Domain knowledge graph (NetworkX/Neo4j)
 Configure in `.env`:
 
 ```env
-LLM_BASE_URL=http://127.0.0.1:8045/v1
-LLM_API_KEY=your_api_key
-LLM_MODEL=gemini-3-flash
-GEMINI_API_KEY=your_gemini_key
-EMBEDDING_MODEL=bge-m3
+LLM_BASE_URL=http://127.0.0.1:11434/v1
+LLM_API_KEY=ollama
+LLM_MODEL=qwen3.5:35b
+EMBEDDING_MODEL=bge-m3:567m
+EMBEDDING_DIM=1024
 ```

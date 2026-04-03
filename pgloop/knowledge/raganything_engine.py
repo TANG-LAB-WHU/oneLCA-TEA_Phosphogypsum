@@ -5,6 +5,7 @@ All-in-one multimodal RAG engine for phosphogypsum literature processing.
 Provides unified document parsing, multimodal understanding, and knowledge graph indexing.
 
 Built on top of LightRAG with integrated MinerU parsing pipeline.
+All LLM and embedding calls go through Ollama's OpenAI-compatible /v1 endpoint.
 """
 
 import asyncio
@@ -24,13 +25,6 @@ try:
     RAGANYTHING_AVAILABLE = True
 except ImportError:
     RAGANYTHING_AVAILABLE = False
-
-try:
-    from sentence_transformers import SentenceTransformer
-
-    SENTENCE_TRANSFORMERS_AVAILABLE = True
-except ImportError:
-    SENTENCE_TRANSFORMERS_AVAILABLE = False
 
 load_dotenv()
 
@@ -55,11 +49,10 @@ class RAGAnythingEngine:
     - Multimodal knowledge graph with cross-modal relations
     - Multimodal query support
 
-    Configuration via environment variables (.env):
-        LLM_BASE_URL: OpenAI-compatible API base URL
-        LLM_API_KEY: API key for LLM provider
-        LLM_MODEL: LLM model name (default: gemini-3-flash)
-        EMBEDDING_MODEL: Embedding model (default: bge-m3)
+    All calls via Ollama's OpenAI-compatible /v1 endpoint (chat + embeddings).
+
+    NOTE: EMBEDDING_MODEL must match `ollama list` output (e.g. "bge-m3:567m").
+    Adjust EMBEDDING_DIM if your model outputs a different vector size.
     """
 
     def __init__(
@@ -67,6 +60,7 @@ class RAGAnythingEngine:
         working_dir: Optional[Path] = None,
         llm_model: Optional[str] = None,
         embedding_model: Optional[str] = None,
+        embedding_dim: Optional[int] = None,
         llm_base_url: Optional[str] = None,
         llm_api_key: Optional[str] = None,
         parser: str = "mineru",
@@ -77,10 +71,11 @@ class RAGAnythingEngine:
 
         Args:
             working_dir: Directory for storing RAG data
-            llm_model: LLM model name
-            embedding_model: Embedding model name
-            llm_base_url: LLM API base URL
-            llm_api_key: LLM API key
+            llm_model: Chat model name (default: LLM_MODEL env or "qwen3.5:35b")
+            embedding_model: Embedding model name (default: EMBEDDING_MODEL env or "bge-m3:567m")
+            embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 1024)
+            llm_base_url: API base URL (default: LLM_BASE_URL env)
+            llm_api_key: API key (default: LLM_API_KEY env or "ollama")
             parser: Document parser ("mineru" or "docling")
             parse_method: Parse method ("auto", "ocr", "txt")
         """
@@ -93,35 +88,23 @@ class RAGAnythingEngine:
         self.working_dir.mkdir(parents=True, exist_ok=True)
 
         # LLM configuration
-        self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:8045/v1")
-        self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY", "")
-        self.llm_model = llm_model or os.getenv("LLM_MODEL", "gemini-3-flash")
+        self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
+        self.llm_api_key = (
+            llm_api_key
+            or os.getenv("LLM_API_KEY")
+            or "ollama"
+        )
+        self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
 
-        # Embedding configuration
-        self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "bge-m3")
+        # Embedding configuration — model name must match `ollama list`
+        self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "bge-m3:567m")
+        self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "1024"))
 
         # Parser configuration
         self.parser = parser
         self.parse_method = parse_method
 
-        # Lazy-loaded instances
         self._rag = None
-        self._local_embed_model = None
-
-    def _get_local_embed_model(self):
-        """Lazy load local embedding model."""
-        if self._local_embed_model is None and SENTENCE_TRANSFORMERS_AVAILABLE:
-            import torch
-
-            print(f"Loading local embedding model: {self.embedding_model}")
-            self._local_embed_model = SentenceTransformer(
-                f"BAAI/{self.embedding_model}",
-                device="cuda" if torch.cuda.is_available() else "cpu",
-                local_files_only=True,
-            )
-            device = "CUDA" if torch.cuda.is_available() else "CPU"
-            print(f"Model loaded on: {device}")
-        return self._local_embed_model
 
     def _create_llm_func(self):
         """Create LLM function for RAGAnything."""
@@ -200,27 +183,20 @@ class RAGAnythingEngine:
         return vision_model_func
 
     def _create_embedding_func(self):
-        """Create embedding function."""
-        if self.embedding_model == "bge-m3" and SENTENCE_TRANSFORMERS_AVAILABLE:
-            # Local embedding
-            model = self._get_local_embed_model()
+        """Create embedding function via Ollama's /v1/embeddings."""
 
-            async def local_embed(texts: list[str]):
-                return np.array(model.encode(texts, normalize_embeddings=True))
+        async def embed_func(texts: list[str]):
+            embeddings = await openai_embed(
+                texts,
+                model=self.embedding_model,
+                api_key=self.llm_api_key,
+                base_url=self.llm_base_url,
+            )
+            return np.array(embeddings)
 
-            return EmbeddingFunc(embedding_dim=1024, max_token_size=8192, func=local_embed)
-        else:
-            # OpenAI-compatible API embedding
-            async def remote_embed(texts: list[str]):
-                embeddings = await openai_embed(
-                    texts,
-                    model="text-embedding-3-large",
-                    api_key=self.llm_api_key,
-                    base_url=self.llm_base_url,
-                )
-                return np.array(embeddings)
-
-            return EmbeddingFunc(embedding_dim=3072, max_token_size=8192, func=remote_embed)
+        return EmbeddingFunc(
+            embedding_dim=self.embedding_dim, max_token_size=8192, func=embed_func
+        )
 
     def _get_rag_instance(self) -> Any:
         """Get or create RAGAnything instance."""
@@ -347,10 +323,9 @@ class RAGAnythingEngine:
 
 
 def main():
-    print("RAGAnything Engine Module")
+    print("RAGAnything Engine (Ollama-only)")
     print("-" * 40)
     print(f"RAGAnything available: {RAGANYTHING_AVAILABLE}")
-    print(f"Sentence Transformers available: {SENTENCE_TRANSFORMERS_AVAILABLE}")
 
     if RAGANYTHING_AVAILABLE:
         print("\nQuick test:")

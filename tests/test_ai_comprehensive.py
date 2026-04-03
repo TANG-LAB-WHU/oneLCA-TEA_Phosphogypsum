@@ -43,7 +43,10 @@ def temp_test_dir():
 
 
 def test_embeddings():
-    """Test text embedding generation and similarity."""
+    """Test embedding generation via Ollama and similarity."""
+    if not os.getenv("LLM_BASE_URL"):
+        pytest.skip("LLM_BASE_URL not set (optional integration test)")
+
     model = EmbeddingModel()
     text1 = "phosphogypsum treatment via cement production."
     text2 = "Using phosphogypsum as an additive in the cement industry."
@@ -53,31 +56,25 @@ def test_embeddings():
     emb2 = model.encode(text2)
     emb3 = model.encode(text3)
 
-    # Check dimensions
-    assert emb1.shape == (384,) or len(emb1.shape) == 1
+    expected_dim = int(os.getenv("EMBEDDING_DIM", "1024"))
+    assert emb1.shape == (expected_dim,), f"Expected ({expected_dim},), got {emb1.shape}"
 
-    # Check similarity
     sim12 = model.similarity(emb1, emb2)
     sim13 = model.similarity(emb1, emb3)
 
-    # Semantic similarity should be high for both cement-related topics
     print(f"\nSimilarity (Cement1 vs Cement2): {sim12:.4f}")
     print(f"Similarity (Cement1 vs Agriculture): {sim13:.4f}")
 
-    # We expect the cement-cement similarity to be reasonably high and
-    # ideally higher than or equal to cement-agriculture in most cases.
-    # Relaxing this slightly to just check they are all semantically related.
     assert sim12 > 0.4
     assert sim13 > 0.3
 
 
 def test_llm_extraction(setup_env):
-    """Test Gemini-based data extraction."""
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        pytest.skip("GEMINI_API_KEY not found in .env")
+    """Test LLM-based data extraction (OpenAI-compatible API)."""
+    if not os.getenv("LLM_BASE_URL"):
+        pytest.skip("LLM_BASE_URL not found in .env (optional integration test)")
 
-    extractor = LLMExtractor(provider="gemini", model="gemini-2.0-flash", api_key=api_key)
+    extractor = LLMExtractor()
 
     text = (
         "Detailed analysis of PG from Florida shows 94% CaSO4, 0.5% P2O5, and Ra-226 at 200 Bq/kg."
@@ -91,9 +88,8 @@ def test_llm_extraction(setup_env):
 
 def test_rag_flow(setup_env, temp_test_dir):
     """Test LightRAG indexing and search."""
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        pytest.skip("GEMINI_API_KEY not found in .env")
+    if not os.getenv("LLM_BASE_URL"):
+        pytest.skip("LLM_BASE_URL not found in .env (optional integration test)")
 
     rag = LightRAGEngine(working_dir=temp_test_dir / "lightrag")
 

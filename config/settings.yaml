@@ -115,19 +115,12 @@ data_sources:
       # No API key required
 
 ai:
-  embedding_model: "all-MiniLM-L6-v2"
-  llm_provider: "gemini" # or "openai", "ollama"
-  llm_model: "gemini-2.0-flash"
-  providers:
-    gemini:
-      api_key: "${GEMINI_API_KEY}"
-      api_version: "v1beta"
-    openai:
-      api_key: "${OPENAI_API_KEY}"
-      base_url: "https://api.openai.com/v1"
-    ollama:
-      base_url: "http://localhost:11434"
-      model: "llama3"
+  llm_provider: "ollama"
+  llm_model: "qwen3.5:35b"
+  embedding_model: "bge-m3:567m"
+  embedding_dim: 1024
+  ollama:
+    base_url: "http://localhost:11434"
   knowledge_graph:
     storage_path: "./data/processed/kg"
     backend: "networkx" # or "neo4j"
