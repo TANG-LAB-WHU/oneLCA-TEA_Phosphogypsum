@@ -4,6 +4,13 @@ End-to-end smoke test for the knowledge-graph pipeline.
 This script validates both RAG engines (LightRAG and RAGAnything, if installed)
 on a small PDF subset in data/raw/papers/unparsed.
 
+LightRAG stage uses MinerU for PDF→Markdown by default (figures/tables; requires
+`pip install -U "mineru[all]"` and model assets). Use `--lightrag-parser pymupdf`
+for a faster text-only parse.
+
+If `data/raw/papers/parsed/<stem>.md` already exists from an older PyMuPDF run,
+`build_knowledge_graph` step 1 will skip parsing; delete that file to force MinerU.
+
 Run from any working directory:
     python examples/e2e_smoke_test.py
 
@@ -20,7 +27,9 @@ import os
 import shutil
 import subprocess
 import sys
+from functools import partial
 from pathlib import Path
+from typing import Any
 
 from dotenv import load_dotenv
 
@@ -37,6 +46,16 @@ from pgloop.knowledge import (  # noqa: E402
     RAGAnythingEngine,
 )
 from scripts.build_knowledge_graph import run_pipeline  # noqa: E402
+
+
+def _lightrag_query_answer(engine: LightRAGEngine, q: str) -> str:
+    """Single-query helper for smoke test (avoids ruff F821 on lambdas in try/finally)."""
+    return engine.query(q, mode="mix").answer
+
+
+def _raganything_query_answer(engine: Any, q: str) -> str:
+    """Single-query helper for RAGAnything smoke test."""
+    return engine.query(q, mode="hybrid")
 
 
 def _clean_dir(path: Path):
@@ -158,8 +177,8 @@ def _has_index_success(results: dict) -> bool:
     return any(bool(ok) for ok in index_results.values())
 
 
-def run_lightrag_smoke(limit: int):
-    """Run LightRAG end-to-end smoke test."""
+def run_lightrag_smoke(limit: int, parser_type: str = "mineru"):
+    """Run LightRAG end-to-end smoke test (`parser_type`: mineru or pymupdf)."""
     lightrag_dir = PROJECT_ROOT / "data" / "processed" / "lightrag_db"
     _clean_dir(lightrag_dir)
 
@@ -167,7 +186,7 @@ def run_lightrag_smoke(limit: int):
     # Full pipeline for LightRAG: parse -> index -> extract -> build
     results = run_pipeline(
         steps=["all"],
-        parser_type="pymupdf",
+        parser_type=parser_type,
         limit=limit,
         engine="lightrag",
     )
@@ -180,7 +199,7 @@ def run_lightrag_smoke(limit: int):
 
     rag = LightRAGEngine(working_dir=lightrag_dir)
     try:
-        _print_query_answers("LightRAG", lambda q: rag.query(q, mode="mix").answer)
+        _print_query_answers("LightRAG", partial(_lightrag_query_answer, rag))
     finally:
         if hasattr(rag, "close"):
             rag.close()
@@ -214,7 +233,7 @@ def run_raganything_smoke(limit: int):
 
     rag = RAGAnythingEngine(working_dir=raganything_dir)
     try:
-        _print_query_answers("RAGAnything", lambda q: rag.query(q, mode="hybrid"))
+        _print_query_answers("RAGAnything", partial(_raganything_query_answer, rag))
     finally:
         if hasattr(rag, "close"):
             rag.close()
@@ -240,6 +259,12 @@ def main():
         action="store_true",
         help="Do not call `ollama stop` between stages",
     )
+    parser.add_argument(
+        "--lightrag-parser",
+        choices=["mineru", "pymupdf"],
+        default="mineru",
+        help="PDF parser for LightRAG pipeline step 1 (default: mineru for images/tables)",
+    )
     args = parser.parse_args()
 
     unparsed_dir = PROJECT_ROOT / "data" / "raw" / "papers" / "unparsed"
@@ -253,7 +278,7 @@ def main():
 
     # Engines are executed sequentially in one process.
     # Memory protection: clear Python refs + optional `ollama stop` between stages.
-    run_lightrag_smoke(limit)
+    run_lightrag_smoke(limit, parser_type=args.lightrag_parser)
     _memory_barrier(unload_between_stages)
 
     if not args.skip_raganything:

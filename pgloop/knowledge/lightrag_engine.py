@@ -111,11 +111,7 @@ class LightRAGEngine:
 
         # LLM configuration
         self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-        self.llm_api_key = (
-            llm_api_key
-            or os.getenv("LLM_API_KEY")
-            or "ollama"
-        )
+        self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "ollama"
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
 
         # Embedding configuration — model name must match `ollama list`
@@ -156,7 +152,9 @@ class LightRAGEngine:
         loop = self._get_or_create_loop()
         return loop.run_until_complete(coro)
 
-    def _build_extra_body(self, existing: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+    def _build_extra_body(
+        self, existing: Optional[Dict[str, Any]] = None
+    ) -> Optional[Dict[str, Any]]:
         """Merge request extra_body with Ollama context hints when configured."""
         extra_body: Dict[str, Any] = dict(existing or {})
         if self.llm_context_length > 0:
@@ -246,9 +244,9 @@ class LightRAGEngine:
             response = client.embeddings.create(model=self.embedding_model, input=batch_texts)
             vectors = np.array([d.embedding for d in response.data], dtype=np.float32)
             if vectors.shape[0] != len(batch_texts):
-                raise ValueError(
-                    f"Embedding response size mismatch: expected {len(batch_texts)}, got {vectors.shape[0]}"
-                )
+                n = len(batch_texts)
+                got = vectors.shape[0]
+                raise ValueError(f"Embedding response size mismatch: expected {n}, got {got}")
             if not np.isfinite(vectors).all():
                 raise ValueError("Embedding response contains non-finite values (NaN/Inf).")
             return vectors
@@ -283,7 +281,9 @@ class LightRAGEngine:
                 return np.vstack(vectors).astype(np.float32)
 
         return EmbeddingFunc(
-            embedding_dim=self.embedding_dim, max_token_size=8192, func=embed_func
+            embedding_dim=self.embedding_dim,
+            max_token_size=8192,
+            func=embed_func,
         )
 
     async def _transcribe_image(self, image_path: Path) -> str:
@@ -372,7 +372,10 @@ class LightRAGEngine:
                         text = f.read()
 
                     if transcribe_images:
-                        image_dirs = [filepath.parent / "images", filepath.parent.parent / "images"]
+                        image_dirs = [
+                            filepath.parent / "images",
+                            filepath.parent.parent / "images",
+                        ]
                         image_text = ""
                         for img_dir in image_dirs:
                             if img_dir.exists() and img_dir.is_dir():

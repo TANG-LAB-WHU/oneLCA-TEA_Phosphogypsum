@@ -192,7 +192,8 @@ def step3_extract_structured_data(limit: int = None, engine: str = "lightrag"):
     """
     Step 3: Extract Structured Data using LLM
 
-    Uses the configured OpenAI-compatible LLM to extract composition, technology, LCI, and cost data.
+    Uses the configured OpenAI-compatible LLM to extract composition, technology,
+    LCI, and cost data.
     """
     print("\n" + "=" * 60)
     print("   STEP 3: LLM DATA EXTRACTION")
@@ -201,8 +202,7 @@ def step3_extract_structured_data(limit: int = None, engine: str = "lightrag"):
     extractor = LLMExtractor()
 
     print(
-        f"LLM: {os.getenv('LLM_BASE_URL', 'http://127.0.0.1:11434/v1')} "
-        f"(model={extractor.model})"
+        f"LLM: {os.getenv('LLM_BASE_URL', 'http://127.0.0.1:11434/v1')} (model={extractor.model})"
     )
     print(f"RAG Engine: {engine}")
 

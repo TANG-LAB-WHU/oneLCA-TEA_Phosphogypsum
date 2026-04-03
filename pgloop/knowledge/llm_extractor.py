@@ -171,7 +171,9 @@ class LLMExtractor:
             self._client = OpenAI(base_url=self.base_url, api_key=self.api_key)
         return self._client
 
-    def _build_extra_body(self, existing: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+    def _build_extra_body(
+        self, existing: Optional[Dict[str, Any]] = None
+    ) -> Optional[Dict[str, Any]]:
         """Attach optional Ollama context hints without discarding caller data."""
         extra_body: Dict[str, Any] = dict(existing or {})
         if self.llm_context_length > 0:

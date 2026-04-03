@@ -100,3 +100,7 @@ LLM_CONTEXT_LENGTH=32768
 LLM_JSON_MODE=1
 
 # Note: OLLAMA_* variables should be set at OS level (setx), then restart Ollama.
+
+
+Remove-Item "data/raw/papers/parsed/1. Environmental impact and management of phosphogypsum.md"
+python examples/e2e_smoke_test.py --limit 1 --skip-raganything

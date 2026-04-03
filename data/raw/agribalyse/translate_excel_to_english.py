@@ -277,9 +277,7 @@ def main():
     print(f"Output folder: {output_dir}")
     print(f"Max concurrency: {max_concurrency}")
     print(f"Max retries: {max_retries}")
-    asyncio.run(
-        _main_async(target_folder, output_dir, use_llm_api, max_concurrency, max_retries)
-    )
+    asyncio.run(_main_async(target_folder, output_dir, use_llm_api, max_concurrency, max_retries))
 
 
 if __name__ == "__main__":

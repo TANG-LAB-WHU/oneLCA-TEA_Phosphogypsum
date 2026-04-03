@@ -102,11 +102,7 @@ class RAGAnythingEngine:
 
         # LLM configuration
         self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-        self.llm_api_key = (
-            llm_api_key
-            or os.getenv("LLM_API_KEY")
-            or "ollama"
-        )
+        self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "ollama"
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
 
         # Embedding configuration — model name must match `ollama list`
@@ -148,7 +144,9 @@ class RAGAnythingEngine:
         loop = self._get_or_create_loop()
         return loop.run_until_complete(coro)
 
-    def _build_extra_body(self, existing: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+    def _build_extra_body(
+        self, existing: Optional[Dict[str, Any]] = None
+    ) -> Optional[Dict[str, Any]]:
         """Attach Ollama context hints without discarding caller-provided extra_body."""
         extra_body: Dict[str, Any] = dict(existing or {})
         if self.llm_context_length > 0:
@@ -266,9 +264,9 @@ class RAGAnythingEngine:
             if vectors.ndim == 1:
                 vectors = np.expand_dims(vectors, axis=0)
             if vectors.shape[0] != len(batch_texts):
-                raise ValueError(
-                    f"Embedding response size mismatch: expected {len(batch_texts)}, got {vectors.shape[0]}"
-                )
+                n = len(batch_texts)
+                got = vectors.shape[0]
+                raise ValueError(f"Embedding response size mismatch: expected {n}, got {got}")
             if not np.isfinite(vectors).all():
                 raise ValueError("Embedding response contains non-finite values (NaN/Inf).")
             return vectors
@@ -302,7 +300,9 @@ class RAGAnythingEngine:
                 return np.vstack(vectors).astype(np.float32)
 
         return EmbeddingFunc(
-            embedding_dim=self.embedding_dim, max_token_size=8192, func=embed_func
+            embedding_dim=self.embedding_dim,
+            max_token_size=8192,
+            func=embed_func,
         )
 
     def _get_rag_instance(self) -> Any:
