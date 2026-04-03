@@ -202,6 +202,9 @@ pip install -e ".[ai,viz,kg,dev]"
 # Optional: advanced PDF parsing (MinerU); see optional-dependencies "pdf" in pyproject.toml
 # pip install -e ".[pdf]"
 
+# Optional: RAG engines (LightRAG + RAGAnything)
+# pip install -e ".[rag]"
+
 # Optional: stochastic_dynamics (PyTorch PINN/VAE) with CUDA 12.9
 # Install CUDA-matched torch first:
 # pip install torch==2.8 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu129

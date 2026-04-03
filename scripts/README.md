@@ -95,6 +95,7 @@ data/processed/knowledge_graph/ ← Domain knowledge graph (NetworkX/Neo4j)
 
 ## Dependencies
 
+- **Project extras (recommended)**: `pip install -e ".[rag,pdf]"`
 - **MinerU**: Advanced PDF parsing with OCR (`pip install -U "mineru[all]"`)
 - **LightRAG**: Graph-enhanced RAG (`pip install lightrag-hku`)
 - **RAGAnything**: Multimodal RAG (optional, `pip install "raganything[all]"`)
