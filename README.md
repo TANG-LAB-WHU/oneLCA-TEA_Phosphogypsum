@@ -26,12 +26,13 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 | `pgloop/chemicals`     | Chemical Database + MACE | `Chemical`, `PropertyPredictor`, `get_chemical()`     |
 | `pgloop/equipment`     | Unit Operations          | `CSTR`, `FilterPress`, `Evaporator`, etc.             |
 | `pgloop/risk`          | Risk Assessment          | `TechnicalRisk`, `PoliticalRisk`, `RiskAggregator`    |
-| `pgloop/decision`      | Decision Support         | `PathwayRanker`, `TOPSIS`, `ScenarioAnalyzer`         |
-| `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `MetropolisHastings`, `HamiltonianMC`, `GibbsSampler`, `MCMCDiagnostics`, `SensitivityAnalyzer`, `DiscernibilityAnalyzer` |
+| `pgloop/decision`      | Decision Support         | `PathwayRanker`, `ScenarioAnalyzer`, `DynamicOptimizer` |
+| `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `JointUncertaintyPropagator`, `BayesianUpdater`, `MCMC` |
+| `pgloop/stochastic_dynamics` | Stochastic Dynamics | `FP_PINN`, `VAE`, `FokkerPlanckSolver`, `LatentSDE` |
 | `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `LightRAGEngine`, `LLMExtractor`  |
-| `pgloop/utils`         | Utilities                | `CurrencyConverter`, `UnitConverter`, `Annotation`    |
 | `pgloop/visualization` | Dashboard & Reports      | `run_dashboard`, `ReportExporter`, `LCAPlots`          |
 | `pgloop/iodata`        | Data Ingestion           | `PDFParser`, `WebScraper`, `APIConnector`             |
+| `pgloop/utils`         | Utilities                | `CurrencyConverter`, `UnitConverter`, `Annotation`    |
 
 ## System Architecture
 
@@ -340,12 +341,23 @@ python scripts/run_dynamic_assessment.py \
 - `data/processed/dynamic_assessment/dynamic_assessment_timeseries.csv`
 - `data/processed/dynamic_assessment/dynamic_assessment_ranking.json`
 
-### New core modules
+## Utility Scripts
 
-- `pgloop/uncertainty/propagation.py`: synchronized LCA+TEA uncertainty propagation
-- `pgloop/decision/scenario.py`: trajectory-aware `Scenario` + `DynamicScenarioAnalyzer`
-- `pgloop/decision/dynamic_optimizer.py`: entropy-proxy/LCOP/GWP multi-objective ranking
-- `pgloop/uncertainty/bayesian_update.py`: posterior updates with discrepancy-aware loop
+The `scripts/` directory contains tools for automation and advanced analysis:
+
+| Script                        | Purpose                                         |
+| ----------------------------- | ----------------------------------------------- |
+| `build_knowledge_graph.py`    | Parse raw literature and populate the KG        |
+| `visualize_knowledge_graph.py` | Generate interactive KG visualizer (PyVis)      |
+| `run_dynamic_assessment.py`   | Run joint LCA+TEA uncertainty over time         |
+| `run_stochastic_dynamics_*.py`| Train and eval PINN/VAE models for uncertainty |
+
+## Tutorials & Examples
+
+For hands-on learning, explore the `examples/notebooks/` directory, which contains:
+- `01_basic_lca_tea.ipynb`: Introduction to core engines.
+- `02_uncertainty_analysis.ipynb`: Monte Carlo and sensitivity tutorials.
+- `03_ai_extraction_workflow.ipynb`: LLM-RAG pipeline demonstration.
 
 ## Treatment Pathways
 
