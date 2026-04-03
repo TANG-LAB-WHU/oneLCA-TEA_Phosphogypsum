@@ -113,3 +113,14 @@ INFO: [] Process 7724 KV load relation_chunks with 0 records
 INFO: [] Process 7724 KV load llm_response_cache with 0 records
 INFO: [] Process 7724 doc status load doc_status with 0 records
 [1/1] Processing: 1. Environmental impact and management of phosphog...
+INFO: Processing 1 document(s)
+INFO: Extracting stage 1/1: unknown_source
+INFO: Processing d-id: doc-181b92583d382f6f9e0c0b40f0e9d221
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
+INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
+INFO:  == LLM cache == saving: default:extract:a54b4655f24ccd93fa0c75b86f74dcb0
+INFO:  == LLM cache == saving: default:extract:aa29dfb05798c88eb6bd02eba291fe81
+INFO:  == LLM cache == saving: default:extract:1490ca3023e0998f1f5d756251693dd3
+INFO:  == LLM cache == saving: default:extract:e92c4ec7e0b0c26d8628bbe00db05b08
+WARNING: chunk-4c63685c56f54818f0ba79268eff1e25: LLM output format error; found 5/4 fields on ENTITY `Tunisian PG` @ `South African PG`
+
