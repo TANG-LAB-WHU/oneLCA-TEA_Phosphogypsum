@@ -64,6 +64,9 @@ class RAGAnythingEngine:
 
     All calls via Ollama's OpenAI-compatible /v1 endpoint (chat + embeddings).
 
+    LLM_TEMPERATURE (default 0.1) is applied when callers omit temperature, matching
+    LightRAGEngine so delimiter-structured LightRAG/RAGAnything extractions stay stable.
+
     NOTE: EMBEDDING_MODEL must match `ollama list` output (e.g. "bge-m3:567m").
     Adjust EMBEDDING_DIM if your model outputs a different vector size.
     """
@@ -111,6 +114,11 @@ class RAGAnythingEngine:
         self.llm_context_length = _read_env_int(
             "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
         )
+        raw_temp = os.getenv("LLM_TEMPERATURE", "0.1").strip()
+        try:
+            self.llm_temperature = float(raw_temp)
+        except ValueError:
+            self.llm_temperature = 0.1
 
         # Parser configuration
         self.parser = parser
@@ -173,6 +181,8 @@ class RAGAnythingEngine:
 
         def llm_model_func(prompt, system_prompt=None, history_messages=None, **kwargs):
             request_kwargs = dict(kwargs)
+            if request_kwargs.get("temperature") is None:
+                request_kwargs["temperature"] = self.llm_temperature
             extra_body = self._build_extra_body(request_kwargs.get("extra_body"))
             if extra_body:
                 request_kwargs["extra_body"] = extra_body
@@ -201,6 +211,8 @@ class RAGAnythingEngine:
             **kwargs,
         ):
             request_kwargs = dict(kwargs)
+            if request_kwargs.get("temperature") is None:
+                request_kwargs["temperature"] = self.llm_temperature
             extra_body = self._build_extra_body(request_kwargs.get("extra_body"))
             if extra_body:
                 request_kwargs["extra_body"] = extra_body
@@ -431,6 +443,7 @@ class RAGAnythingEngine:
             "parse_method": self.parse_method,
             "llm_model": self.llm_model,
             "embedding_model": self.embedding_model,
+            "llm_temperature": self.llm_temperature,
             "llm_context_length": self.llm_context_length,
             "mineru_backend": self.mineru_backend,
             "mineru_device": self.mineru_device,

@@ -10,6 +10,9 @@ Configuration via environment variables (.env):
 - LLM_BASE_URL: OpenAI-compatible API endpoint (default: http://127.0.0.1:11434/v1)
 - LLM_API_KEY: API key (default: "ollama")
 - LLM_MODEL: Chat model name (default: qwen3.5:35b)
+- LLM_TEMPERATURE: Sampling temperature for chat (default: 0.1). LightRAG entity
+  extraction does not pass temperature; without this, the OpenAI client defaults
+  to ~1.0 and often breaks strict tuple-delimited output (warnings like 5/4 fields).
 - EMBEDDING_MODEL: Embedding model name (default: bge-m3:567m)
 """
 
@@ -122,6 +125,13 @@ class LightRAGEngine:
         self.llm_context_length = _read_env_int(
             "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
         )
+        # LightRAG's extract path calls llm_model_func without temperature; OpenAI's
+        # default (~1.0) yields noisy delimiter-based records. Use a low default.
+        raw_temp = os.getenv("LLM_TEMPERATURE", "0.1").strip()
+        try:
+            self.llm_temperature = float(raw_temp)
+        except ValueError:
+            self.llm_temperature = 0.1
 
         self._rag = None
         self._loop: Optional[asyncio.AbstractEventLoop] = None
@@ -224,6 +234,8 @@ class LightRAGEngine:
             for key in passthrough_keys:
                 if key in kwargs and kwargs[key] is not None:
                     request_kwargs[key] = kwargs[key]
+            if "temperature" not in request_kwargs:
+                request_kwargs["temperature"] = self.llm_temperature
             extra_body = self._build_extra_body(kwargs.get("extra_body"))
             if extra_body:
                 request_kwargs["extra_body"] = extra_body
@@ -325,6 +337,7 @@ class LightRAGEngine:
                         ],
                     }
                 ],
+                "temperature": self.llm_temperature,
             }
             extra_body = self._build_extra_body()
             if extra_body:
@@ -422,6 +435,7 @@ class LightRAGEngine:
             "embedding_model": self.embedding_model,
             "embedding_dim": self.embedding_dim,
             "llm_context_length": self.llm_context_length,
+            "llm_temperature": self.llm_temperature,
             "available": LIGHTRAG_AVAILABLE,
         }
 
