@@ -123,4 +123,30 @@ INFO:  == LLM cache == saving: default:extract:aa29dfb05798c88eb6bd02eba291fe81
 INFO:  == LLM cache == saving: default:extract:1490ca3023e0998f1f5d756251693dd3
 INFO:  == LLM cache == saving: default:extract:e92c4ec7e0b0c26d8628bbe00db05b08
 WARNING: chunk-4c63685c56f54818f0ba79268eff1e25: LLM output format error; found 5/4 fields on ENTITY `Tunisian PG` @ `South African PG`
+INFO:  == LLM cache == saving: default:extract:ad131d1c29ba9d7ccddcbe4d9822f53f
+INFO:  == LLM cache == saving: default:extract:c9b6cb575da63cc21cdc072cacbd9a7d
+INFO:  == LLM cache == saving: default:extract:a8736125c1ea118a21771e9dd34084ba
+INFO:  == LLM cache == saving: default:extract:bdc563017a495234bd87ba2993804d0b
+INFO: Chunk 1 of 23 extracted 39 Ent + 12 Rel chunk-4c63685c56f54818f0ba79268eff1e25
+INFO: Chunk 2 of 23 extracted 26 Ent + 22 Rel chunk-eea2170321781fee171144c997d57fbd
+INFO: Chunk 3 of 23 extracted 50 Ent + 38 Rel chunk-353d1f2144d078e2f72e91dc948797cd
+INFO: Chunk 4 of 23 extracted 64 Ent + 21 Rel chunk-8655b2aa46a25a4770ebfc579e59fec0
+INFO:  == LLM cache == saving: default:extract:d4b1ab1025ce7d92781096556d64435a
+INFO:  == LLM cache == saving: default:extract:6c18bfe68d404a96cc01fb1fee6e4e7c
+INFO:  == LLM cache == saving: default:extract:571091dcb7efe1058a88caa2385abd88
+INFO:  == LLM cache == saving: default:extract:75255929d58b654bac38892a3285f32a
+INFO:  == LLM cache == saving: default:extract:bcbea95180b7c962aed72f721b7c9a76
+INFO:  == LLM cache == saving: default:extract:3807acdf8d58d91b6f28984f4cd913a4
+INFO:  == LLM cache == saving: default:extract:d4f243fa2784355114db94ecf054a63a
+INFO: Chunk 5 of 23 extracted 34 Ent + 14 Rel chunk-975c704821217ad354323c108fb3f186
+INFO:  == LLM cache == saving: default:extract:4d8fd79d3493af0b1e13f2260bfb5633
+WARNING: chunk-e908185b5f8266eeb2c2345048783d59: LLM output format error; found 4/5 fields on RELATION `Estuarine Tidal Prism`~`PG Stack Area<br> contaminant propagation`
+INFO: Chunk 6 of 23 extracted 45 Ent + 27 Rel chunk-26139202b375a9dca860a34e05924d71
+INFO: Chunk 7 of 23 extracted 31 Ent + 15 Rel chunk-e908185b5f8266eeb2c2345048783d59
+INFO: Chunk 8 of 23 extracted 32 Ent + 23 Rel chunk-de70c1e3b4790ef1fa858a0383c7df92
+INFO:  == LLM cache == saving: default:extract:1e9d0f89b23d3cfad99b06a1ec041554
+INFO:  == LLM cache == saving: default:extract:c8bb54e0ba8dc4ddaf11f1a082c08535
+INFO:  == LLM cache == saving: default:extract:608ac91528e3574a7cd48a2db3f521e9
+INFO:  == LLM cache == saving: default:extract:1b90057011bc123d9fd018ff5b0f0dab
+INFO:  == LLM cache == saving: default:extract:06f56860a8bc086d06c1687c35bff12f
 
