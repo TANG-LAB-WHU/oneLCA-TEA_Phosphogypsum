@@ -7,7 +7,7 @@ Removing old directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightr
 ============================================================
    PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
 ============================================================
-Start time: 2026-04-04 05:21:01
+Start time: 2026-04-04 06:59:34
 Steps to run: ['all']
 RAG Engine: lightrag
 
@@ -19,78 +19,10 @@ Input:  C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed
 Output: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed
 
 Found 1 PDF files to process
-
-[1/1] Parsing: 1. Environmental impact and management of phosphog...
-2026-04-04 05:21:01.624 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:182 - Pipeline processing-window multi-file run. doc_count=1, total_pages=10, window_size=64, total_batches=1
-2026-04-04 05:21:01.791 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:234 - Pipeline processing window batch 1/1: 10/10 pages, batch_pages=10, doc_slices=doc0:1-10
-2026-04-04 05:21:01.811 | INFO     | mineru.backend.pipeline.pipeline_analyze:batch_image_analyze:327 - GPU Memory: 32 GB, Batch Ratio: 16. 
-2026-04-04 05:21:01.811 | INFO     | mineru.backend.pipeline.model_init:__init__:206 - DocAnalysis init, this may take some times......
-Fetching 7 files:   0%|                                                                                                                | 0/7 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-README.md: 1.66kB [00:00, ?B/s]
-README.md: 0.00B [00:00, ?B/s]     C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\huggingface_hub\file_download.py:143: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\Win11\.cache\huggingface\hub\models--opendatalab--PDF-Extract-Kit-1.0. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
-To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
-  warnings.warn(message)
-generation_config.json: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████| 191/191 [00:00<?, ?B/s] 
-config.json: 5.09kB [00:00, ?B/s]
-tokenizer_config.json: 4.52kB [00:00, ?B/s]                                                                                        | 0.00/191 [00:00<?, ?B/s] 
-tokenizer.json: 3.58MB [00:00, 21.4MB/s]
-special_tokens_map.json: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████| 552/552 [00:00<?, ?B/s] 
-model.safetensors: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 810M/810M [01:10<00:00, 11.5MB/s] 
-Fetching 7 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 7/7 [01:11<00:00, 10.23s/it] 
-Fetching 3 files:   0%|                                                                                                                | 0/3 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-preprocessor_config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 575/575 [00:00<?, ?B/s]
-config.json: 3.79kB [00:00, ?B/s]                                                                                                  | 0.00/575 [00:00<?, ?B/s]
-model.safetensors: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 215M/215M [00:18<00:00, 11.4MB/s] 
-Fetching 3 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:19<00:00,  6.57s/it]
-Fetching 1 files:   0%|                                                                                                                | 0/1 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-ch_PP-OCRv5_det_infer.pth: 100%|████████████████████████████████████████████████████████████████████████████████████████| 14.5M/14.5M [00:01<00:00, 10.0MB/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.41s/it]
-Fetching 1 files:   0%|                                                                                                                | 0/1 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-ch_PP-OCRv4_rec_server_doc_infer.pth: 100%|███████████████████████████████████████████████████████████████████████████████| 101M/101M [00:08<00:00, 11.4MB/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:09<00:00,  9.79s/it]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<?, ?it/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<?, ?it/s]
-Fetching 1 files:   0%|                                                                                                                | 0/1 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-unet.onnx: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 8.34M/8.34M [00:00<00:00, 8.89MB/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:01<00:00,  1.87s/it]
-Fetching 1 files:   0%|                                                                                                                | 0/1 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-slanet-plus.onnx: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████| 7.76M/7.76M [00:00<00:00, 9.74MB/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:01<00:00,  1.72s/it]
-Fetching 1 files:   0%|                                                                                                                | 0/1 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-PP-LCNet_x1_0_table_cls.onnx: 100%|█████████████████████████████████████████████████████████████████████████████████████| 6.78M/6.78M [00:00<00:00, 8.93MB/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:01<00:00,  1.75s/it]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<?, ?it/s]
-Fetching 1 files:   0%|                                                                                                                | 0/1 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-ch_PP-OCRv5_rec_infer.pth: 100%|████████████████████████████████████████████████████████████████████████████████████████| 32.6M/32.6M [00:03<00:00, 10.8MB/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:03<00:00,  3.95s/it]
-Fetching 1 files:   0%|                                                                                                                | 0/1 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-PP-LCNet_x1_0_doc_ori.onnx: 100%|███████████████████████████████████████████████████████████████████████████████████████| 6.79M/6.79M [00:00<00:00, 9.59MB/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:01<00:00,  1.68s/it]
-2026-04-04 05:23:03.683 | INFO     | mineru.backend.pipeline.model_init:__init__:259 - DocAnalysis init done!
-2026-04-04 05:23:03.696 | INFO     | mineru.backend.pipeline.pipeline_analyze:custom_model_init:82 - model init cost: 121.88475203514099
-Layout Predict: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:00<00:00, 11.99it/s]
-MFR Predict: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 141/141 [00:01<00:00, 96.27it/s] 
-Table-ocr det: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 18.12it/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<?, ?it/s]
-Fetching 1 files:   0%|                                                                                                                | 0/1 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-en_PP-OCRv5_rec_infer.pth: 100%|████████████████████████████████████████████████████████████████████████████████████████| 23.9M/23.9M [00:02<00:00, 10.2MB/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:03<00:00,  3.31s/it]
-Table-ocr rec en: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████| 251/251 [00:00<00:00, 293.41it/s]
-Table-wireless Predict: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00,  3.55it/s] 
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<?, ?it/s]
-Table-wired Predict: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:02<00:00,  1.45it/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<?, ?it/s]
-Fetching 1 files: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<?, ?it/s]
-OCR-det en: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 41/41 [00:01<00:00, 22.73it/s]
-Seal Predict: 0it [00:00, ?it/s]
-OCR-rec Predict: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00, 110.73it/s]
-2026-04-04 05:23:19.512 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:_finalize_processing_window_context:120 - Pipeline doc ready: doc0 pages=10t/s] 
-Processing pages: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:01<00:00,  6.84it/s]
-2026-04-04 05:23:19.513 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:283 - processing-window multi-file infer finished, cost: 137.89, speed: 0.073 page/s
-    ✓ Saved: 1. Environmental impact and management of phosphogypsum\auto\1. Environmental impact and management of phosphogypsum.md (75729 chars)
+[1/1] ⏭ Skipped (already parsed): 1. Environmental impact and management of phosphog
 
 ========================================
-Parsing Complete: 1 success, 0 skipped, 0 errors
+Parsing Complete: 0 success, 1 skipped, 0 errors
 
 ============================================================
    STEP 2: LIGHTRAG INDEX CONSTRUCTION
@@ -101,215 +33,124 @@ LLM Model:   qwen3.5:35b
 
 Note: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).
 INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db\graph_chunk_entity_relation.graphml
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
-INFO: [] Process 7724 KV load full_docs with 0 records
-INFO: [] Process 7724 KV load text_chunks with 0 records
-INFO: [] Process 7724 KV load full_entities with 0 records
-INFO: [] Process 7724 KV load full_relations with 0 records
-INFO: [] Process 7724 KV load entity_chunks with 0 records
-INFO: [] Process 7724 KV load relation_chunks with 0 records
-INFO: [] Process 7724 KV load llm_response_cache with 0 records
-INFO: [] Process 7724 doc status load doc_status with 0 records
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
+INFO: [] Process 31568 KV load full_docs with 0 records
+INFO: [] Process 31568 KV load text_chunks with 0 records
+INFO: [] Process 31568 KV load full_entities with 0 records
+INFO: [] Process 31568 KV load full_relations with 0 records
+INFO: [] Process 31568 KV load entity_chunks with 0 records
+INFO: [] Process 31568 KV load relation_chunks with 0 records
+INFO: [] Process 31568 KV load llm_response_cache with 0 records
+INFO: [] Process 31568 doc status load doc_status with 0 records
 [1/1] Processing: 1. Environmental impact and management of phosphog...
 INFO: Processing 1 document(s)
 INFO: Extracting stage 1/1: unknown_source
-INFO: Processing d-id: doc-181b92583d382f6f9e0c0b40f0e9d221
+INFO: Processing d-id: doc-79625fbd56b408c392d357c9f65de19d
 INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
 INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
+INFO:openai._base_client:Retrying request to /chat/completions in 0.482739 seconds
 INFO:  == LLM cache == saving: default:extract:a54b4655f24ccd93fa0c75b86f74dcb0
 INFO:  == LLM cache == saving: default:extract:aa29dfb05798c88eb6bd02eba291fe81
 INFO:  == LLM cache == saving: default:extract:1490ca3023e0998f1f5d756251693dd3
 INFO:  == LLM cache == saving: default:extract:e92c4ec7e0b0c26d8628bbe00db05b08
-WARNING: chunk-4c63685c56f54818f0ba79268eff1e25: LLM output format error; found 5/4 fields on ENTITY `Tunisian PG` @ `South African PG`
-INFO:  == LLM cache == saving: default:extract:ad131d1c29ba9d7ccddcbe4d9822f53f
-INFO:  == LLM cache == saving: default:extract:c9b6cb575da63cc21cdc072cacbd9a7d
-INFO:  == LLM cache == saving: default:extract:a8736125c1ea118a21771e9dd34084ba
-INFO:  == LLM cache == saving: default:extract:bdc563017a495234bd87ba2993804d0b
-INFO: Chunk 1 of 23 extracted 39 Ent + 12 Rel chunk-4c63685c56f54818f0ba79268eff1e25
-INFO: Chunk 2 of 23 extracted 26 Ent + 22 Rel chunk-eea2170321781fee171144c997d57fbd
-INFO: Chunk 3 of 23 extracted 50 Ent + 38 Rel chunk-353d1f2144d078e2f72e91dc948797cd
-INFO: Chunk 4 of 23 extracted 64 Ent + 21 Rel chunk-8655b2aa46a25a4770ebfc579e59fec0
+WARNING: chunk-eea2170321781fee171144c997d57fbd: Complete delimiter can not be found in extraction result
+INFO:openai._base_client:Retrying request to /chat/completions in 0.454764 seconds
+INFO:  == LLM cache == saving: default:extract:e777a409fbe7541d336dbe492bd3f7f6
+INFO:openai._base_client:Retrying request to /chat/completions in 0.449139 seconds
+INFO:  == LLM cache == saving: default:extract:d312cc95353cbbd257e7423b4784a148
+INFO:  == LLM cache == saving: default:extract:ab3f0156d4d0c27fb70a0748f9c52824
+INFO:  == LLM cache == saving: default:extract:9e5a5e302b487acc394d2932964b2d9f
+INFO: Chunk 1 of 23 extracted 54 Ent + 42 Rel chunk-353d1f2144d078e2f72e91dc948797cd
+INFO: Chunk 2 of 23 extracted 68 Ent + 54 Rel chunk-8655b2aa46a25a4770ebfc579e59fec0
 INFO:  == LLM cache == saving: default:extract:d4b1ab1025ce7d92781096556d64435a
+INFO: Chunk 3 of 23 extracted 44 Ent + 21 Rel chunk-eea2170321781fee171144c997d57fbd
+INFO: Chunk 4 of 23 extracted 58 Ent + 98 Rel chunk-4c63685c56f54818f0ba79268eff1e25
 INFO:  == LLM cache == saving: default:extract:6c18bfe68d404a96cc01fb1fee6e4e7c
 INFO:  == LLM cache == saving: default:extract:571091dcb7efe1058a88caa2385abd88
+INFO:  == LLM cache == saving: default:extract:81fe406b4d66f3f55f741b4ce0aaa674
 INFO:  == LLM cache == saving: default:extract:75255929d58b654bac38892a3285f32a
-INFO:  == LLM cache == saving: default:extract:bcbea95180b7c962aed72f721b7c9a76
-INFO:  == LLM cache == saving: default:extract:3807acdf8d58d91b6f28984f4cd913a4
-INFO:  == LLM cache == saving: default:extract:d4f243fa2784355114db94ecf054a63a
-INFO: Chunk 5 of 23 extracted 34 Ent + 14 Rel chunk-975c704821217ad354323c108fb3f186
-INFO:  == LLM cache == saving: default:extract:4d8fd79d3493af0b1e13f2260bfb5633
-WARNING: chunk-e908185b5f8266eeb2c2345048783d59: LLM output format error; found 4/5 fields on RELATION `Estuarine Tidal Prism`~`PG Stack Area<br> contaminant propagation`
-INFO: Chunk 6 of 23 extracted 45 Ent + 27 Rel chunk-26139202b375a9dca860a34e05924d71
-INFO: Chunk 7 of 23 extracted 31 Ent + 15 Rel chunk-e908185b5f8266eeb2c2345048783d59
-INFO: Chunk 8 of 23 extracted 32 Ent + 23 Rel chunk-de70c1e3b4790ef1fa858a0383c7df92
+INFO:openai._base_client:Retrying request to /chat/completions in 0.470699 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.820903 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.450880 seconds
+INFO:  == LLM cache == saving: default:extract:c47de1c33f436425dea7feaaed8af560
+WARNING: chunk-26139202b375a9dca860a34e05924d71: Complete delimiter can not be found in extraction result
+INFO: Chunk 5 of 23 extracted 48 Ent + 38 Rel chunk-975c704821217ad354323c108fb3f186
+WARNING: chunk-e908185b5f8266eeb2c2345048783d59: Complete delimiter can not be found in extraction result
+INFO: Chunk 6 of 23 extracted 49 Ent + 35 Rel chunk-26139202b375a9dca860a34e05924d71
+INFO: Chunk 7 of 23 extracted 30 Ent + 17 Rel chunk-e908185b5f8266eeb2c2345048783d59
+INFO: Chunk 8 of 23 extracted 37 Ent + 35 Rel chunk-de70c1e3b4790ef1fa858a0383c7df92
 INFO:  == LLM cache == saving: default:extract:1e9d0f89b23d3cfad99b06a1ec041554
 INFO:  == LLM cache == saving: default:extract:c8bb54e0ba8dc4ddaf11f1a082c08535
+WARNING: chunk-2c54e54869996639c015e18461f5353e: Complete delimiter can not be found in extraction result
 INFO:  == LLM cache == saving: default:extract:608ac91528e3574a7cd48a2db3f521e9
 INFO:  == LLM cache == saving: default:extract:1b90057011bc123d9fd018ff5b0f0dab
-INFO:  == LLM cache == saving: default:extract:06f56860a8bc086d06c1687c35bff12f
-INFO:  == LLM cache == saving: default:extract:a899c568a2ba7dc558439c3f879c38c4
-INFO: Chunk 9 of 23 extracted 42 Ent + 23 Rel chunk-3fd3f4690887a77155a291d8a4da5ed3
-INFO:  == LLM cache == saving: default:extract:0eee1b280613e1abe2401356ddbe9206
-INFO:  == LLM cache == saving: default:extract:07289732b219275decd6b61f41ee0f7a
-INFO: Chunk 10 of 23 extracted 27 Ent + 16 Rel chunk-2c54e54869996639c015e18461f5353e
-INFO: Chunk 11 of 23 extracted 40 Ent + 23 Rel chunk-25a8040c82f3bfee5b580bb10426f81e
+INFO:openai._base_client:Retrying request to /chat/completions in 0.477403 seconds
+INFO:  == LLM cache == saving: default:extract:1745effd7a68e3e39ea44e40d90c3e2f
+INFO:  == LLM cache == saving: default:extract:63632ba23bc8ca164c1c67af2c7c0570
+INFO:  == LLM cache == saving: default:extract:c1c1251c40a0d049f864c86a332d6f65
+INFO:openai._base_client:Retrying request to /chat/completions in 0.375712 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.865937 seconds
+INFO: Chunk 9 of 23 extracted 55 Ent + 44 Rel chunk-3fd3f4690887a77155a291d8a4da5ed3
+INFO:  == LLM cache == saving: default:extract:1f541e1692f08d920559343fb4c6ae37
+INFO: Chunk 10 of 23 extracted 35 Ent + 15 Rel chunk-2c54e54869996639c015e18461f5353e
+INFO:openai._base_client:Retrying request to /chat/completions in 0.404724 seconds
 INFO:  == LLM cache == saving: default:extract:33be07e73fec789d531cd39f57c64a73
-INFO: Chunk 12 of 23 extracted 27 Ent + 17 Rel chunk-9d8e986bfe12dcbe1c9d9b7ffaf28b8b
+INFO: Chunk 11 of 23 extracted 75 Ent + 54 Rel chunk-25a8040c82f3bfee5b580bb10426f81e
+INFO: Chunk 12 of 23 extracted 63 Ent + 57 Rel chunk-9d8e986bfe12dcbe1c9d9b7ffaf28b8b
+WARNING: chunk-4d64491d64a02ff70ff4a818b7835466: Complete delimiter can not be found in extraction result
 INFO:  == LLM cache == saving: default:extract:c27e1fbf0e8a67759ab5e84740905b65
-INFO:  == LLM cache == saving: default:extract:c1d78af3a9678f8ab80dd177b0f5b14b
-INFO:  == LLM cache == saving: default:extract:7693c351a9e6d7c66b42fd7e0b60191d
-INFO:  == LLM cache == saving: default:extract:e0e1a185fe5a66ab9ae0ceff7c198daa
-WARNING: chunk-4d64491d64a02ff70ff4a818b7835466: LLM output format error; found 4/5 fields on RELATION `Needle-like Crystals<|#Fly Ash`~`structural reinforcement, hydration product`
-INFO:  == LLM cache == saving: default:extract:dd4e9d0f5136829a45b930679895a874
-INFO: Chunk 13 of 23 extracted 31 Ent + 17 Rel chunk-4d64491d64a02ff70ff4a818b7835466
-INFO: Chunk 14 of 23 extracted 26 Ent + 17 Rel chunk-8489cf9b61290701dbc2926c4f438c0a
-INFO:  == LLM cache == saving: default:extract:ef285b7990fec28f3aae52aada5d1244
-INFO:  == LLM cache == saving: default:extract:97ab5e737d9613746231c38ab61a29f1
-INFO: Chunk 15 of 23 extracted 25 Ent + 17 Rel chunk-7c46d92c7a08a9ff038a3f5c566f16c0
-INFO:  == LLM cache == saving: default:extract:6d171ef70b3a8975ccf48e43664c324b
-INFO: Chunk 16 of 23 extracted 26 Ent + 16 Rel chunk-3d0a10b6723267494b378648741f3990
-INFO:  == LLM cache == saving: default:extract:8511833f21db1e4a0e5922c67b4aa739
-INFO:  == LLM cache == saving: default:extract:19d2bfab88ebbf237a74f0b219f6000b
-INFO:  == LLM cache == saving: default:extract:08dc63ca04852d60c0a15efdc21a4266
-INFO:  == LLM cache == saving: default:extract:e3e300a82512435203a0e5233c138445
-INFO:  == LLM cache == saving: default:extract:237844dbd55a937ac774218d58f1372c
-INFO: Chunk 17 of 23 extracted 47 Ent + 22 Rel chunk-3936b6b3c868e9e8f7e67671ac321ca9
-INFO:  == LLM cache == saving: default:extract:6e51027b966733c5ebf00146889cc7ce
-INFO: Chunk 18 of 23 extracted 40 Ent + 26 Rel chunk-791467bdc0f98aaac64717a0b1ba2aa8
-INFO:  == LLM cache == saving: default:extract:f0d8bf248a467daab58c9b6e9b43fb5b
-INFO:  == LLM cache == saving: default:extract:897a4ff6bbcd32c1615cc69f367c4453
-INFO: Chunk 19 of 23 extracted 38 Ent + 26 Rel chunk-27aa9ea05206fbe5933cca5fcdcd2ad8
-INFO: Chunk 20 of 23 extracted 55 Ent + 25 Rel chunk-ab60e9ec8f7612f9acbb66020843d0dd
-INFO:  == LLM cache == saving: default:extract:9302731cbfcd55215c5b386cf1ab4127
-INFO:  == LLM cache == saving: default:extract:801832b95b70ca86282672b909bef125
-INFO:  == LLM cache == saving: default:extract:bf83f3e8caac9ce555cae293624fc42a
-INFO:  == LLM cache == saving: default:extract:9084d1ce7144fb6250fb751d30dcbf50
-INFO: Chunk 21 of 23 extracted 14 Ent + 15 Rel chunk-3f2890570918f37478d03970e0769081
-INFO: Chunk 22 of 23 extracted 35 Ent + 14 Rel chunk-290e741a4c6ff62917f9b4aebbfa3467
-INFO:  == LLM cache == saving: default:extract:37e4ad2fb2a9eb59f4cfafd79a4198b3
-INFO: Chunk 23 of 23 extracted 27 Ent + 21 Rel chunk-e395108537c330ad3e647164b0f9bd53
-INFO: Merging stage 1/1: unknown_source
-INFO: Phase 1: Processing 617 entities from doc-181b92583d382f6f9e0c0b40f0e9d221 (async: 8)
-INFO:openai._base_client:Retrying request to /embeddings in 0.410766 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.813898 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.455260 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.771303 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.414580 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.887963 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.483882 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.808187 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.416330 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.864653 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.480411 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.872638 seconds
-ERROR: Embedding func: Error in decorated function for task 2168504225216_29030.343: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-ERROR: Embedding func: Error in decorated function for task 2168503746624_29030.343: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-WARNING: VDB entity_upsert attempt 1 failed for Leaching Experiments: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}, retrying...
-WARNING: VDB entity_upsert attempt 1 failed for Distilled Water: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}, retrying...
-INFO:openai._base_client:Retrying request to /embeddings in 0.427827 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.948328 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.469836 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.948846 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.480747 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.850716 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.475211 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.969388 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.388346 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.919578 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.464043 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.765139 seconds
-ERROR: Embedding func: Error in decorated function for task 2168504229824_29039.578: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-ERROR: Embedding func: Error in decorated function for task 2168504230400_29039.578: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-WARNING: VDB entity_upsert attempt 2 failed for Leaching Experiments: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}, retrying...
-WARNING: VDB entity_upsert attempt 2 failed for Distilled Water: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}, retrying...
-INFO:openai._base_client:Retrying request to /embeddings in 0.382199 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.796912 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.410544 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.933964 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.390673 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.870650 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.455710 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.861207 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.420869 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.856524 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.479825 seconds
-INFO:openai._base_client:Retrying request to /embeddings in 0.756219 seconds
-ERROR: Embedding func: Error in decorated function for task 2168503778176_29049.562: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-ERROR: Embedding func: Error in decorated function for task 2168503777216_29049.562: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-WARNING: VDB entity_upsert failed for Leaching Experiments after 3 attempts: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-ERROR: Error processing entity `Leaching Experiments`: VDB entity_upsert failed for Leaching Experiments after 3 attempts: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-WARNING: VDB entity_upsert failed for Distilled Water after 3 attempts: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-ERROR: Error processing entity `Distilled Water`: VDB entity_upsert failed for Distilled Water after 3 attempts: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+INFO:openai._base_client:Retrying request to /chat/completions in 0.485629 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.927045 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.427722 seconds
+WARNING: LLM func: Detected stuck task 1602329060608_42140.656 (execution time: 1103.3s), forcing cleanup
+ERROR: Failed to extract entities and relationships: C[13/23]: chunk-3d0a10b6723267494b378648741f3990: LLM func: Task forcefully terminated due to execution timeout (>375s, actual: 1103.3s)
 ERROR: Traceback (most recent call last):
-  File "C:\Github\oneLCA-TEA_Phosphogypsum\pgloop\knowledge\lightrag_engine.py", line 256, in embed_func
-    return _embed_batch(texts)
-           ^^^^^^^^^^^^^^^^^^^
-  File "C:\Github\oneLCA-TEA_Phosphogypsum\pgloop\knowledge\lightrag_engine.py", line 244, in _embed_batch
-    response = client.embeddings.create(model=self.embedding_model, input=batch_texts)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\openai\resources\embeddings.py", line 136, in create
-    return self._post(
-           ^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\openai\_base_client.py", line 1297, in post
-    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\openai\_base_client.py", line 1070, in request
-    raise self._make_status_error_from_response(err.response) from None
-openai.InternalServerError: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 162, in safe_vdb_operation_with_exception
-    await operation()
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\kg\nano_vector_db_impl.py", line 124, in upsert
-    embeddings_list = await asyncio.gather(*embedding_tasks)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 513, in __call__
-    result = await self.func(*args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 1026, in wait_func
     return await future
            ^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 730, in worker
-    result = await asyncio.wait_for(
-             ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py", line 489, in wait_for
-    return fut.result()
-           ^^^^^^^^^^^^
-  File "C:\Github\oneLCA-TEA_Phosphogypsum\pgloop\knowledge\lightrag_engine.py", line 275, in embed_func
-    raise RuntimeError(
-RuntimeError: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+lightrag.utils.HealthCheckTimeoutError: Task forcefully terminated due to execution timeout (>375s, actual: 1103.3s)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3110, in _process_with_semaphore
+    result = await _process_single_content(chunk)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 2965, in _process_single_content
+    final_result, timestamp = await use_llm_func_with_cache(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 2049, in use_llm_func_with_cache
+    res: str = await use_llm_func(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 1055, in wait_func
+    raise TimeoutError(f"{queue_name}: {str(e)}")
+TimeoutError: LLM func: Task forcefully terminated due to execution timeout (>375s, actual: 1103.3s)
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 2606, in _locked_process_entity_name
-    entity_data = await _merge_nodes_then_upsert(
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 1932, in _merge_nodes_then_upsert
-    await safe_vdb_operation_with_exception(
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 168, in safe_vdb_operation_with_exception
-    raise Exception(error_msg) from e
-Exception: VDB entity_upsert failed for Distilled Water after 3 attempts: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2140, in process_document
-    await merge_nodes_and_edges(
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 2683, in merge_nodes_and_edges
-    raise first_exception
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 2663, in merge_nodes_and_edges
-    result = task.result()
-             ^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 2642, in _locked_process_entity_name
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3118, in _process_with_semaphore
     raise prefixed_exception from e
-Exception: `Distilled Water`: VDB entity_upsert failed for Distilled Water after 3 attempts: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 500 - {'error': {'message': 'failed to encode response: json: unsupported value: NaN', 'type': 'api_error', 'param': None, 'code': None}}
+TimeoutError: chunk-3d0a10b6723267494b378648741f3990: LLM func: Task forcefully terminated due to execution timeout (>375s, actual: 1103.3s)
 
-ERROR: Merging stage failed in document 1/1: unknown_source
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2052, in process_document
+    chunk_results = await entity_relation_task
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2341, in _process_extract_entities
+    raise e
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2326, in _process_extract_entities
+    chunk_results = await extract_entities(
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3160, in extract_entities
+    raise prefixed_exception from first_exception
+TimeoutError: C[13/23]: chunk-3d0a10b6723267494b378648741f3990: LLM func: Task forcefully terminated due to execution timeout (>375s, actual: 1103.3s)        
+
+ERROR: Failed to extract document 1/1: unknown_source
 INFO: Enqueued document processing pipeline stopped
     ✓ Indexed successfully
 
@@ -327,7 +168,17 @@ Output: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\extracted_data
 
 Processing 1 documents...
 
-[1/1] ⏭ Skipping: 1. Environmental impact and management o (already extracted)
+[1/1] Extracting from: 1. Environmental impact and management o...
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=qwen3.5:35b, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✗ cost: ['Failed to parse JSON from LLM response']
+    ✗ policy: ['Failed to parse JSON from LLM response']
 
 ========================================
 Extracted data from 1 documents
@@ -349,28 +200,16 @@ Knowledge Graph Statistics:
 ============================================================
    PIPELINE COMPLETE
 ============================================================
-End time: 2026-04-04 06:08:29
+End time: 2026-04-04 10:27:51
 
 LightRAG pipeline results:
 {
-  "parse": 1,
+  "parse": 0,
   "index": {
     "1. Environmental impact and management of phosphogypsum.md": true
   },
   "extract": {
-    "1. Environmental impact and management of phosphogypsum.md": {
-      "cost": {
-        "capex": null,
-        "opex": null,
-        "revenue": null,
-        "payback_period": null,
-        "irr": null,
-        "npv": null,
-        "chemical_cost": null,
-        "energy_cost": null,
-        "labor_cost": null
-      }
-    }
+    "1. Environmental impact and management of phosphogypsum.md": {}
   },
   "build": {
     "total_nodes": 1,
@@ -384,30 +223,59 @@ LightRAG pipeline results:
 
 LightRAG query smoke test:
 INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db\graph_chunk_entity_relation.graphml
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
 INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
 INFO:  == LLM cache == saving: mix:keywords:b1da5513d6f5c7582b38e17f341664b0
 INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
-INFO: Query nodes: Phosphogypsum, Treatment pathways, Recycling methods, Landfilling, Construction materials (top_k:40, cosine:0.2)
-INFO: Query edges: Phosphogypsum treatment, Industrial waste management, Byproduct utilization (top_k:40, cosine:0.2)
+INFO: Query nodes: Phosphogypsum, Treatment methods, Disposal, Recycling (top_k:40, cosine:0.2)
+INFO: Query edges: Phosphogypsum treatment, Treatment pathways, Waste management (top_k:40, cosine:0.2)
 INFO: Naive query: 0 chunks (chunk_top_k:20 cosine:0.2)
 INFO: Raw search results: 0 entities, 0 relations, 0 vector chunks
 INFO: [kg_query] No query context could be built; returning no-result.
 
 Q: What are common phosphogypsum treatment pathways?
 A: Sorry, I'm not able to provide an answer to that question.[no-context]
+INFO:openai._base_client:Retrying request to /chat/completions in 0.439525 seconds
 INFO:  == LLM cache == saving: mix:keywords:4f254cf24050d2304a8f0208292f6de1
 INFO: Query nodes: Rare earth elements, Phosphogypsum, Extraction process (top_k:40, cosine:0.2)
-INFO: Query edges: Rare earth extraction, Phosphogypsum utilization, Chemical recovery methods (top_k:40, cosine:0.2)
+INFO: Query edges: Extraction methods, Rare earth elements, Phosphogypsum processing (top_k:40, cosine:0.2)
 INFO: Naive query: 0 chunks (chunk_top_k:20 cosine:0.2)
 INFO: Raw search results: 0 entities, 0 relations, 0 vector chunks
 INFO: [kg_query] No query context could be built; returning no-result.
 
 Q: How to extract rare earth elements from phosphogypsum?
 A: Sorry, I'm not able to provide an answer to that question.[no-context]
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E30F20>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-467' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-468' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-469' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-470' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-471' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.enhanced_health_check() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:780> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-483' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-484' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-485' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-486' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-487' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-488' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-489' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-490' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:688> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-491' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.enhanced_health_check() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:780> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Exception ignored in: <coroutine object Queue.get at 0x00000175124367A0>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -418,8 +286,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1754' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E310E0>
+task: <Task pending name='Task-535' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x00000175123CCE40>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -430,8 +298,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1756' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E31D20>
+task: <Task pending name='Task-537' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512435D20>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -442,8 +310,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1757' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E30BA0>
+task: <Task pending name='Task-538' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512435700>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -454,8 +322,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1758' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E318C0>
+task: <Task pending name='Task-539' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512435380>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -466,8 +334,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1759' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E319A0>
+task: <Task pending name='Task-540' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512437920>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -478,8 +346,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1760' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E31380>
+task: <Task pending name='Task-541' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512435540>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -490,8 +358,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1761' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E31E00>
+task: <Task pending name='Task-542' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512437E60>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -502,8 +370,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1762' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E312A0>
+task: <Task pending name='Task-543' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x00000175124375A0>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -514,8 +382,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1763' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E317E0>
+task: <Task pending name='Task-544' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512435C40>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -526,8 +394,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1764' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E31EE0>
+task: <Task pending name='Task-545' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512437AE0>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -538,8 +406,8 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1765' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x000001F8E4E31A80>
+task: <Task pending name='Task-546' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017512437760>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -550,41 +418,12 @@ Traceback (most recent call last):
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
 ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1766' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1704' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1703' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1708' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1705' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1706' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1702' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1709' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1707' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1710' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.enhanced_health_check() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:785> wait_for=<Future pending cb=[Task.task_wakeup()]>>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1690' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.enhanced_health_check() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:785> wait_for=<Future pending cb=[Task.task_wakeup()]>>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1686' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1688' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1687' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-1689' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+task: <Task pending name='Task-547' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
 [INFO] Stopped Ollama model: qwen3.5:35b
-[INFO] Stopped Ollama model: bge-m3:567m
+[INFO] Stopped Ollama model: qwen3-embedding:4b
 
 Current Ollama loaded models:
-NAME           ID              SIZE      PROCESSOR    CONTEXT    UNTIL
-bge-m3:567m    790764642607    1.3 GB    100% GPU     8192       Stopping...
+NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL
 Removing old directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db
 
 === RAGAnything smoke run ===
@@ -592,7 +431,7 @@ Removing old directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\ragany
 ============================================================
    PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
 ============================================================
-Start time: 2026-04-04 06:09:42
+Start time: 2026-04-04 10:38:57
 Steps to run: ['index']
 RAG Engine: raganything
 
@@ -615,10 +454,10 @@ INFO:   Max concurrent files: 1
 INFO: Parser 'mineru' installation verified
 INFO: Initializing LightRAG with parameters: {'working_dir': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db'}
 INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db\graph_chunk_entity_relation.graphml
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_entities.json'} 0 data
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_relationships.json'} 0 data
-INFO:nano-vectordb:Init {'embedding_dim': 1024, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_chunks.json'} 0 data
-INFO: [] Process 7724 KV load parse_cache with 0 records
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_entities.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_relationships.json'} 0 data
+INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\raganything_db\\vdb_chunks.json'} 0 data
+INFO: [] Process 31568 KV load parse_cache with 0 records
 INFO: Multimodal processors initialized with context support
 INFO: Available processors: ['image', 'table', 'equation', 'generic']
 INFO: Context configuration: ContextConfig(context_window=1, context_mode='page', max_context_tokens=2000, include_headers=True, include_captions=True, filter_content_types=['text'])
@@ -628,32 +467,26 @@ INFO: Starting document parsing: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\pap
 INFO: Using mineru parser with method: auto
 INFO: Detected PDF file, using parser for PDF...
 INFO:raganything.parser:Executing mineru command: mineru -p C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed\1. Environmental impact and management of phosphogypsum.pdf -o C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db\parsed\1. Environmental impact and management of phosphogypsum_ee349ce3 -m auto
-INFO:raganything.parser:[MinerU] 2026-04-04 06:09:48.954 | INFO     | mineru.cli.client:run_orchestrated_cli:874 - Started local mineru-api at http://127.0.0.1:53635
-INFO:raganything.parser:[MinerU] 2026-04-04 06:09:51.893 | INFO     | __main__:create_app:250 - Request concurrency limited to 3
-INFO:raganything.parser:[MinerU] INFO:     Started server process [15800]
+INFO:raganything.parser:[MinerU] 2026-04-04 10:39:03.366 | INFO     | mineru.cli.client:run_orchestrated_cli:874 - Started local mineru-api at http://127.0.0.1:54938
+INFO:raganything.parser:[MinerU] 2026-04-04 10:39:05.973 | INFO     | __main__:create_app:250 - Request concurrency limited to 3
+INFO:raganything.parser:[MinerU] INFO:     Started server process [19224]
 INFO:raganything.parser:[MinerU] INFO:     Waiting for application startup.
 INFO:raganything.parser:[MinerU] INFO:     Application startup complete.
-INFO:raganything.parser:[MinerU] INFO:     Uvicorn running on http://127.0.0.1:53635 (Press CTRL+C to quit)
-INFO:raganything.parser:[MinerU] 2026-04-04 06:09:52.615 | INFO     | mineru.cli.client:run_planned_task:771 - Submitting batch 1/1 | 1 document, 10 pages in this batch | 10 pages total | task#1 [1. Environmental impact and management of phosphogypsum]
-INFO:raganything.parser:[MinerU] 2026-04-04 06:09:54.518 | INFO     | mineru.utils.engine_utils:get_vlm_engine:34 - Using lmdeploy-engine as the inference engine for VLM.
-INFO:raganything.parser:[MinerU] Start MinerU FastAPI Service: http://127.0.0.1:53635
-INFO:raganything.parser:[MinerU] API documentation: http://127.0.0.1:53635/docs
-INFO:raganything.parser:[MinerU] Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
-WARNING:raganything.parser:[MinerU] 2026-04-04 06:10:53.731 | WARNING  | mineru.cli.api_client:wait_for_task_result:638 - Timed out while polling task status for task#1 [1. Environmental impact and management of phosphogypsum] (task_id=6c02accc-9703-4e40-bfb1-375d87ce7e23). This can happen during cold start; retrying until the task deadline.
-WARNING:raganything.parser:[MinerU] 2026-04-04 06:11:54.753 | WARNING  | mineru.cli.api_client:wait_for_task_result:638 - Timed out while polling task status for task#1 [1. Environmental impact and management of phosphogypsum] (task_id=6c02accc-9703-4e40-bfb1-375d87ce7e23). This can happen during cold start; retrying until the task deadline.
-WARNING:raganything.parser:[MinerU] 2026-04-04 06:12:55.760 | WARNING  | mineru.cli.api_client:wait_for_task_result:638 - Timed out while polling task status for task#1 [1. Environmental impact and management of phosphogypsum] (task_id=6c02accc-9703-4e40-bfb1-375d87ce7e23). This can happen during cold start; retrying until the task deadline.
-WARNING:raganything.parser:[MinerU] C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\huggingface_hub\file_download.py:143: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\Win11\.cache\huggingface\hub\models--opendatalab--MinerU2.5-2509-1.2B. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
-INFO:raganything.parser:[MinerU] To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
-WARNING:raganything.parser:[MinerU] warnings.warn(message)
-INFO:raganything.parser:[MinerU] Fetching 14 files:  57%|    | 8/14 [03:15<02:26, 24.41s/it]
-INFO:raganything.parser:[MinerU] Fetching 14 files: 100%|| 14/14 [03:15<00:00, 13.95s/it]
-INFO:raganything.parser:[MinerU] 2026-04-04 06:13:12.465 | INFO     | mineru.backend.vlm.vlm_analyze:get_model:200 - lmdeploy device is: cuda, lmdeploy backend is: turbomind
+INFO:raganything.parser:[MinerU] INFO:     Uvicorn running on http://127.0.0.1:54938 (Press CTRL+C to quit)
+INFO:raganything.parser:[MinerU] 2026-04-04 10:39:06.957 | INFO     | mineru.cli.client:run_planned_task:771 - Submitting batch 1/1 | 1 document, 10 pages in this batch | 10 pages total | task#1 [1. Environmental impact and management of phosphogypsum]
+INFO:raganything.parser:[MinerU] 2026-04-04 10:39:08.713 | INFO     | mineru.utils.engine_utils:get_vlm_engine:34 - Using lmdeploy-engine as the inference engine for VLM.
+INFO:raganything.parser:[MinerU] Start MinerU FastAPI Service: http://127.0.0.1:54938
+INFO:raganything.parser:[MinerU] API documentation: http://127.0.0.1:54938/docs
+INFO:raganything.parser:[MinerU] Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]
+INFO:raganything.parser:[MinerU] Fetching 14 files: 100%|| 14/14 [00:00<00:00, 26534.23it/s]
+INFO:raganything.parser:[MinerU] 2026-04-04 10:39:11.324 | INFO     | mineru.backend.vlm.vlm_analyze:get_model:200 - lmdeploy device is: cuda, lmdeploy backend is: turbomind
 INFO:raganything.parser:[MinerU] The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
 INFO:raganything.parser:[MinerU] `torch_dtype` is deprecated! Use `dtype` instead!
 INFO:raganything.parser:[MinerU] Add dll path C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin, please note cuda version should >= 11.3 when compiled with cuda 11
 INFO:raganything.parser:[MinerU] Convert to turbomind format:   0%|          | 0/24 [00:00<?, ?it/s]
-INFO:raganything.parser:[MinerU] Convert to turbomind format:  33%|      | 8/24 [00:00<00:00, 77.01it/s]
-INFO:raganything.parser:[MinerU] Convert to turbomind format:  71%|   | 17/24 [00:00<00:00, 81.62it/s]
+INFO:raganything.parser:[MinerU] Convert to turbomind format:  33%|      | 8/24 [00:00<00:00, 74.93it/s]
+INFO:raganything.parser:[MinerU] Convert to turbomind format:  67%|   | 16/24 [00:00<00:00, 73.46it/s]
+INFO:raganything.parser:[MinerU] Convert to turbomind format: 100%|| 24/24 [00:00<00:00, 76.13it/s]
 INFO:raganything.parser:[MinerU] [TM][FATAL] kernels\gemm\tuner\measurer.cu(83): Check failed: status == cudaSuccess no kernel image is available for execution on the device
 ERROR:raganything.parser:[MinerU] Error: 1 task(s) failed while processing documents:
 INFO:raganything.parser:[MinerU] - task#1 (1. Environmental impact and management of phosphogypsum): Failed to query task status for task#1 [1. Environmental impact and management of phosphogypsum]: 502 Bad Gateway
@@ -668,7 +501,7 @@ Working dir: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\raganything_db
 ============================================================
    PIPELINE COMPLETE
 ============================================================
-End time: 2026-04-04 06:13:24
+End time: 2026-04-04 10:39:22
 
 RAGAnything index results:
 {
@@ -679,7 +512,7 @@ RAGAnything index results:
 
 [SKIP] RAGAnything index failed. Skipping RAGAnything query smoke.
 [INFO] Stopped Ollama model: qwen3.5:35b
-[INFO] Stopped Ollama model: bge-m3:567m
+[INFO] Stopped Ollama model: qwen3-embedding:4b
 
 Current Ollama loaded models:
 NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL
@@ -687,3 +520,4 @@ NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL
 E2E smoke test completed.
 INFO: Successfully finalized 12 storages
 INFO: Successfully finalized all RAGAnything storages
+(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum>
