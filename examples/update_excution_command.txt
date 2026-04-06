@@ -1,16 +1,15 @@
-下面给你一份**按优先级的一次性修复路线图（仅配置，不改代码）**，目标是先把流程跑稳，再逐步恢复 RAGAnything。
 
-## 先做“止血版”（30 分钟可执行）
+按这个顺序做，成功率最高（你已经删掉旧 `extracted.json`，很好）：
 
-### 1) 先只验证 LightRAG，避开 RAGAnything
-你现在有两条独立故障链，先把 LightRAG 跑通：
+## 1) 先用“分步跑”定位，不直接跑 `e2e`
+
+在项目根目录 PowerShell：
 
 ```powershell
-python examples/e2e_smoke_test.py --limit 1 --skip-raganything
-```
+# 激活你之前运行成功的同一个环境（日志里是 oneLCA-TEA_pg）
+conda activate oneLCA-TEA_pg
 
-### 2) 在当前终端临时提高超时并降并发（先不改文件）
-```powershell
+# 当前会话临时参数（先不改文件）
 $env:LLM_TIMEOUT="900"
 $env:EMBEDDING_TIMEOUT="120"
 $env:MAX_ASYNC="1"
@@ -19,62 +18,57 @@ $env:LLM_CONTEXT_LENGTH="32768"
 $env:LLM_JSON_MODE="1"
 ```
 
-然后分步跑（更容易定位）：
 ```powershell
+# 清理可能残留的 LightRAG 索引状态
+Remove-Item -Recurse -Force ".\data\processed\lightrag_db" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force ".\data\processed\knowledge_graph" -ErrorAction SilentlyContinue
+```
+
+```powershell
+# Step 2: 先看索引是否还会超时
 python scripts/build_knowledge_graph.py --step index --parser mineru --engine lightrag --limit 1
+
+# Step 3: 再做抽取
 python scripts/build_knowledge_graph.py --step extract --parser mineru --engine lightrag --limit 1
-```
 
-### 3) 通过标准（LightRAG）
-- 日志中不再出现 `HealthCheckTimeoutError` / `Task forcefully terminated due to execution timeout`
-- `index` 至少有 1 个成功文档
-- `extract` 不再全部是 `Failed to parse JSON from LLM response`（允许少量失败）
+# Step 4: 最后构图
+python scripts/build_knowledge_graph.py --step build --parser mineru --engine lightrag --limit 1
+```
 
 ---
 
-## 再处理 RAGAnything（Windows 稳定优先）
+## 2) 立刻验证“是否真的修好”
 
-你日志里 RAGAnything 的根因是 MinerU 自动选了 `lmdeploy-engine -> turbomind`，然后触发 `no kernel image`。  
-先走稳定模式：**强制 MinerU 不走 turbomind GPU 路径**。
-
-### 4) 临时强制 MinerU 后端与设备
 ```powershell
-$env:RAGANYTHING_MINERU_BACKEND="pipeline"
-$env:RAGANYTHING_MINERU_DEVICE="cpu"
+python -c "import json,glob; p=glob.glob(r'data/processed/extracted_data/*phosphogypsum*_extracted.json')[0]; d=json.load(open(p,encoding='utf-8')); print('file=',p); print('keys=',list(d.keys())); print('non_empty=',{k: bool(v) for k,v in d.items()})"
 ```
 
-单独验证：
+你要看到的不是 `{}`，而是至少有部分 `composition/technology/lci/cost/policy` 非空。
+
+---
+
+## 3) 如果仍出现 `Request timed out`
+
+先做 Ollama 侧稳定化（系统级，执行后要重启 Ollama）：
+
 ```powershell
-python scripts/build_knowledge_graph.py --step index --parser mineru --engine raganything --limit 1
+setx OLLAMA_FLASH_ATTENTION 0
+setx OLLAMA_CONTEXT_LENGTH 32768
+setx OLLAMA_NUM_PARALLEL 1
+setx OLLAMA_MAX_LOADED_MODELS 1
 ```
 
-### 5) 通过标准（RAGAnything）
-- 不再出现 `[TM][FATAL] ... no kernel image is available for execution on the device`
-- 不再出现 MinerU 的 `502 Bad Gateway`
-- `index` 至少有 1 个文档成功
+然后：
+- 彻底退出 Ollama（托盘 `Quit`），重新启动
+- 重新开一个 PowerShell（让 `setx` 生效）
+- 再执行上面的第 1、2 步
 
 ---
 
-## 若你必须用 RAGAnything 的 GPU/VLM（性能优先）
+## 4) 最后再回到 smoke test
 
-这条建议直接走 **WSL Ubuntu 24.04 + CUDA 12.8/12.9 + 对应构建**，Windows 原生链路在你这套组合上不稳定概率高。  
-在 Windows 原生上硬顶，会反复踩 `sm_120` / kernel image / backend 选择问题。
+分步都通过后再跑：
 
----
-
-## 建议固化到 `.env`（稳定后再写入）
-
-可把以下值写入 `/.env`（先临时验证通过再固化）：
-
-```env
-LLM_TIMEOUT=900
-EMBEDDING_TIMEOUT=120
-MAX_ASYNC=1
-LLM_TEMPERATURE=0.0
-LLM_CONTEXT_LENGTH=32768
-LLM_JSON_MODE=1
-
-RAGANYTHING_MINERU_BACKEND=pipeline
-RAGANYTHING_MINERU_DEVICE=cpu
+```powershell
+python examples/e2e_smoke_test.py --limit 1 --skip-raganything
 ```
-
