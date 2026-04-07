@@ -1,28 +1,17 @@
-(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum> python examples/e2e_smoke_test.py --limit 1 --skip-raganything
-Found 72 PDFs in C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed
-Removing old directory: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db
-
-=== LightRAG smoke run ===
+(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum> $env:LLM_TIMEOUT="900"
+(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum> $env:EMBEDDING_TIMEOUT="120"
+(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum> $env:MAX_ASYNC="1"
+(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum> $env:LLM_TEMPERATURE="0.0"
+(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum> $env:LLM_CONTEXT_LENGTH="32768"
+(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum> $env:LLM_JSON_MODE="1"
+(oneLCA-TEA_pg) PS C:\Github\oneLCA-TEA_Phosphogypsum> python scripts/build_knowledge_graph.py --step index --parser mineru --engine lightrag --limit 1
 
 ============================================================
    PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
 ============================================================
-Start time: 2026-04-06 04:54:51
-Steps to run: ['all']
+Start time: 2026-04-07 02:57:53
+Steps to run: ['index']
 RAG Engine: lightrag
-
-============================================================
-   STEP 1: PDF PARSING
-============================================================
-Parser type: mineru
-Input:  C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\unparsed
-Output: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed
-
-Found 1 PDF files to process
-[1/1] ⏭ Skipped (already parsed): 1. Environmental impact and management of phosphog
-
-========================================
-Parsing Complete: 0 success, 1 skipped, 0 errors
 
 ============================================================
    STEP 2: LIGHTRAG INDEX CONSTRUCTION
@@ -36,45 +25,40 @@ INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\p
 INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
 INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
 INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
-INFO: [] Process 34112 KV load full_docs with 0 records
-INFO: [] Process 34112 KV load text_chunks with 0 records
-INFO: [] Process 34112 KV load full_entities with 0 records
-INFO: [] Process 34112 KV load full_relations with 0 records
-INFO: [] Process 34112 KV load entity_chunks with 0 records
-INFO: [] Process 34112 KV load relation_chunks with 0 records
-INFO: [] Process 34112 KV load llm_response_cache with 0 records
-INFO: [] Process 34112 doc status load doc_status with 0 records
+INFO: [] Process 34500 KV load full_docs with 0 records
+INFO: [] Process 34500 KV load text_chunks with 0 records
+INFO: [] Process 34500 KV load full_entities with 0 records
+INFO: [] Process 34500 KV load full_relations with 0 records
+INFO: [] Process 34500 KV load entity_chunks with 0 records
+INFO: [] Process 34500 KV load relation_chunks with 0 records
+INFO: [] Process 34500 KV load llm_response_cache with 0 records
+INFO: [] Process 34500 doc status load doc_status with 0 records
 [1/1] Processing: 1. Environmental impact and management of phosphog...
 INFO: Processing 1 document(s)
 INFO: Extracting stage 1/1: unknown_source
-INFO: Processing d-id: doc-b99dfe56708b095534257ac3e32c9ca3
-INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
-INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
-INFO:openai._base_client:Retrying request to /chat/completions in 0.484551 seconds
-INFO:openai._base_client:Retrying request to /chat/completions in 0.473171 seconds
+INFO: Processing d-id: doc-3803f4aa02f9f207a6fcc7178bd171a1
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 120s, Worker: 240s, Health Check: 255s)
+INFO: LLM func: 1 new workers initialized (Timeouts: Func: 900s, Worker: 1800s, Health Check: 1815s)
 INFO:  == LLM cache == saving: default:extract:a54b4655f24ccd93fa0c75b86f74dcb0
-INFO:  == LLM cache == saving: default:extract:aa29dfb05798c88eb6bd02eba291fe81
-INFO:  == LLM cache == saving: default:extract:1490ca3023e0998f1f5d756251693dd3
-INFO:  == LLM cache == saving: default:extract:e92c4ec7e0b0c26d8628bbe00db05b08
-INFO:openai._base_client:Retrying request to /chat/completions in 0.410694 seconds
-INFO:openai._base_client:Retrying request to /chat/completions in 0.762777 seconds
-ERROR: LLM func: Error in decorated function for task 2703241253056_200805.218: Request timed out.
+INFO:openai._base_client:Retrying request to /chat/completions in 0.449825 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.773857 seconds
+ERROR: LLM func: Error in decorated function for task 1615523508288_277713.656: Request timed out.
 ERROR: Failed to extract entities and relationships: Request timed out.
 ERROR: Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions 
     yield
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_transports\default.py", line 250, in handle_request      
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_transports\default.py", line 250, in handle_request
     resp = self._pool.handle_request(req)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\connection_pool.py", line 256, in handle_request 
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\connection_pool.py", line 256, in handle_request     
     raise exc from None
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\connection_pool.py", line 236, in handle_request 
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\connection_pool.py", line 236, in handle_request     
     response = connection.handle_request(
                ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\http_proxy.py", line 206, in handle_request      
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\http_proxy.py", line 206, in handle_request
     return self._connection.handle_request(proxy_request)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\connection.py", line 103, in handle_request      
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\connection.py", line 103, in handle_request
     return self._connection.handle_request(request)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\http11.py", line 136, in handle_request
@@ -82,7 +66,7 @@ ERROR: Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\http11.py", line 106, in handle_request
     ) = self._receive_response_headers(**kwargs)
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\http11.py", line 177, in _receive_response_headers
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\http11.py", line 177, in _receive_response_headers   
     event = self._receive_event(timeout=timeout)
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpcore\_sync\http11.py", line 217, in _receive_event
@@ -108,30 +92,30 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_client.py", line 942, in _send_handling_auth
     response = self._send_handling_redirects(
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects        
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
     response = self._send_single_request(request)
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
     response = transport.handle_request(request)
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_transports\default.py", line 249, in handle_request      
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_transports\default.py", line 249, in handle_request
     with map_httpcore_exceptions():
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\contextlib.py", line 158, in __exit__
     self.gen.throw(typ, value, traceback)
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions 
     raise mapped_exc(message) from exc
 httpx.ReadTimeout: timed out
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3110, in _process_with_semaphore     
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3110, in _process_with_semaphore
     result = await _process_single_content(chunk)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3011, in _process_single_content     
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3011, in _process_single_content
     glean_result, timestamp = await use_llm_func_with_cache(
                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 2049, in use_llm_func_with_cache       
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 2049, in use_llm_func_with_cache
     res: str = await use_llm_func(
                ^^^^^^^^^^^^^^^^^^^
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py", line 1026, in wait_func
@@ -162,7 +146,7 @@ openai.APITimeoutError: Request timed out.
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3118, in _process_with_semaphore     
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3118, in _process_with_semaphore
     raise prefixed_exception from e
 openai.APITimeoutError: Request timed out.
 
@@ -172,9 +156,9 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2052, in process_document
     chunk_results = await entity_relation_task
                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2341, in _process_extract_entities  
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2341, in _process_extract_entities      
     raise e
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2326, in _process_extract_entities  
+  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\lightrag.py", line 2326, in _process_extract_entities      
     chunk_results = await extract_entities(
                     ^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\operate.py", line 3160, in extract_entities
@@ -190,85 +174,50 @@ Indexed 1 / 1 documents
 Working dir: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db
 
 ============================================================
-   STEP 3: LLM DATA EXTRACTION
-============================================================
-LLM: http://127.0.0.1:11434/v1 (model=qwen3.5:35b)
-RAG Engine: lightrag
-Source: C:\Github\oneLCA-TEA_Phosphogypsum\data\raw\papers\parsed (recursive)
-Output: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\extracted_data
-
-Processing 1 documents...
-
-[1/1] ⏭ Skipping: 1. Environmental impact and management o (already extracted)
-
-========================================
-Extracted data from 1 documents
-
-============================================================
-   STEP 4: KNOWLEDGE GRAPH CONSTRUCTION
-============================================================
-KG Storage: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\knowledge_graph
-Extracted Data: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\extracted_data
-
-Loading 1 extraction files...
-
-========================================
-Knowledge Graph Statistics:
-  Nodes: 1
-  Edges: 0
-  Node types: {'Source': 1}
-
-============================================================
    PIPELINE COMPLETE
 ============================================================
-End time: 2026-04-06 06:26:32
-
-LightRAG pipeline results:
-{
-  "parse": 0,
-  "index": {
-    "1. Environmental impact and management of phosphogypsum.md": true
-  },
-  "extract": {
-    "1. Environmental impact and management of phosphogypsum.md": {}
-  },
-  "build": {
-    "total_nodes": 1,
-    "total_edges": 0,
-    "nodes_by_type": {
-      "Source": 1
-    },
-    "edges_by_relation": {}
-  }
-}
-
-LightRAG query smoke test:
-INFO: [] Created new empty graph file: C:\Github\oneLCA-TEA_Phosphogypsum\data\processed\lightrag_db\graph_chunk_entity_relation.graphml
-INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_entities.json'} 0 data
-INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_relationships.json'} 0 data
-INFO:nano-vectordb:Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'C:\\Github\\oneLCA-TEA_Phosphogypsum\\data\\processed\\lightrag_db\\vdb_chunks.json'} 0 data
-INFO: LLM func: 4 new workers initialized (Timeouts: Func: 180s, Worker: 360s, Health Check: 375s)
-INFO:openai._base_client:Retrying request to /chat/completions in 0.415961 seconds
-INFO:  == LLM cache == saving: mix:keywords:b1da5513d6f5c7582b38e17f341664b0
-INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
-INFO: Query nodes: Phosphogypsum, Treatment methods, Disposal techniques, Industrial waste (top_k:40, cosine:0.2)
-INFO: Query edges: Phosphogypsum treatment, Treatment pathways, Industrial waste treatment (top_k:40, cosine:0.2)
-INFO: Naive query: 0 chunks (chunk_top_k:20 cosine:0.2)
-INFO: Raw search results: 0 entities, 0 relations, 0 vector chunks
-INFO: [kg_query] No query context could be built; returning no-result.
-
-Q: What are common phosphogypsum treatment pathways?
-A: Sorry, I'm not able to provide an answer to that question.[no-context]
-INFO:  == LLM cache == saving: mix:keywords:4f254cf24050d2304a8f0208292f6de1
-INFO: Query nodes: Rare earth elements, Phosphogypsum, Extraction techniques (top_k:40, cosine:0.2)
-INFO: Query edges: Rare earth elements extraction, Phosphogypsum processing, Extraction methods (top_k:40, cosine:0.2)
-INFO: Naive query: 0 chunks (chunk_top_k:20 cosine:0.2)
-INFO: Raw search results: 0 entities, 0 relations, 0 vector chunks
-INFO: [kg_query] No query context could be built; returning no-result.
-
-Q: How to extract rare earth elements from phosphogypsum?
-A: Sorry, I'm not able to provide an answer to that question.[no-context]
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEBAE0>
+End time: 2026-04-07 03:42:45
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-33' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-34' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-35' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-36' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-37' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-38' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-39' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-40' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-41' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.enhanced_health_check() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:785> wait_for=<Future pending cb=[Task.task_wakeup()]>>    
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-90' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-91' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.enhanced_health_check() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:785> wait_for=<Future pending cb=[Task.task_wakeup()]>>    
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-107' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-109' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-110' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-111' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-112' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-113' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-114' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-115' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-116' coro=<Queue.get() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:158> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824BBCC80>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -278,9 +227,7 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-228' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEBBC0>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824B573E0>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -290,9 +237,7 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-230' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEAA40>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824B566C0>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -302,9 +247,7 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-231' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEB920>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824B57BC0>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -314,9 +257,7 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-232' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BE92A0>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824B57AE0>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -326,9 +267,7 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-233' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEBE60>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824B57920>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -338,9 +277,7 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-234' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEBCA0>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824B57E60>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -350,9 +287,7 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-235' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEBD80>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824B34580>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -362,9 +297,7 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-236' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEA960>
+Exception ignored in: <coroutine object Queue.get at 0x0000017824B57760>
 Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
     getter.cancel()  # Just in case getter is not done yet.
@@ -374,76 +307,3 @@ Traceback (most recent call last):
   File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
     raise RuntimeError('Event loop is closed')
 RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-237' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEB760>
-Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
-    getter.cancel()  # Just in case getter is not done yet.
-    ^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 762, in call_soon
-    self._check_closed()
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
-    raise RuntimeError('Event loop is closed')
-RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-238' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEAB20>
-Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
-    getter.cancel()  # Just in case getter is not done yet.
-    ^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 762, in call_soon
-    self._check_closed()
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
-    raise RuntimeError('Event loop is closed')
-RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-239' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-Exception ignored in: <coroutine object Queue.get at 0x0000027565BEB840>
-Traceback (most recent call last):
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py", line 160, in get
-    getter.cancel()  # Just in case getter is not done yet.
-    ^^^^^^^^^^^^^^^
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 762, in call_soon
-    self._check_closed()
-  File "C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\base_events.py", line 520, in _check_closed
-    raise RuntimeError('Event loop is closed')
-RuntimeError: Event loop is closed
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-240' coro=<Queue.get() done, defined at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\queues.py:149> wait_for=<Future cancelled> cb=[_release_waiter(<Future pendi...ask_wakeup()]>)() at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\asyncio\tasks.py:431]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-184' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.enhanced_health_check() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:785> wait_for=<Future pending cb=[Task.task_wakeup()]>>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-178' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-181' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-176' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-177' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-182' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-179' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-180' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-183' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-164' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.enhanced_health_check() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:785> wait_for=<Future pending cb=[Task.task_wakeup()]>>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-160' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-162' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-161' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-163' coro=<priority_limit_async_func_call.<locals>.final_decro.<locals>.worker() running at C:\Users\Win11\anaconda3\envs\oneLCA-TEA_pg\Lib\site-packages\lightrag\utils.py:701> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[set.discard()]>
-[INFO] Stopped Ollama model: qwen3.5:35b
-[INFO] Stopped Ollama model: qwen3-embedding:4b
-
-Current Ollama loaded models:
-NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL
-
-E2E smoke test completed.
