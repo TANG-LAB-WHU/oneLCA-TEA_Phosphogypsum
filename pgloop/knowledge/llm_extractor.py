@@ -11,6 +11,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
+from urllib.parse import urlparse
 
 _DEFAULT_BASE_URL = "http://127.0.0.1:11434/v1"
 _DEFAULT_MODEL = "qwen3.5:35b"
@@ -27,6 +28,43 @@ def _read_env_int(*names: str, default: int = 0) -> int:
         except ValueError:
             continue
     return default
+
+
+def _read_env_float(*names: str, default: float = 0.0) -> float:
+    """Read first valid float environment variable."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        try:
+            return float(raw)
+        except ValueError:
+            continue
+    return default
+
+
+def _read_env_bool(*names: str, default: bool = False) -> bool:
+    """Read first valid boolean environment variable."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        return str(raw).strip().lower() not in {"0", "false", "off", "no"}
+    return default
+
+
+def _is_local_base_url(url: str) -> bool:
+    """Return True when URL host points to localhost."""
+    try:
+        host = urlparse(url).hostname
+    except Exception:
+        return False
+    return host in {"127.0.0.1", "localhost", "::1"}
+
+
+def _normalize_timeout(value: float) -> Optional[float]:
+    """Treat non-positive timeout as no timeout override."""
+    return value if value > 0 else None
 
 
 @dataclass
@@ -157,6 +195,9 @@ class LLMExtractor:
         self.model = model or os.getenv("LLM_MODEL", _DEFAULT_MODEL)
         self.base_url = base_url or os.getenv("LLM_BASE_URL", _DEFAULT_BASE_URL)
         self.api_key = api_key or os.getenv("LLM_API_KEY", "ollama")
+        self.llm_timeout = _normalize_timeout(_read_env_float("LLM_TIMEOUT", default=180.0))
+        default_trust_env = not _is_local_base_url(self.base_url)
+        self.llm_trust_env = _read_env_bool("LLM_TRUST_ENV", default=default_trust_env)
         self.llm_context_length = _read_env_int(
             "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
         )
@@ -166,9 +207,19 @@ class LLMExtractor:
     def _get_client(self):
         """Get or create the OpenAI-compatible client."""
         if self._client is None:
-            from openai import OpenAI
+            from openai import DefaultHttpxClient, OpenAI
 
-            self._client = OpenAI(base_url=self.base_url, api_key=self.api_key)
+            client_kwargs: Dict[str, Any] = {"base_url": self.base_url, "api_key": self.api_key}
+            http_client_kwargs: Dict[str, Any] = {"trust_env": self.llm_trust_env}
+            if self.llm_timeout is not None:
+                client_kwargs["timeout"] = self.llm_timeout
+                http_client_kwargs["timeout"] = self.llm_timeout
+            try:
+                client_kwargs["http_client"] = DefaultHttpxClient(**http_client_kwargs)
+            except TypeError:
+                # Fallback for older SDK variants with narrower client kwargs support.
+                pass
+            self._client = OpenAI(**client_kwargs)
         return self._client
 
     def _build_extra_body(

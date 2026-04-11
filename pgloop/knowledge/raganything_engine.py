@@ -13,6 +13,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
+from urllib.parse import urlparse
 
 import numpy as np
 from dotenv import load_dotenv
@@ -40,6 +41,43 @@ def _read_env_int(*names: str, default: int = 0) -> int:
         except ValueError:
             continue
     return default
+
+
+def _read_env_float(*names: str, default: float = 0.0) -> float:
+    """Read first valid float environment variable."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        try:
+            return float(raw)
+        except ValueError:
+            continue
+    return default
+
+
+def _read_env_bool(*names: str, default: bool = False) -> bool:
+    """Read first valid boolean environment variable."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        return str(raw).strip().lower() not in {"0", "false", "off", "no"}
+    return default
+
+
+def _is_local_base_url(url: str) -> bool:
+    """Return True when URL host points to localhost."""
+    try:
+        host = urlparse(url).hostname
+    except Exception:
+        return False
+    return host in {"127.0.0.1", "localhost", "::1"}
+
+
+def _normalize_timeout(value: float) -> Optional[float]:
+    """Treat non-positive timeout as no timeout override."""
+    return value if value > 0 else None
 
 
 @dataclass
@@ -108,10 +146,14 @@ class RAGAnythingEngine:
         self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
         self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "ollama"
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
+        self.llm_timeout = _normalize_timeout(_read_env_float("LLM_TIMEOUT", default=180.0))
 
         # Embedding configuration — model name must match `ollama list`
         self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
         self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "2560"))
+        self.embedding_timeout = _normalize_timeout(
+            _read_env_float("EMBEDDING_TIMEOUT", default=30.0)
+        )
         self.llm_context_length = _read_env_int(
             "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
         )
@@ -120,6 +162,8 @@ class RAGAnythingEngine:
             self.llm_temperature = float(raw_temp)
         except ValueError:
             self.llm_temperature = 0.1
+        default_trust_env = not _is_local_base_url(self.llm_base_url)
+        self.llm_trust_env = _read_env_bool("LLM_TRUST_ENV", default=default_trust_env)
 
         # Parser configuration
         self.parser = parser
@@ -184,6 +228,10 @@ class RAGAnythingEngine:
             request_kwargs = dict(kwargs)
             if request_kwargs.get("temperature") is None:
                 request_kwargs["temperature"] = self.llm_temperature
+            if request_kwargs.get("timeout") is None and self.llm_timeout is not None:
+                request_kwargs["timeout"] = self.llm_timeout
+            if request_kwargs.get("openai_client_configs") is None and self.llm_timeout is not None:
+                request_kwargs["openai_client_configs"] = {"timeout": self.llm_timeout}
             extra_body = self._build_extra_body(request_kwargs.get("extra_body"))
             if extra_body:
                 request_kwargs["extra_body"] = extra_body
@@ -214,6 +262,10 @@ class RAGAnythingEngine:
             request_kwargs = dict(kwargs)
             if request_kwargs.get("temperature") is None:
                 request_kwargs["temperature"] = self.llm_temperature
+            if request_kwargs.get("timeout") is None and self.llm_timeout is not None:
+                request_kwargs["timeout"] = self.llm_timeout
+            if request_kwargs.get("openai_client_configs") is None and self.llm_timeout is not None:
+                request_kwargs["openai_client_configs"] = {"timeout": self.llm_timeout}
             extra_body = self._build_extra_body(request_kwargs.get("extra_body"))
             if extra_body:
                 request_kwargs["extra_body"] = extra_body
@@ -267,11 +319,15 @@ class RAGAnythingEngine:
         """Create embedding function via Ollama's /v1/embeddings."""
 
         async def _embed_batch(batch_texts: list[str]) -> np.ndarray:
+            client_configs = None
+            if self.embedding_timeout is not None:
+                client_configs = {"timeout": self.embedding_timeout}
             embeddings = await openai_embed(
                 batch_texts,
                 model=self.embedding_model,
                 api_key=self.llm_api_key,
                 base_url=self.llm_base_url,
+                client_configs=client_configs,
             )
             vectors = np.array(embeddings, dtype=np.float32)
             if vectors.ndim == 1:
@@ -446,6 +502,9 @@ class RAGAnythingEngine:
             "embedding_model": self.embedding_model,
             "llm_temperature": self.llm_temperature,
             "llm_context_length": self.llm_context_length,
+            "llm_timeout": self.llm_timeout,
+            "embedding_timeout": self.embedding_timeout,
+            "llm_trust_env": self.llm_trust_env,
             "mineru_backend": self.mineru_backend,
             "mineru_device": self.mineru_device,
         }

@@ -21,6 +21,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
+from urllib.parse import urlparse
 
 from dotenv import load_dotenv
 
@@ -48,6 +49,43 @@ def _read_env_int(*names: str, default: int = 0) -> int:
         except ValueError:
             continue
     return default
+
+
+def _read_env_float(*names: str, default: float = 0.0) -> float:
+    """Read the first valid float env var from names."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        try:
+            return float(raw)
+        except ValueError:
+            continue
+    return default
+
+
+def _read_env_bool(*names: str, default: bool = False) -> bool:
+    """Read the first valid boolean env var from names."""
+    for name in names:
+        raw = os.getenv(name)
+        if raw is None or str(raw).strip() == "":
+            continue
+        return str(raw).strip().lower() not in {"0", "false", "off", "no"}
+    return default
+
+
+def _is_local_base_url(url: str) -> bool:
+    """Return True when the API host points to localhost."""
+    try:
+        host = urlparse(url).hostname
+    except Exception:
+        return False
+    return host in {"127.0.0.1", "localhost", "::1"}
+
+
+def _normalize_timeout(value: float) -> Optional[float]:
+    """Treat non-positive timeout as no timeout override."""
+    return value if value > 0 else None
 
 
 @dataclass
@@ -117,10 +155,14 @@ class LightRAGEngine:
         self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
         self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "ollama"
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
+        self.llm_timeout = _normalize_timeout(_read_env_float("LLM_TIMEOUT", default=180.0))
 
         # Embedding configuration — model name must match `ollama list`
         self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
         self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "2560"))
+        self.embedding_timeout = _normalize_timeout(
+            _read_env_float("EMBEDDING_TIMEOUT", default=30.0)
+        )
         # Request-level context length override for Ollama (/v1 compatible path).
         # Prefer explicit LLM_CONTEXT_LENGTH and fallback to OLLAMA_CONTEXT_LENGTH.
         self.llm_context_length = _read_env_int(
@@ -133,6 +175,9 @@ class LightRAGEngine:
             self.llm_temperature = float(raw_temp)
         except ValueError:
             self.llm_temperature = 0.1
+        # For localhost Ollama, default to not inheriting system HTTP proxy env vars.
+        default_trust_env = not _is_local_base_url(self.llm_base_url)
+        self.llm_trust_env = _read_env_bool("LLM_TRUST_ENV", default=default_trust_env)
 
         self._rag = None
         self._loop: Optional[asyncio.AbstractEventLoop] = None
@@ -187,6 +232,27 @@ class LightRAGEngine:
             self._loop.close()
         self._loop = None
 
+    def _create_openai_client(self, timeout: Optional[float]):
+        """Create OpenAI-compatible client with aligned timeout/proxy behavior."""
+        from openai import DefaultHttpxClient, OpenAI
+
+        client_kwargs: Dict[str, Any] = {
+            "base_url": self.llm_base_url,
+            "api_key": self.llm_api_key,
+        }
+        http_client_kwargs: Dict[str, Any] = {"trust_env": self.llm_trust_env}
+        if timeout is not None:
+            client_kwargs["timeout"] = timeout
+            http_client_kwargs["timeout"] = timeout
+
+        try:
+            client_kwargs["http_client"] = DefaultHttpxClient(**http_client_kwargs)
+        except TypeError:
+            # Fallback for older SDK variants with narrower client kwargs support.
+            pass
+
+        return OpenAI(**client_kwargs)
+
     def _get_rag_instance(self) -> LightRAG:
         """Create or return the LightRAG instance."""
         if self._rag is None:
@@ -205,9 +271,7 @@ class LightRAGEngine:
 
     def _create_llm_func(self):
         """Create LLM function via Ollama's /v1/chat/completions."""
-        from openai import OpenAI
-
-        client = OpenAI(base_url=self.llm_base_url, api_key=self.llm_api_key)
+        client = self._create_openai_client(timeout=self.llm_timeout)
         passthrough_keys = {
             "temperature",
             "max_tokens",
@@ -249,9 +313,8 @@ class LightRAGEngine:
     def _create_embedding_func(self) -> Any:
         """Create embedding function via Ollama's /v1/embeddings."""
         import numpy as np
-        from openai import OpenAI
 
-        client = OpenAI(base_url=self.llm_base_url, api_key=self.llm_api_key)
+        client = self._create_openai_client(timeout=self.embedding_timeout)
 
         def _embed_batch(batch_texts: list[str]) -> np.ndarray:
             response = client.embeddings.create(model=self.embedding_model, input=batch_texts)
@@ -304,9 +367,7 @@ class LightRAGEngine:
         try:
             import base64
 
-            from openai import OpenAI
-
-            client = OpenAI(base_url=self.llm_base_url, api_key=self.llm_api_key)
+            client = self._create_openai_client(timeout=self.llm_timeout)
 
             with open(image_path, "rb") as f:
                 image_data = base64.b64encode(f.read()).decode("utf-8")
@@ -437,6 +498,9 @@ class LightRAGEngine:
             "embedding_dim": self.embedding_dim,
             "llm_context_length": self.llm_context_length,
             "llm_temperature": self.llm_temperature,
+            "llm_timeout": self.llm_timeout,
+            "embedding_timeout": self.embedding_timeout,
+            "llm_trust_env": self.llm_trust_env,
             "available": LIGHTRAG_AVAILABLE,
         }
 
