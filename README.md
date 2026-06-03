@@ -58,48 +58,54 @@ Integrates multi-criteria decision analysis (TOPSIS/AHP) across five core pillar
 ## System Architecture
 
 ```text
-┌─══════════════════════════════════════════════════════════════════════════════┐
-│                         PHOSPHOGYPSUMBOT AGENT FRAMEWORK                       │
-└─══════════════════════════════════════════════════════════════════════════════┘
+┌─════════════════════════════════════════════════════════════════════════════┐
+│                       PHOSPHOGYPSUMBOT AGENT FRAMEWORK                      │
+└─════════════════════════════════════════════════════════════════════════════┘
 
-   ┌─────────────────────────────────────────────────────────────────────────┐
-   │                          MULTIMODAL RAG INGESTION                       │
-   │  • Raw literature (PDFs/MinerU) ──▶ Vector Store (Ollama Embedding API) │
-   │  • LLM Extractor ────────────────▶ Knowledge Graph (Neo4j / NetworkX)   │
-   └────────────────────────────────────┬────────────────────────────────────┘
-                                        │
-                                        ▼
-   ┌─────────────────────────────────────────────────────────────────────────┐
-   │                       PHYSICS-INFORMED AI (PI-AI)                       │
-   │  • Governing Equations (VPMs: Carbothermic, Hydration, Crystallization)  │
-   │  • Transport & Density evolution solved via PINNs / Fokker-Planck PDEs  │
-   │  • Bayesian MCMC Calibration (Metropolis-Hastings / Hamiltonian MC)    │
-   └────────────────────────────────────┬────────────────────────────────────┘
-                                        │ (Injects physical priors & params)
-                                        ▼
-   ┌─────────────────────────────────────────────────────────────────────────┐
-   │                     MULTI-SCALE MULTI-OBJECTIVE SYSTEM                  │
-   │                Input Flows: Heat + Work + Currency                      │
-   ├─────────────────────────────────────────────────────────────────────────┤
-   │  [Micro: Reaction Kinetics] ──▶ [Meso: Unit Op / LCA-TEA] ──▶ [Macro]    │
-   └────────────────────────────────────┬────────────────────────────────────┘
-                                        │
-                                        ▼
-   ┌─────────────────────────────────────────────────────────────────────────┐
-   │                         FULL-DIMENSIONAL ASSESSMENT                     │
-   ├──────────────────────────────┬──────────────────────────┬───────────────┤
-   │     UNCERTAINTY INFERENCE    │   REVERSE DESIGN OPT.    │  BENEFIT COMP.│
-   │   • Monte Carlo Propagation  │ • Bayesian Optimization  │• Shadow Price │
-   │   • Elasticity Sensitivity   │   (Gaussian Process GP)  │  Internalization│
-   │   • Discernibility Analysis  │ • Parameter Target search│• Subsidy Opt. │
-   └──────────────────────────────┴─────────────┬────────────┴───────────────┘
-                                                │
-                                                ▼
-   ┌─────────────────────────────────────────────────────────────────────────┐
-   │                      5D SUSTAINABLE DEVELOPMENT LOOP                    │
-   │   Technical  ◀──▶  Economic  ◀──▶  Environmental  ◀──▶  Policy  ◀──▶ Social │
-   │   (TRL/Scale)      (NPV/IRR)       (ISO LCA GWP)      (Subsidies) (Jobs/Risk)│
-   └─────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      1. MULTIMODAL RAG DATA FOUNDATION                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  Unstructured PDFs (MinerU) ────▶ Vector Database (Ollama Embeddings)       │
+│  Knowledge Graph (Neo4j) ◄──────▶ LLM Information Extractor                 │
+└─────────────────────────────────────┬───────────────────────────────────────┘
+                                      │ (Literature facts & priors)
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    2. PHYSICS-INFORMED AI (PI-AI) ENGINE                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  Governing Equations: ODEs/PDEs kinetics & energy-mass conservation         │
+│  Solvers: PINNs (PyTorch) + 1D/2D Fokker-Planck Density Propagators         │
+│  Bayesian MCMC: Metropolis-Hastings / Hamiltonian MC / Gibbs sampling       │
+└─────────────────────────────────────┬───────────────────────────────────────┘
+                                      │ (Physics constraints & parameters)
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                   3. MULTI-SCALE MULTI-OBJECTIVE SYSTEM                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  Thermodynamic Inputs: Heat [Thermal] + Work [Electric]                     │
+│  Economic Inputs: Currency [CAPEX/OPEX/Revenues]                            │
+│  Scales: Micro (Kinetics) ──▶ Meso (Plant LCA-TEA) ──▶ Macro (Grid/Mkt)     │
+└─────────────────────────────────────┬───────────────────────────────────────┘
+                                      │ (Process outputs & economics)
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      4. FULL-DIMENSIONAL AI ASSESSMENT                      │
+├──────────────────────────────┬──────────────────────────┬───────────────────┤
+│    UNCERTAINTY QUANTIFICATION│  BAYESIAN REVERSE DESIGN │   BENEFIT COMP.   │
+├──────────────────────────────┼──────────────────────────┼───────────────────┤
+│ • Monte Carlo Propagation    │ • Gaussian Process (GP)  │ • Shadow Price    │
+│ • Sobol Sensitivity analysis │ • Acquisition (UCB)      │   valuation       │
+│ • Discernibility Analysis    │ • Parameter Target search│ • Subsidy Opt.    │
+└──────────────────────────────┴─────────────┬────────────┴───────────────────┘
+                                             │ (Optimization recommendations)
+                                             ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     5. 5D SUSTAINABLE DEVELOPMENT LOOP                      │
+├────────────┬────────────┬─────────────────┬─────────────────┬───────────────┤
+│ Technical  │  Economic  │  Environmental  │     Policy      │    Social     │
+│ TRL/Scale  │ NPV / IRR  │  ISO 14040 LCA  │   Carbon Tax    │ Job Creation  │
+│Feasibility │  Payback   │  GWP/Toxicity   │    Subsidies    │  Health Risk  │
+└────────────┴────────────┴─────────────────┴─────────────────┴───────────────┘
 ```
 
 ---
