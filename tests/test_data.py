@@ -1,9 +1,9 @@
-"""Tests for Data Layer"""
-
+import pytest
 from pgloop.iodata.data_standardizer import DataStandardizer
-from pgloop.iodata.pdf_parser import PDFParser
+from pgloop.iodata.pdf_parser import PDFParser, PYMUPDF_AVAILABLE
 
 
+@pytest.mark.skipif(not PYMUPDF_AVAILABLE, reason="PyMuPDF not installed")
 def test_pdf_parser_init():
     parser = PDFParser()
     assert parser is not None

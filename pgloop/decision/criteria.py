@@ -110,11 +110,11 @@ def create_default_criteria() -> CriteriaSet:
     """
     criteria = CriteriaSet()
 
-    # Environmental criteria (30%)
+    # Environmental criteria (25%)
     criteria.add(
         Criterion(
             name="gwp",
-            weight=0.15,
+            weight=0.14,
             direction=Direction.MINIMIZE,
             category=Category.ENVIRONMENTAL,
             unit="kg CO2-eq/t PG",
@@ -124,7 +124,7 @@ def create_default_criteria() -> CriteriaSet:
     criteria.add(
         Criterion(
             name="resource_depletion",
-            weight=0.08,
+            weight=0.05,
             direction=Direction.MINIMIZE,
             category=Category.ENVIRONMENTAL,
             unit="kg Sb-eq/t PG",
@@ -134,7 +134,7 @@ def create_default_criteria() -> CriteriaSet:
     criteria.add(
         Criterion(
             name="human_toxicity",
-            weight=0.07,
+            weight=0.06,
             direction=Direction.MINIMIZE,
             category=Category.ENVIRONMENTAL,
             unit="CTUh/t PG",
@@ -196,15 +196,37 @@ def create_default_criteria() -> CriteriaSet:
         )
     )
 
-    # Risk criteria (15%)
+    # Risk criteria (10%)
     criteria.add(
         Criterion(
             name="overall_risk",
-            weight=0.15,
+            weight=0.10,
             direction=Direction.MINIMIZE,
             category=Category.RISK,
             unit="0-100",
             description="Aggregated risk score",
+        )
+    )
+
+    # Social criteria (10%)
+    criteria.add(
+        Criterion(
+            name="job_creation",
+            weight=0.06,
+            direction=Direction.MAXIMIZE,
+            category=Category.SOCIAL,
+            unit="jobs/kt PG",
+            description="Direct and indirect employment generated",
+        )
+    )
+    criteria.add(
+        Criterion(
+            name="community_health_risk",
+            weight=0.04,
+            direction=Direction.MINIMIZE,
+            category=Category.SOCIAL,
+            unit="score 0-100",
+            description="Community health and safety risk score",
         )
     )
 

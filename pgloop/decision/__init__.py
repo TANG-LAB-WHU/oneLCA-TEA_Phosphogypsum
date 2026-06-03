@@ -5,6 +5,7 @@ Multi-criteria decision analysis for pathway selection.
 Integrates LCA, TEA, and risk assessments.
 """
 
+from pgloop.decision.benefit_compensation import BenefitCompensationModel
 from pgloop.decision.criteria import (
     CriteriaSet,
     Criterion,
@@ -16,6 +17,7 @@ from pgloop.decision.mcda import (
     TOPSIS,
     WeightedSum,
 )
+from pgloop.decision.optimizer import ReverseDesignOptimizer
 from pgloop.decision.pareto import (
     ParetoAnalyzer,
     ParetoSolution,
@@ -47,4 +49,6 @@ __all__ = [
     "DynamicMultiObjectiveOptimizer",
     "PathwayRanker",
     "Recommendation",
+    "ReverseDesignOptimizer",
+    "BenefitCompensationModel",
 ]

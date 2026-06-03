@@ -26,8 +26,8 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 | `pgloop/chemicals`     | Chemical Database + MACE | `Chemical`, `PropertyPredictor`, `get_chemical()`     |
 | `pgloop/equipment`     | Unit Operations          | `CSTR`, `FilterPress`, `Evaporator`, etc.             |
 | `pgloop/risk`          | Risk Assessment          | `TechnicalRisk`, `PoliticalRisk`, `RiskAggregator`    |
-| `pgloop/decision`      | Decision Support         | `PathwayRanker`, `ScenarioAnalyzer`, `DynamicOptimizer` |
-| `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `JointUncertaintyPropagator`, `BayesianUpdater`, `MCMC` |
+| `pgloop/decision`      | Decision Support & Optimization | `PathwayRanker`, `ScenarioAnalyzer`, `DynamicMultiObjectiveOptimizer`, `ReverseDesignOptimizer`, `BenefitCompensationModel` |
+| `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `JointUncertaintyPropagator`, `BayesianUpdater`, `MetropolisHastings`, `HamiltonianMC`, `GibbsSampler` |
 | `pgloop/stochastic_dynamics` | Stochastic Dynamics | `FP_PINN`, `VAE`, `FokkerPlanckSolver`, `LatentSDE` |
 | `pgloop/simulation`    | Multi-scale Simulation   | `macro/`, `meso/`, `micro/` sub-modules               |
 | `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `LightRAGEngine`, `LLMExtractor`  |
@@ -169,6 +169,33 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 │  └─────────────────┘  └─────────────────┘  └─────────────────┘                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+## PhosphogypsumBot: Physics-Informed AI (PI-AI) Framework
+
+`PG-LCA-TEA` serves as the core computational and reasoning engine for the **PhosphogypsumBot** framework, aligning with the following architectural pillars:
+
+### 1. Physics-Informed AI (PI-AI) Core
+*   **能质守恒律 (Conservation of Mass & Energy)**: Valorization Pathway Modules (VPMs) located in `pgloop/pathways/vpms/` (e.g., [CarbothermicVPM](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/vpms/carbothermic.py)) declare governing thermodynamic and chemical kinetic ODEs/PDEs. These physical constraints are resolved using stochastic density boundary solvers and PINNs (`pgloop/stochastic_dynamics/`).
+*   **MCMC (Markov Chain Monte Carlo)**: Correlated parameter uncertainty is sampled and calibrated using advanced Markov Chain sampling (Metropolis-Hastings, Hamiltonian Monte Carlo, Gibbs sampling) in `pgloop/uncertainty/mcmc/` to ensure scientifically robust probability density forecasts.
+*   **Embedding (AI Multimodal Learning)**: Multimodal RAG query engines (`pgloop/knowledge/`) extract literature facts and map semantic nodes onto a unified Knowledge Graph (`pgloop/knowledge/graph/`).
+
+### 2. Multi-Objective Multi-Scale System
+*   Evaluates thermal inputs (**热**), mechanical and electricity work (**功**), and capital/operational costs (**货币**) across micro-scale (equipment unit operations), meso-scale (process pathway scaling), and macro-scale (regional grids and policy contexts).
+
+### 3. Full-Dimensional AI Assessment
+*   **Uncertainty Quantification**: Propagates parameter variance via Monte Carlo simulations, elasticity-based sensitivity screening, and distribution overlap tests.
+*   **Reverse Design/Decision-making**: Uses a Bayesian Optimization search algorithm ([ReverseDesignOptimizer](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/decision/optimizer/reverse_design.py)) to back-calculate input process parameters required to satisfy environmental and financial targets (e.g., GWP <= 100 kg CO2-eq, NPV >= $20/t).
+*   **System Benefit Compensation**: Employs [BenefitCompensationModel](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/decision/benefit_compensation.py) to calculate optimized tipping fees, carbon credits, and environmental subsidies to make eco-friendly but capital-intensive pathways economically viable.
+
+### 4. 5D Sustainable Development Loop
+*   A multi-criteria optimization loop ranking pathways across:
+    1.  **技术 (Technical)**: Technology Readiness Level (TRL) and scalability.
+    2.  **经济 (Economic)**: Financial returns (NPV, IRR, payback period).
+    3.  **环境 (Environmental)**: Life Cycle Assessment (10 ISO 14040/14044 categories).
+    4.  **政策 (Policy)**: Carbon tax structures, regional subsidies, and geopolitical/regulatory risks.
+    5.  **社会 (Social)**: Direct and indirect employment creation (`job_creation`) and community health and safety risks (`community_health_risk`).
+
+---
 
 ## Installation
 

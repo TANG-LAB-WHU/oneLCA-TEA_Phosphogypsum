@@ -7,6 +7,8 @@ from typing import Callable, List, Tuple
 
 import numpy as np
 
+trapezoid = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
+
 
 @dataclass
 class FokkerPlanckTrajectory:
@@ -87,11 +89,11 @@ class FokkerPlanck1DSolver:
         return out
 
     def _normalize(self, p: np.ndarray) -> np.ndarray:
-        mass = np.trapezoid(p, self.x)
+        mass = trapezoid(p, self.x)
         if mass <= 0:
             # fallback to narrow positive density around center
             p = np.exp(-0.5 * (self.x / max(self.dx, 1e-6)) ** 2)
-            mass = np.trapezoid(p, self.x)
+            mass = trapezoid(p, self.x)
         return p / mass
 
 
@@ -182,10 +184,10 @@ class FokkerPlanck2DSolver:
         return out
 
     def _normalize(self, p: np.ndarray) -> np.ndarray:
-        mass = np.trapezoid(np.trapezoid(p, self.y, axis=1), self.x)
+        mass = trapezoid(trapezoid(p, self.y, axis=1), self.x)
         if mass <= 0:
             p = np.exp(-0.5 * (self.xx**2 + self.yy**2))
-            mass = np.trapezoid(np.trapezoid(p, self.y, axis=1), self.x)
+            mass = trapezoid(trapezoid(p, self.y, axis=1), self.x)
         return p / mass
 
 
@@ -200,7 +202,7 @@ def const_diffusion(sigma: float = 1.0) -> Callable[[np.ndarray, float], np.ndar
 def gaussian_pdf(x: np.ndarray, mean: float = 0.0, std: float = 1.0) -> np.ndarray:
     std = max(std, 1e-9)
     p = np.exp(-0.5 * ((x - mean) / std) ** 2) / (std * np.sqrt(2.0 * np.pi))
-    return p / np.trapezoid(p, x)
+    return p / trapezoid(p, x)
 
 
 def monte_carlo_histogram(

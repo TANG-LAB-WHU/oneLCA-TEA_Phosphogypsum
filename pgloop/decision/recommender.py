@@ -49,9 +49,10 @@ class PathwayRanker:
         self,
         criteria: CriteriaSet = None,
         method: str = "TOPSIS",
-        lca_weight: float = 0.30,
-        tea_weight: float = 0.40,
-        risk_weight: float = 0.30,
+        lca_weight: float = 0.25,
+        tea_weight: float = 0.35,
+        risk_weight: float = 0.15,
+        social_weight: float = 0.10,
     ):
         """
         Initialize ranker.
@@ -62,6 +63,7 @@ class PathwayRanker:
             lca_weight: Weight for environmental criteria
             tea_weight: Weight for economic criteria
             risk_weight: Weight for risk criteria
+            social_weight: Weight for social criteria
         """
         self.criteria = criteria or create_default_criteria()
         self.method = method
@@ -71,13 +73,14 @@ class PathwayRanker:
             "environmental": lca_weight,
             "economic": tea_weight,
             "risk": risk_weight,
+            "social": social_weight,
         }
 
         # Adjust criteria weights by category
-        self._adjust_category_weights(lca_weight, tea_weight, risk_weight)
+        self._adjust_category_weights(lca_weight, tea_weight, risk_weight, social_weight)
 
     def _adjust_category_weights(
-        self, lca_weight: float, tea_weight: float, risk_weight: float
+        self, lca_weight: float, tea_weight: float, risk_weight: float, social_weight: float
     ) -> None:
         """Adjust individual criterion weights by category."""
 
@@ -92,8 +95,8 @@ class PathwayRanker:
             "environmental": lca_weight,
             "economic": tea_weight,
             "risk": risk_weight,
-            "technical": 1 - lca_weight - tea_weight - risk_weight,
-            "social": 0,
+            "technical": max(0.0, 1 - lca_weight - tea_weight - risk_weight - social_weight),
+            "social": social_weight,
         }
 
         for c in self.criteria.criteria:
@@ -179,6 +182,17 @@ class PathwayRanker:
             strengths.append("Quick payback")
         elif metrics.get("payback", 0) > 10:
             weaknesses.append("Long payback period")
+
+        # Social metrics
+        if metrics.get("job_creation", 0) >= 8.0:
+            strengths.append("High employment generation")
+        elif "job_creation" in metrics and metrics["job_creation"] < 3.0:
+            weaknesses.append("Low employment generation")
+
+        if metrics.get("community_health_risk", 100) < 30.0:
+            strengths.append("Low community health risk")
+        elif metrics.get("community_health_risk", 0) > 60.0:
+            weaknesses.append("High community health risk")
 
         return strengths, weaknesses
 

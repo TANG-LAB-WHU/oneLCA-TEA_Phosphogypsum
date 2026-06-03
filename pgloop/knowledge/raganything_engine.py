@@ -25,6 +25,11 @@ try:
 
     RAGANYTHING_AVAILABLE = True
 except ImportError:
+    openai_complete_if_cache = None
+    openai_embed = None
+    EmbeddingFunc = None
+    RAGAnything = None
+    RAGAnythingConfig = None
     RAGANYTHING_AVAILABLE = False
 
 load_dotenv()

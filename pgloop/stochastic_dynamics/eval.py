@@ -8,6 +8,10 @@ from typing import Dict, List, Tuple
 import numpy as np
 
 
+# Version-compatible trapezoid function
+trapezoid = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
+
+
 def l2_pdf_error(p: np.ndarray, q: np.ndarray, dx: float) -> float:
     return float(np.sqrt(np.sum((p - q) ** 2) * dx))
 
@@ -22,7 +26,7 @@ def kl_divergence(p: np.ndarray, q: np.ndarray, eps: float = 1e-12) -> float:
 
 def conservation_error(pdf: np.ndarray, dx: float) -> float:
     x = np.arange(pdf.size, dtype=float) * dx
-    mass = float(np.trapezoid(pdf, x))
+    mass = float(trapezoid(pdf, x))
     return abs(mass - 1.0)
 
 
