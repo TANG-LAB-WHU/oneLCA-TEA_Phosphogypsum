@@ -1,479 +1,295 @@
-# PG-LCA-TEA: Phosphogypsum Life Cycle Assessment & Techno-Economic Analysis Framework
+# PhosphogypsumBot: Physics-Informed AI Agent Framework for Industrial Phosphogypsum Engineering
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techno-Economic Analysis (TEA) of phosphogypsum end-of-life treatment technologies.
+**PhosphogypsumBot** is a physics-informed, multimodal intelligent agent framework designed to quantify and mitigate uncertainties in industrial phosphogypsum (PG) valorization, life cycle assessment (LCA), and techno-economic analysis (TEA).
 
-## Features
+By integrating physical conservation laws, Bayesian Markov Chain Monte Carlo (MCMC) sampling, and Multimodal Retrieval-Augmented Generation (RAG), PhosphogypsumBot guides engineers and policy-makers toward optimal, sustainable, and economically viable circular economy pathways.
 
-- **7 Treatment Pathways**: Stack disposal, cement, construction materials, soil amendment, chemical recovery, REE extraction, sulfur & acid recovery
-- **Global Coverage**: Support for all major phosphogypsum producing countries with regional context
-- **AI-Enhanced Data Collection**: LLM-RAG pipeline with Knowledge Graph database
-- **Multi-Criteria Decision Analysis**: TOPSIS, AHP, Pareto analysis for pathway selection
-- **Risk Assessment**: Micro (technical/operational/financial) and macro (political/economic/market/policy) risk evaluation
-- **Uncertainty Quantification**: Monte Carlo simulation, Markov chain Monte Carlo (MCMC), sensitivity analysis, and pathway discernibility analysis
-- **Open Source Only**: No commercial databases required
-- **Modular Design**: Easy to extend with new pathways, chemicals, and equipment
+---
+
+## Core Capabilities
+
+### 1. Physics-Informed AI (PI-AI) Engine
+*   **Physical Governing Equations**: Valorization Pathway Modules (VPMs) located in `pgloop/pathways/vpms/` represent governing thermodynamics, chemical kinetics (e.g., shrinking core models for acid leaching, carbonation rate laws, and thermal decomposition heat balances).
+*   **PINNs & Density Solvers**: Resolve density evolution and transport boundaries using Physics-Informed Neural Networks (PINNs) and Fokker-Planck partial differential equation (PDE) solvers (`pgloop/stochastic_dynamics/`).
+*   **MCMC Parameter Calibration**: Calibrates and refines joint parameter uncertainty using Metropolis-Hastings, Hamiltonian Monte Carlo, and Gibbs sampling.
+
+### 2. Multi-Scale & Multi-Objective Process Modeling
+*   Tracks thermodynamic inputs of heat (**Heat** - e.g., coal, natural gas, steam) and electricity (**Work** - e.g., agitation, filtration, pumping) and evaluates them alongside cost inputs (**Currency** - e.g., CAPEX, raw materials, labor).
+*   Models processes from micro-scale (chemical reactions in unit operations) to meso-scale (process pathway scaling) and macro-scale (regional electricity grid mixes, carbon tax structures).
+
+### 3. Full-Dimensional Sustainability Assessment
+*   **Uncertainty Quantification**: Propagates process variance via Monte Carlo simulations, Sobol sensitivity screening, and pathway discernibility assessments.
+*   **Bayesian Reverse Design**: Uses the `ReverseDesignOptimizer` to back-calculate input process variables (e.g., kiln temperature, raw material purity, or grid mix) required to satisfy target environmental and economic thresholds (e.g., GWP <= 100 kg CO2-eq/t, NPV >= $20/t).
+*   **System Benefit Compensation**: Leverages the `BenefitCompensationModel` to internalize environmental external benefits (monetized using shadow pricing) and optimize stakeholder incentive structures, including tipping fees, carbon credits, and governmental subsidies.
+
+### 4. 5D Sustainable Development Loop
+Integrates multi-criteria decision analysis (TOPSIS/AHP) across five core pillars:
+1.  **Technical**: Technology Readiness Level (TRL) and scale-up feasibility.
+2.  **Economic**: Financial returns (NPV, IRR, payback period).
+3.  **Environmental**: ISO 14040/14044 LCA (global warming, human toxicity, resource depletion).
+4.  **Policy**: Geopolitical risks, carbon pricing, and regional subsidy dependencies.
+5.  **Social**: Employment creation (`job_creation`) and community health/safety risks (`community_health_risk`).
+
+---
 
 ## Core Modules
 
-| Module                   | Description              | Key Classes                                                 |
-| ------------------------ | ------------------------ | ----------------------------------------------------------- |
-| `pgloop/lca`           | Life Cycle Assessment    | `LCAEngine`, `ImpactAssessment`, `LifeCycleInventory` |
-| `pgloop/tea`           | Techno-Economic Analysis | `TEAEngine`, `CAPEXCalculator`, `OPEXCalculator`      |
-| `pgloop/pathways`      | Treatment Pathways       | `CementPathway`, `REEExtractionPathway`, etc.           |
-| `pgloop/chemicals`     | Chemical Database + MACE | `Chemical`, `PropertyPredictor`, `get_chemical()`     |
-| `pgloop/equipment`     | Unit Operations          | `CSTR`, `FilterPress`, `Evaporator`, etc.             |
-| `pgloop/risk`          | Risk Assessment          | `TechnicalRisk`, `PoliticalRisk`, `RiskAggregator`    |
-| `pgloop/decision`      | Decision Support & Optimization | `PathwayRanker`, `ScenarioAnalyzer`, `DynamicMultiObjectiveOptimizer`, `ReverseDesignOptimizer`, `BenefitCompensationModel` |
-| `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `JointUncertaintyPropagator`, `BayesianUpdater`, `MetropolisHastings`, `HamiltonianMC`, `GibbsSampler` |
-| `pgloop/stochastic_dynamics` | Stochastic Dynamics | `FP_PINN`, `VAE`, `FokkerPlanckSolver`, `LatentSDE` |
-| `pgloop/simulation`    | Multi-scale Simulation   | `macro/`, `meso/`, `micro/` sub-modules               |
-| `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `LightRAGEngine`, `LLMExtractor`  |
-| `pgloop/visualization` | Dashboard & Reports      | `run_dashboard`, `ReportExporter`, `LCAPlots`          |
-| `pgloop/iodata`        | Data Ingestion           | `PDFParser`, `WebScraper`, `APIConnector`             |
-| `pgloop/utils`         | Utilities                | `CurrencyConverter`, `UnitConverter`, `Annotation`    |
+| Module | Description | Key Classes / Sub-modules |
+| :--- | :--- | :--- |
+| `pgloop/pathways` | Treatment Pathways & VPMs | `CementPathway`, `REEExtractionPathway`, `SulfurAcidPathway`, `vpms/` (Carbothermic, Crystallization, Hydration) |
+| `pgloop/decision` | Multi-Criteria Decision & Optimization | `PathwayRanker`, `ReverseDesignOptimizer`, `BenefitCompensationModel`, `ScenarioAnalyzer` |
+| `pgloop/uncertainty` | Uncertainty Quantification & MCMC | `MonteCarloSimulator`, `JointUncertaintyPropagator`, `MetropolisHastings`, `HamiltonianMC`, `GibbsSampler` |
+| `pgloop/stochastic_dynamics` | Physics-Informed Solvers | `FP_PINN` (PINN solver), `FokkerPlanck1DSolver`, `FokkerPlanck2DSolver`, `VAE` |
+| `pgloop/lca` | Life Cycle Assessment Engine | `LCAEngine`, `ImpactAssessment`, `LifeCycleInventory` |
+| `pgloop/tea` | Techno-Economic Analysis Engine | `TEAEngine`, `CAPEXCalculator`, `OPEXCalculator`, `ExternalCostCalculator` |
+| `pgloop/knowledge` | Knowledge Extraction & Graph | `PhosphogypsumKG`, `RAGAnythingEngine`, `LightRAGEngine`, `embeddings/` |
+| `pgloop/chemicals` | Material Database & ML Properties | `Chemical`, `PropertyPredictor` (MACE machine-learning property predictor) |
+| `pgloop/equipment` | Unit Operations Modeling | `CSTRReactor`, `LeachingTank`, `MixingTank`, `SeparationFilter` |
+| `pgloop/risk` | Micro & Macro Risk Assessment | `TechnicalRisk`, `OperationalRisk`, `PoliticalRisk`, `PolicyRisk`, `RiskAggregator` |
+| `pgloop/simulation` | Multi-Scale System Simulation | `micro/` (reaction level), `meso/` (plant level), `macro/` (market/grid level) |
+| `pgloop/visualization` | Interactive Dashboard & Reporting | `run_dashboard` (Streamlit dashboard), `ReportExporter` (Excel/HTML reports) |
+| `pgloop/iodata` | Raw Data Ingestion | `PDFParser` (MinerU/PyMuPDF parser), `WebScraper`, `DataStandardizer` |
+
+---
 
 ## System Architecture
 
 ```text
 ┌─══════════════════════════════════════════════════════════════════════════════┐
-│                         PG-LCA-TEA COMPLETE ARCHITECTURE                       │
+│                         PHOSPHOGYPSUMBOT AGENT FRAMEWORK                       │
 └─══════════════════════════════════════════════════════════════════════════════┘
 
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                              INPUT DATA SOURCES                                 │
-├───────────────┬───────────────┬───────────────┬───────────────┬─────────────────┤
-│ Local Papers  │ Open Access   │ Open LCI      │ Regulatory    │ Industry        │
-│               │ Literature    │ Databases     │ Databases     │ Reports         │
-│               │               │               │               │                 │
-│ ./data/raw/   │ • Unpaywall   │ • ELCD        │ • EPA         │ • USGS          │
-│   papers/     │ • PubMed OA   │ • USLCI       │ • EU-REG      │ • IFA           │
-│ • unparsed/   │ • arXiv       │ • Agribalyse  │ • UN-ECE      │ • FAO           │
-│ • parsed/     │ • OpenAlex    │ • Idemat      │ • IAEA        │ • World Bank    │
-└───────┬───────┴───────┬───────┴───────┬───────┴───────┬───────┴────────┬────────┘
-        │               │               │               │                │
-        ▼               ▼               ▼               ▼                ▼
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                           DATA INGESTION LAYER                                  │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐              │
-│  │  PDF Parser      │  │  Web Scraper     │  │  API Connector   │              │
-│  │  (MinerU/PyMuPDF)│  │  (BeautifulSoup) │  │  (REST/GraphQL)  │              │
-│  └────────┬─────────┘  └────────┬─────────┘  └────────┬─────────┘              │
-│           └─────────────────────┼─────────────────────┘                         │
-│                                 ▼                                               │
-│                    ┌────────────────────────┐                                   │
-│                    │  Data Standardizer     │                                   │
-│                    │  • Unit conversion     │                                   │
-│                    │  • Schema mapping      │                                   │
-│                    │  • Quality tagging     │                                   │
-│                    └───────────┬────────────┘                                   │
-└────────────────────────────────┼────────────────────────────────────────────────┘
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                        AI + KNOWLEDGE GRAPH LAYER                               │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                     LLM-RAG EXTRACTION ENGINE                           │   │
-│  │  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐            │   │
-│  │  │ Text Chunking  │─▶│ Embedding      │─▶│ Vector Store   │            │   │
-│  │  │ (LangChain)    │  │ (Ollama API)   │  │ (ChromaDB)     │            │   │
-│  │  └────────────────┘  └────────────────┘  └────────────────┘            │   │
-│  │                                                  │                      │   │
-│  │  ┌────────────────┐  ┌────────────────┐  ┌──────▼─────────┐            │   │
-│  │  │ Query Engine   │◀─│ RAG Retriever  │◀─│ LLM Extractor  │            │   │
-│  │  │ (LightRAG)     │  │                │  │ (LLM extractor)│            │   │
-│  │  └────────────────┘  └────────────────┘  └────────────────┘            │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                     │                                          │
-│  ┌──────────────────────────────────▼──────────────────────────────────────┐   │
-│  │                    KNOWLEDGE GRAPH DATABASE                             │   │
-│  │                        (NetworkX / Neo4j)                               │   │
-│  │                                                                         │   │
-│  │    [Country]──produces──▶[PG Composition]──treated_by──▶[Technology]   │   │
-│  │        │                                                    │          │   │
-│  │        ▼                                              ┌─────┴─────┐    │   │
-│  │    [Regulation]                                   requires  emits     │   │
-│  │                                                       │      │        │   │
-│  │                                                       ▼      ▼        │   │
-│  │                                                  [Material][Emission] │   │
-│  │                                                              │        │   │
-│  │                                                              ▼        │   │
-│  │                                                         [Impact]      │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                 │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                        ML GAP-FILLING MODULE                            │   │
-│  │  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐            │   │
-│  │  │ Similarity     │  │ Regression     │  │ Uncertainty    │            │   │
-│  │  │ Matching       │  │ Prediction     │  │ Estimation     │            │   │
-│  │  │ (scikit-learn) │  │ (XGBoost)      │  │ (Monte Carlo)  │            │   │
-│  │  └────────────────┘  └────────────────┘  └────────────────┘            │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-└────────────────────────────────────┬────────────────────────────────────────────┘
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                          LCA-TEA CALCULATION ENGINE                             │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                         LCA MODULE                                      │   │
-│  │  Functional Unit: 1 tonne phosphogypsum treated                        │   │
-│  │                                                                         │   │
-│  │  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐                │   │
-│  │  │ Goal/Scope   │──▶│ Inventory    │──▶│ Impact       │                │   │
-│  │  │ Definition   │   │ Analysis     │   │ Assessment   │                │   │
-│  │  └──────────────┘   └──────────────┘   └──────────────┘                │   │
-│  │                                                                         │   │
-│  │  Impact Categories: GWP, Acidification, Eutrophication, Human Toxicity,│   │
-│  │                     Ecotoxicity, Ionizing Radiation, PM, Resources     │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                 │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                         TEA MODULE                                      │   │
-│  │  ┌──────────────────────────────────────────────────────────────────┐  │   │
-│  │  │ CLCC = CAPEX_annualized + OPEX - Product_Revenue                 │  │   │
-│  │  │ SLCC = Internal_Cost(shadow) + External_Cost(emissions)          │  │   │
-│  │  └──────────────────────────────────────────────────────────────────┘  │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                 │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                    UNCERTAINTY ENGINE                                   │   │
-│  │  Sensitivity Screening │ Monte Carlo Propagation │ MCMC Inference      │   │
-│  │  Pathway Discernibility │ Convergence Diagnostics (ESS, R-hat, AR)     │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-└────────────────────────────────────┬────────────────────────────────────────────┘
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                      TREATMENT PATHWAY COMPARISON                               │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐  │
-│  │ PG-SD  │ │ PG-CM  │ │ PG-CB  │ │ PG-SA  │ │ PG-CR  │ │ PG-RE  │ │ PG-SAc │  │
-│  │ Stack  │ │ Cement │ │Constr. │ │ Soil   │ │Chemical│ │ REE    │ │ Sulfur │  │
-│  │Disposal│ │        │ │Material│ │ Amend. │ │Recovery│ │Extract │ │ & Acid │  │
-│  └───┬────┘ └───┬────┘ └───┬────┘ └───┬────┘ └───┬────┘ └───┬────┘ └───┬────┘  │
-│      └─────────┴─────────┴─────┬───┴─────────┴─────────┴─────────┘       │
-│                                ▼                                             │
-│                 Comparative Analysis Matrix                                  │
-│                 [Extensible: New pathways can be added]                      │
-└────────────────────────────────────┬────────────────────────────────────────────┘
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                      OUTPUT & VISUALIZATION LAYER                               │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐                 │
-│  │ Interactive     │  │ Export          │  │ Knowledge       │                 │
-│  │ Dashboard       │  │ Reports         │  │ Graph Explorer  │                 │
-│  │ (Streamlit)     │  │ (PDF/Excel)     │  │ (PyVis/Gephi)   │                 │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
+   ┌─────────────────────────────────────────────────────────────────────────┐
+   │                          MULTIMODAL RAG INGESTION                       │
+   │  • Raw literature (PDFs/MinerU) ──▶ Vector Store (Ollama Embedding API) │
+   │  • LLM Extractor ────────────────▶ Knowledge Graph (Neo4j / NetworkX)   │
+   └────────────────────────────────────┬────────────────────────────────────┘
+                                        │
+                                        ▼
+   ┌─────────────────────────────────────────────────────────────────────────┐
+   │                       PHYSICS-INFORMED AI (PI-AI)                       │
+   │  • Governing Equations (VPMs: Carbothermic, Hydration, Crystallization)  │
+   │  • Transport & Density evolution solved via PINNs / Fokker-Planck PDEs  │
+   │  • Bayesian MCMC Calibration (Metropolis-Hastings / Hamiltonian MC)    │
+   └────────────────────────────────────┬────────────────────────────────────┘
+                                        │ (Injects physical priors & params)
+                                        ▼
+   ┌─────────────────────────────────────────────────────────────────────────┐
+   │                     MULTI-SCALE MULTI-OBJECTIVE SYSTEM                  │
+   │                Input Flows: Heat [热] + Work [功] + Currency [货币]     │
+   ├─────────────────────────────────────────────────────────────────────────┤
+   │  [Micro: Reaction Kinetics] ──▶ [Meso: Unit Op / LCA-TEA] ──▶ [Macro]    │
+   └────────────────────────────────────┬────────────────────────────────────┘
+                                        │
+                                        ▼
+   ┌─────────────────────────────────────────────────────────────────────────┐
+   │                         FULL-DIMENSIONAL ASSESSMENT                     │
+   ├──────────────────────────────┬──────────────────────────┬───────────────┤
+   │     UNCERTAINTY INFERENCE    │   REVERSE DESIGN OPT.    │  BENEFIT COMP.│
+   │   • Monte Carlo Propagation  │ • Bayesian Optimization  │• Shadow Price │
+   │   • Elasticity Sensitivity   │   (Gaussian Process GP)  │  Internalization│
+   │   • Discernibility Analysis  │ • Parameter Target search│• Subsidy Opt. │
+   └──────────────────────────────┴─────────────┬────────────┴───────────────┘
+                                                │
+                                                ▼
+   ┌─────────────────────────────────────────────────────────────────────────┐
+   │                      5D SUSTAINABLE DEVELOPMENT LOOP                    │
+   │   Technical  ◀──▶  Economic  ◀──▶  Environmental  ◀──▶  Policy  ◀──▶ Social │
+   │   (TRL/Scale)      (NPV/IRR)       (ISO LCA GWP)      (Subsidies) (Jobs/Risk)│
+   └─────────────────────────────────────────────────────────────────────────┘
 ```
-
-## PhosphogypsumBot: Physics-Informed AI (PI-AI) Framework
-
-`PG-LCA-TEA` serves as the core computational and reasoning engine for the **PhosphogypsumBot** framework, aligning with the following architectural pillars:
-
-### 1. Physics-Informed AI (PI-AI) Core
-*   **能质守恒律 (Conservation of Mass & Energy)**: Valorization Pathway Modules (VPMs) located in `pgloop/pathways/vpms/` (e.g., [CarbothermicVPM](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/vpms/carbothermic.py)) declare governing thermodynamic and chemical kinetic ODEs/PDEs. These physical constraints are resolved using stochastic density boundary solvers and PINNs (`pgloop/stochastic_dynamics/`).
-*   **MCMC (Markov Chain Monte Carlo)**: Correlated parameter uncertainty is sampled and calibrated using advanced Markov Chain sampling (Metropolis-Hastings, Hamiltonian Monte Carlo, Gibbs sampling) in `pgloop/uncertainty/mcmc/` to ensure scientifically robust probability density forecasts.
-*   **Embedding (AI Multimodal Learning)**: Multimodal RAG query engines (`pgloop/knowledge/`) extract literature facts and map semantic nodes onto a unified Knowledge Graph (`pgloop/knowledge/graph/`).
-
-### 2. Multi-Objective Multi-Scale System
-*   Evaluates thermal inputs (**热**), mechanical and electricity work (**功**), and capital/operational costs (**货币**) across micro-scale (equipment unit operations), meso-scale (process pathway scaling), and macro-scale (regional grids and policy contexts).
-
-### 3. Full-Dimensional AI Assessment
-*   **Uncertainty Quantification**: Propagates parameter variance via Monte Carlo simulations, elasticity-based sensitivity screening, and distribution overlap tests.
-*   **Reverse Design/Decision-making**: Uses a Bayesian Optimization search algorithm ([ReverseDesignOptimizer](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/decision/optimizer/reverse_design.py)) to back-calculate input process parameters required to satisfy environmental and financial targets (e.g., GWP <= 100 kg CO2-eq, NPV >= $20/t).
-*   **System Benefit Compensation**: Employs [BenefitCompensationModel](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/decision/benefit_compensation.py) to calculate optimized tipping fees, carbon credits, and environmental subsidies to make eco-friendly but capital-intensive pathways economically viable.
-
-### 4. 5D Sustainable Development Loop
-*   A multi-criteria optimization loop ranking pathways across:
-    1.  **技术 (Technical)**: Technology Readiness Level (TRL) and scalability.
-    2.  **经济 (Economic)**: Financial returns (NPV, IRR, payback period).
-    3.  **环境 (Environmental)**: Life Cycle Assessment (10 ISO 14040/14044 categories).
-    4.  **政策 (Policy)**: Carbon tax structures, regional subsidies, and geopolitical/regulatory risks.
-    5.  **社会 (Social)**: Direct and indirect employment creation (`job_creation`) and community health and safety risks (`community_health_risk`).
 
 ---
 
 ## Installation
 
 ### Prerequisites
-
-- Python 3.11+
-- (Optional) Neo4j 5.0+ (for production knowledge graph)
+*   Python 3.11+
+*   (Optional) Neo4j 5.0+ (for production-grade Knowledge Graph)
 
 ### Setup
-
 ```bash
-# Clone the repository (use main — the stable branch for users and contributors)
+# Clone the repository
 git clone -b main https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum.git
 cd oneLCA-TEA_Phosphogypsum
 
-# Create and activate a virtual environment (choose one)
-
-# Option A: venv
+# Create and activate virtual environment
 python -m venv venv
-# Windows:
-.\venv\Scripts\activate
-# Linux/macOS:
-# source venv/bin/activate
+source venv/bin/activate  # Windows: .\venv\Scripts\activate
 
-# Option B: Conda
-# conda create -n pgloop python=3.11
-# conda activate pgloop
-
-# Optional: stochastic_dynamics (PyTorch PINN/VAE) with CUDA 12.9. if having cuda device, recommend the 
-# installation of GPU-versioned Pytorch first:
-# pip install torch==2.8 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu129
-
-# After that, install the core module with editable mode suggested for further development
+# Install the package in editable mode
 pip install -e .
 
-# Then, install package + optional extras (declared in pyproject.toml)
-# including the core of  MinerU (mineru[all]) in which first run may download model weights, as well as
-# another core of RAG engines (LightRAG + RAGAnything libraries)
+# Install package with optional extras (AI, Visualization, Knowledge Graph, Dev tools, RAG)
 pip install -e ".[ai,viz,kg,dev,rag]"
-
-# Then install project extras: (TODO feature)
-# pip install -e ".[stochastic_dynamics]" --no-deps
-
-# Alternative mirror of pinned deps (see requirements.txt header)
-# pip install -r requirements.txt && pip install -e .
 ```
 
-## Project Structure
-
-```
-oneLCA-TEA_Phosphogypsum/
-├── pgloop/                          # Source code (15 modules, ~114 Python files)
-│   ├── chemicals/                # Chemical database + MACE property prediction
-│   ├── iodata/                   # Data ingestion layer (API, PDF, Web)
-│   ├── decision/                 # MCDA, Pareto, scenario analysis
-│   ├── equipment/                # Unit operations (reactors, separations)
-│   ├── knowledge/                # AI & Knowledge Graph layer
-│   ├── lca/                      # LCA calculation module
-│   ├── pathways/                 # Treatment pathway definitions
-│   ├── risk/                     # Micro & macro risk assessment
-│   │   ├── micro/                # Technical, operational, financial
-│   │   └── macro/                # Political, economic, market, policy
-│   ├── tea/                      # TEA calculation module
-│   ├── simulation/               # Multi-scale simulation (macro/meso/micro)
-│   ├── stochastic_dynamics/      # PINN, VAE, Fokker-Planck, Latent SDE
-│   ├── uncertainty/              # MC, MCMC, sensitivity, discernibility, diagnostics
-│   ├── utils/                    # Currency, units, annotations, constants
-│   └── visualization/            # Dashboard & reporting
-├── backend/                         # API backend (scaffold)
-├── chat_agent/                      # Conversational AI agent (scaffold)
-├── frontend/                        # Web frontend (Vite + React + TypeScript)
-├── config/                       # Configuration files
-│   ├── settings.yaml             # Global settings
-│   ├── impact_factors.yaml       # Characterization factors
-│   └── unit_prices.yaml          # Chemical/material prices
-├── data/                         # Data storage
-│   ├── raw/                      # Raw input data
-│   ├── processed/                # Processed data & KG
-│   └── templates/                # Data entry templates
-├── models/                       # ML models
-├── notebooks/                    # Jupyter notebooks
-├── tests/                        # Unit tests
-├── pyproject.toml                  # Package metadata & dependency extras
-├── requirements.txt                # Flat dependency mirror (see file header)
-└── README.md                       # This file
-```
+---
 
 ## Quick Start
+
+### 1. Forward LCA-TEA Assessment
+Define a pathway and run a forward calculation for 1 tonne of phosphogypsum:
 
 ```python
 from pgloop.lca import LCAEngine
 from pgloop.tea import TEAEngine
 from pgloop.pathways import CementPathway
-from pgloop.decision import PathwayRanker
-from pgloop.risk import TechnicalRisk, RiskAggregator
 
-# Initialize engines
-lca = LCAEngine()
-tea = TEAEngine()
+# Initialize computational engines
+lca_engine = LCAEngine()
+tea_engine = TEAEngine(country="China")
 
-# Define pathway
+# Initialize treatment pathway (uses natural gas/coal heat, electric work, regional params)
 pathway = CementPathway(country="China")
 
-# Run analysis for 1 tonne PG
-lca_results = lca.calculate(pathway, functional_unit=1.0)
-tea_results = tea.calculate(pathway, functional_unit=1.0)
+# Calculate environmental and financial footprints
+lca_result = lca_engine.calculate(pathway, functional_unit_value=1.0)
+tea_result = tea_engine.calculate(pathway, functional_unit_value=1.0)
 
-# Risk assessment
-tech_risk = TechnicalRisk().assess(trl=8, scale_factor=10)
-print(f"Technical risk score: {tech_risk.score}")
-
-# Multi-criteria ranking
-ranker = PathwayRanker(lca_weight=0.3, tea_weight=0.4, risk_weight=0.3)
-recommendations = ranker.rank({
-    "PG-CementProd": {"npv": 25, "gwp": 80, "trl": 9},
-    "PG-REEextract": {"npv": 50, "gwp": 150, "trl": 6},
-})
-print(f"Best pathway: {recommendations[0].pathway_name}")
+print(f"LCA Climate Change Impact: {lca_result.impacts['climate_change']:.2f} kg CO2-eq")
+print(f"TEA Conventional Cost (CLCC): ${tea_result.clcc:.2f} per tonne")
 ```
 
-## Uncertainty Analysis Workflow
+### 2. Bayesian Reverse Design
+Back-calculate the process parameters required to satisfy output constraints (e.g., GWP <= 120 kg CO2-eq, NPV >= $20/t) using Bayesian Optimization:
 
-The uncertainty module follows a staged workflow designed for transparent and reproducible inference:
+```python
+from pgloop.decision import ReverseDesignOptimizer
 
-1. **Deterministic baseline evaluation**  
-   Define a baseline `calculation_func(params)` for target indicators (for example, cost, emissions, or net present value).
+# Define forward evaluator function mapping inputs to outputs
+def process_evaluator(params: dict) -> dict:
+    temp = params["kiln_temperature"]
+    coal_ratio = params["coal_ratio"]
+    
+    # Forward simulation surrogate
+    gwp = 200.0 - 0.1 * temp + 1.2 * coal_ratio
+    npv = -50.0 + 0.15 * temp - 0.5 * coal_ratio
+    return {"gwp": gwp, "npv": npv}
 
-2. **Sensitivity screening**  
-   Apply one-at-a-time sensitivity analysis with `SensitivityAnalyzer` to identify high-influence parameters using elasticity-based ranking.
+# Parameter boundaries for search space
+parameter_bounds = {
+    "kiln_temperature": (900.0, 1200.0),
+    "coal_ratio": (50.0, 150.0)
+}
 
-3. **Uncertainty propagation**  
-   Use `MonteCarloSimulator` with explicit distributional assumptions (`triangular`, `normal`, `uniform`, `lognormal`, or `fixed`) to propagate input uncertainty to model outputs.
+# Constraint targets (GWP must be minimized, NPV maximized)
+target_constraints = {
+    "gwp": {"type": "max", "value": 120.0},
+    "npv": {"type": "min", "value": 20.0}
+}
 
-4. **Pathway discernibility assessment**  
-   Compare pathway output distributions with `DiscernibilityAnalyzer` through (i) the probability that one pathway outperforms another and (ii) distribution overlap.
+# Run Bayesian optimization
+optimizer = ReverseDesignOptimizer(
+    evaluator_fn=process_evaluator,
+    parameter_bounds=parameter_bounds,
+    target_constraints=target_constraints
+)
+result = optimizer.run(n_iterations=15, n_initial_points=5)
 
-5. **Posterior and correlation-aware inference (optional)**  
-   For correlated parameters or Bayesian-style calibration, use MCMC samplers (`MetropolisHastings`, `HamiltonianMC`, or `GibbsSampler`).
-
-6. **Diagnostic evaluation and reporting**  
-   Assess sample quality with `MCMCDiagnostics` (effective sample size, acceptance behavior, and R-hat under multi-chain settings), then report interval-based uncertainty summaries (such as P5-P95).
-
-### Minimal API Map
-
-- Direct sampling: `pgloop.uncertainty.direct_sampling.MonteCarloSimulator`
-- Chain sampling and diagnostics: `pgloop.uncertainty.chain_sampling`
-- Sensitivity analysis: `pgloop.uncertainty.sensitivity.SensitivityAnalyzer`
-- Discernibility analysis: `pgloop.uncertainty.discernibility.DiscernibilityAnalyzer`
-
-## Dynamic Uncertainty-Aware Assessment
-
-The framework now supports a dynamic joint LCA-TEA workflow where scenario trajectories
-(e.g., carbon price, green power penetration, and phosphate-rock price index) are propagated
-through a unified uncertainty loop.
-
-### Run dynamic assessment
-
-```bash
-python scripts/run_dynamic_assessment.py \
-  --pathways PG-CementProd PG-REEextract \
-  --scenario baseline \
-  --start-year 2025 \
-  --end-year 2040 \
-  --samples 500
+print("Target Constraints Satisfied:", result["constraints_satisfied"])
+print("Optimal Process Parameters:", result["best_parameters"])
+print("Surrogate Sensitivities:", result["parameter_sensitivities"])
 ```
 
-Optional Bayesian posterior update (closed-loop):
+### 3. Stakeholder Benefit Compensation
+Optimize subsidies and tipping fees to support a green but high-capital pathway:
 
-```bash
-python scripts/run_dynamic_assessment.py \
-  --pathways PG-CementProd \
-  --scenario baseline \
-  --enable-bayes-update
+```python
+from pgloop.decision import BenefitCompensationModel
+
+# Define baseline stack disposal vs advanced chemical recovery impacts
+baseline_impacts = {"climate_change": 450.0, "acidification": 30.0}
+pathway_impacts = {"climate_change": 80.0, "acidification": 5.0}
+
+model = BenefitCompensationModel()
+
+# 1. Monetize avoided environmental damages
+benefits = model.calculate_avoided_damage(baseline_impacts, pathway_impacts)
+total_benefit = benefits["total_avoided_environmental_benefit"]
+
+# 2. Optimize compensation structure for a pathway with high CLCC ($75/t) and low revenue ($40/t)
+compensation = model.optimize_compensation(
+    pathway_code="PG-ChemReco",
+    clcc=75.0,
+    revenue=40.0,
+    avoided_environmental_benefit=total_benefit,
+    target_margin=5.0
+)
+
+print("Compensation Status:", compensation["status"])
+print("Suggested Carbon Credit (USD/t):", compensation["suggested_carbon_credit"])
+print("Suggested Tipping Fee (USD/t):", compensation["suggested_tipping_fee"])
+print("Suggested Government Subsidy (USD/t):", compensation["suggested_subsidy"])
 ```
 
-### Dynamic output artifacts
+### 4. MCMC Uncertainty Calibration
+Run MCMC sampling to calibrate correlated parameters:
 
-- `data/processed/dynamic_assessment/dynamic_assessment.json`
-- `data/processed/dynamic_assessment/dynamic_assessment_timeseries.csv`
-- `data/processed/dynamic_assessment/dynamic_assessment_ranking.json`
+```python
+import numpy as np
+from pgloop.uncertainty.mcmc import MetropolisHastings
 
-## Utility Scripts
+# Define prior log probability function
+def log_prior(theta):
+    if 0 < theta[0] < 10 and 0 < theta[1] < 10:
+        return 0.0
+    return -np.inf
 
-The `scripts/` directory contains tools for automation and advanced analysis:
+# Define log likelihood
+def log_likelihood(theta):
+    # Simulated comparison against experimental measurements
+    x, y = theta
+    return -0.5 * ((x - 2.5) ** 2 + (y - 3.8) ** 2)
 
-| Script                        | Purpose                                         |
-| ----------------------------- | ----------------------------------------------- |
-| `build_knowledge_graph.py`    | Parse raw literature and populate the KG        |
-| `visualize_knowledge_graph.py` | Generate interactive KG visualizer (PyVis)      |
-| `run_dynamic_assessment.py`   | Run joint LCA+TEA uncertainty over time         |
-| `run_stochastic_dynamics_*.py`| Train and eval PINN/VAE models for uncertainty |
+def log_prob(theta):
+    lp = log_prior(theta)
+    if not np.isfinite(lp):
+        return -np.inf
+    return lp + log_likelihood(theta)
 
-## Tutorials & Examples
+# Initialize MCMC
+sampler = MetropolisHastings(
+    log_prob_fn=log_prob,
+    parameter_names=["x", "y"],
+    initial_state=np.array([1.0, 1.0])
+)
+mcmc_result = sampler.sample(n_samples=2000, warmup=500)
+summary = mcmc_result.summary()
 
-For hands-on learning, explore the `examples/notebooks/` directory, which contains:
-- `01_data_exploration.ipynb`: Data exploration and preprocessing.
-- `02_kg_construction.ipynb`: Knowledge graph construction workflow.
-- `03_lca_calculation.ipynb`: LCA calculation tutorial.
-- `04_tea_analysis.ipynb`: TEA analysis tutorial.
+print("Posterior Means:", summary["means"])
+print("95% Credible Intervals:", summary["95_credible"])
+```
 
-## Treatment Pathways
-
-| Code            | Pathway                | Description                      | TRL |
-| --------------- | ---------------------- | -------------------------------- | --- |
-| PG-Stack        | Stack Disposal         | Baseline: engineered stacking    | 9   |
-| PG-CementProd   | Cement Production      | Use as cement retarder/additive  | 9   |
-| PG-ConstructMat | Construction Materials | Bricks, plasterboard, road base  | 8-9 |
-| PG-Soil         | Soil Amendment         | Direct agricultural application  | 8   |
-| PG-ChemReco     | Chemical Recovery      | (NH₄)₂SO₄ + CaCO₃ production | 6-7 |
-| PG-REEextract   | REE Extraction         | Rare earth element recovery      | 5-6 |
-| PG-SulfurAcid   | Sulfur & Acid Recovery | Thermochemical decomposition to S + H₂SO₄ | 7 |
-
-## Regional Contexts
-
-Built-in support for regional scenario analysis:
-
-| Region                | Key Parameters                                     |
-| --------------------- | -------------------------------------------------- |
-| China (Yunnan)        | Low-carbon grid (hydro 70%), low labor cost        |
-| Morocco (Jorf Lasfar) | Massive PG production (30 Mt/yr), high REE content |
-| USA (Florida)         | Strict environmental regulations                   |
-| Brazil (Minas Gerais) | Ultra-low carbon grid (hydro 65%)                  |
-
-## Risk Assessment Framework
-
-### Micro Risks (Project-level)
-
-- **Technical**: TRL, scale-up, complexity
-- **Operational**: Capacity, feedstock, quality
-- **Financial**: Leverage, IRR, payback
-
-### Macro Risks (Country-level)
-
-- **Political**: Stability, regulation, corruption
-- **Economic**: Monetary policy, credit, FX volatility
-- **Market**: Price volatility, demand, competition
-- **Policy**: Subsidies, carbon price, permits
-
-## Data Sources (Open Access Only)
-
-- **ELCD**: European Reference Life Cycle Database
-- **USLCI**: US Life Cycle Inventory Database
-- **Agribalyse**: French agricultural LCI
-- **EPA**: US Environmental Protection Agency
-- **IAEA**: International Atomic Energy Agency (radiation data)
+---
 
 ## Contributing
 
-Pull requests are welcome. MIT license applies to contributions the same as to the rest of the repository.
+We welcome contributions to PhosphogypsumBot. Please read our guidelines:
 
-**Branching:** Fork and base your work on **`main`**. That branch is the default for contributors. The **`dev`** branch is reserved for maintainer-side iteration and is not the recommended starting point for forks or external PRs.
+1.  **Branching**: Base all changes on the `main` branch. The `dev` branch is reserved for maintainer-side release integration.
+2.  **Formatting & Linting**: Run `ruff check .` and `black --check .` before submitting pull requests (max line length: 100).
+3.  **Testing**: Verify code integrity with `pytest` inside the root directory.
 
-1. **Fork** the repository (use **`main`** as the default branch when cloning your fork) and create a branch for your changes.
-2. **Install** with dev tools: `pip install -e ".[dev]"` (or include `ai,viz,kg` if your change touches those areas).
-3. **Run checks** before opening a PR:
-   - `pytest` — unit tests under `tests/`
-   - `ruff check .` and `black --check .` — lint and format (line length 100 per `pyproject.toml`)
-4. **Open a pull request** targeting **`main`** with a short description of the change and, if relevant, how you tested it.
-
-For larger features or API changes, opening an issue first helps align on design and avoids duplicate work.
+---
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+---
+
 ## Citation
 
-If you use this framework in your research, please cite:
+If you use PhosphogypsumBot in your research, please cite:
 
 ```bibtex
-@software{pg_lca_tea_2026,
-  title = {PG-LCA-TEA: Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis Framework},
+@software{phosphogypsumbot_2026,
+  title = {PhosphogypsumBot: Physics-Informed AI Agent Framework for Industrial Phosphogypsum Engineering},
   year = {2026},
   url = {https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum}
 }
 ```
-
-## References
-
-1. ISO 14040:2006. Environmental management — Life cycle assessment — Principles and framework.
-2. ISO 14044:2006. Environmental management — Life cycle assessment — Requirements and guidelines.
