@@ -88,6 +88,16 @@ PATHWAY_MAPPING_RULES: dict[str, dict[str, list[tuple[str, Callable[[float], flo
         "ammonium_sulfate_yield": [("process_yield_fraction", _identity)],
         "caco3_yield": [("process_yield_fraction", _identity)],
     },
+    "PG-SulfurAcid": {
+        "coal_reducing_kg_per_t": [("coal_reducing_kg_per_t", _identity)],
+        "coal_heating_kg_per_t": [("coal_heating_kg_per_t", _identity)],
+        "additives_kg_per_t": [("binder_kg_per_t", _identity)],
+        "electricity_kwh_per_t": [("electricity_kwh_per_t", _identity)],
+        "sulfuric_acid_yield": [("process_yield_fraction", _identity)],
+        "sulfur_yield": [("process_yield_fraction", _identity)],
+        "clinker_yield": [("process_yield_fraction", _identity)],
+        "moisture_fraction": [("moisture_fraction", _identity)],
+    },
 }
 
 PARAMETER_UNITS: dict[str, str] = {

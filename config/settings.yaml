@@ -140,4 +140,5 @@ pathways:
     - PG-Soil # Soil Amendment
     - PG-ChemReco # Chemical Recovery
     - PG-REEextract # REE Extraction
+    - PG-SulfurAcid # Sulfur & Acid Recovery
 

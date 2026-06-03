@@ -4,7 +4,7 @@ Provides knowledge graph construction, LLM extraction, and RAG capabilities.
 
 from pgloop.knowledge.embeddings import EmbeddingModel
 from pgloop.knowledge.gap_filler import GapFiller
-from pgloop.knowledge.knowledge_graph import PhosphogypsumKG
+from pgloop.knowledge.graph import PhosphogypsumKG, Neo4jAdapter, Neo4jConfig, NEO4J_AVAILABLE
 from pgloop.knowledge.llm_extractor import LLMExtractor
 
 try:
@@ -13,22 +13,11 @@ except ImportError:
     LightRAGEngine = None
     LIGHTRAG_AVAILABLE = False
 
-# RAGAnything support (optional upgrade over LightRAG)
 try:
     from pgloop.knowledge.raganything_engine import RAGANYTHING_AVAILABLE, RAGAnythingEngine
 except ImportError:
     RAGAnythingEngine = None
     RAGANYTHING_AVAILABLE = False
-
-# Optional Neo4j support
-try:
-    from pgloop.knowledge.neo4j_adapter import Neo4jAdapter, Neo4jConfig
-
-    NEO4J_AVAILABLE = True
-except ImportError:
-    Neo4jAdapter = None
-    Neo4jConfig = None
-    NEO4J_AVAILABLE = False
 
 __all__ = [
     "PhosphogypsumKG",

@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 from pgloop.knowledge.embeddings import EmbeddingModel
 from pgloop.knowledge.gap_filler import GapFiller
-from pgloop.knowledge.knowledge_graph import PhosphogypsumKG
+from pgloop.knowledge import PhosphogypsumKG
 from pgloop.knowledge.lightrag_engine import LightRAGEngine
 
 # Import modules to test

@@ -16,9 +16,10 @@ def test_pathway_registry():
     from pgloop.pathways import list_pathways
 
     pathways = list_pathways()
-    assert len(pathways) == 6
+    assert len(pathways) == 7
     assert "PG-Stack" in pathways
     assert "PG-CementProd" in pathways
+    assert "PG-SulfurAcid" in pathways
 
 
 def test_stack_disposal_pathway():
@@ -29,6 +30,16 @@ def test_stack_disposal_pathway():
     assert pathway.code == "PG-Stack"
     assert pathway.name == "Stack Disposal"
     assert pathway.trl == 9
+
+
+def test_sulfur_acid_pathway():
+    """Test sulfur acid recovery pathway initialization."""
+    from pgloop.pathways import SulfurAcidPathway
+
+    pathway = SulfurAcidPathway(country="China")
+    assert pathway.code == "PG-SulfurAcid"
+    assert pathway.name == "Sulfur & Acid Recovery"
+    assert pathway.trl == 7
 
 
 def test_lifecycle_inventory():

@@ -13,6 +13,7 @@ from pgloop.pathways.pg_construction import ConstructionMaterialsPathway
 from pgloop.pathways.pg_ree_extraction import REEExtractionPathway
 from pgloop.pathways.pg_soil_amendment import SoilAmendmentPathway
 from pgloop.pathways.pg_stack_disposal import StackDisposalPathway
+from pgloop.pathways.pg_sulfur_acid import SulfurAcidPathway
 
 # Registry of available pathways
 PATHWAYS: Dict[str, Type[BasePathway]] = {
@@ -22,6 +23,7 @@ PATHWAYS: Dict[str, Type[BasePathway]] = {
     "PG-Soil": SoilAmendmentPathway,
     "PG-ChemReco": ChemicalRecoveryPathway,
     "PG-REEextract": REEExtractionPathway,
+    "PG-SulfurAcid": SulfurAcidPathway,
 }
 
 
@@ -45,6 +47,7 @@ __all__ = [
     "SoilAmendmentPathway",
     "ChemicalRecoveryPathway",
     "REEExtractionPathway",
+    "SulfurAcidPathway",
     "PATHWAYS",
     "get_pathway",
     "list_pathways",

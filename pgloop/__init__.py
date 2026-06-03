@@ -3,9 +3,7 @@ PG-LCA-TEA Framework
 
 Main package for phosphogypsum life cycle assessment and techno-economic analysis.
 """
-
-__version__ = "1.1.0"
-
+__version__ = "0.4.0"
 from pgloop.decision.recommender import PathwayRanker
 from pgloop.lca.lca_engine import LCAEngine, LCAResult
 from pgloop.pathways import get_pathway, list_pathways

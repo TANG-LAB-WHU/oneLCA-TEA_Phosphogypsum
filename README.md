@@ -7,7 +7,7 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 
 ## Features
 
-- **6 Treatment Pathways**: Stack disposal, cement, construction materials, soil amendment, chemical recovery, REE extraction
+- **7 Treatment Pathways**: Stack disposal, cement, construction materials, soil amendment, chemical recovery, REE extraction, sulfur & acid recovery
 - **Global Coverage**: Support for all major phosphogypsum producing countries with regional context
 - **AI-Enhanced Data Collection**: LLM-RAG pipeline with Knowledge Graph database
 - **Multi-Criteria Decision Analysis**: TOPSIS, AHP, Pareto analysis for pathway selection
@@ -29,6 +29,7 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 | `pgloop/decision`      | Decision Support         | `PathwayRanker`, `ScenarioAnalyzer`, `DynamicOptimizer` |
 | `pgloop/uncertainty`   | Uncertainty Analysis     | `MonteCarloSimulator`, `JointUncertaintyPropagator`, `BayesianUpdater`, `MCMC` |
 | `pgloop/stochastic_dynamics` | Stochastic Dynamics | `FP_PINN`, `VAE`, `FokkerPlanckSolver`, `LatentSDE` |
+| `pgloop/simulation`    | Multi-scale Simulation   | `macro/`, `meso/`, `micro/` sub-modules               |
 | `pgloop/knowledge`     | AI & Knowledge Graph     | `PhosphogypsumKG`, `LightRAGEngine`, `LLMExtractor`  |
 | `pgloop/visualization` | Dashboard & Reports      | `run_dashboard`, `ReportExporter`, `LCAPlots`          |
 | `pgloop/iodata`        | Data Ingestion           | `PDFParser`, `WebScraper`, `APIConnector`             |
@@ -147,15 +148,15 @@ A comprehensive, AI-enhanced framework for Life Cycle Assessment (LCA) and Techn
 ┌─────────────────────────────────────────────────────────────────────────────────┐
 │                      TREATMENT PATHWAY COMPARISON                               │
 ├─────────────────────────────────────────────────────────────────────────────────┤
-│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐       │
-│  │ PG-SD   │ │ PG-CM   │ │ PG-CB   │ │ PG-SA   │ │ PG-CR   │ │ PG-RE   │       │
-│  │ Stack   │ │ Cement  │ │ Constr. │ │ Soil    │ │ Chemical│ │ REE     │       │
-│  │ Disposal│ │         │ │ Material│ │ Amend.  │ │ Recovery│ │ Extract │       │
-│  └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘       │
-│       └──────────┴──────────┴─────┬────┴──────────┴──────────┘                  │
-│                                   ▼                                             │
-│                    Comparative Analysis Matrix                                  │
-│                    [Extensible: New pathways can be added]                      │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐  │
+│  │ PG-SD  │ │ PG-CM  │ │ PG-CB  │ │ PG-SA  │ │ PG-CR  │ │ PG-RE  │ │ PG-SAc │  │
+│  │ Stack  │ │ Cement │ │Constr. │ │ Soil   │ │Chemical│ │ REE    │ │ Sulfur │  │
+│  │Disposal│ │        │ │Material│ │ Amend. │ │Recovery│ │Extract │ │ & Acid │  │
+│  └───┬────┘ └───┬────┘ └───┬────┘ └───┬────┘ └───┬────┘ └───┬────┘ └───┬────┘  │
+│      └─────────┴─────────┴─────┬───┴─────────┴─────────┴─────────┘       │
+│                                ▼                                             │
+│                 Comparative Analysis Matrix                                  │
+│                 [Extensible: New pathways can be added]                      │
 └────────────────────────────────────┬────────────────────────────────────────────┘
                                      ▼
 ┌─────────────────────────────────────────────────────────────────────────────────┐
@@ -219,7 +220,7 @@ pip install -e ".[ai,viz,kg,dev,rag]"
 
 ```
 oneLCA-TEA_Phosphogypsum/
-├── pgloop/                          # Source code (12 modules, ~80 Python files)
+├── pgloop/                          # Source code (15 modules, ~114 Python files)
 │   ├── chemicals/                # Chemical database + MACE property prediction
 │   ├── iodata/                   # Data ingestion layer (API, PDF, Web)
 │   ├── decision/                 # MCDA, Pareto, scenario analysis
@@ -231,9 +232,14 @@ oneLCA-TEA_Phosphogypsum/
 │   │   ├── micro/                # Technical, operational, financial
 │   │   └── macro/                # Political, economic, market, policy
 │   ├── tea/                      # TEA calculation module
+│   ├── simulation/               # Multi-scale simulation (macro/meso/micro)
+│   ├── stochastic_dynamics/      # PINN, VAE, Fokker-Planck, Latent SDE
 │   ├── uncertainty/              # MC, MCMC, sensitivity, discernibility, diagnostics
 │   ├── utils/                    # Currency, units, annotations, constants
 │   └── visualization/            # Dashboard & reporting
+├── backend/                         # API backend (scaffold)
+├── chat_agent/                      # Conversational AI agent (scaffold)
+├── frontend/                        # Web frontend (Vite + React + TypeScript)
 ├── config/                       # Configuration files
 │   ├── settings.yaml             # Global settings
 │   ├── impact_factors.yaml       # Characterization factors
@@ -358,9 +364,10 @@ The `scripts/` directory contains tools for automation and advanced analysis:
 ## Tutorials & Examples
 
 For hands-on learning, explore the `examples/notebooks/` directory, which contains:
-- `01_basic_lca_tea.ipynb`: Introduction to core engines.
-- `02_uncertainty_analysis.ipynb`: Monte Carlo and sensitivity tutorials.
-- `03_ai_extraction_workflow.ipynb`: LLM-RAG pipeline demonstration.
+- `01_data_exploration.ipynb`: Data exploration and preprocessing.
+- `02_kg_construction.ipynb`: Knowledge graph construction workflow.
+- `03_lca_calculation.ipynb`: LCA calculation tutorial.
+- `04_tea_analysis.ipynb`: TEA analysis tutorial.
 
 ## Treatment Pathways
 
@@ -372,6 +379,7 @@ For hands-on learning, explore the `examples/notebooks/` directory, which contai
 | PG-Soil         | Soil Amendment         | Direct agricultural application  | 8   |
 | PG-ChemReco     | Chemical Recovery      | (NH₄)₂SO₄ + CaCO₃ production | 6-7 |
 | PG-REEextract   | REE Extraction         | Rare earth element recovery      | 5-6 |
+| PG-SulfurAcid   | Sulfur & Acid Recovery | Thermochemical decomposition to S + H₂SO₄ | 7 |
 
 ## Regional Contexts
 
