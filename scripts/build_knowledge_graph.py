@@ -5,13 +5,15 @@ Workflow:
 1. Parse PDFs from data/raw/papers/unparsed/ → data/raw/papers/parsed/
 2. Build LightRAG index (Graph + Vector) in data/processed/lightrag_db/
 3. Extract structured data using OpenAI-compatible LLM (e.g. Ollama)
-4. Construct knowledge graph in data/processed/knowledge_graph/
+4. Build parameter ranges from extracted JSON in data/processed/parameter_ranges/
+5. Construct knowledge graph in data/processed/knowledge_graph/
 
 Usage:
     python scripts/build_knowledge_graph.py --step all
     python scripts/build_knowledge_graph.py --step parse
     python scripts/build_knowledge_graph.py --step index
     python scripts/build_knowledge_graph.py --step extract
+    python scripts/build_knowledge_graph.py --step ranges
     python scripts/build_knowledge_graph.py --step build
 """
 
@@ -33,6 +35,7 @@ load_dotenv(PROJECT_ROOT / ".env")
 
 from pgloop.iodata import PDFParser  # noqa: E402
 from pgloop.knowledge import LightRAGEngine, LLMExtractor, PhosphogypsumKG  # noqa: E402
+from pgloop.knowledge.parameter_ranges import build_parameter_ranges_from_extracted  # noqa: E402
 
 # Optional RAGAnything support
 try:
@@ -52,9 +55,10 @@ LIGHTRAG_DIR = PROCESSED_DIR / "lightrag_db"
 RAGANYTHING_DIR = PROCESSED_DIR / "raganything_db"
 KG_DIR = PROCESSED_DIR / "knowledge_graph"
 EXTRACTED_DIR = PROCESSED_DIR / "extracted_data"
+PARAMETER_RANGE_DIR = PROCESSED_DIR / "parameter_ranges"
 
 # Ensure directories exist
-for d in [PARSED_DIR, LIGHTRAG_DIR, RAGANYTHING_DIR, KG_DIR, EXTRACTED_DIR]:
+for d in [PARSED_DIR, LIGHTRAG_DIR, RAGANYTHING_DIR, KG_DIR, EXTRACTED_DIR, PARAMETER_RANGE_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
 
@@ -300,14 +304,43 @@ def step3_extract_structured_data(limit: int = None, engine: str = "lightrag"):
     return all_results
 
 
-def step4_build_knowledge_graph():
+def step4_build_parameter_ranges(limit: int = None):
+    """
+    Step 4: Build parameter ranges from extracted JSON
+
+    Converts extraction outputs into pathway-ready parameter values and uncertainty
+    distributions. This does not remove or replace KG-RAG; it complements it.
+    """
+    print("\n" + "=" * 60)
+    print("   STEP 4: PARAMETER RANGE SYNTHESIS")
+    print("=" * 60)
+    print(f"Input:  {EXTRACTED_DIR}")
+    print(f"Output: {PARAMETER_RANGE_DIR}")
+
+    result = build_parameter_ranges_from_extracted(
+        extracted_dir=EXTRACTED_DIR,
+        output_dir=PARAMETER_RANGE_DIR,
+        limit=limit,
+    )
+
+    print(f"\n{'=' * 40}")
+    print(f"Processed extraction files: {result['source_file_count']}")
+    print(f"Valid extraction files: {result['valid_document_count']}")
+    print(f"Inferred global parameters: {result['global_parameter_count']}")
+    print("Generated files:")
+    for _, output_path in result["output_files"].items():
+        print(f"  - {output_path}")
+    return result
+
+
+def step5_build_knowledge_graph():
     """
     Step 4: Build Knowledge Graph
 
     Populates the knowledge graph from extracted data.
     """
     print("\n" + "=" * 60)
-    print("   STEP 4: KNOWLEDGE GRAPH CONSTRUCTION")
+    print("   STEP 5: KNOWLEDGE GRAPH CONSTRUCTION")
     print("=" * 60)
 
     # Initialize KG
@@ -405,8 +438,11 @@ def run_pipeline(
     if "extract" in steps or "all" in steps:
         results["extract"] = step3_extract_structured_data(limit, engine)
 
+    if "ranges" in steps or "all" in steps:
+        results["ranges"] = step4_build_parameter_ranges(limit)
+
     if "build" in steps or "all" in steps:
-        results["build"] = step4_build_knowledge_graph()
+        results["build"] = step5_build_knowledge_graph()
 
     print("\n" + "=" * 60)
     print("   PIPELINE COMPLETE")
@@ -422,7 +458,7 @@ def main():
     )
     parser.add_argument(
         "--step",
-        choices=["all", "parse", "index", "extract", "build"],
+        choices=["all", "parse", "index", "extract", "ranges", "build"],
         default="all",
         help="Pipeline step to run",
     )
