@@ -79,7 +79,7 @@ Integrates multi-criteria decision analysis (TOPSIS/AHP) across five core pillar
                                         ▼
    ┌─────────────────────────────────────────────────────────────────────────┐
    │                     MULTI-SCALE MULTI-OBJECTIVE SYSTEM                  │
-   │                Input Flows: Heat [热] + Work [功] + Currency [货币]     │
+   │                Input Flows: Heat + Work + Currency                      │
    ├─────────────────────────────────────────────────────────────────────────┤
    │  [Micro: Reaction Kinetics] ──▶ [Meso: Unit Op / LCA-TEA] ──▶ [Macro]    │
    └────────────────────────────────────┬────────────────────────────────────┘
