@@ -7,6 +7,7 @@ This directory contains scripts and notebooks that demonstrate how to use the PG
 - **`basic_run.py`**: A simple script showing a single pathway assessment.
 - **`custom_pathway_tutorial.py`**: An example of how to define and run a new treatment technology.
 - **`sensitivity_demo.py`**: A demonstration of the uncertainty and sensitivity analysis tools.
+- **`integrated_analysis_demo.py`**: A complete multi-pathway assessment workflow demonstrating LCA, TEA, risk aggregation, MCDA ranking, and market scenarios.
 - **`e2e_smoke_test.py`**: End-to-end smoke test validating both RAG engines.
 
 ## Notebooks
