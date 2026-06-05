@@ -116,7 +116,7 @@ Integrates multi-criteria decision analysis (TOPSIS/AHP) across five core pillar
 *   Python 3.11+
 *   (Optional) Neo4j 5.0+ (for production-grade Knowledge Graph)
 
-### Setup
+### Standard Setup
 ```bash
 # Clone the repository
 git clone -b main https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum.git
@@ -132,6 +132,28 @@ pip install -e .
 # Install package with optional extras (AI, Visualization, Knowledge Graph, Dev tools, RAG)
 pip install -e ".[ai,viz,kg,dev,rag]"
 ```
+
+### HPC Deployment & vLLM Compilation (Wuhan University Supercomputing Center - WHU-SCC)
+When deploying on high-performance computing (HPC) nodes like **WHU-SCC**, installing the optional packages triggers a compilation of `vllm` (required by the MinerU multi-modal parser). Since `vllm` tries to compile from source in the absence of a pre-built wheel, it requires standard CUDA compiler toolchains and build dependencies.
+
+Follow this sequential setup inside your active virtual environment (e.g., `conda activate pgbot`) on the cluster terminal:
+
+```bash
+# 1. Load the CUDA module matching PyTorch (CUDA 12.9 is recommended)
+module load nvidia/cuda/12.9
+
+# 2. Set the CUDA_HOME environment variable (critical for the vllm compilation script)
+export CUDA_HOME=$(dirname $(dirname $(which nvcc)))
+echo "Current CUDA_HOME is: $CUDA_HOME"
+
+# 3. Pre-install fundamental build-time dependencies
+pip install numpy ninja wheel setuptools
+
+# 4. Install the package in editable mode with GPU acceleration indices
+pip install -e ".[ai,viz,rag,kg,dev]" --extra-index-url https://download.pytorch.org/whl/cu129
+```
+
+For detailed Slurm job scripts, compute node partition guidelines (`a100x4`, `gpu`, `9a14a`), and NUMA socket isolation (`numactl`) details, refer to the **[HPC Supercomputer Deployment Guide](docs/hpc_slurm_deployment.md)**.
 
 ---
 
