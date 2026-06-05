@@ -2,6 +2,7 @@
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-v0.5.0-green.svg)](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)
 
 **PhosphogypsumBot** is a physics-informed, multimodal intelligent agent framework designed to quantify and mitigate uncertainties in industrial phosphogypsum (PG) valorization, life cycle assessment (LCA), and techno-economic analysis (TEA).
 
@@ -33,6 +34,12 @@ Integrates multi-criteria decision analysis (TOPSIS/AHP) across five core pillar
 4.  **Policy**: Geopolitical risks, carbon pricing, and regional subsidy dependencies.
 5.  **Social**: Employment creation (`job_creation`) and community health/safety risks (`community_health_risk`).
 
+### 5. Microscopic Materials Potential & Live IoT Telemetry (v0.5.0)
+*   **Materials Potential Validation**: Connects to the Materials Project API (`mp-api`) to retrieve real DFT crystal structures (anhydrite, gypsum, fluorite) and validates static potential energy predictions with MACE machine-learning potentials.
+*   **Lattice Optimizer & EOS Fitting**: Performs BFGS/FIRE structural relaxations (positions, cell shapes, volume) and Birch-Murnaghan Equation of State (EOS) fitting to determine bulk modulus properties.
+*   **Edge-to-Cloud IoT Ingestion**: Streamlines asynchronous industrial sensor telemetry from edge OPC UA nodes (`asyncua`) and publishes to MQTT brokers with QoS 1, connection resilience, and LWT.
+*   **Non-blocking Live Monitoring**: Persists telemetry in a SQLite database in Write-Ahead Logging (WAL) mode for concurrency, rendering instant LCA/TEA metrics inside Streamlit using `@st.fragment` sub-second updates.
+
 ---
 
 ## Core Modules
@@ -46,12 +53,12 @@ Integrates multi-criteria decision analysis (TOPSIS/AHP) across five core pillar
 | `pgloop/lca` | Life Cycle Assessment Engine | `LCAEngine`, `ImpactAssessment`, `LifeCycleInventory` |
 | `pgloop/tea` | Techno-Economic Analysis Engine | `TEAEngine`, `CAPEXCalculator`, `OPEXCalculator`, `ExternalCostCalculator` |
 | `pgloop/knowledge` | Knowledge Extraction & Graph | `PhosphogypsumKG`, `RAGAnythingEngine`, `LightRAGEngine`, `embeddings/` |
-| `pgloop/chemicals` | Material Database & ML Properties | `Chemical`, `PropertyPredictor` (MACE machine-learning property predictor) |
+| `pgloop/chemicals` | Material Database & ML Properties | `Chemical`, `PropertyPredictor`, `evaluate_mace_on_mp` (MACE validator), `optimize_structure`/`fit_eos` (BFGS / Birch-Murnaghan lattice optimizer) |
 | `pgloop/equipment` | Unit Operations Modeling | `CSTRReactor`, `LeachingTank`, `MixingTank`, `SeparationFilter` |
 | `pgloop/risk` | Micro & Macro Risk Assessment | `TechnicalRisk`, `OperationalRisk`, `PoliticalRisk`, `PolicyRisk`, `RiskAggregator` |
 | `pgloop/simulation` | Multi-Scale System Simulation | `micro/` (reaction level), `meso/` (plant level), `macro/` (market/grid level) |
 | `pgloop/visualization` | Interactive Dashboard & Reporting | `run_dashboard` (Streamlit dashboard), `ReportExporter` (Excel/HTML reports) |
-| `pgloop/iodata` | Raw Data Ingestion | `PDFParser` (MinerU/PyMuPDF parser), `WebScraper`, `DataStandardizer` |
+| `pgloop/iodata` | Ingestion & Telemetry | `PDFParser` (MinerU/PyMuPDF parser), `WebScraper`, `DataStandardizer`, `EdgeBridge` (OPC UA -> MQTT), `StreamProcessor` (MQTT -> SQLite WAL) |
 
 ---
 
@@ -129,8 +136,8 @@ source venv/bin/activate  # Windows: .\venv\Scripts\activate
 # Install the package in editable mode
 pip install -e .
 
-# Install package with optional extras (AI, Visualization, Knowledge Graph, Dev tools, RAG)
-pip install -e ".[ai,viz,kg,dev,rag]"
+# Install package with optional extras (AI, Visualization, Knowledge Graph, Dev tools, RAG, IoT)
+pip install -e ".[ai,viz,kg,dev,rag,iot]"
 ```
 
 ### HPC Deployment & vLLM Compilation (Wuhan University Supercomputing Center - WHU-SCC)
@@ -150,7 +157,7 @@ echo "Current CUDA_HOME is: $CUDA_HOME"
 pip install numpy ninja wheel setuptools
 
 # 4. Install the package in editable mode with GPU acceleration indices
-pip install -e ".[ai,viz,rag,kg,dev]" --extra-index-url https://download.pytorch.org/whl/cu129
+pip install -e ".[ai,viz,rag,kg,dev,iot]" --extra-index-url https://download.pytorch.org/whl/cu129
 ```
 
 For detailed Slurm job scripts, compute node partition guidelines (`a100x4`, `gpu`, `9a14a`), and NUMA socket isolation (`numactl`) details, refer to the **[HPC Supercomputer Deployment Guide](docs/hpc_slurm_deployment.md)**.
@@ -290,6 +297,91 @@ summary = mcmc_result.summary()
 
 print("Posterior Means:", summary["means"])
 print("95% Credible Intervals:", summary["95_credible"])
+```
+
+### 5. Microscopic Materials Potential Evaluation (MACE & MP-API)
+Fetch real DFT crystal structures from the Materials Project API online database and validate the accuracy of zero-shot energy predictions using MACE universal machine-learning interatomic potentials:
+
+```python
+import os
+from pgloop.chemicals.eval_mace import evaluate_mace_on_mp
+
+# MP IDs representing Phosphogypsum phases and co-existing impurities:
+# 1. CaSO4 (Anhydrite): mp-4406
+# 2. CaSO4.2H2O (Gypsum): mp-23690
+# 3. CaF2 (Fluorite): mp-2741
+default_ids = ["mp-4406", "mp-23690", "mp-2741"]
+
+# Evaluate MACE-MP static potential energy against DFT benchmarks
+# Note: Requires setting the 'MP_API_KEY' environment variable.
+results = evaluate_mace_on_mp(default_ids, model_size="medium", device="cpu")
+
+print("Evaluation Success (MAE < 0.05 eV/atom):", results["success"])
+print(f"Mean Absolute Error: {results['mae']:.6f} eV/atom")
+```
+
+Perform structure geometry/cell relaxations and Equation of State (EOS) fitting:
+
+```python
+import os
+from mp_api.client import MPRester
+from pymatgen.io.ase import AseAtomsAdaptor
+from pgloop.chemicals.mace_interface import get_mace_calculator
+from pgloop.chemicals.lattice_optimizer import optimize_structure, fit_eos
+
+# 1. Fetch structure from Materials Project
+with MPRester(os.environ.get("MP_API_KEY")) as mpr:
+    struct = mpr.summary.get_data_by_id("mp-4406").structure
+atoms = AseAtomsAdaptor.get_atoms(struct)
+
+# 2. Setup MACE machine-learning calculator
+calc = get_mace_calculator(model_size="medium")
+
+# 3. Relax atomic coordinates, cell shapes, and volume simultaneously
+relaxed_atoms, metadata = optimize_structure(
+    atoms=atoms,
+    calculator=calc,
+    fmax=0.05,
+    constant_volume=False
+)
+print(f"Optimized Energy: {metadata['energy_per_atom_ev']:.4f} eV/atom")
+
+# 4. Fit Birch-Murnaghan Equation of State (EOS) to get Bulk Modulus
+eos, eos_results = fit_eos(
+    atoms=relaxed_atoms,
+    calculator=calc,
+    num_points=7,
+    strain_range=0.05
+)
+print(f"Fitted Bulk Modulus: {eos_results['b0_gpa']:.2f} GPa")
+```
+
+### 6. Industrial IoT Stream Ingestion & Live Monitoring
+PhosphogypsumBot supports a production-grade, real-time edge telemetry pipeline. The data flow runs from physical sensors (OPC UA) -> Edge Bridge -> MQTT Broker -> Stream Processor (LCA/TEA validation) -> SQLite WAL Database -> Streamlit Live Dashboard.
+
+#### Step 1: Start the Edge Bridge (OPC UA -> MQTT)
+Subscribe to target industrial OPC UA nodes and forward them to an MQTT broker. Implements QoS 1, connection resilience, and LWT status retention:
+
+```bash
+# Start the Edge Bridge (runs asynchronously)
+# Provide the OPC UA Node IDs to subscribe to as arguments
+python pgloop/iodata/edge_bridge.py "ns=2;i=2" "ns=2;i=3"
+```
+
+#### Step 2: Start the Stream Processor (MQTT -> SQLite WAL)
+Subscribe to the raw MQTT telemetry stream, perform physics conservation rules and boundary validation checks, compute instant LCA (CO2 emission rate) and TEA (OPEX cost rate) KPIs, and persist records into a SQLite database with Write-Ahead Logging (WAL) mode enabled:
+
+```bash
+# Start the Stream Processor
+python pgloop/iodata/stream_processor.py
+```
+
+#### Step 3: Launch the Dashboard
+Run the Streamlit interactive dashboard and navigate to the **Live Monitoring** tab to view real-time metrics, auto-refreshing every second using non-blocking `@st.fragment` renders:
+
+```bash
+# Start the dashboard
+streamlit run pgloop/visualization/dashboard.py
 ```
 
 ---
