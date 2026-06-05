@@ -40,6 +40,14 @@ Rigorous mathematical, physical, and economic modeling underpinning the pathway 
     *   Conventional Life Cycle Costing (CLCC) and Societal Life Cycle Costing (SLCC) with shadow pricing.
     *   CAPEX, OPEX, and revenue breakdowns.
 
+### 5. Physics-Informed VPM Modules
+Detailed explanation of physical kinetics, thermodynamics, and mass transfer governing equations for each chemical pathway:
+*   **[B1 VPM_carbothermic_reduction: Carbothermic Reduction](vpm_b1_carbothermic_reduction.md)**: Thermochemical reduction kinetics of PG to recover sulfuric acid and cement clinker.
+*   **[B2 VPM_hydration: Hydration & Ettringite](vpm_b2_hydration_ettringite.md)**: Curing hydration kinetics, crystallization-pressure, and structural solidification parameters.
+*   **[B3 VPM_ammono_carbonation: Ammonium Carbonation](vpm_b3_ammono_carbonation.md)**: Three-phase Merseburg process kinetics, gas dissolution, and carbon mineral sequestration.
+*   **[B4 VPM_alpha_hemihydrate: α-Hemihydrate Calcination](vpm_b4_alpha_hemihydrate.md)**: Hydrothermal phase crystallization kinetics and crystal aspect ratio modifiers.
+*   **[B5 VPM_ree_extraction: Rare Earth Element Acid Leaching](vpm_b5_ree_extraction.md)**: Shrinking core diffusion model for selective acid leaching of REEs from PG.
+
 ---
 
 ## 🛠️ Prerequisites & Environment Configuration
