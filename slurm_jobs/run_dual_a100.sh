@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=pgbot_a100
 #SBATCH --partition=a100x4
-#SBATCH --account=tangsiqi         # Replace with your supervisor's account name
+#SBATCH --account=tangsiqi      # Replace with your supervisor's account name
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:2              # Allocate 2 A100 GPU cards (40GB each)

@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=pgbot_v100
 #SBATCH --partition=gpu
-#SBATCH --account=tangsiqi        # Replace with your supervisor's account name
+#SBATCH --account=tangsiqi      # Replace with your supervisor's account name
 #SBATCH --nodes=2                 # Default to 2 nodes for dedicated deployment, set to 1 for Single-Node NUMA Isolation, or 4
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:4              # Request all 4 V100 GPU cards on each node (16GB each)

@@ -196,7 +196,9 @@ class LLMExtractor:
         self.llm_timeout = _normalize_timeout(_read_env_float("LLM_TIMEOUT", default=180.0))
         default_trust_env = not _is_local_base_url(self.base_url)
         self.llm_trust_env = _read_env_bool("LLM_TRUST_ENV", default=default_trust_env)
-        self.llm_context_length = _read_env_int("LLM_CONTEXT_LENGTH", default=0)
+        self.llm_context_length = _read_env_int(
+            "LLM_CONTEXT_LENGTH", default=0
+        )
         self.prefer_json_mode = os.getenv("LLM_JSON_MODE", "1").lower() not in {"0", "false", "off"}
         self._client = None
 

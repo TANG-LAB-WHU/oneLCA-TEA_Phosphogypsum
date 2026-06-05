@@ -182,8 +182,6 @@ class LightRAGEngine:
             embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 2560)
             llm_base_url: OpenAI-compatible API base URL (default: LLM_BASE_URL env)
             llm_api_key: API key (default: LLM_API_KEY env or "sk-no-key-required")
-            graph_storage: Override graph storage backend (default: LIGHTRAG_GRAPH_STORAGE env)
-            vector_storage: Override vector storage backend (default: LIGHTRAG_VECTOR_STORAGE env)
         """
         if not LIGHTRAG_AVAILABLE:
             raise ImportError("lightrag not installed. Run: pip install lightrag-hku")
@@ -204,7 +202,9 @@ class LightRAGEngine:
             _read_env_float("EMBEDDING_TIMEOUT", default=30.0)
         )
         # Request-level context length override for llama-server (/v1 compatible path).
-        self.llm_context_length = _read_env_int("LLM_CONTEXT_LENGTH", default=0)
+        self.llm_context_length = _read_env_int(
+            "LLM_CONTEXT_LENGTH", default=0
+        )
         # LightRAG's extract path calls llm_model_func without temperature; OpenAI's
         # default (~1.0) yields noisy delimiter-based records. Use a low default.
         raw_temp = os.getenv("LLM_TEMPERATURE", "0.1").strip()
