@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pg-lca-tea"
-version = "0.4.0"
+version = "0.5.0"
 description = "Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis Framework"
 readme = "README.md"
 license = {text = "MIT"}
@@ -80,6 +80,10 @@ dev = [
 stochastic_dynamics = [
     "tensorboard>=2.15.0",
 ]
+iot = [
+    "asyncua>=1.0.0",
+    "paho-mqtt>=1.6.0,<3.0.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum"
@@ -112,7 +116,7 @@ filterwarnings = [
 ]
 
 [tool.bumpversion]
-current_version = "0.4.0"
+current_version = "0.5.0"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
 serialize = ["{major}.{minor}.{patch}"]
 search = "{current_version}"
