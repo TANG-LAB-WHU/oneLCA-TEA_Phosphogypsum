@@ -6,8 +6,8 @@ import time
 from typing import Callable, List, Optional
 import torch
 
-from pgloop.stochastic_dynamics.pinns.stiff_pinn import StiffBoundaryPINN
-from pgloop.stochastic_dynamics.pinns.acr_sampler import AdaptiveCollocationSampler
+from pgloop.stochastic_dynamics.stiff_pinn import StiffBoundaryPINN
+from pgloop.stochastic_dynamics.acr_sampler import AdaptiveCollocationSampler
 
 
 class StiffPINNTrainer:

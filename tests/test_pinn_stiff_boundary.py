@@ -17,9 +17,9 @@ def test_stiff_pinn_imports():
     if torch is None:
         pytest.skip("PyTorch not installed, skipping PINN tests.")
     
-    from pgloop.stochastic_dynamics.pinns.stiff_pinn import StiffBoundaryPINN
-    from pgloop.stochastic_dynamics.pinns.acr_sampler import AdaptiveCollocationSampler
-    from pgloop.stochastic_dynamics.pinns.pinn_trainer import StiffPINNTrainer
+    from pgloop.stochastic_dynamics.stiff_pinn import StiffBoundaryPINN
+    from pgloop.stochastic_dynamics.acr_sampler import AdaptiveCollocationSampler
+    from pgloop.stochastic_dynamics.pinn_trainer import StiffPINNTrainer
     
     assert StiffBoundaryPINN is not None
     assert AdaptiveCollocationSampler is not None
@@ -31,7 +31,7 @@ def test_stiff_pinn_forward_and_residual():
     if torch is None:
         pytest.skip("PyTorch not installed.")
     
-    from pgloop.stochastic_dynamics.pinns.stiff_pinn import StiffBoundaryPINN
+    from pgloop.stochastic_dynamics.stiff_pinn import StiffBoundaryPINN
     
     torch.set_default_dtype(torch.float64)
     model = StiffBoundaryPINN(hidden=[16, 16], activation="sine")
@@ -61,8 +61,8 @@ def test_adaptive_collocation_sampler():
     if torch is None:
         pytest.skip("PyTorch not installed.")
         
-    from pgloop.stochastic_dynamics.pinns.acr_sampler import AdaptiveCollocationSampler
-    from pgloop.stochastic_dynamics.pinns.stiff_pinn import StiffBoundaryPINN
+    from pgloop.stochastic_dynamics.acr_sampler import AdaptiveCollocationSampler
+    from pgloop.stochastic_dynamics.stiff_pinn import StiffBoundaryPINN
     
     torch.set_default_dtype(torch.float64)
     model = StiffBoundaryPINN(hidden=[16, 16], activation="tanh")
@@ -102,8 +102,8 @@ def test_stiff_pinn_trainer_smoke():
     if torch is None:
         pytest.skip("PyTorch not installed.")
         
-    from pgloop.stochastic_dynamics.pinns.stiff_pinn import StiffBoundaryPINN
-    from pgloop.stochastic_dynamics.pinns.pinn_trainer import StiffPINNTrainer
+    from pgloop.stochastic_dynamics.stiff_pinn import StiffBoundaryPINN
+    from pgloop.stochastic_dynamics.pinn_trainer import StiffPINNTrainer
     from pgloop.stochastic_dynamics.fokker_planck import FokkerPlanck1DSolver
     from pgloop.stochastic_dynamics.eval import compare_with_numerical_solver
     
