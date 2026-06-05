@@ -1,8 +1,8 @@
 """
 Handles text embedding for RAG and similarity analysis.
 
-Calls Ollama's OpenAI-compatible /v1/embeddings endpoint.
-Configure EMBEDDING_MODEL (must match `ollama list`) and EMBEDDING_DIM in .env.
+Calls llama-server's OpenAI-compatible /v1/embeddings endpoint.
+Configure EMBEDDING_MODEL (must match `llama-server list`) and EMBEDDING_DIM in .env.
 """
 
 import os
@@ -15,7 +15,7 @@ load_dotenv()
 
 
 class EmbeddingModel:
-    """Wrapper around Ollama's /v1/embeddings endpoint."""
+    """Wrapper around llama-server's /v1/embeddings endpoint."""
 
     def __init__(
         self,
@@ -24,8 +24,8 @@ class EmbeddingModel:
         api_key: str = None,
     ):
         self.model_name = model_name or os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
-        self.base_url = base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-        self.api_key = api_key or os.getenv("LLM_API_KEY", "ollama")
+        self.base_url = base_url or os.getenv("EMBEDDING_BASE_URL", os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1"))
+        self.api_key = api_key or os.getenv("LLM_API_KEY", "sk-no-key-required")
         self.dim = int(os.getenv("EMBEDDING_DIM", "2560"))
         self._client = None
 
@@ -37,7 +37,7 @@ class EmbeddingModel:
         return self._client
 
     def encode(self, texts: Union[str, List[str]]) -> np.ndarray:
-        """Generate embeddings via Ollama /v1/embeddings."""
+        """Generate embeddings via llama-server /v1/embeddings."""
         single = isinstance(texts, str)
         if single:
             texts = [texts]

@@ -1,14 +1,12 @@
 """
-LightRAG Engine Module
-
 Graph-enhanced Retrieval Augmented Generation engine for phosphogypsum literature.
 Uses LightRAG for entity-relationship extraction and knowledge graph-based retrieval.
 
-All LLM and embedding calls go through Ollama's OpenAI-compatible /v1 endpoint.
+All LLM and embedding calls go through llama-server's OpenAI-compatible /v1 endpoint.
 
 Configuration via environment variables (.env):
 - LLM_BASE_URL: OpenAI-compatible API endpoint (default: http://127.0.0.1:11434/v1)
-- LLM_API_KEY: API key (default: "ollama")
+- LLM_API_KEY: API key (default: "sk-no-key-required")
 - LLM_MODEL: Chat model name (default: qwen3.5:35b)
 - LLM_TEMPERATURE: Sampling temperature for chat (default: 0.1). LightRAG entity
   extraction does not pass temperature; without this, the OpenAI client defaults
@@ -116,9 +114,9 @@ class LightRAGEngine:
     - Knowledge graph-based retrieval
     - Multiple query modes: local, global, hybrid, mix
     - Multimodal support: automatic image transcription (qwen3.5 vision)
-    - All calls via Ollama's OpenAI-compatible /v1 endpoint (chat + embeddings)
+    - All calls via llama-server's OpenAI-compatible /v1 endpoint (chat + embeddings)
 
-    NOTE: EMBEDDING_MODEL must match the exact name shown by `ollama list`,
+    NOTE: EMBEDDING_MODEL must match the exact name shown by `llama-server list`,
     e.g. "qwen3-embedding:4b". The embedding dimension (default 2560) must also
     match the model's actual output dimension; adjust EMBEDDING_DIM if you
     switch to a different embedding model.
@@ -143,7 +141,7 @@ class LightRAGEngine:
                 (default: EMBEDDING_MODEL env or "qwen3-embedding:4b")
             embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 2560)
             llm_base_url: OpenAI-compatible API base URL (default: LLM_BASE_URL env)
-            llm_api_key: API key (default: LLM_API_KEY env or "ollama")
+            llm_api_key: API key (default: LLM_API_KEY env or "sk-no-key-required")
         """
         if not LIGHTRAG_AVAILABLE:
             raise ImportError("lightrag not installed. Run: pip install lightrag-hku")
@@ -153,20 +151,19 @@ class LightRAGEngine:
 
         # LLM configuration
         self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-        self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "ollama"
+        self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "sk-no-key-required"
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
         self.llm_timeout = _normalize_timeout(_read_env_float("LLM_TIMEOUT", default=180.0))
 
-        # Embedding configuration — model name must match `ollama list`
+        # Embedding configuration — model name must match `llama-server list`
         self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
         self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "2560"))
         self.embedding_timeout = _normalize_timeout(
             _read_env_float("EMBEDDING_TIMEOUT", default=30.0)
         )
-        # Request-level context length override for Ollama (/v1 compatible path).
-        # Prefer explicit LLM_CONTEXT_LENGTH and fallback to OLLAMA_CONTEXT_LENGTH.
+        # Request-level context length override for llama-server (/v1 compatible path).
         self.llm_context_length = _read_env_int(
-            "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
+            "LLM_CONTEXT_LENGTH", default=0
         )
         # LightRAG's extract path calls llm_model_func without temperature; OpenAI's
         # default (~1.0) yields noisy delimiter-based records. Use a low default.
@@ -175,7 +172,7 @@ class LightRAGEngine:
             self.llm_temperature = float(raw_temp)
         except ValueError:
             self.llm_temperature = 0.1
-        # For localhost Ollama, default to not inheriting system HTTP proxy env vars.
+        # For localhost llama-server, default to not inheriting system HTTP proxy env vars.
         default_trust_env = not _is_local_base_url(self.llm_base_url)
         self.llm_trust_env = _read_env_bool("LLM_TRUST_ENV", default=default_trust_env)
 
@@ -211,7 +208,7 @@ class LightRAGEngine:
     def _build_extra_body(
         self, existing: Optional[Dict[str, Any]] = None
     ) -> Optional[Dict[str, Any]]:
-        """Merge request extra_body with Ollama context hints when configured."""
+        """Merge request extra_body with llama-server context hints when configured."""
         extra_body: Dict[str, Any] = dict(existing or {})
         if self.llm_context_length > 0:
             options = dict(extra_body.get("options") or {})
@@ -232,12 +229,12 @@ class LightRAGEngine:
             self._loop.close()
         self._loop = None
 
-    def _create_openai_client(self, timeout: Optional[float]):
+    def _create_openai_client(self, timeout: Optional[float], base_url: Optional[str] = None):
         """Create OpenAI-compatible client with aligned timeout/proxy behavior."""
         from openai import DefaultHttpxClient, OpenAI
 
         client_kwargs: Dict[str, Any] = {
-            "base_url": self.llm_base_url,
+            "base_url": base_url or self.llm_base_url,
             "api_key": self.llm_api_key,
         }
         http_client_kwargs: Dict[str, Any] = {"trust_env": self.llm_trust_env}
@@ -270,7 +267,7 @@ class LightRAGEngine:
         return rag
 
     def _create_llm_func(self):
-        """Create LLM function via Ollama's /v1/chat/completions."""
+        """Create LLM function via llama-server's /v1/chat/completions."""
         client = self._create_openai_client(timeout=self.llm_timeout)
         passthrough_keys = {
             "temperature",
@@ -311,10 +308,11 @@ class LightRAGEngine:
         return llm_func
 
     def _create_embedding_func(self) -> Any:
-        """Create embedding function via Ollama's /v1/embeddings."""
+        """Create embedding function via llama-server's /v1/embeddings."""
         import numpy as np
 
-        client = self._create_openai_client(timeout=self.embedding_timeout)
+        emb_base = os.getenv("EMBEDDING_BASE_URL", self.llm_base_url)
+        client = self._create_openai_client(timeout=self.embedding_timeout, base_url=emb_base)
 
         def _embed_batch(batch_texts: list[str]) -> np.ndarray:
             response = client.embeddings.create(model=self.embedding_model, input=batch_texts)
@@ -522,7 +520,7 @@ class LightRAGEngine:
 
 
 def main():
-    print("LightRAG Engine (Ollama-only)")
+    print("LightRAG Engine (llama-server-only)")
     print(f"  LightRAG available: {LIGHTRAG_AVAILABLE}")
     print("\nConfiguration from .env:")
     print(f"  LLM_BASE_URL:     {os.getenv('LLM_BASE_URL', '(not set)')}")

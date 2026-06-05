@@ -1,8 +1,6 @@
 """
-LLM Extractor Module
-
 Uses Large Language Models to extract structured LCA/TEA data from text.
-Calls Ollama's OpenAI-compatible /v1/chat/completions endpoint.
+Calls llama-server's OpenAI-compatible /v1/chat/completions endpoint.
 """
 
 import json
@@ -174,7 +172,7 @@ class LLMExtractor:
     """
     Extracts structured data from text using LLMs.
 
-    Uses an OpenAI-compatible Chat Completions API (Ollama, OpenAI, vLLM, etc.).
+    Uses an OpenAI-compatible Chat Completions API (llama-server, OpenAI, vLLM, etc.).
     Configure via LLM_BASE_URL, LLM_API_KEY, LLM_MODEL or constructor arguments.
     """
 
@@ -189,17 +187,17 @@ class LLMExtractor:
 
         Args:
             model: Model name (default: LLM_MODEL env or qwen3.5:35b)
-            api_key: API key (default: LLM_API_KEY env or "ollama")
+            api_key: API key (default: LLM_API_KEY env or "sk-no-key-required")
             base_url: API base URL (default: LLM_BASE_URL env or http://127.0.0.1:11434/v1)
         """
         self.model = model or os.getenv("LLM_MODEL", _DEFAULT_MODEL)
         self.base_url = base_url or os.getenv("LLM_BASE_URL", _DEFAULT_BASE_URL)
-        self.api_key = api_key or os.getenv("LLM_API_KEY", "ollama")
+        self.api_key = api_key or os.getenv("LLM_API_KEY", "sk-no-key-required")
         self.llm_timeout = _normalize_timeout(_read_env_float("LLM_TIMEOUT", default=180.0))
         default_trust_env = not _is_local_base_url(self.base_url)
         self.llm_trust_env = _read_env_bool("LLM_TRUST_ENV", default=default_trust_env)
         self.llm_context_length = _read_env_int(
-            "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
+            "LLM_CONTEXT_LENGTH", default=0
         )
         self.prefer_json_mode = os.getenv("LLM_JSON_MODE", "1").lower() not in {"0", "false", "off"}
         self._client = None
@@ -225,7 +223,7 @@ class LLMExtractor:
     def _build_extra_body(
         self, existing: Optional[Dict[str, Any]] = None
     ) -> Optional[Dict[str, Any]]:
-        """Attach optional Ollama context hints without discarding caller data."""
+        """Attach optional llama-server context hints without discarding caller data."""
         extra_body: Dict[str, Any] = dict(existing or {})
         if self.llm_context_length > 0:
             options = dict(extra_body.get("options") or {})

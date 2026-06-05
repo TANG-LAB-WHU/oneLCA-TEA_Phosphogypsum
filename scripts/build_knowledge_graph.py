@@ -4,7 +4,7 @@ This script processes PDF papers and builds a knowledge graph for PG-LCA-TEA.
 Workflow:
 1. Parse PDFs from data/raw/papers/unparsed/ → data/raw/papers/parsed/
 2. Build LightRAG index (Graph + Vector) in data/processed/lightrag_db/
-3. Extract structured data using OpenAI-compatible LLM (e.g. Ollama)
+3. Extract structured data using OpenAI-compatible LLM (e.g. llama-server)
 4. Build parameter ranges from extracted JSON in data/processed/parameter_ranges/
 5. Construct knowledge graph in data/processed/knowledge_graph/
 

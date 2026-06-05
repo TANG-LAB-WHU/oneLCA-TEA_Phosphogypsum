@@ -1,11 +1,9 @@
 """
-RAGAnything Engine Module
-
 All-in-one multimodal RAG engine for phosphogypsum literature processing.
 Provides unified document parsing, multimodal understanding, and knowledge graph indexing.
 
 Built on top of LightRAG with integrated MinerU parsing pipeline.
-All LLM and embedding calls go through Ollama's OpenAI-compatible /v1 endpoint.
+All LLM and embedding calls go through llama-server's OpenAI-compatible /v1 endpoint.
 """
 
 import asyncio
@@ -105,12 +103,12 @@ class RAGAnythingEngine:
     - Multimodal knowledge graph with cross-modal relations
     - Multimodal query support
 
-    All calls via Ollama's OpenAI-compatible /v1 endpoint (chat + embeddings).
+    All calls via llama-server's OpenAI-compatible /v1 endpoint (chat + embeddings).
 
     LLM_TEMPERATURE (default 0.1) is applied when callers omit temperature, matching
     LightRAGEngine so delimiter-structured LightRAG/RAGAnything extractions stay stable.
 
-    NOTE: EMBEDDING_MODEL must match `ollama list` output (e.g. "qwen3-embedding:4b").
+    NOTE: EMBEDDING_MODEL must match `llama-server list` output (e.g. "qwen3-embedding:4b").
     Adjust EMBEDDING_DIM if your model outputs a different vector size.
     """
 
@@ -135,7 +133,7 @@ class RAGAnythingEngine:
                 (default: EMBEDDING_MODEL env or "qwen3-embedding:4b")
             embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 2560)
             llm_base_url: API base URL (default: LLM_BASE_URL env)
-            llm_api_key: API key (default: LLM_API_KEY env or "ollama")
+            llm_api_key: API key (default: LLM_API_KEY env or "sk-no-key-required")
             parser: Document parser ("mineru" or "docling")
             parse_method: Parse method ("auto", "ocr", "txt")
         """
@@ -149,18 +147,18 @@ class RAGAnythingEngine:
 
         # LLM configuration
         self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-        self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "ollama"
+        self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "sk-no-key-required"
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
         self.llm_timeout = _normalize_timeout(_read_env_float("LLM_TIMEOUT", default=180.0))
 
-        # Embedding configuration — model name must match `ollama list`
+        # Embedding configuration — model name must match `llama-server list`
         self.embedding_model = embedding_model or os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
         self.embedding_dim = embedding_dim or int(os.getenv("EMBEDDING_DIM", "2560"))
         self.embedding_timeout = _normalize_timeout(
             _read_env_float("EMBEDDING_TIMEOUT", default=30.0)
         )
         self.llm_context_length = _read_env_int(
-            "LLM_CONTEXT_LENGTH", "OLLAMA_CONTEXT_LENGTH", default=0
+            "LLM_CONTEXT_LENGTH", default=0
         )
         raw_temp = os.getenv("LLM_TEMPERATURE", "0.1").strip()
         try:
@@ -205,7 +203,7 @@ class RAGAnythingEngine:
     def _build_extra_body(
         self, existing: Optional[Dict[str, Any]] = None
     ) -> Optional[Dict[str, Any]]:
-        """Attach Ollama context hints without discarding caller-provided extra_body."""
+        """Attach llama-server context hints without discarding caller-provided extra_body."""
         extra_body: Dict[str, Any] = dict(existing or {})
         if self.llm_context_length > 0:
             options = dict(extra_body.get("options") or {})
@@ -321,7 +319,7 @@ class RAGAnythingEngine:
         return vision_model_func
 
     def _create_embedding_func(self):
-        """Create embedding function via Ollama's /v1/embeddings."""
+        """Create embedding function via llama-server's /v1/embeddings."""
 
         async def _embed_batch(batch_texts: list[str]) -> np.ndarray:
             client_configs = None
@@ -523,7 +521,7 @@ class RAGAnythingEngine:
 
 
 def main():
-    print("RAGAnything Engine (Ollama-only)")
+    print("RAGAnything Engine (llama-server-only)")
     print("-" * 40)
     print(f"RAGAnything available: {RAGANYTHING_AVAILABLE}")
 

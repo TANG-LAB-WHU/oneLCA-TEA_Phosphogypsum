@@ -12,7 +12,7 @@ Translator backend priority:
 3) Default backend: `googletrans`
 
 Usage examples:
-- Use OpenAI-compatible LLM backend (e.g. Ollama):
+- Use OpenAI-compatible LLM backend (e.g. llama-server):
   python translate_excel_to_english.py --translator llm
 
 - Use googletrans backend:
@@ -49,7 +49,7 @@ load_dotenv()
 # Default folder containing the Excel files (script directory)
 DEFAULT_FOLDER_PATH = os.path.dirname(os.path.abspath(__file__))
 
-# OpenAI-compatible API (e.g. Ollama /v1)
+# OpenAI-compatible API (e.g. llama-server /v1)
 LLM_BASE_URL = os.getenv("LLM_BASE_URL")
 LLM_API_KEY = os.getenv("LLM_API_KEY")
 LLM_MODEL = os.getenv("LLM_MODEL", "qwen3.5:35b")
@@ -102,7 +102,7 @@ async def _translate_text_llm_request(session, text, src_lang="fr", dest_lang="e
     base = (LLM_BASE_URL or "http://127.0.0.1:11434/v1").rstrip("/")
     url = f"{base}/chat/completions"
     headers = {
-        "Authorization": f"Bearer {LLM_API_KEY or 'ollama'}",
+        "Authorization": f"Bearer {LLM_API_KEY or 'sk-no-key-required'}",
         "Content-Type": "application/json",
     }
     payload = {
