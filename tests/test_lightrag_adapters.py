@@ -29,7 +29,10 @@ def test_lightrag_engine_init(mock_lightrag_cls):
     )
 
     # Trigger RAG instance creation
-    _ = engine._get_rag_instance()
+    with patch.object(engine, "_create_openai_client") as mock_client_factory:
+        mock_client = MagicMock()
+        mock_client_factory.return_value = mock_client
+        _ = engine._get_rag_instance()
 
     # Assert correct parameters were passed to LightRAG
     mock_lightrag_cls.assert_called_once()

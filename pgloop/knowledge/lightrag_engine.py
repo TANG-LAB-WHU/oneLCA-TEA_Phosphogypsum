@@ -33,7 +33,18 @@ try:
 except ImportError:
     LIGHTRAG_AVAILABLE = False
     LightRAG = None
-    QueryParam = None
+
+    class QueryParam:
+        def __init__(self, **kwargs):
+            for k, v in kwargs.items():
+                setattr(self, k, v)
+
+    class EmbeddingFunc:
+        def __init__(self, embedding_dim, max_token_size, func):
+            self.embedding_dim = embedding_dim
+            self.max_token_size = max_token_size
+            self.func = func
+
 
 try:
     from sentence_transformers import CrossEncoder
@@ -186,7 +197,9 @@ class LightRAGEngine:
         if not LIGHTRAG_AVAILABLE:
             raise ImportError("lightrag not installed. Run: pip install lightrag-hku")
 
-        self.working_dir = working_dir or Path("./data/processed/lightrag_db")
+        self.working_dir = (
+            Path(working_dir) if working_dir else Path("./data/processed/lightrag_db")
+        )
         self.working_dir.mkdir(parents=True, exist_ok=True)
 
         # LLM configuration

@@ -36,8 +36,10 @@ def test_retrieval_latency_benchmark(mock_reranker_cls, mock_lightrag_cls, capsy
     async def fake_aquery(query, param=None):
         return "Context chunk A about phosphogypsum.\n\nContext chunk B about CaSO4."
 
+    from unittest.mock import AsyncMock
+
     mock_rag.aquery = fake_aquery
-    engine._get_initialized_rag = MagicMock(return_value=fake_aquery)
+    engine._get_initialized_rag = AsyncMock(return_value=mock_rag)
 
     # Mock Re-ranker to return input chunks
     mock_reranker = MagicMock()
