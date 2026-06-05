@@ -18,6 +18,9 @@ from pgloop.chemicals.registry import (
     list_chemicals,
 )
 from pgloop.chemicals.solvents import SOLVENTS
+from pgloop.chemicals.mace_interface import get_mace_calculator, is_mace_available
+from pgloop.chemicals.lattice_optimizer import optimize_structure, fit_eos
+from pgloop.chemicals.eval_mace import fetch_mp_data, evaluate_mace_on_mp
 
 __all__ = [
     "Chemical",
@@ -30,4 +33,10 @@ __all__ = [
     "ACIDS",
     "BASES",
     "SOLVENTS",
+    "get_mace_calculator",
+    "is_mace_available",
+    "optimize_structure",
+    "fit_eos",
+    "fetch_mp_data",
+    "evaluate_mace_on_mp",
 ]
