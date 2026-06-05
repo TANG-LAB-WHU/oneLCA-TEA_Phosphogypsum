@@ -2,11 +2,12 @@
 
 This directory contains scripts and notebooks that demonstrate how to use the PG-LCA-TEA framework.
 
-## Planned Contents
+## Core Example Scripts
 
 - **`basic_run.py`**: A simple script showing a single pathway assessment.
 - **`custom_pathway_tutorial.py`**: An example of how to define and run a new treatment technology.
 - **`sensitivity_demo.py`**: A demonstration of the uncertainty and sensitivity analysis tools.
+- **`e2e_smoke_test.py`**: End-to-end smoke test validating both RAG engines.
 
 ## Notebooks
 
