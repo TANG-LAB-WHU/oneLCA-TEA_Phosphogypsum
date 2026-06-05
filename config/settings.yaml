@@ -115,11 +115,11 @@ data_sources:
       # No API key required
 
 ai:
-  llm_provider: "ollama"
+  llm_provider: "sk-no-key-required"
   llm_model: "qwen3.5:35b"
   embedding_model: "qwen3-embedding:4b"
   embedding_dim: 2560
-  ollama:
+  llama-server:
     base_url: "http://localhost:11434"
   knowledge_graph:
     storage_path: "./data/processed/kg"

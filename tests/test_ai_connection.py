@@ -6,14 +6,14 @@ from dotenv import load_dotenv
 
 
 def test_llm_connection():
-    """Test Ollama chat completions via /v1/chat/completions."""
+    """Test llama-server chat completions via /v1/chat/completions."""
     load_dotenv()
 
     base_url = os.getenv("LLM_BASE_URL")
     if not base_url:
         pytest.skip("LLM_BASE_URL not set")
 
-    api_key = os.getenv("LLM_API_KEY", "ollama")
+    api_key = os.getenv("LLM_API_KEY", "sk-no-key-required")
     model = os.getenv("LLM_MODEL", "qwen3.5:35b")
 
     from openai import OpenAI
@@ -28,14 +28,14 @@ def test_llm_connection():
 
 
 def test_embedding_connection():
-    """Test Ollama embeddings via /v1/embeddings."""
+    """Test llama-server embeddings via /v1/embeddings."""
     load_dotenv()
 
     base_url = os.getenv("LLM_BASE_URL")
     if not base_url:
         pytest.skip("LLM_BASE_URL not set")
 
-    api_key = os.getenv("LLM_API_KEY", "ollama")
+    api_key = os.getenv("LLM_API_KEY", "sk-no-key-required")
     model = os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
     expected_dim = int(os.getenv("EMBEDDING_DIM", "2560"))
 
@@ -56,17 +56,17 @@ def test_config_loading():
         config = yaml.safe_load(f)
 
     assert "ai" in config
-    assert config["ai"]["llm_provider"] == "ollama"
-    assert "ollama" in config["ai"]
+    assert config["ai"]["llm_provider"] == "sk-no-key-required"
+    assert "sk-no-key-required" in config["ai"]
     assert "gemini" not in config["ai"]
 
 
 def main():
     print("Testing configuration loading...")
     test_config_loading()
-    print("Testing Ollama LLM connection...")
+    print("Testing llama-server LLM connection...")
     test_llm_connection()
-    print("Testing Ollama embedding connection...")
+    print("Testing llama-server embedding connection...")
     test_embedding_connection()
     print("\nAll tests passed!")
 

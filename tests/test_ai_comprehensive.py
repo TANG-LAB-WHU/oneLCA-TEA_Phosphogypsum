@@ -43,7 +43,7 @@ def temp_test_dir():
 
 
 def test_embeddings():
-    """Test embedding generation via Ollama and similarity."""
+    """Test embedding generation via llama-server and similarity."""
     if not os.getenv("LLM_BASE_URL"):
         pytest.skip("LLM_BASE_URL not set (optional integration test)")
 

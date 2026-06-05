@@ -65,7 +65,7 @@ Integrates multi-criteria decision analysis (TOPSIS/AHP) across five core pillar
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                      1. MULTIMODAL RAG DATA FOUNDATION                      │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│  Unstructured PDFs (MinerU) ────▶ Vector Database (Ollama Embeddings)       │
+│  Unstructured PDFs (MinerU) ────▶ Vector Database (Local Embeddings)       │
 │  Knowledge Graph (Neo4j) ◄──────▶ LLM Information Extractor                 │
 └─────────────────────────────────────┬───────────────────────────────────────┘
                                       │ (Literature facts & priors)

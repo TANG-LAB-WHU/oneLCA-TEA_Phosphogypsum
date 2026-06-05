@@ -17,8 +17,7 @@ Run from any working directory:
 
 Memory safety notes:
 - Engines run sequentially, not in parallel.
-- Python object cleanup alone does not unload Ollama model memory.
-- To reduce GPU memory pressure, this script can call `ollama stop` between stages.
+- Python object cleanup via `gc.collect()` is triggered between stages.
 """
 
 import argparse
@@ -26,7 +25,6 @@ import gc
 import json
 import os
 import shutil
-import subprocess
 import sys
 from functools import partial
 from pathlib import Path
@@ -66,76 +64,13 @@ def _clean_dir(path: Path):
         shutil.rmtree(path)
 
 
-def _models_to_unload() -> list[str]:
-    """Collect model names from env for best-effort unload."""
-    models = []
-    for model_name in [os.getenv("LLM_MODEL"), os.getenv("EMBEDDING_MODEL")]:
-        if model_name and model_name not in models:
-            models.append(model_name)
-    return models
-
-
-def _run_ollama_command(args: list[str]) -> subprocess.CompletedProcess | None:
-    """Run an ollama CLI command, returning None if ollama is unavailable."""
-    try:
-        return subprocess.run(
-            ["ollama", *args],
-            check=False,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-        )
-    except FileNotFoundError:
-        return None
-
-
-def _stop_ollama_models(models: list[str]):
-    """
-    Best-effort model unload to reduce VRAM pressure.
-
-    NOTE:
-    - `del` in Python only drops local references.
-    - Actual model memory is controlled by the Ollama server process.
-    """
-    if not models:
-        return
-    for model in models:
-        result = _run_ollama_command(["stop", model])
-        if result is None:
-            print("[WARN] `ollama` CLI not found. Cannot force-unload models.")
-            return
-        if result.returncode == 0:
-            print(f"[INFO] Stopped Ollama model: {model}")
-        else:
-            # Non-zero is not fatal here (e.g., model already not running).
-            err = (result.stderr or "").strip()
-            if err:
-                print(f"[WARN] Could not stop model `{model}`: {err}")
-
-
-def _print_ollama_ps():
-    """Print current loaded Ollama models for visibility."""
-    result = _run_ollama_command(["ps"])
-    if result is None:
-        return
-    output = (result.stdout or "").strip()
-    if output:
-        print("\nCurrent Ollama loaded models:")
-        print(output)
-
-
-def _memory_barrier(unload_ollama_models: bool):
+def _memory_barrier():
     """
     Apply lightweight memory barrier between engine stages.
 
     1) Trigger Python garbage collection.
-    2) Optionally ask Ollama to unload models to free VRAM.
     """
     gc.collect()
-    if unload_ollama_models:
-        _stop_ollama_models(_models_to_unload())
-        _print_ollama_ps()
 
 
 def _looks_like_oom(exc: Exception) -> bool:
@@ -255,11 +190,6 @@ def main():
         action="store_true",
         help="Skip RAGAnything stage",
     )
-    parser.add_argument(
-        "--no-unload",
-        action="store_true",
-        help="Do not call `ollama stop` between stages",
-    )
     args = parser.parse_args()
 
     unparsed_dir = PROJECT_ROOT / "data" / "raw" / "papers" / "unparsed"
@@ -269,12 +199,11 @@ def main():
 
     print(f"Found {len(pdfs)} PDFs in {unparsed_dir}")
     limit = min(args.limit, len(pdfs))
-    unload_between_stages = not args.no_unload
 
     # Engines are executed sequentially in one process.
-    # Memory protection: clear Python refs + optional `ollama stop` between stages.
+    # Memory protection: clear Python refs between stages.
     run_lightrag_smoke(limit)
-    _memory_barrier(unload_between_stages)
+    _memory_barrier()
 
     if not args.skip_raganything:
         try:
@@ -286,7 +215,7 @@ def main():
             else:
                 raise
         finally:
-            _memory_barrier(unload_between_stages)
+            _memory_barrier()
 
     print("\nE2E smoke test completed.")
 
