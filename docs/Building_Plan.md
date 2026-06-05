@@ -4,6 +4,8 @@
 > [!NOTE]
 > **Project Vision Statement**
 > To transform phosphogypsum (PG) utilization from empirical trial-and-error chemistry into a highly predictable, multi-objective, and physics-constrained engineering science. By combining **Physics-Informed Artificial Intelligence (PI-AI)** with **Bayesian Uncertainty Quantification (UQ)**, PhosphogypsumBot serves as an intelligent decision-support system that balances **Technology, Economy, Policy, Environment, and Society (TEPES)** to discover, evaluate, and scale revolutionary PG valorization pathways.
+>
+> **Implementation Status (v0.4.0)**: The core modules of the platform have been successfully built, integrated, and validated on the **Wuhan University Supercomputing Center (WHU-SCC)**.
 
 ---
 
@@ -12,7 +14,7 @@
 Phosphogypsum (PG) is an industrial solid waste generated during the production of phosphoric acid via the wet-process treatment of phosphate rock with sulfuric acid:
 $$\text{Ca}_5(\text{PO}_4)_3\text{F} + 5\text{H}_2\text{SO}_4 + 10\text{H}_2\text{O} \rightarrow 5(\text{CaSO}_4 \cdot 2\text{H}_2\text{O}) + 3\text{H}_3\text{PO}_4 + \text{HF}$$
 
-For every ton of phosphoric acid ($P_2O_5$) produced, approximately **4.5 to 5.5 tons of PG** are generated. These stockpiles pose severe environmental risks, including leaching of residual acids, heavy metals, and naturally occurring radioactive materials (NORM, primarily Ra-226).
+For every ton of phosphoric acid ($P_2\text{O}_5$) produced, approximately **4.5 to 5.5 tons of PG** are generated. These stockpiles pose severe environmental risks, including leaching of residual acids, heavy metals, and naturally occurring radioactive materials (NORM, primarily Ra-226).
 
 To address this, our **Sustainable Resource Cycling Engineering Science** framework utilizes a closed-loop, multi-level systems approach driven by **PI-AI** to optimize five core sustainability dimensions:
 
@@ -23,15 +25,15 @@ graph TD
     end
 
     subgraph PI_AI_Engine ["PI-AI Core Engine"]
-        PINN["PINNs (Physics Constraints)"]
-        MCMC["MCMC (Uncertainty Quantification)"]
+        PINN["PINNs / Fokker-Planck solvers"]
+        MCMC["MCMC Chain Samplers (UQ)"]
         Embed["Multimodal Embedding (Cross-scale)"]
     end
 
     subgraph MLS ["Multi-Level System Simulation"]
-        Micro["Micro: Reaction Chemistry"]
-        Meso["Meso: Process Engineering"]
-        Macro["Macro: LCA-TEA"]
+        Micro["Micro: Chemical Kinetics"]
+        Meso["Meso: Flowsheet Process Engine"]
+        Macro["Macro: LCA-TEA Engine"]
     end
 
     subgraph TEPES ["Sustainability Dimensions"]
@@ -45,9 +47,10 @@ graph TD
         Tech --> Econ --> Soc --> Env --> Pol --> Tech
     end
 
-    subgraph Decision ["Adaptive Steering & Compensation"]
-        ROV["Real Options Valuation (Compensation)"]
-        AL["Active Learning (Experiment Design)"]
+    subgraph Decision ["Adaptive Steering & Optimization"]
+        BCM["Benefit Compensation Model"]
+        RDO["Reverse Design Optimizer"]
+        MCDA["Pathway Ranker (TOPSIS/AHP)"]
     end
 
     Resource_Input --> MLS
@@ -74,59 +77,95 @@ PhosphogypsumBot is designed with a **strictly modular plug-in architecture**. T
 ### 2.1 Module Registry & Interface Contracts
 Every component is a "Module" that registers with a central `ModuleRegistry`. Modules communicate via rigidly defined I/O schemas. For example, any chemical process is encapsulated as a `ValorizationPathwayModule (VPM)`.
 
+The base classes are implemented in [pgloop/pathways/vpms/base_vpm.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/vpms/base_vpm.py):
+
 ```python
+from abc import ABC, abstractmethod
+from typing import Dict, Any, List
+from pydantic import BaseModel
+
+class VPMSchema(BaseModel):
+    """Base schema for inputs and outputs of a VPM."""
+    pass
+
+class ValidationReport(BaseModel):
+    """Report generated after validating the VPM against benchmarks."""
+    is_valid: bool
+    metrics: Dict[str, float]
+    details: str
+
 class ValorizationPathwayModule(ABC):
-    """Abstract interface for all PG treatment pathway PINN models."""
+    """
+    Abstract interface for all Phosphogypsum treatment pathway PINN models.
+    Enforces a strict modular contract for I/O and physics.
+    """
     
     @property
-    def module_id(self) -> str: ...
+    @abstractmethod
+    def module_id(self) -> str:
+        """Unique identifier for the module (e.g., 'VPM_carbothermic_reduction')."""
+        pass
     
     @property  
-    def governing_equations(self) -> list[PDE]: ...
+    @abstractmethod
+    def governing_equations(self) -> List[str]:
+        """Returns the list of governing PDEs/ODEs as string representations."""
+        pass
     
     @property
-    def input_schema(self) -> dict: ...
-        # Must include: feedstock_composition, U_heat, U_work, temperature
+    @abstractmethod
+    def input_schema(self) -> type[VPMSchema]:
+        """Pydantic model defining the expected inputs (Heat, Work, Feedstock)."""
+        pass
     
     @property
-    def output_schema(self) -> dict: ...
-        # Must include: conversion_rate, product_composition, NORM_partitioning
+    @abstractmethod
+    def output_schema(self) -> type[VPMSchema]:
+        """Pydantic model defining the outputs (Conversion, Purity, NORM partition)."""
+        pass
     
     @abstractmethod
-    def build_pinn_loss(self, collocation_pts) -> jnp.ndarray: ...
+    def build_pinn_loss(self, collocation_pts: Any) -> Any:
+        """Constructs the physics-informed loss function using PyTorch/JAX."""
+        pass
     
     @abstractmethod
-    def validate(self, benchmark_data) -> ValidationReport: ...
+    def validate(self, benchmark_data: Any) -> ValidationReport:
+        """Validates the model against benchmark data and returns a report."""
+        pass
 ```
 
 ### 2.2 System Integration Map
 The system is divided into five logical module groups:
-*   **Group A (Data Foundation):** Ingests and structures raw data.
-*   **Group B (PI-AI Core):** Executes physics-constrained ML and Bayesian inference.
-*   **Group C (Simulation Engine):** Scales predictions from molecular to macroeconomic levels.
-*   **Group D (Decision Engine):** Optimizes inputs and calculates policy compensations.
-*   **Group E (Platform):** Provides the user interface and orchestration.
+*   **Group A (Data Foundation):** Ingests and structures raw text, standards, and literature data into vector-graph indices.
+*   **Group B (PI-AI Core):** Executes physics-constrained ML, interatomic property modeling, and Bayesian MCMC inference.
+*   **Group C (Simulation Engine):** Scales predictions from micro unit operations to macroscopic LCA-TEA processes.
+*   **Group D (Decision Engine):** Ranks pathways, optimizes incentive compensations, and executes reverse Bayesian design.
+*   **Group E (Platform):** Orchestrates agent tasks, triggers interactive visualizations, and hosts the LLM chat interface.
 
 ---
 
 ## 3. Data Foundation Layer (Module Group A)
 
-This layer transforms raw, heterogeneous industrial data into structured, physics-ready inputs.
+This layer transforms raw, heterogeneous industrial data, scientific papers, and policy manuals into structured, physics-ready inputs.
 
 ### Module A1: Data Ingestion & ETL Pipeline
-*   **Function:** Handles real-time sensor streams, historic batch logs, and environmental monitoring data.
-*   **Tech Stack:** Apache Kafka (streaming), dbt (transformation), DVC (Data Version Control for reproducible Bayesian priors).
+*   **Implementation Location**: [pgloop/iodata/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/)
+*   **Function:** Handles document extraction and standardization.
+    *   **PDF Ingestion:** Uses a PyMuPDF and MinerU parsing engine ([pdf_parser.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/pdf_parser.py)) for parsing complex tables, layouts, and OCR text in scientific PDFs.
+    *   **Web Scraper:** Collects regional electricity grid data, chemical prices, and environmental standards ([web_scraper.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/web_scraper.py)).
+    *   **Data Standardizer:** Normalizes inputs into uniform industrial metrics ([data_standardizer.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/data_standardizer.py)).
 
-### Module A2: Knowledge Graph Engine
-*   **Function:** Structures the ontological relationships between chemicals, processes, and policies.
-*   **Ontology Schema:**
-    *   **Entities:** `PG_Source`, `Impurity` (P2O5, F, Ra-226), `Product` (CaCO3, α-HH), `Process_Unit`, `Regulation`.
-    *   **Relations:** `CONTAINS`, `TRANSFORMS_TO`, `CATALYZES`, `RESTRICTED_BY`.
-*   **Tech Stack:** Neo4j graph database.
+### Module A2: Knowledge Graph & RAG Engine
+*   **Implementation Location**: [pgloop/knowledge/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/)
+*   **Function:** Builds and queries the system's ontological domain knowledge base.
+    *   **Extraction:** Uses an LLM information extractor ([llm_extractor.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/llm_extractor.py)) to map entities (`PG_Source`, `Impurity`, `Product`, `Process_Unit`, `Regulation`) and relations (`CONTAINS`, `TRANSFORMS_TO`, `CATALYZES`, `RESTRICTED_BY`).
+    *   **Validation & Constraints:** Automatically evaluates extracted parameters against physical boundaries ([parameter_ranges.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/parameter_ranges.py)) and solves missing values under thermodynamic limits ([gap_filler.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/gap_filler.py)).
+    *   **Storage & Query:** Interfaces with Neo4j ([graph/neo4j_adapter.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/graph/neo4j_adapter.py)) and local vector-graph models (**LightRAG** / **RAGAnything** in [lightrag_engine.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py)).
 
-### Module A3: NORM Radioactivity Tracking
-*   **Function:** A dedicated sub-module calculating the mass balance and partitioning of Ra-226, U-238, and Th-232 across any chosen VPM.
-*   **Output:** Feeds directly into the Environment (Leaching Pollution Index) dimension of the TEPES evaluation.
+### Module A3: Materials Database & NORM Radioactivity Tracking
+*   **Implementation Location**: [pgloop/chemicals/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/chemicals/)
+*   **Function:** Integrates material property databases and incorporates a **MACE machine-learning interatomic potential** predictor to estimate physical properties (e.g., lattice structures, phase transition boundaries). Tracks mass balance and partitioning of heavy metals and radioactive isotopes (Ra-226, U-238, Th-232) across VPM processes.
 
 ---
 
@@ -135,107 +174,125 @@ This layer transforms raw, heterogeneous industrial data into structured, physic
 The intelligence core relies on the `ValorizationPathwayModule (VPM)` interface, allowing seamless addition of new PG treatment technologies.
 
 ### 4.1-4.5 VPM Instances (The Chemical Pathways)
+Located in [pgloop/pathways/vpms/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/vpms/):
 
-| Module ID | VPM B1: Carbothermic Reduction | VPM B2: Hydration & Ettringite | VPM B3: Ammono-Carbonation (Merseburg) | VPM B4: α-Hemihydrate Calcination | VPM B5: REE Selective Extraction |
+| Module ID | B1: Carbothermic Reduction | B2: Hydration & Ettringite | B3: Ammono-Carbonation (Merseburg) | B4: α-Hemihydrate Calcination | B5: REE Selective Extraction |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Pathway** | Thermal decomposition to SO₂ + CaO | Road base stabilization | Conversion to CaCO₃ + (NH₄)₂SO₄ | High-value plaster/mold production | Strategic La/Ce/Nd recovery |
+| **Pathway** | Thermal decomposition to SO₂ + CaO (Sulfuric Acid & Cement Co-production) | Road base stabilization | Conversion to CaCO₃ + (NH₄)₂SO₄ | High-value plaster/mold production | Strategic La/Ce/Nd recovery |
+| **Macro Class** | [SulfurAcidPathway](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/pg_sulfur_acid.py) | [ConstructionPathway](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/pg_construction.py) / [SoilAmendmentPathway](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/pg_soil_amendment.py) | [ChemicalRecoveryPathway](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/pg_chemical_recovery.py) | [CementPathway](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/pg_cement.py) | [REEExtractionPathway](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/pathways/pg_ree_extraction.py) |
 | **Governing PDE** | Reaction-diffusion heat transfer | Crystallization-pressure diffusion | Gas-liquid-solid mass transfer | Dissolution-recrystallization | Shrinking-core leaching kinetics |
 | **NORM Tracking** | Concentrates in CaO ash | Immobilized in C-S-H gel | Partitions >90% into CaCO₃ | Retained in gypsum lattice | Tracked in pregnant leach solution |
 
-### 4.6 Advanced PINN Techniques (Cross-Cutting Module B6)
-To handle the complex PDEs of the VPMs, we implement state-of-the-art physics-informed techniques:
-*   **Multiscale PINNs (MPINNs):** Addresses the **stiffness problem** (fast reaction vs. slow diffusion) by grouping chemical species with similar time scales and using adaptive-weight loss functions.
-*   **Hard Constraint Architectures:** Instead of soft penalties, we use positivity layers (to prevent negative concentrations) and divergence-free layers to strictly enforce mass balance.
+### 4.6 Advanced PINN & Stochastic Solvers
+*   **Implementation Location**: [pgloop/stochastic_dynamics/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/stochastic_dynamics/)
+*   **Function:** Solves physical transport boundaries and chemical phase density states.
+    *   **Fokker-Planck Solver:** Computes multi-dimensional density distributions over time using Fokker-Planck PDE models ([fokker_planck.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/stochastic_dynamics/fokker_planck.py)).
+    *   **PINN Architectures:** Integrates PyTorch neural networks optimized for solving Fokker-Planck transport boundaries ([pinn.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/stochastic_dynamics/pinn.py)).
+    *   **Latent SDEs & VAEs:** Captures stochastic process anomalies and molecular dynamics ([latent_sde.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/stochastic_dynamics/latent_sde.py), [vae.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/stochastic_dynamics/vae.py)).
 
-### 4.7 Bayesian MCMC Engine (Module B7)
-Quantifies parameter uncertainty (reaction rates, activation energies) and market volatility using NumPyro.
+### 4.7 Bayesian MCMC Engine
+*   **Implementation Location**: [pgloop/uncertainty/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/uncertainty/)
+*   **Function:** Quantifies parameter uncertainty (reaction rates, activation energies) and propagates process variance.
+    *   **Samplers:** Custom Python implementations of **Metropolis-Hastings**, **Hamiltonian Monte Carlo**, and **Gibbs Sampler** ([chain_sampling.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/uncertainty/chain_sampling.py)) to calibrate joint parameter distributions.
+    *   **Bayesian Updater:** Executes closed-loop inference updating parameter distributions based on real-time observations ([bayesian_update.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/uncertainty/bayesian_update.py)).
+    *   **Sensitivity Screening:** Performs global sensitivity analysis using Sobol and Delta indices ([sensitivity.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/uncertainty/sensitivity.py)).
 
 ```python
-import numpyro
-import numpyro.distributions as dist
-import jax.numpy as jnp
-from jax.experimental.ode import odeint
-
-def pg_kinetic_model(t, y, args):
-    # True contracting-core ODE implementation
-    alpha = y[0]
-    k = args[0]
-    d_alpha_dt = k * 3 * jnp.power(1.0 - alpha, 2.0/3.0)
-    return jnp.array([d_alpha_dt])
-
-def mcmc_inference(time_data, obs_conversion):
-    # Priors
-    log_A = numpyro.sample('log_A', dist.Normal(12.0, 2.0))
-    Ea = numpyro.sample('Ea', dist.Normal(150.0, 20.0))
-    k = jnp.exp(log_A - Ea / (8.314 * T_const))
+# Conceptual framework for our Metropolis-Hastings Sampler class
+class MetropolisHastings(BaseMCMC):
+    """Metropolis-Hastings MCMC Sampler for parameter calibration."""
     
-    # ODE Integration
-    y0 = jnp.array([0.0])
-    predicted_alpha = odeint(pg_kinetic_model, y0, time_data, k)
-    
-    # Likelihood
-    sigma = numpyro.sample('sigma', dist.HalfNormal(0.05))
-    numpyro.sample('obs', dist.Normal(predicted_alpha[:, 0], sigma), obs=obs_conversion)
+    def sample(self, n_samples: int, warmup: int = 1000, adapt_proposal: bool = True) -> MCMCResult:
+        # Runs random-walk MCMC sampling over parameter priors, computes
+        # acceptance rates based on log_prob_fn(state) and returns calibrated posterior distributions.
+        ...
 ```
-
-### 4.8 Multimodal Embedding Engine (Module B8)
-Aligns three distinct data scales into a unified latent space using a self-supervised Contrastive Projection Network:
-1.  **Micro (GNNs):** Impurity molecular graphs.
-2.  **Meso (CNN-Transformers):** Reactor time-series.
-3.  **Macro (LLMs):** Policy text and regulations.
 
 ---
 
 ## 5. Multi-Level Simulation Engine (Module Group C)
 
-This engine bridges scales using explicit coupling protocols.
+This engine bridges physical scales from reactors to global economics using explicit upscaling coupling protocols.
 
-### Module C1: Micro-Level Reactor Simulator
-*   **Input:** Output from VPMs ($\alpha(t,x)$, $T(t,x)$).
-*   **Function:** Simulates spatial distribution of reactions within a single reactor unit.
+### Module C1: Micro-Level Unit Operations
+*   **Implementation Location**: [pgloop/equipment/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/equipment/)
+*   **Function:** Simulates physical reactor hardware units.
+    *   Includes modeling of **CSTR Reactors**, **Leaching Tanks**, **Mixing Tanks**, and **Separation Filters**.
+    *   Couples reaction kinetics (VPM outputs) directly to unit mass-energy conservation boundaries.
 
-### Module C2: Meso-Level Process Flowsheet Engine
-*   **Coupling Protocol (Upscaling):** Integrates micro-level conversion rates over the reactor volume to yield macroscopic mass flow rates ($\dot{m}_{\text{product}}$) and total heat duty ($Q_{total}$).
-*   **Function:** Solves steady-state/dynamic mass and energy balances across the entire plant (pumps, kilns, filters).
+### Module C2: Meso-Level Flowsheet Process Engine
+*   **Implementation Location**: [pgloop/simulation/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/simulation/)
+*   **Function:** Solves mass and energy balances across the plant flowsheet (`micro/` reactor outputs scaling to `meso/` factory streams). Calculates aggregate parameters (total steam $U_{heat}$, electrical energy $U_{work}$, raw material streams).
 
 ### Module C3: Macro-Level LCA-TEA Evaluator
-*   **Coupling Protocol (Aggregation):** Converts meso-level mass/energy flows into environmental impacts (using ecoinvent factors) and financial cash flows.
-*   **Outputs:** NPV, IRR, Global Warming Potential (GWP), Leaching Pollution Index (LPI).
+*   **Implementation Location**: [pgloop/lca/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/lca/) & [pgloop/tea/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/tea/)
+*   **Function:** Evaluates life-cycle environmental and techno-economic footprints.
+    *   **LCAEngine:** Compiles the Life Cycle Inventory (LCI) and scales environmental indicators (including GWP, water footprint, particulate matter, NORM exposure) based on ISO 14040/14044 norms.
+    *   **TEAEngine:** Calculates Capital Expenditures (CAPEX), Operational Expenditures (OPEX), revenues, and tracks conventional financial metrics (NPV, IRR, Payback Period).
 
 ---
 
 ## 6. Decision & Optimization Engine (Module Group D)
 
-### Module D1: Real Options Valuation (ROV) Engine
-Calculates the exact subsidy required to de-risk high-uncertainty innovations. If the probability of negative NPV exceeds a risk threshold ($P(NPV < 0 | \theta) > \beta_{\text{risk}}$), it back-calculates the required financial injection vector (e.g., carbon credits, direct subsidies).
+This layer converts physical and economic metrics into policy recommendations and optimal process parameters.
 
-### Module D2: Multi-Objective Bayesian Optimizer
-Uses `BoTorch` to explore the operational parameter space, generating a Pareto Frontier across the TEPES dimensions (e.g., balancing maximum yield vs. minimum carbon footprint).
+### Module D1: Benefit Compensation Model
+*   **Implementation Location**: [pgloop/decision/benefit_compensation.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/decision/benefit_compensation.py)
+*   **Function:** Optimizes financial support parameters. Evaluates avoided environmental damage based on **shadow pricing** and back-calculates required carbon tax credits, tipping fees, or direct government subsidies to make low-margin, high-benefit pathways profitable.
 
-### Module D3: Active Learning Loop
-Uses Upper Confidence Bound (UCB) acquisition functions to identify where model epistemic uncertainty is highest, recommending specific laboratory experiments to the user to maximize information gain.
+### Module D2: Reverse Design Optimizer
+*   **Implementation Location**: [pgloop/decision/optimizer/reverse_design.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/decision/optimizer/reverse_design.py)
+*   **Function:** Uses Bayesian Optimization with a **Gaussian Process Regressor** (Matern kernel) to back-calculate required process inputs (e.g., solid-liquid ratios, operating temperatures, or material purity) that satisfy target threshold constraints (e.g., GWP $\le$ 100 kg CO₂-eq/t, NPV $\ge$ \$20/t).
+
+### Module D3: Multi-Criteria Pathway Ranker
+*   **Implementation Location**: [pgloop/decision/mcda.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/decision/mcda.py) & [recommender.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/decision/recommender.py)
+*   **Function:** Ranks pathways across TEPES criteria using Multi-Criteria Decision Analysis (**TOPSIS**, **AHP**, and WSM). Computes ideal and anti-ideal solution vectors to find the most balanced pathway.
+
+### Module D4: Micro & Macro Risk Assessment
+*   **Implementation Location**: [pgloop/risk/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/risk/)
+*   **Function:** Aggregates process-level (technical, operational) and regional-level (political, policy, carbon tax volatility) risks into unified safety boundaries.
 
 ---
 
 ## 7. Platform & Deployment (Module Group E)
 
-*   **Module E1: FastAPI Gateway:** Orchestrates module communication and task queues (Celery).
-*   **Module E2: React Dashboard:** Provides 3D Pareto visualizers and interactive input sliders ($U_{heat}, U_{work}, U_{money}$).
-*   **Module E3: LLM Chat Agent:** A RAG-enabled assistant querying the Neo4j/Milvus knowledge bases.
-*   **Module E4: Deployment & Edge Inference:** Core training runs on SLURM GPU clusters; surrogate GRNN models are deployed to edge devices at the chemical plant for real-time inference.
+### Module E1: Streamlit Dashboard
+*   **Implementation Location**: [pgloop/visualization/dashboard.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/visualization/dashboard.py)
+*   **Function:** Renders an interactive web interface. Includes 3D Pareto frontier visualizations, process parameter sliders, Monte Carlo distributions, and TEPES dimension graphs.
+
+### Module E2: Report Exporter
+*   **Implementation Location**: [pgloop/visualization/report.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/visualization/report.py)
+*   **Function:** Compiles analytical outputs, MCDA rankings, and uncertainty charts into standard HTML and Excel spreadsheets for engineering reviews.
+
+### Module E3: LLM ReAct Chat Agent
+*   **Implementation Location**: [chat_agent/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/chat_agent/)
+*   **Function:** Hosts a terminal CLI and API connector ([agent.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/chat_agent/agent.py)) driven by a ReAct reasoning loop. The agent automatically parses Python signatures into JSON schema tool formats ([tools.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/chat_agent/tools.py)), allowing it to call core backend modules (e.g., executing LCA-TEA simulations, searching scientific literature via LightRAG, ranking pathways).
+
+### Module E4: WHU-SCC Slurm Clusters
+*   **Implementation Location**: [slurm_jobs/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/slurm_jobs/)
+*   **Function:** Orchestrates training and inference on the Wuhan University Supercomputing Center. Manages conda environments, local HuggingFace/ollama servers, and implements **NUMA node binding (`numactl --cpunodebind`)** to optimize EPYC CPU memory alignment.
 
 ---
 
 ## 8. Development Timeline & Milestones
 
-| Phase | Duration | Module Focus | Key Deliverable | Quantitative Success Criterion |
+### Historical Releases & Completed Milestones
+*   **Phase 1: Foundation (v0.1.0 - v0.2.0)**
+    *   *Achievements*: Authoring core mathematical models (LCA/TEA engines). Constructing Neo4j databases and parser pipelines (MinerU/PyMuPDF pdf extraction).
+*   **Phase 2: Physics-Informed AI (v0.3.0)**
+    *   *Achievements*: Writing Fokker-Planck solvers and VPM kinetics. Building MCMC chain samplers (Metropolis-Hastings, Hamiltonian MC) for Bayesian uncertainty.
+*   **Phase 3: Decision & System Optimization (v0.4.0 - Current)**
+    *   *Achievements*: Integrating the Reverse Design GP optimizer, Benefit Compensation model, and MCDA TOPSIS ranker. Authoring the Streamlit dashboard and implementing the ReAct Chat Agent. Deploying on WHU-SCC Slurm clusters with GPU acceleration.
+
+### Next-Phase Plans: Road to Production (v0.5.0)
+
+| Focus Area | Target Date | Module Focus | Core Deliverable | Success Criteria |
 | :--- | :--- | :--- | :--- | :--- |
-| **1. Foundation** | Months 1-3 | Group A | PG Knowledge Graph | >500 regulatory docs parsed; schema validated |
-| **2. PI-AI Core** | Months 4-9 | Group B | VPM B1 & B2 | PINN relative error < 5% vs benchmark data |
-| **3. MCMC & MLS**| Months 10-12 | B7 & Group C | MCMC pipeline & Flowsheet | Gelman-Rubin $\hat{R} < 1.05$; Mass balance < 1% error |
-| **4. Decision** | Months 13-15 | Group D | ROV & Optimizer | Successful Pareto extraction on 3 VPMs |
-| **5. Platform** | Months 16-18 | Group E | Full UI Deployment | <500ms latency on surrogate edge inference |
+| **Multi-Scale Scaling** | Month 19-21 | Group C & E | Large-scale Neo4j & Milvus deployment | Ingestion of >5,000 papers; latency < 200ms |
+| **Production PINNs** | Month 22-24 | Group B | Fokker-Planck stiff boundary optimizations | Integration error < 1% vs CFD benchmarks |
+| **Material MACE Validation**| Month 25-26 | chemicals | Machine learning interatomic properties | MACE validation error < 0.05 eV/atom |
+| **Field Validation** | Month 27-28 | Field Test | Real-time plant edge server integration | Real-time sensor-to-dashboard pipeline |
 
 > [!WARNING]
 > **Risk Mitigation (Stiffness in PDEs)**
-> Chemical kinetics often exhibit extreme stiffness. It is critical to validate the MPINNs (Module B6) on a stiff benchmark (e.g., ROBER problem) before applying them to the complex Merseburg or Calcination VPMs.
+> Chemical kinetics often exhibit extreme stiffness (fast reaction vs slow diffusion). In Phase 6, we must prioritize testing our multiscale MPINNs on stiff CFD benchmarks (e.g. Merseburg reactor profiles) to ensure numerical stability when solving high-pressure crystallization models.
