@@ -68,3 +68,37 @@ def prediction_interval_coverage(
 ) -> float:
     covered = (y_true >= y_low) & (y_true <= y_high)
     return float(np.mean(covered))
+
+
+def compare_with_numerical_solver(model, trajectory) -> dict:
+    """
+    Evaluates the PINN model on the space-time grid of a numerical trajectory
+    and computes the relative L2 error:
+      E = || p_PINN - p_numerical ||_2 / || p_numerical ||_2
+    """
+    import torch
+    model.eval()
+
+    nx = len(trajectory.x_grid)
+    x_tensor = torch.tensor(trajectory.x_grid, dtype=torch.float64).unsqueeze(1)
+
+    p_pinn_list = []
+    with torch.no_grad():
+        for t_val in trajectory.t_grid:
+            t_tensor = torch.full((nx, 1), t_val, dtype=torch.float64)
+            p_pred = model(x_tensor, t_tensor)
+            p_pinn_list.append(p_pred.squeeze(-1).cpu().numpy())
+
+    p_pinn = np.stack(p_pinn_list, axis=0)  # shape [nt, nx]
+    p_num = trajectory.pdf_t
+
+    # Compute L2 error
+    l2_diff = np.sqrt(np.sum((p_pinn - p_num) ** 2))
+    l2_num = np.sqrt(np.sum(p_num ** 2))
+
+    rel_l2 = float(l2_diff / max(l2_num, 1e-9))
+    return {
+        "p_pinn": p_pinn,
+        "rel_l2_error": rel_l2,
+    }
+
