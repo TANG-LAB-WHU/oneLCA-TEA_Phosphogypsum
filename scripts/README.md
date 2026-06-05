@@ -106,10 +106,11 @@ Configure in `.env`:
 
 ```env
 LLM_BASE_URL=http://127.0.0.1:11434/v1
-LLM_API_KEY=ollama
-LLM_MODEL=qwen3.5:35b
-EMBEDDING_MODEL=qwen3-embedding:4b
-EMBEDDING_DIM=2560
+LLM_API_KEY=sk-no-key-required
+LLM_MODEL=Qwen3.6-27B
+EMBEDDING_BASE_URL=http://127.0.0.1:11436/v1
+EMBEDDING_MODEL=Qwen3-Embedding-8B-GGUF
+EMBEDDING_DIM=4096
 LLM_CONTEXT_LENGTH=32768
 LLM_JSON_MODE=1
 MINERU_MODEL_SOURCE=huggingface
@@ -119,42 +120,31 @@ HF_ENDPOINT=https://huggingface.co
 # RAGANYTHING_MINERU_DEVICE=cpu
 ```
 
-On your deployed Windows desktop, verify embedding dimension once after pulling the model:
+On your deployed supercomputer node, verify embedding dimension once after starting the embedding server:
 
-```powershell
-python -c "from openai import OpenAI; import os; from dotenv import load_dotenv; load_dotenv(); c=OpenAI(base_url=os.getenv('LLM_BASE_URL'), api_key=os.getenv('LLM_API_KEY','ollama')); v=c.embeddings.create(model=os.getenv('EMBEDDING_MODEL'), input=['hello']).data[0].embedding; print('dim=',len(v))"
+```bash
+python -c "from openai import OpenAI; import os; from dotenv import load_dotenv; load_dotenv(); c=OpenAI(base_url=os.getenv('EMBEDDING_BASE_URL'), api_key=os.getenv('LLM_API_KEY','sk-no-key-required')); v=c.embeddings.create(model=os.getenv('EMBEDDING_MODEL'), input=['hello']).data[0].embedding; print('dim=',len(v))"
 ```
 
-If this prints a value other than `2560`, set `.env` `EMBEDDING_DIM` to that value.
+If this prints a value other than `4096`, set `.env` `EMBEDDING_DIM` to that value.
 
-### Ollama Stability Checklist (Windows)
+### llama-server Tuning Tips
 
-For local `qwen3.5:35b` + `qwen3-embedding:4b`, set these as **OS-level environment variables**, then restart Ollama:
+When running `llama-server` for LightRAG knowledge graph construction, use the `--parallel` flag
+to allow concurrent requests (LightRAG sends many async calls during entity extraction):
 
-```powershell
-setx OLLAMA_FLASH_ATTENTION 0
-setx OLLAMA_CONTEXT_LENGTH 32768
-setx OLLAMA_NUM_PARALLEL 1
-setx OLLAMA_MAX_LOADED_MODELS 1
+```bash
+llama-server --model <model.gguf> --parallel 4 --ctx-size 32768 --n-gpu-layers 99
 ```
 
-Then fully quit Ollama from tray icon and launch it again.
+Also increase Python-side timeouts in `.env`:
 
-### Optional: create a 32k model alias via Modelfile
-
-If your Ollama version ignores request-level context hints, create a model alias with explicit `num_ctx`:
-
-```text
-# Modelfile.qwen35-32k
-FROM qwen3.5:35b
-PARAMETER num_ctx 32768
+```env
+LLM_TIMEOUT=1800
+EMBEDDING_TIMEOUT=600
 ```
 
-```powershell
-ollama create qwen3.5:35b-32k -f Modelfile.qwen35-32k
-```
-
-Then set `LLM_MODEL=qwen3.5:35b-32k` in `.env`.
+Then set `LLM_MODEL=Qwen3.6-27B` in `.env`.
 
 ### MinerU preflight (recommended before RAGAnything)
 

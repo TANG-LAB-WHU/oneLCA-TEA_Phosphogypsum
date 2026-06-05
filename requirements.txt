@@ -3,6 +3,8 @@
 # This file is kept for `pip install -r requirements.txt` compatibility.
 # To install with optional groups:  pip install -e ".[ai,viz,kg,dev]"
 
+--extra-index-url https://download.pytorch.org/whl/cu129
+
 # ── Core ────────────────────────────────────────────────────────────────
 pandas>=2.0.0
 numpy>=1.24.0
@@ -20,6 +22,7 @@ googletrans>=4.0.0
 mineru[all]>=3.0.0
 
 # ── AI / ML ─────────────────────────────────────────────────────────────
+torch==2.8.0+cu129
 openai>=1.0.0
 langchain>=0.2.0
 langchain-community>=0.2.0
