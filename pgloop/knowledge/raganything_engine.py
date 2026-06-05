@@ -157,9 +157,7 @@ class RAGAnythingEngine:
         self.embedding_timeout = _normalize_timeout(
             _read_env_float("EMBEDDING_TIMEOUT", default=30.0)
         )
-        self.llm_context_length = _read_env_int(
-            "LLM_CONTEXT_LENGTH", default=0
-        )
+        self.llm_context_length = _read_env_int("LLM_CONTEXT_LENGTH", default=0)
         raw_temp = os.getenv("LLM_TEMPERATURE", "0.1").strip()
         try:
             self.llm_temperature = float(raw_temp)

@@ -322,9 +322,83 @@ class Neo4jAdapter:
 
     # ==================== Sync with NetworkX ====================
 
+    def create_nodes_batch(self, nodes_list: List[Dict[str, Any]]) -> int:
+        """
+        Create multiple nodes in batch using Cypher UNWIND.
+        nodes_list elements: {"node_id": str, "label": str, "properties": dict}
+        """
+        if not nodes_list:
+            return 0
+
+        from collections import defaultdict
+
+        grouped = defaultdict(list)
+        for item in nodes_list:
+            grouped[item["label"]].append(
+                {"node_id": item["node_id"], "properties": item.get("properties") or {}}
+            )
+
+        count = 0
+        for label, batch in grouped.items():
+            for item in batch:
+                item["properties"]["node_id"] = item["node_id"]
+
+            query = f"""
+            UNWIND $batch AS row
+            MERGE (n:{label} {{node_id: row.node_id}})
+            SET n += row.properties
+            """
+            try:
+                with self._driver.session(database=self.config.database) as session:
+                    session.execute_write(lambda tx: tx.run(query, batch=batch))
+                count += len(batch)
+            except Exception as e:
+                logger.error(f"Failed to batch create nodes for label {label}: {e}")
+
+        return count
+
+    def create_edges_batch(self, edges_list: List[Dict[str, Any]]) -> int:
+        """
+        Create multiple edges in batch using Cypher UNWIND.
+        edges_list elements: {"source_id": str, "target_id": str, "relation": str, "properties": dict}
+        """
+        if not edges_list:
+            return 0
+
+        from collections import defaultdict
+
+        grouped = defaultdict(list)
+        for item in edges_list:
+            rel_type = item["relation"].upper()
+            grouped[rel_type].append(
+                {
+                    "source_id": item["source_id"],
+                    "target_id": item["target_id"],
+                    "properties": item.get("properties") or {},
+                }
+            )
+
+        count = 0
+        for rel_type, batch in grouped.items():
+            query = f"""
+            UNWIND $batch AS row
+            MATCH (a {{node_id: row.source_id}})
+            MATCH (b {{node_id: row.target_id}})
+            MERGE (a)-[r:{rel_type}]->(b)
+            SET r += row.properties
+            """
+            try:
+                with self._driver.session(database=self.config.database) as session:
+                    session.execute_write(lambda tx: tx.run(query, batch=batch))
+                count += len(batch)
+            except Exception as e:
+                logger.error(f"Failed to batch create edges for relation {rel_type}: {e}")
+
+        return count
+
     def import_from_networkx(self, nx_graph) -> int:
         """
-        Import nodes and edges from a NetworkX graph.
+        Import nodes and edges from a NetworkX graph in batches.
 
         Args:
             nx_graph: NetworkX graph object
@@ -332,22 +406,31 @@ class Neo4jAdapter:
         Returns:
             Number of items imported
         """
-        count = 0
-
-        # Import nodes
+        nodes_batch = []
         for node_id, props in nx_graph.nodes(data=True):
             node_type = props.get("type", "Node")
-            if self.create_node(node_id, node_type, dict(props)):
-                count += 1
+            nodes_batch.append({"node_id": node_id, "label": node_type, "properties": dict(props)})
 
-        # Import edges
+        edges_batch = []
         for source, target, props in nx_graph.edges(data=True):
             relation = props.get("relation", "RELATED_TO")
-            if self.create_edge(source, target, relation, dict(props)):
-                count += 1
+            edges_batch.append(
+                {
+                    "source_id": source,
+                    "target_id": target,
+                    "relation": relation,
+                    "properties": dict(props),
+                }
+            )
 
-        logger.info(f"Imported {count} items from NetworkX")
-        return count
+        imported_nodes = self.create_nodes_batch(nodes_batch)
+        imported_edges = self.create_edges_batch(edges_batch)
+
+        total_imported = imported_nodes + imported_edges
+        logger.info(
+            f"Imported {total_imported} items from NetworkX in batches (nodes: {imported_nodes}, edges: {imported_edges})"
+        )
+        return total_imported
 
     def export_to_networkx(self):
         """

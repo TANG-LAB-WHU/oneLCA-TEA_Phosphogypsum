@@ -1,5 +1,4 @@
 from typing import Any, Dict, List
-import numpy as np
 
 try:
     import torch
@@ -7,20 +6,29 @@ except ImportError:
     torch = None
 
 from pydantic import Field
-from .base_vpm import ValorizationPathwayModule, VPMSchema, ValidationReport
+
+from .base_vpm import ValidationReport, ValorizationPathwayModule, VPMSchema
 
 
 class HydrationInputSchema(VPMSchema):
     water_solid_ratio: float = Field(..., description="Water to solid weight ratio", ge=0.3, le=2.0)
     temperature_c: float = Field(..., description="Initial hydration temperature", ge=5.0, le=60.0)
-    retarder_dosage_ppm: float = Field(..., description="Retarder concentration in ppm", ge=0.0, le=1000.0)
-    mixing_energy_kwh: float = Field(..., description="Electricity consumption in mixing per tonne product")
+    retarder_dosage_ppm: float = Field(
+        ..., description="Retarder concentration in ppm", ge=0.0, le=1000.0
+    )
+    mixing_energy_kwh: float = Field(
+        ..., description="Electricity consumption in mixing per tonne product"
+    )
 
 
 class HydrationOutputSchema(VPMSchema):
     hydration_degree: float = Field(..., description="Final hydration degree", ge=0.0, le=1.0)
-    setting_time_min: float = Field(..., description="Setting/curing time in minutes", ge=2.0, le=300.0)
-    compressive_strength_mpa: float = Field(..., description="Compressive strength at 2 hours", ge=1.0, le=40.0)
+    setting_time_min: float = Field(
+        ..., description="Setting/curing time in minutes", ge=2.0, le=300.0
+    )
+    compressive_strength_mpa: float = Field(
+        ..., description="Compressive strength at 2 hours", ge=1.0, le=40.0
+    )
 
 
 class HydrationVPM(ValorizationPathwayModule):
@@ -38,7 +46,7 @@ class HydrationVPM(ValorizationPathwayModule):
         return [
             "d_alpha_dt = n * k * t^(n-1) * (1 - alpha)  # Hydration kinetics (Avrami-Erofeev model)",
             "dT_dt = (Q_hydration * d_alpha_dt - U * A * (T - T_ambient)) / (m * Cp)  # Exothermic heat balance",
-            "d_C_dt = r_dissolution(hemihydrate) - r_crystallization(dihydrate)  # Liquid phase mass conservation"
+            "d_C_dt = r_dissolution(hemihydrate) - r_crystallization(dihydrate)  # Liquid phase mass conservation",
         ]
 
     @property
@@ -69,15 +77,13 @@ class HydrationVPM(ValorizationPathwayModule):
 
             # Gradients
             alpha_t = torch.autograd.grad(
-                alpha_pred, t_pts,
-                grad_outputs=torch.ones_like(alpha_pred),
-                create_graph=True
+                alpha_pred, t_pts, grad_outputs=torch.ones_like(alpha_pred), create_graph=True
             )[0]
 
             # Avrami rate law: d_alpha_dt - n * k * t^(n-1) * (1 - alpha)
             rate_law = n_avrami * k_avrami * (t_pts ** (n_avrami - 1)) * (1.0 - alpha_pred)
             residual = alpha_t - rate_law
-            return torch.mean(residual ** 2)
+            return torch.mean(residual**2)
 
         return pinn_loss_fn
 
@@ -97,6 +103,9 @@ class HydrationVPM(ValorizationPathwayModule):
 
         return ValidationReport(
             is_valid=is_valid,
-            metrics={"setting_time_mae": float(error), "estimated_setting_time": float(est_setting_time)},
-            details=f"Validated with W/S {w_s:.2f} and {retarder:.0f} ppm retarder. MAE: {error:.4f} min"
+            metrics={
+                "setting_time_mae": float(error),
+                "estimated_setting_time": float(est_setting_time),
+            },
+            details=f"Validated with W/S {w_s:.2f} and {retarder:.0f} ppm retarder. MAE: {error:.4f} min",
         )

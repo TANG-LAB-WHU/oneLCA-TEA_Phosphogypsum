@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 
 class BenefitCompensationModel:
@@ -15,7 +15,7 @@ class BenefitCompensationModel:
         """
         self.shadow_prices = shadow_prices or {
             "climate_change": 0.10,  # USD per kg CO2-eq ($100/t)
-            "acidification": 2.50,   # USD per mol H+-eq
+            "acidification": 2.50,  # USD per mol H+-eq
             "eutrophication_fresh": 15.00,  # USD per kg P-eq
             "human_toxicity_cancer": 5000.0,  # USD per CTUh
             "human_toxicity_noncancer": 1000.0,
@@ -24,7 +24,7 @@ class BenefitCompensationModel:
 
     def calculate_avoided_damage(
         self, baseline_impacts: Dict[str, float], pathway_impacts: Dict[str, float]
-      ) -> Dict[str, float]:
+    ) -> Dict[str, float]:
         """
         Calculate monetized avoided environmental damage compared to a baseline (e.g., stack disposal).
         """
@@ -95,5 +95,9 @@ class BenefitCompensationModel:
             "suggested_tipping_fee": suggested_tipping_fee,
             "suggested_subsidy": suggested_subsidy,
             "net_social_benefit_to_society": net_social_benefit,
-            "social_roi": (avoided_environmental_benefit / suggested_subsidy) if suggested_subsidy > 0 else float("inf"),
+            "social_roi": (
+                (avoided_environmental_benefit / suggested_subsidy)
+                if suggested_subsidy > 0
+                else float("inf")
+            ),
         }

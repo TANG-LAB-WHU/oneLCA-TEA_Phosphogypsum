@@ -1,5 +1,6 @@
+from typing import Any, Callable, Dict, Tuple
+
 import numpy as np
-from typing import Any, Callable, Dict, List, Tuple, Optional
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import Matern
 
@@ -135,7 +136,7 @@ class ReverseDesignOptimizer:
         best_params, best_metrics, best_utility = metrics_history[best_idx]
 
         # Check if all constraints are fully met
-        is_satisfied = (best_utility == 0.0)
+        is_satisfied = best_utility == 0.0
 
         # Estimate parameter sensitivity/importance using surrogate correlation
         gp.fit(x_train, y_train)

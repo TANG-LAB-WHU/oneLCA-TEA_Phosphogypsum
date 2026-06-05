@@ -1,4 +1,5 @@
 from typing import Any, Dict, List
+
 import numpy as np
 
 try:
@@ -7,19 +8,26 @@ except ImportError:
     torch = None
 
 from pydantic import Field
-from .base_vpm import ValorizationPathwayModule, VPMSchema, ValidationReport
+
+from .base_vpm import ValidationReport, ValorizationPathwayModule, VPMSchema
 
 
 class CarbothermicInputSchema(VPMSchema):
-    temperature_c: float = Field(..., description="Rotary kiln temperature in Celsius", ge=600.0, le=1400.0)
-    residence_time_min: float = Field(..., description="Residence time in minutes", ge=5.0, le=180.0)
+    temperature_c: float = Field(
+        ..., description="Rotary kiln temperature in Celsius", ge=600.0, le=1400.0
+    )
+    residence_time_min: float = Field(
+        ..., description="Residence time in minutes", ge=5.0, le=180.0
+    )
     c_s_ratio: float = Field(..., description="Carbon to Sulfur molar ratio", ge=0.5, le=3.0)
     heat_input_mj: float = Field(..., description="Heat input in MJ per tonne of PG")
     work_input_kwh: float = Field(..., description="Electricity consumption in kWh per tonne of PG")
 
 
 class CarbothermicOutputSchema(VPMSchema):
-    ca_conversion: float = Field(..., description="Calcium sulfate conversion fraction", ge=0.0, le=1.0)
+    ca_conversion: float = Field(
+        ..., description="Calcium sulfate conversion fraction", ge=0.0, le=1.0
+    )
     so2_yield: float = Field(..., description="SO2 yield fraction", ge=0.0, le=1.0)
     co2_emission_kg: float = Field(..., description="CO2 emission in kg per tonne of PG")
 
@@ -39,7 +47,7 @@ class CarbothermicVPM(ValorizationPathwayModule):
         return [
             "d_alpha_dt = A * exp(-Ea / (R * T)) * (1 - alpha)^n  # Reaction kinetics (shrinking core)",
             "dT_dt = (Q_heat - delta_H * r_reaction - Q_loss) / (m * Cp)  # Energy conservation",
-            "d_c_dt = D_eff * d2_c_dx2 - r_reaction  # Mass conservation and diffusion"
+            "d_c_dt = D_eff * d2_c_dx2 - r_reaction  # Mass conservation and diffusion",
         ]
 
     @property
@@ -76,15 +84,13 @@ class CarbothermicVPM(ValorizationPathwayModule):
 
             # Gradients
             alpha_t = torch.autograd.grad(
-                alpha_pred, t_pts,
-                grad_outputs=torch.ones_like(alpha_pred),
-                create_graph=True
+                alpha_pred, t_pts, grad_outputs=torch.ones_like(alpha_pred), create_graph=True
             )[0]
 
             # Kinetic residual: d_alpha_dt - A * exp(-Ea / (R * T)) * (1 - alpha)
             kinetic_rate = a_pre * torch.exp(-ea / (r_gas * temp_pts)) * (1.0 - alpha_pred)
             residual = alpha_t - kinetic_rate
-            return torch.mean(residual ** 2)
+            return torch.mean(residual**2)
 
         return pinn_loss_fn
 
@@ -109,5 +115,5 @@ class CarbothermicVPM(ValorizationPathwayModule):
         return ValidationReport(
             is_valid=is_valid,
             metrics={"conversion_mae": float(error), "estimated_conversion": float(est_conversion)},
-            details=f"Validated at {temp} C for {time} min. MAE: {error:.4f}"
+            details=f"Validated at {temp} C for {time} min. MAE: {error:.4f}",
         )

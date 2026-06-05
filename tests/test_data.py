@@ -1,6 +1,7 @@
 import pytest
+
 from pgloop.iodata.data_standardizer import DataStandardizer
-from pgloop.iodata.pdf_parser import PDFParser, PYMUPDF_AVAILABLE
+from pgloop.iodata.pdf_parser import PYMUPDF_AVAILABLE, PDFParser
 
 
 @pytest.mark.skipif(not PYMUPDF_AVAILABLE, reason="PyMuPDF not installed")

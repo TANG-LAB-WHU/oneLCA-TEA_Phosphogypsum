@@ -1,4 +1,5 @@
 from typing import Any, Dict, List
+
 import numpy as np
 
 try:
@@ -7,21 +8,32 @@ except ImportError:
     torch = None
 
 from pydantic import Field
-from .base_vpm import ValorizationPathwayModule, VPMSchema, ValidationReport
+
+from .base_vpm import ValidationReport, ValorizationPathwayModule, VPMSchema
 
 
 class REEExtractionInputSchema(VPMSchema):
     acid_type: str = Field(..., description="Acid type used for leaching (e.g., H2SO4, HNO3, HCl)")
     acid_concentration_m: float = Field(..., description="Acid molar concentration", ge=0.1, le=5.0)
-    solid_liquid_ratio: float = Field(..., description="Solid to liquid weight ratio", ge=0.05, le=0.5)
+    solid_liquid_ratio: float = Field(
+        ..., description="Solid to liquid weight ratio", ge=0.05, le=0.5
+    )
     temperature_c: float = Field(..., description="Leaching temperature", ge=20.0, le=95.0)
-    leaching_time_min: float = Field(..., description="Leaching reaction duration in minutes", ge=10.0, le=240.0)
+    leaching_time_min: float = Field(
+        ..., description="Leaching reaction duration in minutes", ge=10.0, le=240.0
+    )
 
 
 class REEExtractionOutputSchema(VPMSchema):
-    ree_recovery_pct: float = Field(..., description="Percentage of REE recovered in liquid phase", ge=0.0, le=100.0)
-    acid_consumption_kg_per_t: float = Field(..., description="Acid consumption in kg per tonne of PG")
-    calcium_loss_pct: float = Field(..., description="Percentage of calcium matrix co-dissolved", ge=0.0, le=100.0)
+    ree_recovery_pct: float = Field(
+        ..., description="Percentage of REE recovered in liquid phase", ge=0.0, le=100.0
+    )
+    acid_consumption_kg_per_t: float = Field(
+        ..., description="Acid consumption in kg per tonne of PG"
+    )
+    calcium_loss_pct: float = Field(
+        ..., description="Percentage of calcium matrix co-dissolved", ge=0.0, le=100.0
+    )
 
 
 class REEExtractionVPM(ValorizationPathwayModule):
@@ -39,7 +51,7 @@ class REEExtractionVPM(ValorizationPathwayModule):
         return [
             "1 - 3 * (1 - alpha)^(2/3) + 2 * (1 - alpha) = k_d * t  # Shrinking Core Model (diffusion control)",
             "d_C_acid_dt = -r_acid_consumption - D_eff * d2_C_acid_dx2  # Acid concentration diffusion",
-            "d_ree_liq_dt = r_leaching - Q_out * C_ree  # Mass conservation of dissolved REEs"
+            "d_ree_liq_dt = r_leaching - Q_out * C_ree  # Mass conservation of dissolved REEs",
         ]
 
     @property
@@ -74,7 +86,7 @@ class REEExtractionVPM(ValorizationPathwayModule):
 
             # Residual: F(alpha) - kd * t
             residual = f_alpha - kd_val * t_pts
-            return torch.mean(residual ** 2)
+            return torch.mean(residual**2)
 
         return pinn_loss_fn
 
@@ -96,6 +108,9 @@ class REEExtractionVPM(ValorizationPathwayModule):
 
         return ValidationReport(
             is_valid=is_valid,
-            metrics={"recovery_mae_pct": float(error), "estimated_recovery_pct": float(est_recovery)},
-            details=f"Validated at {temp} C with {conc:.2f} M acid. MAE: {error:.4f}%"
+            metrics={
+                "recovery_mae_pct": float(error),
+                "estimated_recovery_pct": float(est_recovery),
+            },
+            details=f"Validated at {temp} C with {conc:.2f} M acid. MAE: {error:.4f}%",
         )

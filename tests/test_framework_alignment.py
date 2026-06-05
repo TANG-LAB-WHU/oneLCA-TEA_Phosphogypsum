@@ -1,8 +1,7 @@
-import pytest
 from pgloop.decision import (
-    ReverseDesignOptimizer,
     BenefitCompensationModel,
     PathwayRanker,
+    ReverseDesignOptimizer,
     create_default_criteria,
 )
 
@@ -66,7 +65,7 @@ def test_reverse_design_optimizer():
         y = params["y"]
         return {
             "gwp": float(x**2 + y**2),
-            "npv": float(100.0 - (x - 2.0)**2 - (y - 3.0)**2),
+            "npv": float(100.0 - (x - 2.0) ** 2 - (y - 3.0) ** 2),
         }
 
     parameter_bounds = {
@@ -109,7 +108,7 @@ def test_benefit_compensation_model():
 
     pathway_impacts = {
         "climate_change": 150.0,  # Avoids 350 kg CO2-eq -> $35 benefit
-        "acidification": 10.0,   # Avoids 40 mol H+-eq -> $100 benefit
+        "acidification": 10.0,  # Avoids 40 mol H+-eq -> $100 benefit
         "human_toxicity_cancer": 0.01,  # Avoids 0.04 -> $200 benefit
     }
 

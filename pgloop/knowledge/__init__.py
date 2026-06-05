@@ -4,7 +4,7 @@ Provides knowledge graph construction, LLM extraction, and RAG capabilities.
 
 from pgloop.knowledge.embeddings import EmbeddingModel
 from pgloop.knowledge.gap_filler import GapFiller
-from pgloop.knowledge.graph import PhosphogypsumKG, Neo4jAdapter, Neo4jConfig, NEO4J_AVAILABLE
+from pgloop.knowledge.graph import NEO4J_AVAILABLE, Neo4jAdapter, Neo4jConfig, PhosphogypsumKG
 from pgloop.knowledge.llm_extractor import LLMExtractor
 
 try:

@@ -7,9 +7,9 @@ import pytest
 import yaml
 from dotenv import load_dotenv
 
+from pgloop.knowledge import PhosphogypsumKG
 from pgloop.knowledge.embeddings import EmbeddingModel
 from pgloop.knowledge.gap_filler import GapFiller
-from pgloop.knowledge import PhosphogypsumKG
 from pgloop.knowledge.lightrag_engine import LightRAGEngine
 
 # Import modules to test

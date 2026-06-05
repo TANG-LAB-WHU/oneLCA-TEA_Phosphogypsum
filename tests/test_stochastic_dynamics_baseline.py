@@ -11,7 +11,6 @@ from pgloop.stochastic_dynamics.fokker_planck import (
     ou_drift,
 )
 
-
 trapezoid = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
 
 

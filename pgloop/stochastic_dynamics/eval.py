@@ -7,7 +7,6 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 
-
 # Version-compatible trapezoid function
 trapezoid = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
 

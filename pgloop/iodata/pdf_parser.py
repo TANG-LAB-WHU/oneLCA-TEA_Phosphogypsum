@@ -4,9 +4,12 @@ PDF Parser Module
 Extracts text and data from scientific papers using PyMuPDF or MinerU.
 """
 
+import hashlib
+import json
 import os
 import subprocess
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Union
 
@@ -419,6 +422,29 @@ class PDFParser:
 
         return documents
 
+    async def parse_pdf_async(self, filepath: Union[str, Path]) -> ParsedDocument:
+        """Asynchronously parse a single PDF using run_in_executor."""
+        import asyncio
+
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, self.parse_pdf, filepath)
+
+    async def parse_batch_async(
+        self, filepaths: List[Union[str, Path]], max_workers: int = 4
+    ) -> List[ParsedDocument]:
+        """Parse a batch of PDFs concurrently with worker limit."""
+        import asyncio
+        from asyncio import Semaphore
+
+        sem = Semaphore(max_workers)
+
+        async def worker(fp):
+            async with sem:
+                return await self.parse_pdf_async(fp)
+
+        tasks = [worker(fp) for fp in filepaths]
+        return await asyncio.gather(*tasks, return_exceptions=True)
+
     @staticmethod
     def is_mineru_available() -> bool:
         """Check if MinerU is available for use."""
@@ -428,6 +454,68 @@ class PDFParser:
     def is_pymupdf_available() -> bool:
         """Check if PyMuPDF is available for use."""
         return PYMUPDF_AVAILABLE
+
+
+def compute_sha256(filepath: Path) -> str:
+    """Compute the SHA-256 hash of a file."""
+    sha256_hash = hashlib.sha256()
+    with open(filepath, "rb") as f:
+        for byte_block in iter(lambda: f.read(4096), b""):
+            sha256_hash.update(byte_block)
+    return sha256_hash.hexdigest()
+
+
+class IngestionRegistry:
+    """Registry to track document ingestion state and prevent duplicate processing."""
+
+    def __init__(self, registry_path: Path):
+        self.registry_path = Path(registry_path)
+        self.data = self._load()
+
+    def _load(self) -> dict[str, dict[str, Any]]:
+        if self.registry_path.exists():
+            try:
+                with open(self.registry_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                return {}
+        return {}
+
+    def save(self) -> None:
+        self.registry_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(self.registry_path, "w", encoding="utf-8") as f:
+            json.dump(self.data, f, indent=2, ensure_ascii=False)
+
+    def is_modified_or_new(self, filepath: Path) -> bool:
+        filename = filepath.name
+        if not filepath.exists():
+            return False
+        curr_hash = compute_sha256(filepath)
+        if filename not in self.data:
+            return True
+        return self.data[filename].get("sha256") != curr_hash
+
+    def update_file(self, filepath: Path, parser_type: str, status: str = "success") -> None:
+        filename = filepath.name
+        if not filepath.exists():
+            return
+        curr_hash = compute_sha256(filepath)
+        self.data[filename] = {
+            "sha256": curr_hash,
+            "parser_type": parser_type,
+            "parsed_at": datetime.now().isoformat(),
+            "status": status,
+        }
+        self.save()
+
+    def get_removed_files(self, current_files: List[Path]) -> List[str]:
+        current_names = {f.name for f in current_files}
+        return [name for name in self.data if name not in current_names]
+
+    def remove_file(self, filename: str) -> None:
+        if filename in self.data:
+            del self.data[filename]
+            self.save()
 
 
 def main():

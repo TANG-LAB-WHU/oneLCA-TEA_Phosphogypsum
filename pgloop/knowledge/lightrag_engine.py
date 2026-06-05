@@ -35,6 +35,14 @@ except ImportError:
     LightRAG = None
     QueryParam = None
 
+try:
+    from sentence_transformers import CrossEncoder
+
+    CROSS_ENCODER_AVAILABLE = True
+except ImportError:
+    CROSS_ENCODER_AVAILABLE = False
+    CrossEncoder = None
+
 
 def _read_env_int(*names: str, default: int = 0) -> int:
     """Read the first valid integer env var from names."""
@@ -105,6 +113,36 @@ class QueryResult:
     sources: List[Dict] = None
 
 
+class ReRankerPipeline:
+    """Cross-Encoder re-ranker pipeline to refine retrieved context documents."""
+
+    def __init__(self, model_name: str = "BAAI/bge-reranker-large"):
+        self.model = None
+        self.model_name = model_name
+
+    def load(self):
+        if CROSS_ENCODER_AVAILABLE and self.model is None:
+            try:
+                self.model = CrossEncoder(self.model_name)
+            except Exception:
+                self.model = None
+
+    def re_rank(self, query: str, documents: List[str], top_k: int = 5) -> List[str]:
+        if not documents:
+            return []
+        self.load()
+        if self.model is None:
+            return documents[:top_k]
+
+        pairs = [[query, doc] for doc in documents]
+        try:
+            scores = self.model.predict(pairs)
+            scored_docs = sorted(zip(scores, documents), key=lambda x: x[0], reverse=True)
+            return [doc for score, doc in scored_docs[:top_k]]
+        except Exception:
+            return documents[:top_k]
+
+
 class LightRAGEngine:
     """
     LightRAG-based Retrieval Augmented Generation engine.
@@ -130,6 +168,8 @@ class LightRAGEngine:
         embedding_dim: Optional[int] = None,
         llm_base_url: Optional[str] = None,
         llm_api_key: Optional[str] = None,
+        graph_storage: Optional[str] = None,
+        vector_storage: Optional[str] = None,
     ):
         """
         Initialize the LightRAGEngine.
@@ -142,6 +182,8 @@ class LightRAGEngine:
             embedding_dim: Embedding vector dimension (default: EMBEDDING_DIM env or 2560)
             llm_base_url: OpenAI-compatible API base URL (default: LLM_BASE_URL env)
             llm_api_key: API key (default: LLM_API_KEY env or "sk-no-key-required")
+            graph_storage: Override graph storage backend (default: LIGHTRAG_GRAPH_STORAGE env)
+            vector_storage: Override vector storage backend (default: LIGHTRAG_VECTOR_STORAGE env)
         """
         if not LIGHTRAG_AVAILABLE:
             raise ImportError("lightrag not installed. Run: pip install lightrag-hku")
@@ -162,9 +204,7 @@ class LightRAGEngine:
             _read_env_float("EMBEDDING_TIMEOUT", default=30.0)
         )
         # Request-level context length override for llama-server (/v1 compatible path).
-        self.llm_context_length = _read_env_int(
-            "LLM_CONTEXT_LENGTH", default=0
-        )
+        self.llm_context_length = _read_env_int("LLM_CONTEXT_LENGTH", default=0)
         # LightRAG's extract path calls llm_model_func without temperature; OpenAI's
         # default (~1.0) yields noisy delimiter-based records. Use a low default.
         raw_temp = os.getenv("LLM_TEMPERATURE", "0.1").strip()
@@ -175,6 +215,10 @@ class LightRAGEngine:
         # For localhost llama-server, default to not inheriting system HTTP proxy env vars.
         default_trust_env = not _is_local_base_url(self.llm_base_url)
         self.llm_trust_env = _read_env_bool("LLM_TRUST_ENV", default=default_trust_env)
+
+        # Storage engine overrides
+        self.graph_storage = graph_storage or os.getenv("LIGHTRAG_GRAPH_STORAGE")
+        self.vector_storage = vector_storage or os.getenv("LIGHTRAG_VECTOR_STORAGE")
 
         self._rag = None
         self._loop: Optional[asyncio.AbstractEventLoop] = None
@@ -253,11 +297,46 @@ class LightRAGEngine:
     def _get_rag_instance(self) -> LightRAG:
         """Create or return the LightRAG instance."""
         if self._rag is None:
-            self._rag = LightRAG(
-                working_dir=str(self.working_dir),
-                llm_model_func=self._create_llm_func(),
-                embedding_func=self._create_embedding_func(),
-            )
+            kwargs = {
+                "working_dir": str(self.working_dir),
+                "llm_model_func": self._create_llm_func(),
+                "embedding_func": self._create_embedding_func(),
+                "addon_params": {
+                    "entity_types": [
+                        "ValorizationPathway",
+                        "ChemicalCompound",
+                        "ProcessEquipment",
+                        "EnvironmentalIndicator",
+                        "FinancialMetric",
+                    ]
+                },
+            }
+
+            # Configure Graph Storage backend
+            if self.graph_storage:
+                kwargs["graph_storage"] = self.graph_storage
+                if self.graph_storage == "Neo4JStorage":
+                    # Neo4J connection is managed via standard environment variables:
+                    # NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD, NEO4J_WORKSPACE
+                    pass
+
+            # Configure Vector Storage backend
+            if self.vector_storage:
+                kwargs["vector_storage"] = self.vector_storage
+                if self.vector_storage == "MilvusVectorDBStorage":
+                    milvus_uri = os.getenv("MILVUS_URI", "http://127.0.0.1:19530")
+                    milvus_db_name = os.getenv("MILVUS_DB_NAME", "lightrag")
+                    kwargs["vector_db_storage_cls_kwargs"] = {
+                        "uri": milvus_uri,
+                        "db_name": milvus_db_name,
+                        "index_type": "HNSW",
+                        "metric_type": "COSINE",
+                        "hnsw_m": 16,
+                        "hnsw_ef_construction": 360,
+                        "hnsw_ef": 200,
+                    }
+
+            self._rag = LightRAG(**kwargs)
         return self._rag
 
     async def _get_initialized_rag(self) -> LightRAG:
@@ -323,6 +402,11 @@ class LightRAGEngine:
                 raise ValueError(f"Embedding response size mismatch: expected {n}, got {got}")
             if not np.isfinite(vectors).all():
                 raise ValueError("Embedding response contains non-finite values (NaN/Inf).")
+
+            # Truncate using Matryoshka Representation Learning (MRL) if requested dimension is smaller
+            if vectors.shape[1] > self.embedding_dim:
+                vectors = vectors[:, : self.embedding_dim]
+
             return vectors
 
         async def embed_func(texts: list[str]) -> np.ndarray:
@@ -470,8 +554,87 @@ class LightRAGEngine:
         self._run_coroutine(_work())
         return results
 
-    def query(self, query: str, mode: str = "mix") -> QueryResult:
-        """Query the knowledge base."""
+    def route_query(self, query_text: str) -> str:
+        """
+        Classifies query intent to route to the optimal LightRAG search mode:
+        - 'naive': For simple keyword or direct fact extraction.
+        - 'local': For multi-hop relational lookups of local entity neighborhoods.
+        - 'global': For high-level aggregations, policy questions, and overall summaries.
+        - 'hybrid': For complex LCA/TEA calculations requiring both vector and relation context.
+        """
+        lowered = query_text.lower()
+
+        # 1. Broad global summaries/comparisons
+        global_keywords = [
+            "overall",
+            "summary",
+            "trend",
+            "compare",
+            "difference",
+            "policy",
+            "regulation",
+            "global",
+            "standards",
+        ]
+        if any(k in lowered for k in global_keywords):
+            return "global"
+
+        # 2. Multi-hop / relational pathways
+        relational_keywords = [
+            "how to",
+            "relationship",
+            "connect",
+            "pathway",
+            "process",
+            "cycle",
+            "reagent",
+            "equipment",
+        ]
+        if any(k in lowered for k in relational_keywords):
+            return "hybrid"
+
+        # Default fallback
+        return "local"
+
+    def query_with_reranking(self, query: str, mode: str = "mix", top_k: int = 5) -> QueryResult:
+        """Query the database, retrieve context, re-rank it, and generate the final response."""
+        routed_mode = self.route_query(query) if mode == "mix" else mode
+
+        async def _work():
+            rag = await self._get_initialized_rag()
+            # 1. Retrieve context chunks only
+            param = QueryParam(mode=routed_mode, only_need_context=True)
+            raw_context = await rag.aquery(query, param=param)
+
+            # Split raw context into individual paragraphs/chunks
+            chunks = [c.strip() for c in raw_context.split("\n\n") if c.strip()]
+
+            # 2. Re-rank chunks using CrossEncoder
+            pipeline = ReRankerPipeline()
+            reranked_chunks = pipeline.re_rank(query, chunks, top_k=top_k)
+            refined_context = "\n\n".join(reranked_chunks)
+
+            # 3. Generate response using LLM with refined context
+            system_prompt = (
+                "You are a helpful assistant specialized in phosphogypsum valorization. "
+                "Answer the user query based ONLY on the provided context. If the context "
+                "does not contain the answer, say so. Do not make things up."
+            )
+            prompt = f"Context:\n{refined_context}\n\nQuery: {query}\n\nAnswer:"
+            llm_func = self._create_llm_func()
+            answer = await llm_func(prompt, system_prompt=system_prompt)
+            return answer
+
+        answer = self._run_coroutine(_work())
+        return QueryResult(query=query, answer=answer, mode=routed_mode)
+
+    def query(self, query: str, mode: str = "mix", rerank: bool = True) -> QueryResult:
+        """Query the knowledge base with optional intent routing and Cross-Encoder re-ranking."""
+        if rerank:
+            try:
+                return self.query_with_reranking(query, mode=mode)
+            except Exception as e:
+                print(f"Reranked query failed (falling back to standard query): {e}")
 
         async def _work():
             rag = await self._get_initialized_rag()

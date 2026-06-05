@@ -16,6 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 import numpy as np
+
 from pgloop import LCAEngine, TEAEngine, get_pathway
 from pgloop.uncertainty.propagation import JointUncertaintyPropagator
 from pgloop.uncertainty.sensitivity import SensitivityAnalyzer
@@ -44,14 +45,14 @@ def main():
         return {"clcc": float(res.clcc)}
 
     oat_results = analyzer.oat_analysis(
-        parameters=pathway.parameters,
-        calculation_func=clcc_evaluator,
-        output_name="clcc"
+        parameters=pathway.parameters, calculation_func=clcc_evaluator, output_name="clcc"
     )
 
     print("\nOAT Sensitivity Results (Target: CLCC):")
     for r in oat_results[:5]:
-        print(f"  Rank {r.importance_rank:2} | Parameter: {r.parameter:28} | Elasticity: {r.elasticity:+.4f}")
+        print(
+            f"  Rank {r.importance_rank:2} | Parameter: {r.parameter:28} | Elasticity: {r.elasticity:+.4f}"
+        )
 
     # 3. Monte Carlo Joint Uncertainty Propagation
     print("\n--- Running Joint Monte Carlo Propagation (100 iterations) ---")
@@ -59,15 +60,17 @@ def main():
         lca_engine=lca_engine,
         tea_engine=tea_engine,
         n_iterations=100,  # low count for demo speed
-        seed=42
+        seed=42,
     )
 
     # Propagate default distributions
     propagation_result = propagator.propagate(pathway)
-    
+
     print("\nUncertainty Propagation Summary statistics:")
     for metric_name, stats in propagation_result.summary.items():
-        print(f"  {metric_name.upper():12}: Mean = {stats['mean']:10.2f} | Std = {stats['std']:10.2f} | 90% CI = [{stats['p5']:.2f}, {stats['p95']:.2f}]")
+        print(
+            f"  {metric_name.upper():12}: Mean = {stats['mean']:10.2f} | Std = {stats['std']:10.2f} | 90% CI = [{stats['p5']:.2f}, {stats['p95']:.2f}]"
+        )
 
     # 4. Global Sensitivity Analysis (Sobol Indices)
     print("\n--- Running Global Sensitivity Analysis (Sobol Method) ---")
@@ -84,11 +87,7 @@ def main():
                 names.append(name)
                 bounds.append([spec["mean"] - 3 * spec["std"], spec["mean"] + 3 * spec["std"]])
 
-        problem = {
-            "num_vars": len(names),
-            "names": names,
-            "bounds": bounds
-        }
+        problem = {"num_vars": len(names), "names": names, "bounds": bounds}
 
         # Model evaluator function for Sobol sampler
         def model_eval_fn(X_samples):
@@ -104,12 +103,14 @@ def main():
         sobol_results = analyzer.sobol_analysis(
             problem=problem,
             model_eval_fn=model_eval_fn,
-            n_samples=32  # low count for demo speed
+            n_samples=32,  # low count for demo speed
         )
 
         print("\nSobol First-Order Sensitivity Indices (Target: GWP):")
         # Sort by index magnitude
-        sorted_indices = sorted(sobol_results["S1"].items(), key=lambda item: abs(item[1]), reverse=True)
+        sorted_indices = sorted(
+            sobol_results["S1"].items(), key=lambda item: abs(item[1]), reverse=True
+        )
         for name, s1 in sorted_indices[:5]:
             print(f"  - Parameter: {name:28} | S1 Index: {s1:.4f}")
 

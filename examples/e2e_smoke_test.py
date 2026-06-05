@@ -23,7 +23,6 @@ Memory safety notes:
 import argparse
 import gc
 import json
-import os
 import shutil
 import sys
 from functools import partial

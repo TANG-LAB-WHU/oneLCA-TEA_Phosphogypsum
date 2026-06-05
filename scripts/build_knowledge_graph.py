@@ -33,7 +33,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 # Load environment variables
 load_dotenv(PROJECT_ROOT / ".env")
 
-from pgloop.iodata import PDFParser  # noqa: E402
+from pgloop.iodata import IngestionRegistry, PDFParser  # noqa: E402
 from pgloop.knowledge import LightRAGEngine, LLMExtractor, PhosphogypsumKG  # noqa: E402
 from pgloop.knowledge.parameter_ranges import build_parameter_ranges_from_extracted  # noqa: E402
 
@@ -95,8 +95,12 @@ def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
         limit: Max number of PDFs to process (None for all)
     """
     print("\n" + "=" * 60)
-    print("   STEP 1: PDF PARSING")
+    print("   STEP 1: PDF PARSING WITH INCREMENTAL TRACKING")
     print("=" * 60)
+
+    # Initialize registry
+    registry_path = PROCESSED_DIR / "ingestion_registry.json"
+    registry = IngestionRegistry(registry_path)
 
     # Initialize parser
     parser = PDFParser(parser_type=parser_type, output_dir=PARSED_DIR, language="en")
@@ -104,13 +108,38 @@ def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
     print(f"Parser type: {parser_type}")
     print(f"Input:  {UNPARSED_DIR}")
     print(f"Output: {PARSED_DIR}")
+    print(f"Registry: {registry_path}")
 
     # Get PDF files
-    pdf_files = list(UNPARSED_DIR.glob("*.pdf"))
+    pdf_files = sorted(list(UNPARSED_DIR.glob("*.pdf")))
+
+    # Shard files if running in a Slurm Array Job context
+    array_task_id = os.getenv("SLURM_ARRAY_TASK_ID")
+    array_task_count = os.getenv("SLURM_ARRAY_TASK_COUNT")
+    if array_task_id is not None and array_task_count is not None:
+        try:
+            task_id = int(array_task_id)
+            task_count = int(array_task_count)
+            pdf_files = [
+                pdf_files[idx] for idx in range(len(pdf_files)) if idx % task_count == task_id
+            ]
+            print(
+                f"[Slurm Array] Task {task_id}/{task_count} - "
+                f"Sharding assigned {len(pdf_files)} files to this task."
+            )
+        except ValueError:
+            pass
+
+    # Deletion Propagation: remove items from registry that no longer exist in unparsed directory
+    removed_files = registry.get_removed_files(pdf_files)
+    for name in removed_files:
+        print(f"Propagating deletion: Removing {name} from registry state")
+        registry.remove_file(name)
+
     if limit:
         pdf_files = pdf_files[:limit]
 
-    print(f"\nFound {len(pdf_files)} PDF files to process")
+    print(f"\nFound {len(pdf_files)} PDF files to check")
 
     success_count = 0
     error_count = 0
@@ -118,11 +147,12 @@ def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
 
     for i, pdf_path in enumerate(pdf_files, 1):
         try:
-            # Check if already parsed (supports flat, nested, and legacy double-nested layouts)
-            existing_md = _find_existing_parsed_markdown(pdf_path.stem, parser_type=parser_type)
-            if existing_md is not None:
+            # Check registry for unmodified files
+            if not registry.is_modified_or_new(pdf_path):
                 skipped_count += 1
-                print(f"[{i}/{len(pdf_files)}] ⏭ Skipped (already parsed): {pdf_path.name[:50]}")
+                print(
+                    f"[{i}/{len(pdf_files)}] ⏭ Skipped (up-to-date registry): {pdf_path.name[:50]}"
+                )
                 continue
 
             print(f"\n[{i}/{len(pdf_files)}] Parsing: {pdf_path.name[:50]}...")
@@ -152,6 +182,8 @@ def step1_parse_pdfs(parser_type: str = "pymupdf", limit: int = None):
                     saved_display = Path(pdf_path.stem) / "auto" / f"{pdf_path.stem}.md"
                 print(f"    ✓ Saved: {saved_display} ({len(doc.text)} chars)")
 
+            # Record success in registry
+            registry.update_file(pdf_path, parser_type, status="success")
             success_count += 1
 
         except Exception as e:

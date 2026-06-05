@@ -266,10 +266,46 @@ def _convert_volume_to_m3(amount: float, unit_text: str) -> float | None:
     return None
 
 
+PHYSICAL_BOUNDARIES: dict[str, tuple[float, float]] = {
+    "caso4_fraction": (0.0, 1.0),
+    "p2o5_fraction": (0.0, 0.2),  # P2O5 is an impurity, rarely exceeds 20%
+    "f_fraction": (0.0, 0.1),  # Fluorine rarely exceeds 10%
+    "moisture_fraction": (0.0, 1.0),
+    "process_yield_fraction": (0.0, 1.0),
+    "ra226_bq_kg": (0.0, 2000.0),  # Radioactivity Bq/kg is usually < 2000
+    "electricity_kwh_per_t": (0.0, 5000.0),  # Max 5000 kWh/t
+    "steam_mj_per_t": (0.0, 20000.0),  # Max 20000 MJ/t
+    "process_water_m3_per_t": (0.0, 500.0),  # Max 500 m3/t
+    "h2so4_kg_per_t": (0.0, 2000.0),
+    "sodium_hydroxide_kg_per_t": (0.0, 2000.0),
+    "ammonia_kg_per_t": (0.0, 2000.0),
+    "co2_input_kg_per_t": (0.0, 3000.0),
+    "extractant_l_per_t": (0.0, 1000.0),
+    "binder_kg_per_t": (0.0, 2000.0),
+    "leachate_m3_per_t": (0.0, 500.0),
+    "residue_treatment_cost_usd_t": (0.0, 1000.0),
+    "ree_market_price_usd_kg": (0.0, 10000.0),
+    "trl": (1.0, 9.0),
+}
+
+
+def validate_value(key: str, value: float) -> bool:
+    """Validate if value is within physical boundary limits."""
+    if key in PHYSICAL_BOUNDARIES:
+        low, high = PHYSICAL_BOUNDARIES[key]
+        return low <= value <= high
+    return True
+
+
 def _append_metric(metrics: dict[str, list[float]], key: str, value: float | None) -> None:
     if value is None:
         return
     if not math.isfinite(value):
+        return
+    if not validate_value(key, value):
+        print(
+            f"    [Anomaly Rejected] {key} value {value} is outside physical boundaries {PHYSICAL_BOUNDARIES[key]}"
+        )
         return
     metrics[key].append(float(value))
 
@@ -587,6 +623,15 @@ def _merge_with_mapping_rules(
 
 def _build_pathway_profiles(global_samples: dict[str, list[float]]) -> dict[str, Any]:
     pathways_output: dict[str, Any] = {}
+
+    # Try importing and initializing GapFiller
+    try:
+        from pgloop.knowledge.gap_filler import SKLEARN_AVAILABLE, GapFiller
+
+        gap_filler = GapFiller() if SKLEARN_AVAILABLE else None
+    except Exception:
+        gap_filler = None
+
     for pathway_code, pathway_cls in PATHWAYS.items():
         pathway = pathway_cls()
         defaults = pathway.parameters
@@ -596,7 +641,9 @@ def _build_pathway_profiles(global_samples: dict[str, list[float]]) -> dict[str,
         distributions: dict[str, Any] = {}
         inferred_count = 0
         missing_parameters: list[str] = []
+        known_parameters: dict[str, float] = {}
 
+        # First pass: extract parameters matching rules
         for parameter_name, default_value in defaults.items():
             rules = mapping_rules.get(parameter_name, [(parameter_name, _identity)])
             inferred_values, source_names = _merge_with_mapping_rules(global_samples, rules)
@@ -616,8 +663,53 @@ def _build_pathway_profiles(global_samples: dict[str, list[float]]) -> dict[str,
                 if unit:
                     parameters[parameter_name]["unit"] = unit
                 distributions[parameter_name] = stat["distribution"]
+                known_parameters[parameter_name] = stat["median"]
             else:
                 missing_parameters.append(parameter_name)
+
+        # Second pass: fill missing parameters using GapFiller or default fallback
+        for parameter_name in missing_parameters:
+            default_value = defaults[parameter_name]
+            unit = PARAMETER_UNITS.get(parameter_name)
+            pred_used = False
+
+            if gap_filler is not None and known_parameters:
+                try:
+                    pred_res = gap_filler.predict_by_similarity(known_parameters, parameter_name)
+                    if pred_res and not math.isnan(pred_res.predicted_value):
+                        low = (
+                            pred_res.uncertainty_low
+                            if math.isfinite(pred_res.uncertainty_low)
+                            else pred_res.predicted_value * 0.8
+                        )
+                        high = (
+                            pred_res.uncertainty_high
+                            if math.isfinite(pred_res.uncertainty_high)
+                            else pred_res.predicted_value * 1.2
+                        )
+                        parameters[parameter_name] = {
+                            "value": pred_res.predicted_value,
+                            "range": [low, high],
+                            "sample_count": 0,
+                            "default_value": default_value,
+                            "fallback_used": True,
+                            "gap_filled": True,
+                            "gap_fill_method": pred_res.method,
+                            "source_parameters": [],
+                        }
+                        if unit:
+                            parameters[parameter_name]["unit"] = unit
+                        distributions[parameter_name] = {
+                            "type": "triangular",
+                            "min": low,
+                            "mode": pred_res.predicted_value,
+                            "max": high,
+                        }
+                        pred_used = True
+                except Exception:
+                    pass
+
+            if not pred_used:
                 parameters[parameter_name] = {
                     "value": default_value,
                     "range": [default_value, default_value],
@@ -718,4 +810,3 @@ def build_parameter_ranges_from_extracted(
             "distributions": str(pathway_distribution_path),
         },
     }
-

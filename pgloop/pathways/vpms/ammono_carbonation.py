@@ -1,5 +1,4 @@
 from typing import Any, Dict, List
-import numpy as np
 
 try:
     import torch
@@ -7,21 +6,30 @@ except ImportError:
     torch = None
 
 from pydantic import Field
-from .base_vpm import ValorizationPathwayModule, VPMSchema, ValidationReport
+
+from .base_vpm import ValidationReport, ValorizationPathwayModule, VPMSchema
 
 
 class AmmonoCarbonationInputSchema(VPMSchema):
     nh3_pg_ratio: float = Field(..., description="Molar ratio of NH3 to PG (CaSO4)", ge=1.5, le=2.5)
     co2_pressure_bar: float = Field(..., description="CO2 partial pressure", ge=0.5, le=10.0)
-    slurry_density_pct: float = Field(..., description="Slurry solid concentration in wt%", ge=10.0, le=50.0)
-    temperature_c: float = Field(..., description="Reaction temperature in Celsius", ge=20.0, le=90.0)
+    slurry_density_pct: float = Field(
+        ..., description="Slurry solid concentration in wt%", ge=10.0, le=50.0
+    )
+    temperature_c: float = Field(
+        ..., description="Reaction temperature in Celsius", ge=20.0, le=90.0
+    )
     work_input_kwh: float = Field(..., description="Stirring and pumping power in kWh per tonne PG")
 
 
 class AmmonoCarbonationOutputSchema(VPMSchema):
-    conversion_rate: float = Field(..., description="Conversion rate of CaSO4 to CaCO3", ge=0.0, le=1.0)
+    conversion_rate: float = Field(
+        ..., description="Conversion rate of CaSO4 to CaCO3", ge=0.0, le=1.0
+    )
     ammonium_sulfate_yield: float = Field(..., description="Yield of (NH4)2SO4 in kg per kg PG")
-    co2_sequestration_efficiency: float = Field(..., description="CO2 sequestration efficiency fraction", ge=0.0, le=1.0)
+    co2_sequestration_efficiency: float = Field(
+        ..., description="CO2 sequestration efficiency fraction", ge=0.0, le=1.0
+    )
 
 
 class AmmonoCarbonationVPM(ValorizationPathwayModule):
@@ -40,7 +48,7 @@ class AmmonoCarbonationVPM(ValorizationPathwayModule):
             "d_CO2_dt = kLa * (C_CO2_sat - C_CO2) - r_reaction  # Gas-liquid mass transfer of CO2",
             "d_alpha_dt = k_r * C_NH3^2 * C_CO2 * (1 - alpha)^n  # Reaction kinetics of carbonation",
             "r_precipitation = k_p * (S - 1)^p  # Calcium carbonate precipitation kinetics",
-            "d_Ca_dt = r_dissolution - r_precipitation  # Mass conservation of calcium ions"
+            "d_Ca_dt = r_dissolution - r_precipitation  # Mass conservation of calcium ions",
         ]
 
     @property
@@ -74,22 +82,18 @@ class AmmonoCarbonationVPM(ValorizationPathwayModule):
 
             # Gradients
             alpha_t = torch.autograd.grad(
-                alpha_pred, t_pts,
-                grad_outputs=torch.ones_like(alpha_pred),
-                create_graph=True
+                alpha_pred, t_pts, grad_outputs=torch.ones_like(alpha_pred), create_graph=True
             )[0]
 
             # Mass transfer residual: d_C_CO2_dt = kLa * (C_sat - C) - r_reaction
             c_co2_t = torch.autograd.grad(
-                c_co2_pts, t_pts,
-                grad_outputs=torch.ones_like(c_co2_pts),
-                create_graph=True
+                c_co2_pts, t_pts, grad_outputs=torch.ones_like(c_co2_pts), create_graph=True
             )[0]
 
             mass_transfer_residual = c_co2_t - (kla * (c_sat - c_co2_pts) - r_pred)
             kinetic_residual = alpha_t - r_pred
 
-            return torch.mean(mass_transfer_residual ** 2 + kinetic_residual ** 2)
+            return torch.mean(mass_transfer_residual**2 + kinetic_residual**2)
 
         return pinn_loss_fn
 
@@ -110,5 +114,5 @@ class AmmonoCarbonationVPM(ValorizationPathwayModule):
         return ValidationReport(
             is_valid=is_valid,
             metrics={"conversion_mae": float(error), "estimated_conversion": float(est_conversion)},
-            details=f"Validated at {temp} C with molar ratio {nh3_ratio:.2f}. MAE: {error:.4f}"
+            details=f"Validated at {temp} C with molar ratio {nh3_ratio:.2f}. MAE: {error:.4f}",
         )

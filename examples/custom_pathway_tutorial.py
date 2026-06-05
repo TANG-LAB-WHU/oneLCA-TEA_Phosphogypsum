@@ -25,7 +25,7 @@ from pgloop.utils.currency import format_currency
 class CarbonMineralizationPathway(BasePathway):
     """
     Custom Pathway: Carbon Mineralization using Slag and PG.
-    
+
     This process sequestrates CO2 into carbonated building blocks.
     - Replaces natural aggregates.
     - Captures CO2 permanently.
@@ -51,9 +51,9 @@ class CarbonMineralizationPathway(BasePathway):
             "electricity_kwh_per_t": 75.0,
             "additive_kg_per_t": 30.0,
             "water_kg_per_t": 250.0,
-            "product_yield": 1.15,          # 1.15 t block per t PG
-            "avoided_aggregate_kg": 0.90,    # substitutes 0.90 kg aggregate per kg PG
-            "process_co2_emission_kg": 25.0, # process emission
+            "product_yield": 1.15,  # 1.15 t block per t PG
+            "avoided_aggregate_kg": 0.90,  # substitutes 0.90 kg aggregate per kg PG
+            "process_co2_emission_kg": 25.0,  # process emission
         }
 
     def _build_inventory(self) -> LifeCycleInventory:
@@ -62,7 +62,7 @@ class CarbonMineralizationPathway(BasePathway):
         lci = LifeCycleInventory(
             process_name="PG Carbon Mineralization Process",
             functional_unit="1 kg PG",
-            functional_unit_value=1.0
+            functional_unit_value=1.0,
         )
 
         # Inputs
@@ -100,7 +100,7 @@ class CarbonMineralizationPathway(BasePathway):
                 "installation": 1.35,
                 "engineering": 0.12,
                 "contingency": 0.15,
-            }
+            },
         }
 
     def get_opex_data(self) -> Dict:
@@ -108,9 +108,24 @@ class CarbonMineralizationPathway(BasePathway):
         p = self.parameters
         return {
             "materials": [
-                {"name": "Blast furnace slag", "quantity": p["slag_kg_per_t"], "per_kg_input": 1000.0, "price": 0.04},
-                {"name": "Silica additive", "quantity": p["additive_kg_per_t"], "per_kg_input": 1000.0, "price": 0.15},
-                {"name": "CO2 purchase", "quantity": p["co2_captured_kg_per_t"], "per_kg_input": 1000.0, "price": 0.05},
+                {
+                    "name": "Blast furnace slag",
+                    "quantity": p["slag_kg_per_t"],
+                    "per_kg_input": 1000.0,
+                    "price": 0.04,
+                },
+                {
+                    "name": "Silica additive",
+                    "quantity": p["additive_kg_per_t"],
+                    "per_kg_input": 1000.0,
+                    "price": 0.15,
+                },
+                {
+                    "name": "CO2 purchase",
+                    "quantity": p["co2_captured_kg_per_t"],
+                    "per_kg_input": 1000.0,
+                    "price": 0.05,
+                },
             ],
             "utilities": {
                 "electricity_kwh": p["electricity_kwh_per_t"],
@@ -118,7 +133,7 @@ class CarbonMineralizationPathway(BasePathway):
             },
             "labor": {
                 "hours_per_tonne": 0.45,
-            }
+            },
         }
 
     def get_products(self) -> List[Dict]:
@@ -152,11 +167,13 @@ def main():
     # C. Calculate LCA
     print("\n[LCA] Evaluating environmental indices...")
     lca_result = lca_engine.calculate(custom_pathway, functional_unit_value=1.0)
-    
+
     # Notice that climate change (GWP) will be negative due to carbon capture
     gwp = lca_result.impacts.get("climate_change", 0.0)
     print(f"  - Climate Change (GWP)     : {gwp:.3f} kg CO2-eq/t PG")
-    print(f"  - Resource Depletion       : {lca_result.impacts.get('resource_depletion', 0.0):.6f} kg Sb-eq/t PG")
+    print(
+        f"  - Resource Depletion       : {lca_result.impacts.get('resource_depletion', 0.0):.6f} kg Sb-eq/t PG"
+    )
 
     # D. Calculate TEA
     print("\n[TEA] Evaluating financial indices...")
@@ -164,7 +181,9 @@ def main():
     npv_result = tea_engine.calculate_npv(custom_pathway)
 
     print(f"  - Conventional Cost (CLCC) : {format_currency(tea_result.clcc)} / t PG")
-    print(f"  - Societal Cost (SLCC)     : {format_currency(tea_result.slcc)} / t PG (including carbon credit)")
+    print(
+        f"  - Societal Cost (SLCC)     : {format_currency(tea_result.slcc)} / t PG (including carbon credit)"
+    )
     print(f"  - Net Present Value (NPV)  : {format_currency(npv_result['npv'])}")
     print(f"  - Payback Years            : {npv_result['payback_years']:.1f} years")
 

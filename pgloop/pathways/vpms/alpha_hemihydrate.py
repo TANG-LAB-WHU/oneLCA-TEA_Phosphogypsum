@@ -1,4 +1,5 @@
 from typing import Any, Dict, List
+
 import numpy as np
 
 try:
@@ -7,20 +8,29 @@ except ImportError:
     torch = None
 
 from pydantic import Field
-from .base_vpm import ValorizationPathwayModule, VPMSchema, ValidationReport
+
+from .base_vpm import ValidationReport, ValorizationPathwayModule, VPMSchema
 
 
 class AlphaHemihydrateInputSchema(VPMSchema):
     temperature_c: float = Field(..., description="Autoclave temperature", ge=90.0, le=160.0)
     pressure_bar: float = Field(..., description="Steam pressure in bar", ge=1.0, le=6.0)
-    solid_liquid_ratio: float = Field(..., description="Solid to liquid weight ratio", ge=0.1, le=1.5)
-    additive_dosage_pct: float = Field(..., description="Crystallization modifier dosage in wt%", ge=0.0, le=2.0)
+    solid_liquid_ratio: float = Field(
+        ..., description="Solid to liquid weight ratio", ge=0.1, le=1.5
+    )
+    additive_dosage_pct: float = Field(
+        ..., description="Crystallization modifier dosage in wt%", ge=0.0, le=2.0
+    )
     heat_input_mj: float = Field(..., description="Heat input in MJ per tonne of hemihydrate")
 
 
 class AlphaHemihydrateOutputSchema(VPMSchema):
-    hemihydrate_yield: float = Field(..., description="Yield of alpha-hemihydrate phase", ge=0.0, le=1.0)
-    aspect_ratio: float = Field(..., description="Mean aspect ratio of crystals (L/D)", ge=1.0, le=20.0)
+    hemihydrate_yield: float = Field(
+        ..., description="Yield of alpha-hemihydrate phase", ge=0.0, le=1.0
+    )
+    aspect_ratio: float = Field(
+        ..., description="Mean aspect ratio of crystals (L/D)", ge=1.0, le=20.0
+    )
     purity_pct: float = Field(..., description="Hemihydrate purity percentage", ge=80.0, le=100.0)
 
 
@@ -40,7 +50,7 @@ class AlphaHemihydrateVPM(ValorizationPathwayModule):
             "d_alpha_dt = k_c * (C - C_sat)^m  # Crystal growth rate (dissolution-recrystallization kinetics)",
             "d_L_dt = G_L * (1 - exp(-E_aspect))  # Crystal length growth rate",
             "d_D_dt = G_D * exp(-E_aspect)  # Crystal diameter growth rate",
-            "d_H_dt = Q_latent * d_alpha_dt + U * A * (T_steam - T)  # Energy conservation and phase transition"
+            "d_H_dt = Q_latent * d_alpha_dt + U * A * (T_steam - T)  # Energy conservation and phase transition",
         ]
 
     @property
@@ -72,15 +82,13 @@ class AlphaHemihydrateVPM(ValorizationPathwayModule):
 
             # Gradients
             alpha_t = torch.autograd.grad(
-                alpha_pred, t_pts,
-                grad_outputs=torch.ones_like(alpha_pred),
-                create_graph=True
+                alpha_pred, t_pts, grad_outputs=torch.ones_like(alpha_pred), create_graph=True
             )[0]
 
             # Growth rate equation: d_alpha_dt - k_growth * (C - C_sat)^1.5
             rate_law = k_growth * torch.clamp(conc_pts - c_sat, min=0.0) ** 1.5
             residual = alpha_t - rate_law
-            return torch.mean(residual ** 2)
+            return torch.mean(residual**2)
 
         return pinn_loss_fn
 
@@ -100,5 +108,5 @@ class AlphaHemihydrateVPM(ValorizationPathwayModule):
         return ValidationReport(
             is_valid=is_valid,
             metrics={"yield_mae": float(error), "estimated_yield": float(est_yield)},
-            details=f"Validated at {temp} C for {time} min. MAE: {error:.4f}"
+            details=f"Validated at {temp} C for {time} min. MAE: {error:.4f}",
         )

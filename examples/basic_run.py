@@ -31,7 +31,7 @@ def main():
     pathway_code = "PG-SulfurAcid"
     print(f"\nLoading pathway: {pathway_code}...")
     pathway = get_pathway(pathway_code)
-    
+
     print(f"Name: {pathway.name}")
     # Display pathway default parameters
     print("Parameters:")
@@ -41,7 +41,7 @@ def main():
     # 3. Calculate Life Cycle Assessment (LCA) environmental impacts
     print("\n[LCA] Calculating environmental impacts...")
     lca_result = lca_engine.calculate(pathway, functional_unit_value=1.0)
-    
+
     print("Environmental Indicators (per 1 tonne PG treated):")
     for category, value in lca_result.impacts.items():
         unit = lca_engine.get_indicator_unit(category) or "kg-eq"
