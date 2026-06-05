@@ -202,9 +202,7 @@ class LightRAGEngine:
             _read_env_float("EMBEDDING_TIMEOUT", default=30.0)
         )
         # Request-level context length override for llama-server (/v1 compatible path).
-        self.llm_context_length = _read_env_int(
-            "LLM_CONTEXT_LENGTH", default=0
-        )
+        self.llm_context_length = _read_env_int("LLM_CONTEXT_LENGTH", default=0)
         # LightRAG's extract path calls llm_model_func without temperature; OpenAI's
         # default (~1.0) yields noisy delimiter-based records. Use a low default.
         raw_temp = os.getenv("LLM_TEMPERATURE", "0.1").strip()
