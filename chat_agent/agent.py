@@ -1,12 +1,13 @@
 """
 Provides the PhosphogypsumAgent class, which implements an OpenAI tool-calling
-loop (ReAct/Planning) to orchestrate PhosphogypsumBot's backend tools.
+loop (ReAct/Plan-and-Solve) to orchestrate PhosphogypsumBot's backend tools.
 """
 
 import inspect
 import json
 import os
-from typing import Callable
+import re
+from typing import Callable, Optional
 
 try:
     from openai import OpenAI
@@ -31,8 +32,6 @@ def function_to_schema(func: Callable) -> dict:
     # Parse parameter descriptions from docstring
     param_descs = {}
     if "Args:" in doc:
-        import re
-
         args_section = doc.split("Args:")[1]
         for next_section in ["Returns:", "Raises:", "Yields:", "Examples:"]:
             if next_section in args_section:
@@ -87,36 +86,42 @@ def function_to_schema(func: Callable) -> dict:
 class PhosphogypsumAgent:
     """
     The central orchestration agent for PhosphogypsumBot.
-    Connects user queries to backend physical solvers and LCA/TEA tools via LLM function calling.
+    Connects user queries to backend physical solvers and LCA/TEA tools via LLM function calling
+    using a Plan-and-Solve autonomous reasoning cycle.
     """
 
-    def __init__(self, base_url: str = None, api_key: str = None, model: str = None):
+    def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None, model: Optional[str] = None):
         if OpenAI is None:
             raise ImportError(
                 "The 'openai' package is required for the Chat Agent. Install with: pip install openai"
             )
 
-        # Default to local llama-server if not specified
+        # Default to local server if not specified
         self.base_url = base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
         self.api_key = api_key or os.getenv("LLM_API_KEY", "sk-no-key-required")
-        self.model = model or os.getenv("LLM_MODEL", "qwen2.5:32b")
+        self.model = model or os.getenv("LLM_MODEL", "Qwen/Qwen3.6-35B-A3B-Instruct")
 
         self.client = OpenAI(base_url=self.base_url, api_key=self.api_key)
 
         self.tools = AVAILABLE_TOOLS
         self.tool_schemas = [function_to_schema(func) for func in self.tools.values()]
 
-        # System instructions
+        # System instructions with Plan-and-Solve Chain-of-Thought (CoT)
         self.system_prompt = inspect.cleandoc("""
-            You are PhosphogypsumBot, a highly advanced, physics-informed AI agent specializing in Industrial Phosphogypsum Engineering, Life Cycle Assessment (LCA), and Techno-Economic Analysis (TEA).
-            You have access to a suite of backend tools (Python functions) that run rigorous thermodynamic physics solvers, MCMC uncertainty calibrations, and GraphRAG knowledge retrievals.
+            You are PhosphogypsumBot, a world-class, physics-informed AI engineering agent specializing in Industrial Phosphogypsum (PG) Valorization, ISO 14040/14044 Life Cycle Assessment (LCA), Techno-Economic Analysis (TEA), and Circular Economy Policy Design.
 
-            Follow these strict rules:
-            1. Always base your technical claims on the tools provided. If asked about a pathway's GWP, NPV, or viability, immediately CALL the `calculate_lca_tea` or `rank_all_pathways` tool.
-            2. If asked about specific literature or reaction kinetics, CALL the `search_literature` tool.
-            3. Be professional, scientifically rigorous, and structured in your final answers. Use markdown tables and bullet points.
-            4. If a tool returns an error, inform the user clearly and suggest alternative actions.
-            5. You can call multiple tools in sequence if the question requires it.
+            You have access to a suite of deterministic backend Python tools (thermodynamic physics solvers, Bayesian reverse design optimizers, benefit compensation calculators, MCMC uncertainty samplers, and live IoT telemetry streams).
+
+            Follow these strict engineering rules:
+            1. Scientific Grounding: NEVER guess numerical values (GWP, NPV, CAPEX, CLCC, reaction temperatures). Always execute the appropriate tool (`calculate_lca_tea`, `optimize_reverse_design`, `optimize_benefit_compensation`, etc.) to calculate them deterministically.
+            2. Multi-Step Plan-and-Solve: For complex inquiries (e.g., assessing pathway feasibility, balancing subsidies under "以渣定产" regulations, or optimizing process parameters), form a step-by-step plan:
+               - Step 1: Query literature/pathway registry (`get_available_pathways` / `search_literature`)
+               - Step 2: Calculate forward LCA/TEA footprints (`calculate_lca_tea`)
+               - Step 3: Run inverse Bayesian parameter design if constraints are requested (`optimize_reverse_design`)
+               - Step 4: Calculate financial compensation and shadow pricing if deficits exist (`optimize_benefit_compensation`)
+               - Step 5: Synthesize a 5D TEPES (Technical, Economic, Environmental, Policy, Social) executive decision report.
+            3. Rigorous Formatting: Structure your final reports with clear Markdown headings, comparative tables, LaTeX formulas, and bulleted takeaways.
+            4. Error Recovery: If a tool encounters an error, state the cause clearly and call a fallback tool or alternative parameter set.
         """)
 
         self.messages = [{"role": "system", "content": self.system_prompt}]
@@ -127,12 +132,12 @@ class PhosphogypsumAgent:
         """
         self.messages.append({"role": "user", "content": user_input})
 
-        print(f"\n[Agent] Thinking... (Model: {self.model})")
+        print(f"\n[PhosphogypsumBot] Analyzing intent & planning actions... (Model: {self.model})")
 
-        # Max iteration limit to prevent infinite loops
-        max_iterations = 5
+        # Allow up to 10 iterations for multi-hop tool execution
+        max_iterations = 10
 
-        for _ in range(max_iterations):
+        for iteration in range(max_iterations):
             try:
                 api_kwargs = {"model": self.model, "messages": self.messages, "temperature": 0.1}
                 if self.tool_schemas:
@@ -141,17 +146,17 @@ class PhosphogypsumAgent:
 
                 response = self.client.chat.completions.create(**api_kwargs)
             except Exception as e:
-                return f"[Agent Error] Connection failed: {e}. Is your LLM server ({self.base_url}) running?"
+                return f"[Agent Error] Connection failed: {e}. (Base URL: {self.base_url}, Model: {self.model})"
 
             response_message = response.choices[0].message
 
             # If the model didn't call any tools, it's a final text response
             if not response_message.tool_calls:
-                final_answer = response_message.content
+                final_answer = response_message.content or ""
                 self.messages.append({"role": "assistant", "content": final_answer})
                 return final_answer
 
-            # If it called tools, we append the assistant message as a dict and execute the tools
+            # If it called tools, append the assistant message and execute each tool
             msg_dict = {
                 "role": "assistant",
                 "content": response_message.content,
@@ -171,19 +176,19 @@ class PhosphogypsumAgent:
                 function_name = tool_call.function.name
                 function_args = tool_call.function.arguments
 
-                print(f"[Agent] Calling tool: {function_name} with arguments: {function_args}")
+                print(f"[Agent Step {iteration+1}] Calling Tool: {function_name}({function_args})")
 
                 # Execute the tool
                 try:
-                    kwargs = json.loads(function_args)
+                    kwargs = json.loads(function_args) if function_args else {}
                     func = self.tools.get(function_name)
 
                     if func:
                         tool_result = str(func(**kwargs))
                     else:
-                        tool_result = f"Error: Tool {function_name} not found."
+                        tool_result = f"Error: Tool '{function_name}' not found."
                 except Exception as e:
-                    tool_result = f"Error executing {function_name}: {str(e)}"
+                    tool_result = f"Error executing '{function_name}': {str(e)}"
 
                 # Append tool result to history
                 self.messages.append(
@@ -195,4 +200,4 @@ class PhosphogypsumAgent:
                     }
                 )
 
-        return "[Agent Error] Max tool iterations reached. Could not formulate a final answer."
+        return "[Agent Error] Max tool iterations reached without formulating a final response."
