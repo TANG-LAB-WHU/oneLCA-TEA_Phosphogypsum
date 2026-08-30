@@ -65,6 +65,7 @@ for d in [PARSED_DIR, LIGHTRAG_DIR, RAGANYTHING_DIR, KG_DIR, EXTRACTED_DIR, PARA
 def _parsed_markdown_candidates(pdf_stem: str, parser_type: str | None = None) -> list[Path]:
     """Known parsed markdown layouts for each parser and legacy MinerU runs."""
     pymupdf_candidates = [PARSED_DIR / f"{pdf_stem}.md"]
+    docling_candidates = [PARSED_DIR / pdf_stem / f"{pdf_stem}.md"]
     mineru_candidates = [
         PARSED_DIR / pdf_stem / f"{pdf_stem}.md",
         PARSED_DIR / pdf_stem / "auto" / f"{pdf_stem}.md",
@@ -73,9 +74,11 @@ def _parsed_markdown_candidates(pdf_stem: str, parser_type: str | None = None) -
 
     if parser_type == "pymupdf":
         return pymupdf_candidates
+    if parser_type == "docling":
+        return docling_candidates
     if parser_type == "mineru":
         return mineru_candidates
-    return pymupdf_candidates + mineru_candidates
+    return pymupdf_candidates + docling_candidates + mineru_candidates
 
 
 def _find_existing_parsed_markdown(pdf_stem: str, parser_type: str | None = None) -> Path | None:
@@ -496,9 +499,9 @@ def main():
     )
     parser.add_argument(
         "--parser",
-        choices=["pymupdf", "mineru"],
-        default="mineru",
-        help="PDF parser to use (default: mineru)",
+        choices=["pymupdf", "docling", "mineru"],
+        default="docling",
+        help="PDF parser to use (default: docling)",
     )
     parser.add_argument(
         "--limit",

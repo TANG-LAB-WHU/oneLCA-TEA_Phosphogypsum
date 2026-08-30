@@ -20,6 +20,13 @@ try:
 except ImportError:
     PYMUPDF_AVAILABLE = False
 
+try:
+    from docling.document_converter import DocumentConverter
+
+    DOCLING_AVAILABLE = True
+except ImportError:
+    DOCLING_AVAILABLE = False
+
 # MinerU: probe pipeline-only imports. Do NOT import mineru.cli.common here — it pulls
 # VLM/office backends and optional deps; a partial env then looked like "MinerU not installed".
 _MINERU_IMPORT_ERROR: Optional[BaseException] = None
@@ -124,6 +131,9 @@ class PDFParser:
         if parser_type == "pymupdf" and not PYMUPDF_AVAILABLE:
             raise ImportError("PyMuPDF not installed. Run: pip install PyMuPDF")
 
+        if parser_type == "docling" and not DOCLING_AVAILABLE:
+            raise ImportError("Docling not installed. Run: pip install docling")
+
         if parser_type == "mineru" and not MINERU_AVAILABLE:
             msg = (
                 "MinerU Python pipeline could not be loaded (import/API mismatch or missing "
@@ -151,6 +161,8 @@ class PDFParser:
 
         if self.parser_type == "pymupdf":
             return self._parse_with_pymupdf(filepath)
+        elif self.parser_type == "docling":
+            return self._parse_with_docling(filepath)
         elif self.parser_type == "mineru":
             return self._parse_with_mineru(filepath)
         elif self.parser_type == "mineru_cli":
@@ -159,6 +171,33 @@ class PDFParser:
             return self._parse_mineru_output(filepath)
         else:
             raise ValueError(f"Unknown parser type: {self.parser_type}")
+
+    def _parse_with_docling(self, filepath: Path) -> ParsedDocument:
+        """Parse PDF using IBM Docling for fast, accurate table and structure extraction."""
+        if not DOCLING_AVAILABLE:
+            raise ImportError("Docling not installed. Run: pip install docling")
+
+        converter = DocumentConverter()
+        result = converter.convert(str(filepath))
+        doc = result.document
+        md_text = doc.export_to_markdown()
+
+        pdf_name = filepath.stem
+        local_md_dir = self.output_dir / pdf_name
+        local_md_dir.mkdir(parents=True, exist_ok=True)
+        md_path = local_md_dir / f"{pdf_name}.md"
+        md_path.write_text(md_text, encoding="utf-8")
+
+        pages_count = len(doc.pages) if hasattr(doc, "pages") else 1
+
+        return ParsedDocument(
+            filepath=str(filepath),
+            title=pdf_name,
+            text=md_text,
+            pages=pages_count,
+            tables=[],
+            metadata={"parser": "docling", "source": str(filepath)},
+        )
 
     def _parse_with_pymupdf(self, filepath: Path) -> ParsedDocument:
         """Parse PDF using PyMuPDF."""
