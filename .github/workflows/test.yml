@@ -29,7 +29,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install --extra-index-url https://download.pytorch.org/whl/cpu torch
-          pip install -e ".[dev,ai,docling,stochastic_dynamics]"
+          pip install -e ".[dev,ai,docling,stochastic_dynamics,chemicals]"
 
       - name: Check version synchronization
         run: |
