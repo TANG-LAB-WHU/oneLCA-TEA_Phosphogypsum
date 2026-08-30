@@ -104,3 +104,4 @@ temp_*
 # Local task notes
 TODO_list/slurm_jobs/logs/
 data/raw/papers/parsed/
+HELP_docs/
