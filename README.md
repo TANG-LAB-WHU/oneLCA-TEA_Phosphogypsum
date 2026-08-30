@@ -105,11 +105,11 @@ cd oneLCA-TEA_Phosphogypsum
 python -m venv venv
 source venv/bin/activate  # Windows: .\venv\Scripts\activate
 
-# Install the package in editable mode
+# Install the package in editable mode (base)
 pip install -e .
 
-# Install package with optional extras (AI, Visualization, Dev tools, Docling, IoT)
-pip install -e ".[ai,viz,docling,dev,iot]"
+# Or install with all features (AI, Dashboard, Docling, Materials, GraphRAG, IoT)
+pip install -e ".[all]"
 ```
 
 ### HPC Deployment on Wuhan University Supercomputing Center (WHU-SCC)
