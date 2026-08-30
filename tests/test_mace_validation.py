@@ -11,11 +11,12 @@ Validates:
 import os
 import pytest
 import numpy as np
-from ase.build import bulk
 
-# Skip entire test file if mace is not installed or importable
+# Skip entire test file if ase or mace is not installed or importable
+ase = pytest.importorskip("ase")
 mace = pytest.importorskip("mace")
 
+from ase.build import bulk
 from pgloop.chemicals.mace_interface import get_mace_calculator, is_mace_available
 from pgloop.chemicals.lattice_optimizer import optimize_structure, fit_eos
 from pgloop.chemicals.eval_mace import evaluate_mace_on_mp, fetch_mp_data

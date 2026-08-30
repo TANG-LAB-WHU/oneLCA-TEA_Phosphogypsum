@@ -97,7 +97,7 @@ Repository = "https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum.git"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["pgloop*"]
+include = ["pgloop*", "chat_agent*"]
 
 [tool.black]
 line-length = 100
@@ -116,6 +116,7 @@ ignore = ["E501"]
 "tests/**/*" = ["E402"]
 
 [tool.pytest.ini_options]
+pythonpath = ["."]
 filterwarnings = [
     "ignore:distutils Version classes are deprecated\\. Use packaging\\.version instead\\.:DeprecationWarning:thop\\.profile",
 ]
