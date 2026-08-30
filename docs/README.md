@@ -41,7 +41,7 @@ Rigorous mathematical, physical, and economic modeling underpinning the pathway 
     *   CAPEX, OPEX, and revenue breakdowns.
 
 ### 5. Physics-Informed VPM (Valorization Pathway Module) Systems
-> **VPM Definition**: **VPM** stands for **Valorization Pathway Module** (资源化高值转化路径模块). It serves as the standardized, physics-constrained software abstraction for individual industrial phosphogypsum valorization routes. Each VPM strictly defines governing reaction kinetics, mass/energy conservation equations, input energy vectors $U_{in}$ (Heat, Work, Money), and NORM radionuclide partition boundaries.
+> **VPM Definition**: **VPM** stands for **Valorization Pathway Module**. It serves as the standardized, physics-constrained software abstraction for individual industrial phosphogypsum valorization routes. Each VPM strictly defines governing reaction kinetics, mass/energy conservation equations, input energy vectors $U_{in}$ (Heat, Work, Money), and NORM radionuclide partition boundaries.
 
 Detailed explanation of physical kinetics, thermodynamics, and mass transfer governing equations for each chemical pathway:
 *   **[B1 VPM_carbothermic_reduction: Carbothermic Reduction](vpm_b1_carbothermic_reduction.md)**: Thermochemical reduction kinetics of PG to recover sulfuric acid and cement clinker.
