@@ -152,7 +152,7 @@ This layer transforms raw, heterogeneous industrial data, scientific papers, and
 ### Module A1: Data Ingestion & ETL Pipeline
 *   **Implementation Location**: [pgloop/iodata/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/)
 *   **Function:** Handles document extraction and standardization.
-    *   **PDF Ingestion:** Uses a PyMuPDF and MinerU parsing engine ([pdf_parser.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/pdf_parser.py)) for parsing complex tables, layouts, and OCR text in scientific PDFs.
+    *   **PDF Ingestion:** Uses a multi-engine parsing architecture ([pdf_parser.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/pdf_parser.py)) featuring **IBM Docling** for high-precision table and formula extraction, alongside **MinerU** and **PyMuPDF**.
     *   **Web Scraper:** Collects regional electricity grid data, chemical prices, and environmental standards ([web_scraper.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/web_scraper.py)).
     *   **Data Standardizer:** Normalizes inputs into uniform industrial metrics ([data_standardizer.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/iodata/data_standardizer.py)).
 
@@ -264,13 +264,13 @@ This layer converts physical and economic metrics into policy recommendations an
 *   **Implementation Location**: [pgloop/visualization/report.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/pgloop/visualization/report.py)
 *   **Function:** Compiles analytical outputs, MCDA rankings, and uncertainty charts into standard HTML and Excel spreadsheets for engineering reviews.
 
-### Module E3: LLM ReAct Chat Agent
+### Module E3: Autonomous Plan-and-Solve Agent (10-Tool Portfolio)
 *   **Implementation Location**: [chat_agent/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/chat_agent/)
-*   **Function:** Hosts a terminal CLI and API connector ([agent.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/chat_agent/agent.py)) driven by a ReAct reasoning loop. The agent automatically parses Python signatures into JSON schema tool formats ([tools.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/chat_agent/tools.py)), allowing it to call core backend modules (e.g., executing LCA-TEA simulations, searching scientific literature via LightRAG, ranking pathways).
+*   **Function:** Hosts an autonomous engineering agent ([agent.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/chat_agent/agent.py)) driven by a multi-step **Plan-and-Solve Chain-of-Thought (CoT)** reasoning loop. The agent interfaces with 10 deterministic backend Python tools ([tools.py](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/chat_agent/tools.py)), including Bayesian Reverse Design (`optimize_reverse_design`), Benefit Compensation (`optimize_benefit_compensation`), MCMC Parameter Calibration (`calibrate_process_parameters`), Crystal Properties (`predict_crystal_properties`), Live IoT Telemetry (`query_realtime_telemetry`), Forward LCA/TEA (`calculate_lca_tea`), and 5D TEPES Ranking (`rank_all_pathways`).
 
-### Module E4: WHU-SCC Slurm Clusters
+### Module E4: WHU-SCC Slurm Clusters & llama.cpp Inference
 *   **Implementation Location**: [slurm_jobs/](file:///Users/siqi/GitHub/oneLCA-TEA_Phosphogypsum/slurm_jobs/)
-*   **Function:** Orchestrates training and inference on the Wuhan University Supercomputing Center. Manages conda environments, local HuggingFace/ollama servers, and implements **NUMA node binding (`numactl --cpunodebind`)** to optimize EPYC CPU memory alignment.
+*   **Function:** Orchestrates training and inference on the Wuhan University Supercomputing Center. Standardized exclusively on **`llama.cpp` (`llama-server`)** with multi-hardware auto-routing (`a100x4` GPU, `gpu` V100, and `9a14a` AMD EPYC CPU), implementing **NUMA memory interleaving (`numactl --interleave=all`)** and automated process lifecycle traps.
 
 ---
 
@@ -286,15 +286,55 @@ This layer converts physical and economic metrics into policy recommendations an
 *   **Phase 4: Agentic AI & 10-Tool Plan-and-Solve (v0.6.0 - Current)**
     *   *Achievements*: Expanding to full 10-tool autonomous agent portfolio, Plan-and-Solve CoT reasoning loop, IBM Docling SOTA literature ingestion, and unified llama.cpp WHU-SCC Slurm orchestration.
 
-### Next-Phase Plans: Road to Production (v0.5.0)
+### Next-Phase Plans: Road to Production (v0.7.0 ~ v1.0.0)
 
-| Focus Area | Target Date | Module Focus | Core Deliverable | Success Criteria |
+| Focus Area | Target Version | Module Focus | Core Deliverable | Success Criteria |
 | :--- | :--- | :--- | :--- | :--- |
-| **Multi-Scale Scaling** | Month 19-21 | Group C & E | Large-scale Neo4j & Milvus deployment | Ingestion of >5,000 papers; latency < 200ms |
-| **Production PINNs** | Month 22-24 | Group B | Fokker-Planck stiff boundary optimizations | Integration error < 1% vs CFD benchmarks |
-| **Material MACE Validation**| Month 25-26 | chemicals | Machine learning interatomic properties | MACE validation error < 0.05 eV/atom |
-| **Field Validation** | Month 27-28 | Field Test | Real-time plant edge server integration | Real-time sensor-to-dashboard pipeline |
+| **Docling Literature Scale** | v0.7.0 | Group A | High-speed batch parsing of 5,000+ solid waste papers on WHU-SCC | Complete parameter range graph across all pathways |
+| **Domain SFT Fine-Tuning** | v0.8.0 | `Phosphogypsum-Qwen-32B` | LoRA fine-tuning on 50k Plan-and-Solve tool trajectories | Tool calling accuracy > 98.5% on complex chemical prompts |
+| **Bulk Solid Waste Expansion** | v0.9.0 | VPMs & Pathways | Expansion to Red Mud, Steel Slag, Fly Ash, and Coal Gangue | Cross-waste valorization recipe optimization |
+| **Hazardous Waste Confinement**| v1.0.0 | Hazardous VPMs | Heavy-metal leaching kinetics, NORM radioactive partition | Compliance with GB 18598 & EPA RCRA hazardous limits |
 
-> [!WARNING]
-> **Risk Mitigation (Stiffness in PDEs)**
-> Chemical kinetics often exhibit extreme stiffness (fast reaction vs slow diffusion). In Phase 6, we must prioritize testing our multiscale MPINNs on stiff CFD benchmarks (e.g. Merseburg reactor profiles) to ensure numerical stability when solving high-pressure crystallization models.
+---
+
+## 9. Strategic Evolution: From Phosphogypsum to All Bulk & Hazardous Solid Wastes
+
+Phosphogypsum serves as the pilot proving ground for this physics-informed agentic architecture. The overarching mission of this framework is to generalize across all industrial bulk solid wastes (大宗工业固废) and hazardous wastes (危险废物):
+
+```mermaid
+graph TD
+    subgraph Stage1 ["Stage 1: PhosphogypsumBot (v0.6.0 - Validated)"]
+        PG["Phosphogypsum (磷石膏)"]
+        PG --> VPM_PG["5 VPMs: Acid Leaching, Carbothermic, Calcination, Merseburg, REE"]
+        PG --> Agent_PG["10-Tool Plan-and-Solve Agent"]
+    end
+
+    subgraph Stage2 ["Stage 2: Bulk Solid Waste Matrix (大宗固废通用化 - v0.9.0)"]
+        Bulk["Bulk Industrial Wastes"]
+        RM["Red Mud (赤泥 - Bayer/Sintering)"]
+        SS["Steel Slag (钢渣 / 高炉矿渣)"]
+        FA["Coal Fly Ash (粉煤灰 / 煤矸石)"]
+        CS["Carbide Slag (电石渣)"]
+        
+        Bulk --> RM & SS & FA & CS
+        RM & SS & FA & CS --> Unified_VPM["Generalized VPM & Multi-Waste Co-Processing Engine"]
+    end
+
+    subgraph Stage3 ["Stage 3: Hazardous Solid Waste Confinement (危废高值无害化 - v1.0.0)"]
+        Haz["Hazardous Waste Stream"]
+        MSWI["Incineration Fly Ash (垃圾焚烧飞灰)"]
+        EP["Electroplating Sludge (电镀污泥)"]
+        SM["Smelting Residues (有色冶炼废渣)"]
+        
+        Haz --> MSWI & EP & SM
+        MSWI & EP & SM --> Haz_Solver["Multi-Phase Leaching & Radionuclide / Heavy-Metal Immobilization Engine"]
+    end
+
+    Stage1 ==> Stage2 ==> Stage3
+```
+
+### Strategic Milestones for Generalization:
+1. **Universal Chemical & Phase Ontology**: Expand `pgloop/chemicals/` to cover aluminum silicate complexes (赤泥铝硅酸盐相), heavy-metal spinels (重金属尖晶石固溶相), and chloride volatilization kinetics.
+2. **Co-Processing & Multi-Feedstock Blend Optimizer**: Transfer the multi-component continuous simplex optimization engine (proven in `PyroBot`) to multi-solid-waste synergistic recipes (e.g., Red Mud + Phosphogypsum + Steel Slag green geopolymer cement).
+3. **Proprietary Open-Weight Foundation Model**: Release **`SolidWaste-Qwen-32B-Instruct`**, an open-source, physics-constrained large language model for international circular economy research.
+
