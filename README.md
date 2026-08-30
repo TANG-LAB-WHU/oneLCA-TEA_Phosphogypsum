@@ -3,7 +3,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Inference: llama.cpp](https://img.shields.io/badge/inference-llama.cpp-orange.svg)](https://github.com/ggerganov/llama.cpp)
-[![Version](https://img.shields.io/badge/version-v0.5.0-green.svg)](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)
+[![Version](https://img.shields.io/badge/version-v0.6.0-green.svg)](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)
 
 **PhosphogypsumBot** is a physics-informed, multimodal intelligent agent framework designed to quantify and mitigate uncertainties in industrial phosphogypsum (PG) valorization, Life Cycle Assessment (LCA), and Techno-Economic Analysis (TEA).
 

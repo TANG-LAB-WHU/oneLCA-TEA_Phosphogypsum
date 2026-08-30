@@ -5,7 +5,7 @@
 > **Project Vision Statement**
 > To transform phosphogypsum (PG) utilization from empirical trial-and-error chemistry into a highly predictable, multi-objective, and physics-constrained engineering science. By combining **Physics-Informed Artificial Intelligence (PI-AI)** with **Bayesian Uncertainty Quantification (UQ)**, PhosphogypsumBot serves as an intelligent decision-support system that balances **Technology, Economy, Policy, Environment, and Society (TEPES)** to discover, evaluate, and scale revolutionary PG valorization pathways.
 >
-> **Implementation Status (v0.5.0)**: The core modules of the platform have been successfully built, integrated, and validated on the **Wuhan University Supercomputing Center (WHU-SCC)**.
+> **Implementation Status (v0.6.0)**: The core modules of the platform have been successfully built, integrated, and validated on the **Wuhan University Supercomputing Center (WHU-SCC)**.
 
 ---
 
@@ -281,8 +281,10 @@ This layer converts physical and economic metrics into policy recommendations an
     *   *Achievements*: Authoring core mathematical models (LCA/TEA engines). Constructing Neo4j databases and parser pipelines (MinerU/PyMuPDF pdf extraction).
 *   **Phase 2: Physics-Informed AI (v0.3.0)**
     *   *Achievements*: Writing Fokker-Planck solvers and VPM kinetics. Building MCMC chain samplers (Metropolis-Hastings, Hamiltonian MC) for Bayesian uncertainty.
-*   **Phase 3: Decision & System Optimization (v0.5.0 - Current)**
-    *   *Achievements*: Integrating the Reverse Design GP optimizer, Benefit Compensation model, and MCDA TOPSIS ranker. Authoring the Streamlit dashboard and implementing the ReAct Chat Agent. Deploying on WHU-SCC Slurm clusters with GPU acceleration.
+*   **Phase 3: Decision & System Optimization (v0.5.0)**
+    *   *Achievements*: Integrating the Reverse Design GP optimizer, Benefit Compensation model, and MCDA TOPSIS ranker. Deploying on WHU-SCC Slurm clusters with GPU acceleration.
+*   **Phase 4: Agentic AI & 10-Tool Plan-and-Solve (v0.6.0 - Current)**
+    *   *Achievements*: Expanding to full 10-tool autonomous agent portfolio, Plan-and-Solve CoT reasoning loop, IBM Docling SOTA literature ingestion, and unified llama.cpp WHU-SCC Slurm orchestration.
 
 ### Next-Phase Plans: Road to Production (v0.5.0)
 
