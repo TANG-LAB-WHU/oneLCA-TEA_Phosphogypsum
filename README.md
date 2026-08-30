@@ -138,7 +138,7 @@ Launch the autonomous AI agent in command-line interactive mode or single-query 
 python -m chat_agent.cli
 
 # Or run a single query directly:
-python -m chat_agent.cli --query "请对比 PG-CementProd 与 PG-REEextract 的 LCA 碳足迹，并进行以渣定产政策下的最优路径推荐。"
+python -m chat_agent.cli --query "Compare the LCA carbon footprints of PG-CementProd and PG-REEextract, and recommend the optimal circular pathway under industrial policy constraints."
 ```
 
 Or call programmatically via Python:
@@ -151,7 +151,10 @@ agent = PhosphogypsumAgent(
     model="Qwen/Qwen3.6-35B-A3B-Instruct"
 )
 
-response = agent.chat("针对磷石膏分解制酸（PG-SulfurAcid）技术，进行贝叶斯逆向参数反演，要求 GWP < 120 kg CO2-eq 且 NPV > 20 $/t。")
+response = agent.chat(
+    "For the phosphogypsum decomposition to sulfuric acid (PG-SulfurAcid) pathway, "
+    "perform Bayesian reverse parameter inversion to satisfy GWP < 120 kg CO2-eq and NPV > $20/t."
+)
 print(response)
 ```
 
