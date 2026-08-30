@@ -172,7 +172,7 @@ class LLMExtractor:
     """
     Extracts structured data from text using LLMs.
 
-    Uses an OpenAI-compatible Chat Completions API (llama-server, OpenAI, vLLM, etc.).
+    Uses llama-server's OpenAI-compatible Chat Completions API.
     Configure via LLM_BASE_URL, LLM_API_KEY, LLM_MODEL or constructor arguments.
     """
 

@@ -47,6 +47,7 @@ def test_embeddings():
     if not os.getenv("LLM_BASE_URL"):
         pytest.skip("LLM_BASE_URL not set (optional integration test)")
 
+    pytest.importorskip("openai")
     model = EmbeddingModel()
     text1 = "phosphogypsum treatment via cement production."
     text2 = "Using phosphogypsum as an additive in the cement industry."
@@ -74,6 +75,7 @@ def test_llm_extraction(setup_env):
     if not os.getenv("LLM_BASE_URL"):
         pytest.skip("LLM_BASE_URL not found in .env (optional integration test)")
 
+    pytest.importorskip("openai")
     extractor = LLMExtractor()
 
     text = (
@@ -91,6 +93,7 @@ def test_rag_flow(setup_env, temp_test_dir):
     if not os.getenv("LLM_BASE_URL"):
         pytest.skip("LLM_BASE_URL not found in .env (optional integration test)")
 
+    pytest.importorskip("lightrag")
     rag = LightRAGEngine(working_dir=temp_test_dir / "lightrag")
 
     # Index document

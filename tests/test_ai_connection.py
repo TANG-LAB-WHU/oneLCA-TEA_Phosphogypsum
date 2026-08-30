@@ -13,9 +13,7 @@ def test_llm_connection():
     if not base_url:
         pytest.skip("LLM_BASE_URL not set")
 
-    api_key = os.getenv("LLM_API_KEY", "sk-no-key-required")
-    model = os.getenv("LLM_MODEL", "qwen3.5:35b")
-
+    openai = pytest.importorskip("openai")
     from openai import OpenAI
 
     client = OpenAI(base_url=base_url, api_key=api_key)
@@ -35,10 +33,7 @@ def test_embedding_connection():
     if not base_url:
         pytest.skip("LLM_BASE_URL not set")
 
-    api_key = os.getenv("LLM_API_KEY", "sk-no-key-required")
-    model = os.getenv("EMBEDDING_MODEL", "qwen3-embedding:4b")
-    expected_dim = int(os.getenv("EMBEDDING_DIM", "2560"))
-
+    openai = pytest.importorskip("openai")
     from openai import OpenAI
 
     client = OpenAI(base_url=base_url, api_key=api_key)
@@ -56,8 +51,7 @@ def test_config_loading():
         config = yaml.safe_load(f)
 
     assert "ai" in config
-    assert config["ai"]["llm_provider"] == "sk-no-key-required"
-    assert "sk-no-key-required" in config["ai"]
+    assert "llama-server" in config["ai"]
     assert "gemini" not in config["ai"]
 
 
