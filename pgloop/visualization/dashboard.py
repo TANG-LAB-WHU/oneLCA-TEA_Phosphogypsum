@@ -153,7 +153,7 @@ def run_dashboard():
             live_monitor_logic()
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("**PG-LCA-TEA v0.6.0**")
+    st.sidebar.markdown("**PG-LCA-TEA v0.6.5**")
     st.sidebar.markdown("[GitHub](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)")
 
 
