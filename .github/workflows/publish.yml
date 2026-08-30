@@ -79,11 +79,14 @@ jobs:
           name: python-package-distributions
           path: dist/
 
-      - name: Publish to PyPI via API Token (if secret is configured)
-        if: ${{ secrets.PYPI_API_TOKEN != '' }}
+      - name: Publish to PyPI via API Token
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
+          if [ -z "$TWINE_PASSWORD" ]; then
+            echo "ℹ️ PYPI_API_TOKEN secret is not configured in repository secrets. Skipping PyPI upload."
+            exit 0
+          fi
           pip install twine
           twine upload --skip-existing dist/*
