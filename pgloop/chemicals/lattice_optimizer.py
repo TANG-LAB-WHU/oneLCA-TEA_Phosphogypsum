@@ -8,10 +8,19 @@ fitting of Equation of State (EOS) to determine bulk modulus properties.
 
 import numpy as np
 from typing import Dict, Any, Tuple, List
-from ase import Atoms
-from ase.optimize import BFGS
-from ase.filters import ExpCellFilter
-from ase.eos import EquationOfState
+
+try:
+    from ase import Atoms
+    from ase.optimize import BFGS
+    from ase.filters import ExpCellFilter
+    from ase.eos import EquationOfState
+    ASE_AVAILABLE = True
+except ImportError:
+    Atoms = Any
+    BFGS = None
+    ExpCellFilter = None
+    EquationOfState = None
+    ASE_AVAILABLE = False
 
 
 def optimize_structure(

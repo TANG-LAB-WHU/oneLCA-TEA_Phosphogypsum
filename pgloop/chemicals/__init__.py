@@ -18,9 +18,17 @@ from pgloop.chemicals.registry import (
     list_chemicals,
 )
 from pgloop.chemicals.solvents import SOLVENTS
-from pgloop.chemicals.mace_interface import get_mace_calculator, is_mace_available
-from pgloop.chemicals.lattice_optimizer import optimize_structure, fit_eos
-from pgloop.chemicals.eval_mace import fetch_mp_data, evaluate_mace_on_mp
+try:
+    from pgloop.chemicals.mace_interface import get_mace_calculator, is_mace_available
+    from pgloop.chemicals.lattice_optimizer import optimize_structure, fit_eos
+    from pgloop.chemicals.eval_mace import fetch_mp_data, evaluate_mace_on_mp
+except ImportError:
+    get_mace_calculator = None
+    is_mace_available = lambda: False
+    optimize_structure = None
+    fit_eos = None
+    fetch_mp_data = None
+    evaluate_mace_on_mp = None
 
 __all__ = [
     "Chemical",
