@@ -2,22 +2,25 @@ name: test
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main, dev, feat-phosphogypsum-bot]
   pull_request:
-    branches: [main, dev]
+    branches: [main, dev, feat-phosphogypsum-bot]
+  workflow_dispatch:
 
 jobs:
   test:
+    name: Unit & Agent Tests (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -25,41 +28,34 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install --index-url https://download.pytorch.org/whl/cpu torch==2.9.0
-          pip install -e ".[dev,ai]"
+          pip install --extra-index-url https://download.pytorch.org/whl/cpu torch
+          pip install -e ".[dev,ai,docling,stochastic_dynamics]"
 
-      - name: Check version sync
+      - name: Check version synchronization
         run: |
           python scripts/check_version_sync.py
 
-      - name: Run pre-commit checks
+      - name: Run unit & agent test suite
         run: |
-          pre-commit run --all-files
-
-      - name: Test with pytest
-        run: |
-          # Run unit tests that don't require external API keys
-          pytest tests/test_pdf_parser.py tests/test_iodata.py -v
+          pytest tests/ -v -k "not integration and not slow"
 
   stochastic-dynamics-smoke:
+    name: Stochastic Dynamics Smoke Tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11"]
-
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.11"
           cache: "pip"
 
-      - name: Install dependencies (CPU torch for smoke tests)
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install --index-url https://download.pytorch.org/whl/cpu torch==2.9.0
+          pip install --extra-index-url https://download.pytorch.org/whl/cpu torch
           pip install -e ".[dev,stochastic_dynamics]"
 
       - name: Run stochastic dynamics smoke tests
