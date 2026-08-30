@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=pgbot_cpu_moe
 #SBATCH --partition=9a14a
-#SBATCH --account=supervisor      # ⚠️ Replace with your supervisor's account name
+#SBATCH --account=tangsiqi
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=32        # Allocate 32 physical EPYC cores
