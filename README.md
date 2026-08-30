@@ -105,11 +105,20 @@ cd oneLCA-TEA_Phosphogypsum
 python -m venv venv
 source venv/bin/activate  # Windows: .\venv\Scripts\activate
 
-# Install the package in editable mode (base)
+# Option A: Install base package (Core LCA/TEA, VPM kinetics, MCMC uncertainty)
 pip install -e .
 
-# Or install with all features (AI, Dashboard, Docling, Materials, GraphRAG, IoT)
+# Option B: Install with all features (Recommended: AI, Dashboard, Docling, Materials, IoT)
 pip install -e ".[all]"
+
+# Option C: Selective modular installation by feature area:
+pip install -e ".[ai]"           # Agent LLM, embeddings & vector store
+pip install -e ".[viz]"          # Interactive Streamlit dashboard & Plotly charts
+pip install -e ".[docling]"      # IBM Docling high-precision scientific paper parser
+pip install -e ".[chemicals]"    # ASE crystal structure & bulk modulus optimizer
+pip install -e ".[rag]"          # LightRAG & Knowledge Graph adapters
+pip install -e ".[iot]"          # Industrial OPC UA & MQTT real-time telemetry
+pip install -e ".[dev]"          # Pytest test suite & code linting tools
 ```
 
 ### HPC Deployment on Wuhan University Supercomputing Center (WHU-SCC)
