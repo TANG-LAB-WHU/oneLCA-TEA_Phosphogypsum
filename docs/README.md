@@ -25,11 +25,11 @@ The step-by-step engineering pipeline that digests unstructured scientific paper
     *   **Phase 4 & 5: Ranges & Graph Construction**: Compiling parameter ranges and constructing the final knowledge graph.
 
 ### 3. Agentic Framework & RAG Integration
-Documentation on the ReAct (Reasoning and Acting) orchestration engine that connects the user interface to physics solvers and databases.
+Documentation on the Plan-and-Solve CoT orchestration engine that connects the user interface to physics solvers and databases.
 *   **[Chat Agent Internal Mechanisms](chat_agent_internals.md)**
-    *   Tool-calling loop in `chat_agent/agent.py` using the OpenAI compatible schema.
-    *   Description of standard tools: `get_available_pathways`, `search_literature`, `calculate_lca_tea`, `rank_all_pathways`, `run_market_robustness_scenario`.
-    *   System Prompt safety constraints and formatting guidelines.
+    *   Autonomous tool-calling loop in `chat_agent/agent.py` using OpenAI-compatible function calling schemas.
+    *   Full 10-Tool portfolio: `calculate_lca_tea`, `rank_all_pathways`, `run_market_robustness_scenario`, `get_available_pathways`, `search_literature`, `optimize_reverse_design`, `optimize_benefit_compensation`, `calibrate_process_parameters`, `predict_crystal_properties`, `query_realtime_telemetry`.
+    *   System Prompt safety constraints, Plan-and-Solve 5-step decomposition, and formatting guidelines.
 
 ### 4. Sustainability & Process Methodologies
 Rigorous mathematical, physical, and economic modeling underpinning the pathway simulations.
@@ -40,7 +40,9 @@ Rigorous mathematical, physical, and economic modeling underpinning the pathway 
     *   Conventional Life Cycle Costing (CLCC) and Societal Life Cycle Costing (SLCC) with shadow pricing.
     *   CAPEX, OPEX, and revenue breakdowns.
 
-### 5. Physics-Informed VPM Modules
+### 5. Physics-Informed VPM (Valorization Pathway Module) Systems
+> **VPM Definition**: **VPM** stands for **Valorization Pathway Module** (资源化高值转化路径模块). It serves as the standardized, physics-constrained software abstraction for individual industrial phosphogypsum valorization routes. Each VPM strictly defines governing reaction kinetics, mass/energy conservation equations, input energy vectors $U_{in}$ (Heat, Work, Money), and NORM radionuclide partition boundaries.
+
 Detailed explanation of physical kinetics, thermodynamics, and mass transfer governing equations for each chemical pathway:
 *   **[B1 VPM_carbothermic_reduction: Carbothermic Reduction](vpm_b1_carbothermic_reduction.md)**: Thermochemical reduction kinetics of PG to recover sulfuric acid and cement clinker.
 *   **[B2 VPM_hydration: Hydration & Ettringite](vpm_b2_hydration_ettringite.md)**: Curing hydration kinetics, crystallization-pressure, and structural solidification parameters.
