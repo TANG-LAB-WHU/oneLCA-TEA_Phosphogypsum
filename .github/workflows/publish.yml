@@ -80,12 +80,10 @@ jobs:
           path: dist/
 
       - name: Publish to PyPI via API Token (if secret is configured)
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
-        if: "${{ env.PYPI_TOKEN != '' }}"
-        run: |
-          pip install twine
-          twine upload --skip-existing dist/*
+        if: ${{ secrets.PYPI_API_TOKEN != '' }}
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          pip install twine
+          twine upload --skip-existing dist/*
