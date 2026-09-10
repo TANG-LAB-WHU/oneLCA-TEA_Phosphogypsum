@@ -14,7 +14,8 @@
 #    - Single A100 GPU (Hybrid Offload): sbatch -p a100x4 --gres=gpu:1 --cpus-per-task=16 slurm_jobs/run_phosphogypsum_agent.sh
 #      * 1x 40GB A100 = 40GB VRAM (32 layers offloaded to GPU to prevent CUDA OOM, remaining on CPU RAM)
 #    - V100 GPU (Hybrid Offload):        sbatch -p gpu --gres=gpu:2 --cpus-per-task=10 slurm_jobs/run_phosphogypsum_agent.sh
-#    - 9a14a 192-Core CPU (Pure NUMA):   sbatch -p 9a14a --nodes=1 --cpus-per-task=192 slurm_jobs/run_phosphogypsum_agent.sh
+
+#    - 9a14a 192-Core CPU (Pure NUMA):   sbatch -p 9a14a --nodes=1 --cpus-per-task=192 run_phosphogypsum_agent.sh --flash
 #
 # 2. Explicit Model Selection & Cross-Partition Usage:
 #    - Force Qwen3.8-Flash-Next (Default): sbatch -p a100x4 --gres=gpu:4 slurm_jobs/run_phosphogypsum_agent.sh --flash
