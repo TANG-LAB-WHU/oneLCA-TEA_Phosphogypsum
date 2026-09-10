@@ -1,118 +1,269 @@
 """
-Streamlit Dashboard for PG-LCA-TEA
+Streamlit Dashboard for PG-LCA-TEA (v0.7.0)
 
-Run with: streamlit run src/visualization/dashboard.py
+Interactive, real-time decision dashboard powered by IntegratedAssessmentEngine.
+Run with: streamlit run pgloop/visualization/dashboard.py
 """
+
+from typing import Dict, List, Any
 
 
 def run_dashboard():
-    """Main entry point for the dashboard."""
+    """Main entry point for the interactive Streamlit dashboard."""
     try:
         import streamlit as st
+        import pandas as pd
     except ImportError:
-        print("Streamlit not installed. Run: pip install streamlit")
+        print("Streamlit or Pandas not installed. Run: pip install streamlit pandas")
         return
 
-    st.set_page_config(page_title="PG-LCA-TEA Dashboard", page_icon="🔬", layout="wide")
+    from pgloop.assessment import IntegratedAssessmentEngine
+    from pgloop.pathways import PATHWAYS, list_pathways, get_pathway
+    from pgloop.iodata import DataHub
 
-    st.title("🔬 Phosphogypsum LCA-TEA Framework")
-    st.markdown("### Life Cycle Assessment & Techno-Economic Analysis")
-
-    # Sidebar
-    st.sidebar.header("Configuration")
-
-    country = st.sidebar.selectbox(
-        "Select Country", ["China", "USA", "Morocco", "EU", "Brazil", "India", "Global"]
+    st.set_page_config(
+        page_title="PhosphogypsumBot Dashboard v0.7.0",
+        page_icon="🔬",
+        layout="wide",
+        initial_sidebar_state="expanded",
     )
 
-    pathways = st.sidebar.multiselect(
-        "Select Pathways",
-        ["PG-SD", "PG-CM", "PG-CB", "PG-SA", "PG-CR", "PG-RE"],
-        default=["PG-SD", "PG-CM"],
+    st.title("🔬 PhosphogypsumBot: Industrial LCA-TEA Framework")
+    st.markdown(
+        "**Physics-Informed Decision Intelligence for Industrial Phosphogypsum Engineering** &nbsp;|&nbsp; "
+        "`v0.7.0` &nbsp;|&nbsp; [GitHub](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)"
+    )
+
+    # -------------------------------------------------------------------------
+    # Sidebar Configuration
+    # -------------------------------------------------------------------------
+    st.sidebar.header("⚙️ Configuration")
+
+    country = st.sidebar.selectbox(
+        "Target Country / Jurisdiction",
+        ["China", "USA", "Morocco", "EU", "Brazil", "India", "Global"],
+        index=0,
+    )
+
+    all_codes = list_pathways()
+    pathway_label_map = {
+        code: f"{code} ({get_pathway(code).name})" for code in all_codes
+    }
+
+    selected_codes = st.sidebar.multiselect(
+        "Select Valorization Pathways",
+        options=all_codes,
+        default=["PG-Stack", "PG-CementProd", "PG-ConstructMat", "PG-SulfurAcid"],
+        format_func=lambda x: pathway_label_map.get(x, x),
     )
 
     functional_unit = st.sidebar.number_input(
-        "Functional Unit (tonnes PG)", min_value=1.0, value=1.0, step=1.0
+        "Functional Unit (tonnes PG)",
+        min_value=0.1,
+        max_value=1000000.0,
+        value=1.0,
+        step=1.0,
+        help="Base functional unit mass of phosphogypsum to be treated.",
     )
 
-    # Main content
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Overview", "LCA Results", "TEA Results", "Comparison", "Live Monitoring"])
+    fu_kg = float(functional_unit * 1000.0)
 
+    # Initialize computational engine
+    engine = IntegratedAssessmentEngine(country=country)
+
+    # -------------------------------------------------------------------------
+    # Main Tabs
+    # -------------------------------------------------------------------------
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "📋 Overview",
+        "🌱 LCA Footprint",
+        "💰 TEA Economics",
+        "⚖️ MCDA Ranking",
+        "📡 Live Telemetry",
+    ])
+
+    # -------------------------------------------------------------------------
+    # Tab 1: Overview
+    # -------------------------------------------------------------------------
     with tab1:
-        st.header("Framework Overview")
+        st.header("System Overview & Registered Pathways")
 
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.metric("Pathways Selected", len(pathways))
-        with col2:
-            st.metric("Country", country)
-        with col3:
-            st.metric("Functional Unit", f"{functional_unit} t PG")
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Pathways Selected", f"{len(selected_codes)} / {len(all_codes)}")
+        c2.metric("Jurisdiction", country)
+        c3.metric("Functional Unit", f"{functional_unit:,.1f} t PG ({fu_kg:,.0f} kg)")
 
-        st.markdown(
-            """
-        ### Treatment Pathways
+        st.markdown("### Registered Valorization Pathways")
+        pathway_rows = []
+        for code in all_codes:
+            pw = get_pathway(code)
+            pathway_rows.append({
+                "Code": pw.code,
+                "Pathway Name": pw.name,
+                "Category": getattr(pw, "category", "Valorization"),
+                "TRL": getattr(pw, "trl", 7),
+                "Primary Products": ", ".join(getattr(pw, "products", ["By-products"])),
+            })
+        st.dataframe(pd.DataFrame(pathway_rows), use_container_width=True)
 
-        | Code | Pathway | Description | TRL |
-        |------|---------|-------------|-----|
-        | PG-SD | Stack Disposal | Baseline: engineered stacking | 9 |
-        | PG-CM | Cement Production | Cement additive/retarder | 9 |
-        | PG-CB | Construction Materials | Bricks, plasterboard | 8 |
-        | PG-SA | Soil Amendment | Agricultural application | 8 |
-        | PG-CR | Chemical Recovery | (NH₄)₂SO₄ + CaCO₃ | 7 |
-        | PG-RE | REE Extraction | Rare earth recovery | 5 |
-        """
-        )
-
+    # -------------------------------------------------------------------------
+    # Tab 2: Life Cycle Assessment (LCA)
+    # -------------------------------------------------------------------------
     with tab2:
-        st.header("Life Cycle Assessment")
-        st.info("Select pathways and click 'Run Analysis' to see LCA results.")
+        st.header("🌱 Environmental Life Cycle Assessment (ISO 14040)")
 
-        if st.button("Run LCA Analysis", key="lca"):
-            with st.spinner("Calculating..."):
-                st.success("LCA calculation complete!")
-                # Placeholder for actual results
-                st.bar_chart({"Climate Change": [10, 8, 12, 5, 7, 15]})
+        if not selected_codes:
+            st.warning("Please select at least one pathway in the sidebar.")
+        else:
+            if st.button("🚀 Calculate Forward LCA", key="btn_lca", type="primary"):
+                with st.spinner("Computing forward LCA footprints across selected pathways..."):
+                    lca_records = []
+                    for code in selected_codes:
+                        res = engine.assess(code, functional_unit_kg=fu_kg)
+                        impacts = res["lca"]["impacts"]
+                        lca_records.append({
+                            "Pathway": res["pathway_name"],
+                            "Code": code,
+                            "Climate Change (kg CO2-eq)": impacts.get("climate_change", 0.0),
+                            "Acidification (kg SO2-eq)": impacts.get("acidification", 0.0),
+                            "Eutrophication Fresh (kg P-eq)": impacts.get("eutrophication_fresh", 0.0),
+                            "Human Toxicity Cancer (CTUh)": impacts.get("human_toxicity_cancer", 0.0),
+                        })
 
+                    df_lca = pd.DataFrame(lca_records)
+                    st.session_state["df_lca"] = df_lca
+
+            if "df_lca" in st.session_state:
+                df_lca = st.session_state["df_lca"]
+                st.subheader("Carbon Footprint Comparison (GWP)")
+                chart_data = df_lca.set_index("Pathway")[["Climate Change (kg CO2-eq)"]]
+                st.bar_chart(chart_data)
+
+                st.subheader("Detailed Midpoint Environmental Impacts")
+                st.dataframe(df_lca, use_container_width=True)
+
+    # -------------------------------------------------------------------------
+    # Tab 3: Techno-Economic Analysis (TEA)
+    # -------------------------------------------------------------------------
     with tab3:
-        st.header("Techno-Economic Analysis")
-        st.info("Select pathways and click 'Run Analysis' to see TEA results.")
+        st.header("💰 Techno-Economic Analysis & Life Cycle Costing")
 
-        if st.button("Run TEA Analysis", key="tea"):
-            with st.spinner("Calculating..."):
-                st.success("TEA calculation complete!")
-                # Placeholder for actual results
-                st.bar_chart({"CLCC ($/t)": [15, 25, 30, 10, 45, 80]})
+        if not selected_codes:
+            st.warning("Please select at least one pathway in the sidebar.")
+        else:
+            if st.button("🚀 Calculate TEA Metrics", key="btn_tea", type="primary"):
+                with st.spinner("Calculating CAPEX, OPEX, CLCC, and External Environmental Costs..."):
+                    tea_records = []
+                    for code in selected_codes:
+                        res = engine.assess(code, functional_unit_kg=fu_kg)
+                        tea = res["tea"]
+                        tea_records.append({
+                            "Pathway": res["pathway_name"],
+                            "Code": code,
+                            "CLCC ($/t)": tea["clcc"],
+                            "SLCC ($/t)": tea["slcc"],
+                            "Annualized CAPEX ($)": tea["capex_annualized"],
+                            "Annual OPEX ($)": tea["opex_total"],
+                            "Gross Revenue ($)": tea["revenue"],
+                            "NPV ($)": tea["npv"],
+                            "Payback (years)": tea["payback_years"],
+                        })
 
+                    df_tea = pd.DataFrame(tea_records)
+                    st.session_state["df_tea"] = df_tea
+
+            if "df_tea" in st.session_state:
+                df_tea = st.session_state["df_tea"]
+                st.subheader("Conventional Life Cycle Cost (CLCC vs SLCC)")
+                chart_data = df_tea.set_index("Pathway")[["CLCC ($/t)", "SLCC ($/t)"]]
+                st.bar_chart(chart_data)
+
+                st.subheader("Financial Metrics Breakdown")
+                st.dataframe(df_tea, use_container_width=True)
+
+    # -------------------------------------------------------------------------
+    # Tab 4: MCDA Ranking & Comparison
+    # -------------------------------------------------------------------------
     with tab4:
-        st.header("Pathway Comparison")
-        st.markdown("Compare environmental and economic performance across pathways.")
+        st.header("⚖️ Multi-Criteria Decision Analysis (MCDA 5D TEPES)")
 
-        st.pyplot(fig=None)  # Placeholder
+        if not selected_codes:
+            st.warning("Please select at least one pathway in the sidebar.")
+        else:
+            c1, c2, c3, c4 = st.columns(4)
+            w_env = c1.slider("Environmental Weight", 0.0, 1.0, 0.30, step=0.05)
+            w_econ = c2.slider("Economic Weight", 0.0, 1.0, 0.40, step=0.05)
+            w_risk = c3.slider("Risk Weight", 0.0, 1.0, 0.15, step=0.05)
+            w_soc = c4.slider("Social Weight", 0.0, 1.0, 0.15, step=0.05)
 
+            if st.button("⚖️ Run TOPSIS / VIKOR Ranking", key="btn_rank", type="primary"):
+                with st.spinner("Performing multi-criteria ranking and Pareto frontier optimization..."):
+                    recommendations = engine.rank_all_pathways(
+                        pathway_codes=selected_codes,
+                        functional_unit_kg=fu_kg,
+                        weights={
+                            "environmental": w_env,
+                            "economic": w_econ,
+                            "risk": w_risk,
+                            "social": w_soc,
+                        },
+                    )
+
+                    rank_records = [
+                        {
+                            "Rank": r.rank,
+                            "Pathway": r.pathway_name,
+                            "Composite Score": round(r.score, 4),
+                            "Pareto Optimal": "✅ Yes" if r.is_pareto_optimal else "❌ Dominated",
+                            "Strengths": ", ".join(r.strengths) if r.strengths else "N/A",
+                            "Weaknesses": ", ".join(r.weaknesses) if r.weaknesses else "N/A",
+                            "Explanation": r.explanation,
+                        }
+                        for r in recommendations
+                    ]
+                    st.session_state["df_rank"] = pd.DataFrame(rank_records)
+
+            if "df_rank" in st.session_state:
+                df_rank = st.session_state["df_rank"]
+                st.subheader("Optimal Pathway Recommendations")
+                st.dataframe(df_rank, use_container_width=True)
+
+                st.subheader("MCDA Composite Scores")
+                st.bar_chart(df_rank.set_index("Pathway")[["Composite Score"]])
+
+    # -------------------------------------------------------------------------
+    # Tab 5: Industrial Live Monitoring
+    # -------------------------------------------------------------------------
     with tab5:
-        st.header("📡 Industrial Live Monitoring")
-        st.markdown("Real-time sensor-to-dashboard pipeline streaming from Edge OPC UA to MQTT.")
+        st.header("📡 Industrial IoT Live Telemetry Stream")
+        st.markdown("Real-time edge sensor streaming from Edge OPC UA ➔ MQTT ➔ SQLite WAL database.")
 
-        # Handle Streamlit fragment decorator for backwards compatibility
         fragment_decorator = getattr(st, "fragment", getattr(st, "experimental_fragment", None))
 
         def live_monitor_logic():
             import sqlite3
-            import pandas as pd
             import os
-            
-            db_path = "sensors_live.db"
-            if not os.path.exists(db_path):
-                st.info("Waiting for live telemetry data. Please start edge bridge and stream processor.")
+
+            db_paths = [
+                "sensors_live.db",
+                str(DataHub.TELEMETRY_DB),
+                str(DataHub.RAW_TELEMETRY / "sensors_live.db"),
+            ]
+            active_db = next((p for p in db_paths if os.path.exists(p)), None)
+
+            if not active_db:
+                st.info(
+                    "Waiting for live telemetry database (`sensors_live.db`). "
+                    "Start `EdgeBridge` or `StreamProcessor` to stream live OPC UA sensors."
+                )
                 return
 
             try:
-                # Open with URI so we can enforce read-only
-                conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+                conn = sqlite3.connect(f"file:{active_db}?mode=ro", uri=True)
                 df = pd.read_sql(
-                    "SELECT timestamp, node_id, value, status, lca_co2_rate, tea_cost_rate FROM telemetry ORDER BY id DESC LIMIT 20",
-                    conn
+                    "SELECT timestamp, node_id, value, status, lca_co2_rate, tea_cost_rate "
+                    "FROM telemetry ORDER BY id DESC LIMIT 20",
+                    conn,
                 )
                 conn.close()
             except Exception as e:
@@ -120,41 +271,36 @@ def run_dashboard():
                 return
 
             if df.empty:
-                st.info("No live telemetry data received yet.")
+                st.info("No live telemetry rows received yet.")
                 return
 
-            # Check for alarms
-            alarms = df[df["status"].str.contains("ALARM")]
+            alarms = df[df["status"].str.contains("ALARM", na=False)]
             if not alarms.empty:
                 st.error(f"⚠️ {len(alarms)} constraint violations detected in the recent stream window!")
-                st.dataframe(alarms.head())
+                st.dataframe(alarms.head(), use_container_width=True)
             else:
                 st.success("All systems operating within physical boundaries.")
 
-            # Show metrics for latest entry
             latest = df.iloc[0]
-            c1, c2, c3 = st.columns(3)
-            c1.metric("Latest Sensor Value", f"{latest['value']:.2f}")
-            c2.metric("Instant CO2 Emission Rate", f"{latest['lca_co2_rate']:.2f} kg/s")
-            c3.metric("Instant OPEX Rate", f"${latest['tea_cost_rate']:.2f}/s")
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Latest Sensor Reading", f"{latest['value']:.2f}")
+            col2.metric("Instant CO2 Rate", f"{latest['lca_co2_rate']:.2f} kg/s")
+            col3.metric("Instant OPEX Rate", f"${latest['tea_cost_rate']:.2f}/s")
 
-            st.subheader("Live Telemetry Stream")
-            st.dataframe(df)
+            st.subheader("Recent Stream Buffer")
+            st.dataframe(df, use_container_width=True)
 
         if fragment_decorator:
-            # Wrap with run_every 1s
             render_live_monitoring = fragment_decorator(run_every="1s")(live_monitor_logic)
             render_live_monitoring()
         else:
-            # Fallback for old streamlit versions
-            st.warning("Your Streamlit version does not support st.fragment. Live auto-refresh disabled.")
-            if st.button("Refresh Manually"):
+            if st.button("🔄 Refresh Telemetry"):
                 pass
             live_monitor_logic()
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("**PG-LCA-TEA v0.7.0**")
-    st.sidebar.markdown("[GitHub](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)")
+    st.sidebar.markdown("**PhosphogypsumBot v0.7.0**")
+    st.sidebar.markdown("TANG Lab at Wuhan University")
 
 
 def main():
@@ -163,3 +309,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

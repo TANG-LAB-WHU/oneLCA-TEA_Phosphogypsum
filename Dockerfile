@@ -23,13 +23,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # Copy dependency manifests first for layer caching
-COPY pyproject.toml /app/
+COPY pyproject.toml README.md /app/
 COPY pgloop/__init__.py /app/pgloop/__init__.py
+COPY chat_agent/__init__.py /app/chat_agent/__init__.py
 
 # Install PyTorch CPU and core package dependencies
 RUN pip install --upgrade pip setuptools wheel && \
     pip install --extra-index-url https://download.pytorch.org/whl/cpu torch && \
-    pip install -e ".[viz,ai,docling,stochastic_dynamics]"
+    pip install -e ".[viz,ai,docling,stochastic_dynamics,chemicals]"
 
 # Copy application source code
 COPY . /app
