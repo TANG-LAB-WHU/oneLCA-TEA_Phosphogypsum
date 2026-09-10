@@ -19,7 +19,7 @@ from pgloop.stochastic_dynamics.fokker_planck import (
 
 
 def main():
-    out_dir = Path("data/processed/dynamic_assessment")
+    out_dir = Path("datahub/processed/dynamic_assessment")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     solver = FokkerPlanck1DSolver(x_min=-5, x_max=5, n_x=301)

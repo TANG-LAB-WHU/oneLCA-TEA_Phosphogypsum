@@ -8,7 +8,7 @@ from pathlib import Path
 import networkx as nx
 
 
-def load_graph_with_viz_attributes(storage_path="data/processed/knowledge_graph"):
+def load_graph_with_viz_attributes(storage_path="datahub/processed/knowledge_graph"):
     """
     Load the knowledge graph from JSON files and add attributes for visualization.
     """
@@ -372,7 +372,7 @@ def main():
         print_graph_summary(kg)
 
         # 3. Generate Visualizations
-        output_dir = Path("data/processed/knowledge_graph")
+        output_dir = Path("datahub/processed/knowledge_graph")
         output_dir.mkdir(exist_ok=True, parents=True)
 
         visualize_pyvis(kg, output_dir / "kg_interactive.html")

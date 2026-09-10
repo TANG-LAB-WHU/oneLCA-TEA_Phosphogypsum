@@ -12,7 +12,15 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 
-from pgloop import LCAEngine, PathwayRanker, RiskAggregator, TEAEngine, get_pathway, list_pathways
+from pgloop import (
+    IntegratedAssessmentEngine,
+    LCAEngine,
+    PathwayRanker,
+    RiskAggregator,
+    TEAEngine,
+    get_pathway,
+    list_pathways,
+)
 from pgloop.chemicals.registry import get_chemical
 from pgloop.decision.benefit_compensation import BenefitCompensationModel
 from pgloop.decision.optimizer.reverse_design import ReverseDesignOptimizer
@@ -21,10 +29,11 @@ from pgloop.knowledge.lightrag_engine import LIGHTRAG_AVAILABLE, LightRAGEngine
 from pgloop.uncertainty.chain_sampling import MetropolisHastings
 
 # Initialize computational engines globally to reuse them across tool calls
-lca_engine = LCAEngine()
-tea_engine = TEAEngine(country="China")
-risk_aggregator = RiskAggregator()
-pathway_ranker = PathwayRanker()
+assessment_engine = IntegratedAssessmentEngine(country="China")
+lca_engine = assessment_engine.lca_engine
+tea_engine = assessment_engine.tea_engine
+risk_aggregator = assessment_engine.risk_aggregator
+pathway_ranker = assessment_engine.ranker
 benefit_model = BenefitCompensationModel()
 
 if LIGHTRAG_AVAILABLE:
@@ -79,37 +88,36 @@ def search_literature(query: str, mode: str = "hybrid") -> str:
 
 def calculate_lca_tea(pathway_code: str) -> str:
     """
-    Run Life Cycle Assessment (LCA) and Techno-Economic Analysis (TEA) for a given phosphogypsum pathway.
+    Run Life Cycle Assessment (LCA), Techno-Economic Analysis (TEA), and dynamic VPM kinetics
+    for a given phosphogypsum pathway.
 
     Args:
         pathway_code: The code of the pathway to analyze (e.g., "PG-CementProd", "PG-REEextract", "PG-Stack", "PG-SulfurAcid", "PG-ChemReco").
 
     Returns:
-        A JSON string containing the environmental impacts (e.g., GWP, Resource Depletion) and economic metrics (e.g., NPV, CAPEX, OPEX).
+        A JSON string containing the environmental impacts, economic metrics, dynamic kinetics, and risk metrics.
     """
     try:
         print(f"\n[Tool Execution] Calculating LCA/TEA for pathway: '{pathway_code}'...")
-        pathway = get_pathway(pathway_code)
-
-        lca_result = lca_engine.calculate(pathway, functional_unit_value=1.0)
-        tea_result = tea_engine.calculate(pathway, functional_unit_value=1.0)
-        npv_result = tea_engine.calculate_npv(pathway)
-
+        res = assessment_engine.assess(pathway_code)
         result_dict = {
-            "pathway_code": pathway_code,
-            "pathway_name": pathway.name,
-            "LCA_Impacts": lca_result.impacts,
+            "pathway_code": res["pathway_code"],
+            "pathway_name": res["pathway_name"],
+            "TRL": res["trl"],
+            "LCA_Impacts": res["lca"]["impacts"],
             "TEA_Metrics": {
-                "CAPEX_Total": tea_result.capex_total,
-                "CAPEX_Annualized": tea_result.capex_annualized,
-                "OPEX_Total": tea_result.opex_total,
-                "Revenue": tea_result.revenue,
-                "CLCC": tea_result.clcc,
-                "SLCC": tea_result.slcc,
-                "NPV": npv_result.get("npv", 0),
-                "IRR": npv_result.get("irr", 0),
-                "Payback_Years": npv_result.get("payback_years", 0),
+                "CAPEX_Total": res["tea"]["capex_total"],
+                "CAPEX_Annualized": res["tea"]["capex_annualized"],
+                "OPEX_Total": res["tea"]["opex_total"],
+                "Revenue": res["tea"]["revenue"],
+                "CLCC": res["tea"]["clcc"],
+                "SLCC": res["tea"]["slcc"],
+                "NPV": res["tea"]["npv"],
+                "IRR": res["tea"]["irr"],
+                "Payback_Years": res["tea"]["payback_years"],
             },
+            "VPM_Kinetics": res["vpm"],
+            "Risk_Assessment": res["risk"],
         }
         return json.dumps(result_dict, indent=2, ensure_ascii=False)
     except Exception as e:
@@ -125,30 +133,7 @@ def rank_all_pathways() -> str:
     """
     try:
         print("\n[Tool Execution] Ranking all pathways...")
-        pathway_codes = ["PG-Stack", "PG-CementProd", "PG-REEextract", "PG-SulfurAcid", "PG-ChemReco"]
-        decision_data = {}
-
-        for code in pathway_codes:
-            try:
-                pathway = get_pathway(code)
-                lca_result = lca_engine.calculate(pathway, functional_unit_value=1.0)
-                npv_result = tea_engine.calculate_npv(pathway)
-
-                decision_data[pathway.name] = {
-                    "gwp": lca_result.impacts.get("climate_change", 100.0),
-                    "resource_depletion": lca_result.impacts.get("resource_depletion", 0.0),
-                    "human_toxicity": lca_result.impacts.get("human_toxicity", 0.0),
-                    "npv": npv_result.get("npv", 0) / 1000000,
-                    "irr": npv_result.get("irr", 0.0),
-                    "payback": npv_result.get("payback_years", 20.0),
-                    "trl": getattr(pathway, "trl", 6),
-                    "scalability": 0.8,
-                    "overall_risk": 50.0,
-                }
-            except Exception:
-                continue
-
-        recommendations = pathway_ranker.rank(decision_data)
+        recommendations = assessment_engine.rank_all_pathways()
 
         result_str = "Pathway Rankings across 5D TEPES Criteria:\n"
         for rec in recommendations:
@@ -409,7 +394,7 @@ def query_realtime_telemetry(metric_name: str = "all", limit: int = 5) -> str:
     """
     try:
         print(f"\n[Tool Execution] Querying live IoT telemetry (metric: {metric_name}, limit: {limit})...")
-        db_path = Path("data/processed/telemetry.db")
+        db_path = Path("datahub/processed/telemetry.db")
         if not db_path.exists():
             # Return live simulated sensor feed matching industrial kiln conditions
             records = [

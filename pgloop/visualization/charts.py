@@ -118,56 +118,6 @@ class TEAPlots:
         return fig
 
 
-class ReportExporter:
-    """Export results to various formats."""
+# Re-export ReportExporter for backward compatibility
+from pgloop.visualization.export import ReportExporter  # noqa: E402
 
-    @staticmethod
-    def to_excel(results: Dict, filepath: str):
-        """Export results to Excel."""
-        try:
-            import pandas as pd
-        except ImportError:
-            raise ImportError("pandas not installed")
-
-        with pd.ExcelWriter(filepath) as writer:
-            for sheet_name, data in results.items():
-                if isinstance(data, dict):
-                    df = pd.DataFrame([data])
-                elif isinstance(data, list):
-                    df = pd.DataFrame(data)
-                else:
-                    df = pd.DataFrame(data)
-                df.to_excel(writer, sheet_name=sheet_name[:31])
-
-    @staticmethod
-    def to_html(results: Dict, filepath: str, title: str = "PG-LCA-TEA Results"):
-        """Export results to HTML report."""
-        html = f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>{title}</title>
-            <style>
-                body {{ font-family: Arial, sans-serif; margin: 40px; }}
-                h1 {{ color: #2c3e50; }}
-                table {{ border-collapse: collapse; width: 100%; }}
-                th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
-                th {{ background-color: #3498db; color: white; }}
-            </style>
-        </head>
-        <body>
-            <h1>{title}</h1>
-        """
-
-        for section, data in results.items():
-            html += f"<h2>{section}</h2>"
-            if isinstance(data, dict):
-                html += "<table>"
-                for k, v in data.items():
-                    html += f"<tr><td>{k}</td><td>{v}</td></tr>"
-                html += "</table>"
-
-        html += "</body></html>"
-
-        with open(filepath, "w") as f:
-            f.write(html)

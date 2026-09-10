@@ -21,7 +21,7 @@ from pgloop.stochastic_dynamics.vae import VAE
 def main():
     torch.set_default_dtype(torch.float64)
     rng = np.random.default_rng(42)
-    data_file = Path("data/processed/dynamic_assessment/dynamic_assessment_timeseries.csv")
+    data_file = Path("datahub/processed/dynamic_assessment/dynamic_assessment_timeseries.csv")
     if data_file.exists():
         df = pd.read_csv(data_file)
         cols = [c for c in ["gwp", "clcc", "slcc", "lcop"] if c in df.columns]
@@ -48,11 +48,11 @@ def main():
         lr=2e-3,
         beta=5e-3,
         fp_weight=0.05,
-        checkpoint_path="data/processed/dynamic_assessment/stochastic_vae.ckpt",
-        log_path="data/processed/dynamic_assessment/stochastic_vae_log.json",
+        checkpoint_path="datahub/processed/dynamic_assessment/stochastic_vae.ckpt",
+        log_path="datahub/processed/dynamic_assessment/stochastic_vae_log.json",
     )
 
-    out_dir = Path("data/processed/dynamic_assessment")
+    out_dir = Path("datahub/processed/dynamic_assessment")
     out_dir.mkdir(parents=True, exist_ok=True)
     with torch.no_grad():
         _recon, mu, _logvar, _z = model(x[:32])

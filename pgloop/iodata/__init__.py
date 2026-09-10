@@ -13,4 +13,24 @@ from pgloop.iodata.data_standardizer import DataStandardizer
 from pgloop.iodata.pdf_parser import PDFParser
 from pgloop.iodata.web_scraper import WebScraper
 
-__all__ = ["PDFParser", "WebScraper", "DataStandardizer", "APIConnector"]
+try:
+    from pgloop.iodata.edge_bridge import EdgeBridge
+except ImportError:
+    EdgeBridge = None
+
+try:
+    from pgloop.iodata.stream_processor import StreamProcessor
+except ImportError:
+    StreamProcessor = None
+
+from pgloop.iodata.datahub import DataHub
+
+__all__ = [
+    "DataHub",
+    "PDFParser",
+    "WebScraper",
+    "DataStandardizer",
+    "APIConnector",
+    "EdgeBridge",
+    "StreamProcessor",
+]

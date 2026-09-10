@@ -8,6 +8,7 @@ from typing import Dict, List
 
 from pgloop.lca.inventory import LifeCycleInventory
 from pgloop.pathways.base_pathway import BasePathway
+from pgloop.pathways.vpms import AlphaHemihydrateVPM
 
 
 class CementPathway(BasePathway):
@@ -19,6 +20,8 @@ class CementPathway(BasePathway):
     - Acts as set retarder
     - Reduces natural gypsum mining
     """
+
+    vpm_class = AlphaHemihydrateVPM
 
     @property
     def code(self) -> str:

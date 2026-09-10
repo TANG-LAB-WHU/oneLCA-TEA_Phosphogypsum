@@ -53,7 +53,7 @@ class GapFiller:
         if not SKLEARN_AVAILABLE:
             raise ImportError("scikit-learn not installed. Run: pip install scikit-learn")
 
-        self.data_path = data_path or Path("./data/processed")
+        self.data_path = data_path or Path("./datahub/processed")
         self.scaler = StandardScaler()
         self.reference_data = []
         self.models = {}

@@ -45,8 +45,8 @@ def main():
         n_epochs=50,
         lr=2e-3,
         dx=float(x[1] - x[0]),
-        checkpoint_path="data/processed/dynamic_assessment/stochastic_pinn.ckpt",
-        log_path="data/processed/dynamic_assessment/stochastic_pinn_log.json",
+        checkpoint_path="datahub/processed/dynamic_assessment/stochastic_pinn.ckpt",
+        log_path="datahub/processed/dynamic_assessment/stochastic_pinn_log.json",
     )
 
     # Compare PINN density at final time vs finite-difference baseline
@@ -69,7 +69,7 @@ def main():
     l2_err = l2_pdf_error(p_pred, p_ref, solver.dx)
     kl_err = kl_divergence(p_ref, p_pred)
 
-    out_dir = Path("data/processed/dynamic_assessment")
+    out_dir = Path("datahub/processed/dynamic_assessment")
     out_dir.mkdir(parents=True, exist_ok=True)
     payload = {
         "epochs": train_out["epochs"],

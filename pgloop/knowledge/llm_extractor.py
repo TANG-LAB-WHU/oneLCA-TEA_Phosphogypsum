@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Union
 from urllib.parse import urlparse
 
 _DEFAULT_BASE_URL = "http://127.0.0.1:11434/v1"
-_DEFAULT_MODEL = "qwen3.5:35b"
+_DEFAULT_MODEL = "Qwen/Qwen3.8-Flash-Next"
 
 
 def _read_env_int(*names: str, default: int = 0) -> int:

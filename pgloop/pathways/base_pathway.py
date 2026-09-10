@@ -7,7 +7,7 @@ Abstract base class for all treatment pathways.
 import copy
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Any, Dict, List, Optional, Type
 
 from pgloop.lca.inventory import LifeCycleInventory
 
@@ -35,6 +35,9 @@ class BasePathway(ABC):
     - OPEX data (materials, utilities, labor)
     - Product data (outputs with prices)
     """
+
+    # Optional Valorization Pathway Module (VPM) class for dynamic physics/kinetics modeling
+    vpm_class: Optional[Type[Any]] = None
 
     def __init__(self, country: str = "global", year: int = 2024, capacity_tonnes: float = 100000):
         """
@@ -178,3 +181,37 @@ class BasePathway(ABC):
             "parameters": self.parameters,
             "inventory": self.inventory.to_dict(),
         }
+
+    def evaluate_operating_conditions(self, conditions: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """
+        Evaluate dynamic operating conditions using the associated Valorization Pathway Module (VPM)
+        if available, or fall back to static pathway parameters.
+
+        Args:
+            conditions: Dictionary of operating conditions (e.g., temperature_c, residence_time_min, etc.)
+
+        Returns:
+            Dictionary containing VPM evaluation metrics, governing equations, and status.
+        """
+        cond = conditions or {}
+        if self.vpm_class is not None:
+            vpm_instance = self.vpm_class()
+            report = vpm_instance.validate(cond)
+            return {
+                "vpm_id": vpm_instance.module_id,
+                "governing_equations": vpm_instance.governing_equations,
+                "validation": {
+                    "is_valid": report.is_valid,
+                    "metrics": report.metrics,
+                    "details": report.details,
+                },
+                "operating_conditions": cond,
+                "status": "simulated",
+            }
+        return {
+            "vpm_id": None,
+            "operating_conditions": cond,
+            "status": "static_fallback",
+            "parameters": self.parameters.copy(),
+        }
+

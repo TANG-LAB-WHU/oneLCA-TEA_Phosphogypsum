@@ -13,10 +13,10 @@
 mkdir -p slurm_jobs/logs
 
 # Set directory variables for persistence
-DATA_DIR="$(pwd)/data/processed/neo4j/data"
-LOGS_DIR="$(pwd)/data/processed/neo4j/logs"
-CONF_DIR="$(pwd)/data/processed/neo4j/conf"
-IMPORT_DIR="$(pwd)/data/processed/neo4j/import"
+DATA_DIR="$(pwd)/datahub/processed/neo4j/data"
+LOGS_DIR="$(pwd)/datahub/processed/neo4j/logs"
+CONF_DIR="$(pwd)/datahub/processed/neo4j/conf"
+IMPORT_DIR="$(pwd)/datahub/processed/neo4j/import"
 
 mkdir -p "$DATA_DIR" "$LOGS_DIR" "$CONF_DIR" "$IMPORT_DIR"
 

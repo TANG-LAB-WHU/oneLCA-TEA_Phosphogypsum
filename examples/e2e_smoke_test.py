@@ -2,13 +2,13 @@
 End-to-end smoke test for the knowledge-graph pipeline.
 
 This script validates both RAG engines (LightRAG and RAGAnything, if installed)
-on a small PDF subset in data/raw/papers/unparsed.
+on a small PDF subset in datahub/raw/papers/unparsed.
 
 LightRAG stage always uses MinerU for PDF→Markdown (figures/tables; requires
 `pip install -U "mineru[all]"` and model assets). This smoke test does not offer a
 PyMuPDF shortcut.
 
-If MinerU output already exists under `data/raw/papers/parsed/`,
+If MinerU output already exists under `datahub/interim/papers/parsed/`,
 `build_knowledge_graph` step 1 may skip parsing; delete it to force re-parse.
 Old flat PyMuPDF markdown is ignored for MinerU runs.
 

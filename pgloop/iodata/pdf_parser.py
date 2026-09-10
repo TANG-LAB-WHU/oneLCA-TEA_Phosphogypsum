@@ -120,12 +120,12 @@ class PDFParser:
                 - "mineru": Advanced extraction with MinerU Python API
                 - "mineru_cli": Parse using MinerU command line
                 - "mineru_output": Read pre-parsed MinerU markdown files
-            output_dir: Directory to save MinerU output (default: ./data/raw/papers/parsed)
+            output_dir: Directory to save MinerU output (default: ./datahub/interim/papers/parsed)
             language: Document language for OCR (default: "en")
                 Options: 'ch', 'en', 'korean', 'japan', 'arabic', 'latin', etc.
         """
         self.parser_type = parser_type
-        self.output_dir = Path(output_dir) if output_dir else Path("./data/raw/papers/parsed")
+        self.output_dir = Path(output_dir) if output_dir else Path("./datahub/interim/papers/parsed")
         self.language = language
 
         if parser_type == "pymupdf" and not PYMUPDF_AVAILABLE:

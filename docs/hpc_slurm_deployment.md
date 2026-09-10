@@ -78,6 +78,23 @@ To run, submit to the queue:
 sbatch slurm_jobs/run_cpu_reasoner.sh
 ```
 
+### Scenario D: Autonomous Agent Orchestration (Qwen3.8-Flash-Next Default - Production)
+*   **Script**: [slurm_jobs/run_phosphogypsum_agent.sh](../slurm_jobs/run_phosphogypsum_agent.sh)
+*   **Default Model**: `Qwen/Qwen3.8-Flash-Next` (~110GB sharded MoE weights).
+*   **Hardware Scaling**:
+    *   **4x A100 (Recommended, 160GB VRAM)**: Full VRAM offload (99 layers, `-sm row`).
+        ```bash
+        sbatch -p a100x4 --gres=gpu:4 --cpus-per-task=32 slurm_jobs/run_phosphogypsum_agent.sh --flash
+        ```
+    *   **1x A100 (Hybrid Offload, 40GB VRAM)**: 32 layers offloaded to GPU to prevent CUDA OOM, remaining layers on host CPU RAM.
+        ```bash
+        sbatch -p a100x4 --gres=gpu:1 --cpus-per-task=16 slurm_jobs/run_phosphogypsum_agent.sh --flash
+        ```
+    *   **9a14a (192 Cores pure CPU NUMA)**:
+        ```bash
+        sbatch -p 9a14a --nodes=1 --cpus-per-task=192 slurm_jobs/run_phosphogypsum_agent.sh --flash
+        ```
+
 ---
 
 ## ⚡ 3. NUMA-Aware Socket Isolation & Pinning (Critical)

@@ -74,7 +74,7 @@ class APIConnector:
         if not REQUESTS_AVAILABLE:
             raise ImportError("requests not installed. Run: pip install requests")
 
-        self.cache_dir = cache_dir or Path("./data/cache")
+        self.cache_dir = cache_dir or Path("./datahub/cache")
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.sources = OPEN_DATABASES.copy()
 

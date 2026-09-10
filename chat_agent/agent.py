@@ -99,7 +99,7 @@ class PhosphogypsumAgent:
         # Default to local server if not specified
         self.base_url = base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
         self.api_key = api_key or os.getenv("LLM_API_KEY", "sk-no-key-required")
-        self.model = model or os.getenv("LLM_MODEL", "Qwen/Qwen3.6-35B-A3B-Instruct")
+        self.model = model or os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next")
 
         self.client = OpenAI(base_url=self.base_url, api_key=self.api_key)
 

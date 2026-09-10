@@ -137,7 +137,7 @@ class TEAEngine:
         capex_per_fu = capex_annualized / annual_throughput if annual_throughput > 0 else 0
 
         # Calculate OPEX
-        opex_result = self.opex_calc.calculate(opex_data, fu_kg)
+        opex_result = self.opex_calc.calculate(opex_data, fu_kg, annual_throughput)
         opex_per_fu = opex_result["total"]
 
         # Calculate revenue
@@ -301,8 +301,28 @@ class TEAEngine:
             if cumulative >= 0 and payback is None:
                 payback = year
 
+        # Calculate Internal Rate of Return (IRR)
+        irr = 0.0
+        if annual_profit > 0 and capex_total > 0:
+            def npv_at(rate):
+                return sum(cf / (1.0 + rate) ** t for t, cf in enumerate(cash_flows))
+
+            low, high = -0.9, 5.0
+            if npv_at(low) * npv_at(high) <= 0:
+                for _ in range(50):
+                    mid = (low + high) / 2.0
+                    val = npv_at(mid)
+                    if abs(val) < 1e-4:
+                        break
+                    if val > 0:
+                        low = mid
+                    else:
+                        high = mid
+                irr = max(0.0, float(mid))
+
         return {
             "npv": npv,
+            "irr": irr,
             "payback_years": payback if payback is not None else project_lifetime,
             "annual_profit": annual_profit,
             "total_investment": capex_total,

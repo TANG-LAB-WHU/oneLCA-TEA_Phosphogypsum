@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pg-lca-tea"
-version = "0.6.5"
+version = "0.7.0"
 description = "Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis Framework"
 readme = "README.md"
 license = {text = "MIT"}
@@ -147,12 +147,16 @@ ignore = ["E501"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+markers = [
+    "integration: marks integration tests requiring external services (select with '-m integration')",
+    "slow: marks slow running tests",
+]
 filterwarnings = [
     "ignore:distutils Version classes are deprecated\\. Use packaging\\.version instead\\.:DeprecationWarning:thop\\.profile",
 ]
 
 [tool.bumpversion]
-current_version = "0.6.5"
+current_version = "0.7.0"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
 serialize = ["{major}.{minor}.{patch}"]
 search = "{current_version}"
@@ -171,6 +175,11 @@ replace = 'version = "{new_version}"'
 filename = "config/settings.yaml"
 search = 'version: "{current_version}"'
 replace = 'version: "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "pgloop/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "pgloop/visualization/dashboard.py"

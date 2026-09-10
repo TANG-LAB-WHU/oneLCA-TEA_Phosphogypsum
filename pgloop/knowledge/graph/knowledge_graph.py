@@ -101,7 +101,7 @@ class PhosphogypsumKG:
             raise ImportError("NetworkX not installed. Run: pip install networkx")
 
         self.graph = nx.MultiDiGraph()
-        self.storage_path = storage_path or Path("./data/processed/kg")
+        self.storage_path = storage_path or Path("./datahub/processed/kg")
         self.storage_path.mkdir(parents=True, exist_ok=True)
 
         # Try to load existing graph

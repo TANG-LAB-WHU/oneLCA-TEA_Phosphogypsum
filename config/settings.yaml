@@ -2,7 +2,7 @@
 
 project:
   name: "PG-LCA-TEA"
-  version: "0.6.5"
+  version: "0.7.0"
   description: "Phosphogypsum Life Cycle Assessment and Techno-Economic Analysis"
 
 functional_unit:
@@ -51,22 +51,22 @@ uncertainty:
 data_sources:
   # Local Papers
   literature:
-    unparsed_path: "./data/raw/papers/unparsed" # Original PDF papers
-    parsed_path: "./data/raw/papers/parsed" # MinerU-converted markdown
+    unparsed_path: "./datahub/raw/papers/unparsed" # Original PDF papers
+    parsed_path: "./datahub/interim/papers/parsed" # MinerU/Docling-converted markdown
 
   # Open LCI Databases
   lci_databases:
     - name: "ELCD"
-      path: "./data/raw/elcd"
+      path: "./datahub/raw/elcd"
       url: "https://eplca.jrc.ec.europa.eu/ELCD3/"
     - name: "USLCI"
-      path: "./data/raw/uslci"
+      path: "./datahub/raw/uslci"
       url: "https://www.lcacommons.gov/lca-collaboration/"
     - name: "Agribalyse"
-      path: "./data/raw/agribalyse"
+      path: "./datahub/raw/agribalyse"
       url: "https://agribalyse.ademe.fr/"
     - name: "Idemat"
-      path: "./data/raw/idemat"
+      path: "./datahub/raw/idemat"
       url: "https://www.intechopen.com/chapters/78082"
 
   # Open Access Literature APIs
@@ -117,13 +117,13 @@ data_sources:
 ai:
   inference_engine: "llama.cpp"
   llm_provider: "llama-server"
-  llm_model: "qwen3.5:35b"
+  llm_model: "Qwen/Qwen3.8-Flash-Next"
   embedding_model: "qwen3-embedding:4b"
   embedding_dim: 2560
   llama-server:
     base_url: "http://localhost:11434"
   knowledge_graph:
-    storage_path: "./data/processed/kg"
+    storage_path: "./datahub/processed/kg"
     backend: "networkx" # or "neo4j"
 
 visualization:

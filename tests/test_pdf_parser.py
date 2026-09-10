@@ -21,7 +21,7 @@ class TestPDFParserInit:
 
         parser = PDFParser(parser_type="pymupdf")
         assert parser.parser_type == "pymupdf"
-        assert parser.output_dir == Path("./data/raw/papers/parsed")
+        assert parser.output_dir == Path("./datahub/interim/papers/parsed")
 
     def test_init_custom_output_dir(self):
         """Test initialization with custom output directory."""

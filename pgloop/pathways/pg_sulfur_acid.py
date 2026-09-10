@@ -8,6 +8,7 @@ from typing import Dict, List
 
 from pgloop.lca.inventory import LifeCycleInventory
 from pgloop.pathways.base_pathway import BasePathway
+from pgloop.pathways.vpms import CarbothermicVPM
 
 
 class SulfurAcidPathway(BasePathway):
@@ -20,6 +21,8 @@ class SulfurAcidPathway(BasePathway):
     - Under optimized reducing conditions, elemental Sulfur (S) is recovered
     - Calcium oxide (CaO) residue can be used as cement clinker component
     """
+
+    vpm_class = CarbothermicVPM
 
     @property
     def code(self) -> str:

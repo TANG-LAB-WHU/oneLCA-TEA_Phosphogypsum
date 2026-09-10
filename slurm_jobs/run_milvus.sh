@@ -13,8 +13,8 @@
 mkdir -p slurm_jobs/logs
 
 # Set directory variables for persistence
-DATA_DIR="$(pwd)/data/processed/milvus/data"
-CONF_DIR="$(pwd)/data/processed/milvus/conf"
+DATA_DIR="$(pwd)/datahub/processed/milvus/data"
+CONF_DIR="$(pwd)/datahub/processed/milvus/conf"
 
 mkdir -p "$DATA_DIR" "$CONF_DIR"
 

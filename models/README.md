@@ -11,7 +11,8 @@ To prevent Git repository bloat, large binary weight files (e.g., `.bin`, `.pt`,
 ### 1. `models/gguf/`
 *   **Purpose**: Stores GGUF-quantized weights for the Reasoner LLM and Parser VLM used by the `llama.cpp` server backends.
 *   **Expected Files**:
-    *   `Qwen3.6-27B-Q8_0.gguf` (Reasoner LLM)
+    *   `Qwen3.8-Flash-Next-Q8_0-00001-of-00006.gguf` ... `00006.gguf` (Default Reasoner LLM, 125B MoE)
+    *   `Qwen3.8-27B-UD-Q8_K_XL.gguf` / `Qwen3.6-27B-Q8_0.gguf` (Reasoner LLM Fallback)
     *   `Qwen3.6-35B-A3B-UD-Q8_K_XL.gguf` (Parser VLM) + `mmproj-BF16.gguf` (VLM Vision Projector)
 *   **Active Integration**: Reference these paths inside your `.env` configuration file and Slurm runscripts (`slurm_jobs/`).
 

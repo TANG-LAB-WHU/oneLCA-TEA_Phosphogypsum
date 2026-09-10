@@ -70,6 +70,18 @@ class LCAEngine:
         self.characterization = CharacterizationFactors(self.config_path)
         self.impact_assessment = ImpactAssessment(self.characterization)
 
+    def get_indicator_unit(self, category: str) -> str:
+        """
+        Get standard reporting unit for an LCIA impact category.
+
+        Args:
+            category: Impact category name (e.g. 'climate_change')
+
+        Returns:
+            Unit string (e.g. 'kg CO2-eq')
+        """
+        return self.characterization.get_unit(category)
+
     def calculate(
         self,
         pathway,  # Treatment pathway instance

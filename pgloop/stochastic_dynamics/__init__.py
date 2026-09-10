@@ -21,10 +21,22 @@ from pgloop.stochastic_dynamics.acr_sampler import AdaptiveCollocationSampler
 from pgloop.stochastic_dynamics.pinn_trainer import StiffPINNTrainer
 from pgloop.stochastic_dynamics.stiff_pinn import StiffBoundaryPINN
 
+try:
+    from pgloop.stochastic_dynamics.pinn import FP_PINN
+except ImportError:
+    FP_PINN = None
+
+try:
+    from pgloop.stochastic_dynamics.vae import VAE
+except ImportError:
+    VAE = None
+
 __all__ = [
     "FokkerPlanck1DSolver",
     "FokkerPlanck2DSolver",
     "StiffBoundaryPINN",
+    "FP_PINN",
+    "VAE",
     "AdaptiveCollocationSampler",
     "StiffPINNTrainer",
     "l2_pdf_error",

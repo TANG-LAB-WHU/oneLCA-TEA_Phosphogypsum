@@ -27,10 +27,10 @@ python scripts/build_knowledge_graph.py [OPTIONS]
 
 | Step | Description | Output |
 |------|-------------|--------|
-| `parse` | Extract text from PDFs using MinerU or PyMuPDF | `data/raw/papers/parsed/*.md` |
-| `index` | Build RAG index with entity extraction | `data/processed/lightrag_db/` or `data/processed/raganything_db/` |
-| `extract` | Extract structured data using LLM | `data/processed/extracted_data/*.json` |
-| `build` | Construct domain knowledge graph | `data/processed/knowledge_graph/` |
+| `parse` | Extract text from PDFs using MinerU or PyMuPDF | `datahub/interim/papers/parsed/*.md` |
+| `index` | Build RAG index with entity extraction | `datahub/processed/lightrag_db/` or `datahub/processed/raganything_db/` |
+| `extract` | Extract structured data using LLM | `datahub/processed/extracted_data/*.json` |
+| `build` | Construct domain knowledge graph | `datahub/processed/knowledge_graph/` |
 
 ### Examples
 
@@ -77,18 +77,18 @@ python scripts/build_knowledge_graph.py --engine raganything --limit 2
 ### Data Flow
 
 ```
-data/raw/papers/unparsed/*.pdf
-        ↓ (parse step - MinerU)
-data/raw/papers/parsed/
+datahub/raw/papers/unparsed/*.pdf
+        ↓ (parse step - MinerU / Docling)
+datahub/interim/papers/parsed/
     └── paper_name/
         ├── paper_name.md      ← Markdown with text, tables, formulas
         └── auto/images/       ← Extracted figures
         ↓ (index step - LightRAG/RAGAnything)
-data/processed/lightrag_db/    ← Entity-relationship graph + vector index
+datahub/processed/lightrag_db/    ← Entity-relationship graph + vector index
         ↓ (extract step - LLM)
-data/processed/extracted_data/ ← Structured JSON (compositions, technologies, LCI, costs)
+datahub/processed/extracted_data/ ← Structured JSON (compositions, technologies, LCI, costs)
         ↓ (build step)
-data/processed/knowledge_graph/ ← Domain knowledge graph (NetworkX/Neo4j)
+datahub/processed/knowledge_graph/ ← Domain knowledge graph (NetworkX/Neo4j)
 ```
 
 ---
@@ -107,7 +107,7 @@ Configure in `.env`:
 ```env
 LLM_BASE_URL=http://127.0.0.1:11434/v1
 LLM_API_KEY=sk-no-key-required
-LLM_MODEL=Qwen3.6-27B
+LLM_MODEL=Qwen/Qwen3.8-Flash-Next
 EMBEDDING_BASE_URL=http://127.0.0.1:11436/v1
 EMBEDDING_MODEL=Qwen3-Embedding-8B-GGUF
 EMBEDDING_DIM=4096
@@ -144,7 +144,7 @@ LLM_TIMEOUT=1800
 EMBEDDING_TIMEOUT=600
 ```
 
-Then set `LLM_MODEL=Qwen3.6-27B` in `.env`.
+Then set `LLM_MODEL=Qwen/Qwen3.8-Flash-Next` in `.env`.
 
 ### MinerU preflight (recommended before RAGAnything)
 

@@ -2,11 +2,11 @@
 This script processes PDF papers and builds a knowledge graph for PG-LCA-TEA.
 
 Workflow:
-1. Parse PDFs from data/raw/papers/unparsed/ → data/raw/papers/parsed/
-2. Build LightRAG index (Graph + Vector) in data/processed/lightrag_db/
+1. Parse PDFs from datahub/raw/papers/unparsed/ → datahub/interim/papers/parsed/
+2. Build LightRAG index (Graph + Vector) in datahub/processed/lightrag_db/
 3. Extract structured data using OpenAI-compatible LLM (e.g. llama-server)
-4. Build parameter ranges from extracted JSON in data/processed/parameter_ranges/
-5. Construct knowledge graph in data/processed/knowledge_graph/
+4. Build parameter ranges from extracted JSON in datahub/processed/parameter_ranges/
+5. Construct knowledge graph in datahub/processed/knowledge_graph/
 
 Usage:
     python scripts/build_knowledge_graph.py --step all
@@ -45,12 +45,13 @@ except ImportError:
     RAGANYTHING_AVAILABLE = False
 
 # === Directory Configuration ===
-DATA_DIR = PROJECT_ROOT / "data"
+DATA_DIR = PROJECT_ROOT / "datahub"
 RAW_DIR = DATA_DIR / "raw"
+INTERIM_DIR = DATA_DIR / "interim"
 PROCESSED_DIR = DATA_DIR / "processed"
 
 UNPARSED_DIR = RAW_DIR / "papers" / "unparsed"
-PARSED_DIR = RAW_DIR / "papers" / "parsed"
+PARSED_DIR = INTERIM_DIR / "papers" / "parsed"
 LIGHTRAG_DIR = PROCESSED_DIR / "lightrag_db"
 RAGANYTHING_DIR = PROCESSED_DIR / "raganything_db"
 KG_DIR = PROCESSED_DIR / "knowledge_graph"

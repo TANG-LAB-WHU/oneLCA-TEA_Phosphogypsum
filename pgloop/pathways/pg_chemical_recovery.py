@@ -4,10 +4,13 @@ from typing import Dict, List
 
 from pgloop.lca.inventory import LifeCycleInventory
 from pgloop.pathways.base_pathway import BasePathway
+from pgloop.pathways.vpms import AmmonoCarbonationVPM
 
 
 class ChemicalRecoveryPathway(BasePathway):
     """PG converted to ammonium sulfate and calcium carbonate."""
+
+    vpm_class = AmmonoCarbonationVPM
 
     @property
     def code(self) -> str:

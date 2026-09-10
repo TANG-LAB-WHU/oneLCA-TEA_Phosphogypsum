@@ -40,6 +40,19 @@ class CharacterizationFactors:
         "resource_depletion",
     ]
 
+    UNITS = {
+        "climate_change": "kg CO2-eq",
+        "acidification": "mol H+-eq",
+        "eutrophication_fresh": "kg P-eq",
+        "eutrophication_marine": "kg N-eq",
+        "human_toxicity_cancer": "CTUh",
+        "human_toxicity_noncancer": "CTUh",
+        "ecotoxicity_freshwater": "CTUe",
+        "ionizing_radiation": "kBq U-235 eq",
+        "particulate_matter": "disease incidence",
+        "resource_depletion": "kg Sb-eq",
+    }
+
     # Default characterization factors (subset of common substances)
     # Units are per kg emission unless otherwise noted
     DEFAULT_FACTORS = {
@@ -281,6 +294,10 @@ class CharacterizationFactors:
         if category not in self.factors:
             self.factors[category] = {}
         self.factors[category][substance.lower()] = value
+
+    def get_unit(self, category: str) -> str:
+        """Get standard reporting unit for an impact category."""
+        return self.UNITS.get(category, "kg-eq")
 
     def save(self, filepath: Path) -> None:
         """Save factors to JSON file."""

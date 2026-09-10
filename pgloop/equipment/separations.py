@@ -54,6 +54,10 @@ class FilterPress(BaseEquipment):
         }
 
 
+# Alias for backwards and documentation compatibility
+SeparationFilter = FilterPress
+
+
 class Centrifuge(BaseEquipment):
     """Decanter Centrifuge for continuous solid-liquid separation."""
 

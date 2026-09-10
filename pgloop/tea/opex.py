@@ -89,13 +89,19 @@ class OPEXCalculator:
         """Set custom unit price."""
         self.unit_prices[item.lower()] = price
 
-    def calculate(self, opex_data: Dict, functional_unit_kg: float = 1000) -> Dict:
+    def calculate(
+        self,
+        opex_data: Dict,
+        functional_unit_kg: float = 1000,
+        annual_throughput: float = 100000,
+    ) -> Dict:
         """
         Calculate operational costs.
 
         Args:
             opex_data: Dict with consumption data
             functional_unit_kg: Functional unit in kg
+            annual_throughput: Annual plant throughput in tonnes/year
 
         Returns:
             Dict with total and breakdown
@@ -161,10 +167,14 @@ class OPEXCalculator:
         total += labor_cost
         breakdown["labor"] = labor_cost
 
-        # Maintenance (typically 2-4% of CAPEX annually)
+        # Maintenance (typically 2-4% of CAPEX annually or lump sum annual maintenance)
         maintenance = opex_data.get("maintenance", 0)
-        total += maintenance * (functional_unit_kg / 1000)
-        breakdown["maintenance"] = maintenance * (functional_unit_kg / 1000)
+        if annual_throughput > 0 and maintenance > 100:
+            maint_per_fu = (maintenance / annual_throughput) * (functional_unit_kg / 1000)
+        else:
+            maint_per_fu = maintenance * (functional_unit_kg / 1000)
+        total += maint_per_fu
+        breakdown["maintenance"] = maint_per_fu
 
         # Overhead (typically 15-25% of operating costs)
         overhead_rate = opex_data.get("overhead_rate", 0.15)

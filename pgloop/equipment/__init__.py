@@ -26,6 +26,7 @@ from pgloop.equipment.separations import (
     Centrifuge,
     Evaporator,
     FilterPress,
+    SeparationFilter,
     SolventExtractor,
 )
 
@@ -36,6 +37,7 @@ __all__ = [
     "LeachingTank",
     "MixingTank",
     "FilterPress",
+    "SeparationFilter",
     "Centrifuge",
     "Evaporator",
     "SolventExtractor",

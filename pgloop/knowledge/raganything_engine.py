@@ -141,14 +141,14 @@ class RAGAnythingEngine:
             raise ImportError("RAGAnything not installed. Run: pip install 'raganything[all]'")
 
         self.working_dir = (
-            Path(working_dir) if working_dir else Path("./data/processed/raganything_db")
+            Path(working_dir) if working_dir else Path("./datahub/processed/raganything_db")
         )
         self.working_dir.mkdir(parents=True, exist_ok=True)
 
         # LLM configuration
         self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
         self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or "sk-no-key-required"
-        self.llm_model = llm_model or os.getenv("LLM_MODEL", "qwen3.5:35b")
+        self.llm_model = llm_model or os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next")
         self.llm_timeout = _normalize_timeout(_read_env_float("LLM_TIMEOUT", default=180.0))
 
         # Embedding configuration — model name must match `llama-server list`

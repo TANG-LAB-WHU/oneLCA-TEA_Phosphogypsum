@@ -8,6 +8,7 @@ from typing import Dict, List
 
 from pgloop.lca.inventory import LifeCycleInventory
 from pgloop.pathways.base_pathway import BasePathway
+from pgloop.pathways.vpms import REEExtractionVPM
 
 
 class REEExtractionPathway(BasePathway):
@@ -19,6 +20,8 @@ class REEExtractionPathway(BasePathway):
     2. Solvent extraction / Ion exchange
     3. Precipitation and purification
     """
+
+    vpm_class = REEExtractionVPM
 
     @property
     def code(self) -> str:

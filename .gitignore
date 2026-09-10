@@ -71,14 +71,15 @@ venv.bak/
 .ipynb_checkpoints
 
 # Data files (keep structure, ignore large files)
-data/raw/*.pdf
-data/raw/*.csv
-data/processed/*.json
-data/processed/lightrag_db/
-data/processed/raganything_db/
-data/processed/knowledge_graph/
-!data/raw/.gitkeep
-!data/processed/.gitkeep
+datahub/raw/**/*.pdf
+datahub/raw/**/*.csv
+datahub/interim/papers/parsed/
+datahub/processed/*.json
+datahub/processed/lightrag_db/
+datahub/processed/raganything_db/
+datahub/processed/knowledge_graph/
+datahub/processed/telemetry.db
+!datahub/**/.gitkeep
 
 # Model files
 models/**/*.pt
@@ -103,7 +104,6 @@ temp_*
 
 # Local task notes
 TODO_list/slurm_jobs/logs/
-data/raw/papers/parsed/
 HELP_docs/
 help/
 
