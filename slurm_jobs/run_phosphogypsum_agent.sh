@@ -8,21 +8,22 @@
 
 #=============================================================================#
 # [Submission Guidelines on WHU-SCC Cluster]
+# (Note: Please execute 'cd slurm_jobs' before submitting)
+#
 # 1. Hardware Default Routing (Auto-Selection / Default: Qwen3.8-Flash-Next):
-#    - Full VRAM Offload (Recommended):  sbatch -p a100x4 --gres=gpu:4 --cpus-per-task=32 slurm_jobs/run_phosphogypsum_agent.sh --flash
+#    - Full VRAM Offload (Recommended):  sbatch -p a100x4 --gres=gpu:4 --cpus-per-task=32 run_phosphogypsum_agent.sh --flash
 #      * 4x 40GB A100 = 160GB VRAM (Fits 100% of ~110GB weights, ngl 99 via NVLink tensor parallel -sm row)
-#    - Single A100 GPU (Hybrid Offload): sbatch -p a100x4 --gres=gpu:1 --cpus-per-task=16 slurm_jobs/run_phosphogypsum_agent.sh
+#    - Single A100 GPU (Hybrid Offload): sbatch -p a100x4 --gres=gpu:1 --cpus-per-task=16 run_phosphogypsum_agent.sh
 #      * 1x 40GB A100 = 40GB VRAM (32 layers offloaded to GPU to prevent CUDA OOM, remaining on CPU RAM)
-#    - V100 GPU (Hybrid Offload):        sbatch -p gpu --gres=gpu:2 --cpus-per-task=10 slurm_jobs/run_phosphogypsum_agent.sh
-
-#    - 9a14a 192-Core CPU (Pure NUMA):   sbatch -p 9a14a --nodes=1 --cpus-per-task=192 slurm_jobs/run_phosphogypsum_agent.sh --flash
+#    - V100 GPU (Hybrid Offload):        sbatch -p gpu --gres=gpu:2 --cpus-per-task=10 run_phosphogypsum_agent.sh
+#    - 9a14a 192-Core CPU (Pure NUMA):   sbatch -p 9a14a --nodes=1 --cpus-per-task=192 run_phosphogypsum_agent.sh --flash
 #
 # 2. Explicit Model Selection & Cross-Partition Usage:
-#    - Force Qwen3.8-Flash-Next (Default): sbatch -p a100x4 --gres=gpu:4 slurm_jobs/run_phosphogypsum_agent.sh --flash
-#    - Force Qwen3.8-27B-Instruct:         sbatch -p a100x4 --gres=gpu:1 slurm_jobs/run_phosphogypsum_agent.sh --27b
+#    - Force Qwen3.8-Flash-Next (Default): sbatch -p a100x4 --gres=gpu:4 run_phosphogypsum_agent.sh --flash
+#    - Force Qwen3.8-27B-Instruct:         sbatch -p a100x4 --gres=gpu:1 run_phosphogypsum_agent.sh --27b
 #
 # 3. Custom Query Execution:
-#    - Run batch optimization:             sbatch -p a100x4 --gres=gpu:4 slurm_jobs/run_phosphogypsum_agent.sh "评估磷石膏制硫酸联产水泥生产线的碳减排潜力和经济净现值"
+#    - Run batch optimization:             sbatch -p a100x4 --gres=gpu:4 run_phosphogypsum_agent.sh "评估磷石膏制硫酸联产水泥生产线的碳减排潜力和经济净现值"
 #=============================================================================#
 
 echo "======================================================================="
