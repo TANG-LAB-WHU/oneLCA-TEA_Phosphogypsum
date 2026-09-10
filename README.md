@@ -2,12 +2,13 @@
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum/actions/workflows/test.yml/badge.svg)](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum/actions/workflows/test.yml)
 [![Inference: llama.cpp](https://img.shields.io/badge/inference-llama.cpp-orange.svg)](https://github.com/ggerganov/llama.cpp)
 [![Version](https://img.shields.io/badge/version-v0.7.0-green.svg)](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)
 
 **PhosphogypsumBot** is a physics-informed, multimodal intelligent agent framework designed to quantify and mitigate uncertainties in industrial phosphogypsum (PG) valorization, Life Cycle Assessment (LCA), and Techno-Economic Analysis (TEA).
 
-By integrating physical conservation laws, Bayesian Markov Chain Monte Carlo (MCMC) sampling, high-accuracy literature extraction (IBM Docling & MinerU), and a deterministic **10-Tool Plan-and-Solve Autonomous Agent**, PhosphogypsumBot guides engineers and policy-makers toward optimal, sustainable, and economically viable circular economy pathways.
+By combining physical conservation laws, Bayesian Markov Chain Monte Carlo (MCMC) sampling, high-accuracy scientific literature extraction (IBM Docling & MinerU), a Medallion-structured **DataHub**, and a deterministic **10-Tool Plan-and-Solve Autonomous Agent**, PhosphogypsumBot guides engineers and policy-makers toward optimal, sustainable, and economically viable circular economy pathways.
 
 ---
 
@@ -16,10 +17,11 @@ By integrating physical conservation laws, Bayesian Markov Chain Monte Carlo (MC
 ### 1. Autonomous Plan-and-Solve Agent (`chat_agent/`)
 * **10-Tool Portfolio**: Deterministic Python solvers exposed directly to OpenAI-compatible Function Calling interfaces (Reverse Design, Benefit Compensation, MCMC, LCA/TEA, 5D TEPES Ranking, Crystal Properties, Real-time IoT).
 * **Plan-and-Solve Reasoning**: Autonomous multi-step reasoning that queries literature, calculates forward environmental-economic footprints, back-calculates process parameters, and optimizes governmental subsidy structures.
-* **Unified llama.cpp Inference**: Natively designed to run with `llama-server`, enabling zero-cost, high-speed, local or supercomputing (WHU-SCC) cluster deployments.
+* **Unified llama.cpp Inference**: Natively designed for `llama-server` running **Qwen3.8-Flash-Next**, enabling zero-cost, high-speed, local or supercomputing (WHU-SCC) cluster deployments.
 
-### 2. Physics-Informed AI (PI-AI) Engine
-* **Physical Governing Equations**: Valorization Pathway Modules (VPMs) located in `pgloop/pathways/vpms/` represent governing thermodynamics, chemical kinetics (e.g., shrinking core models for acid leaching, carbonation rate laws, and thermal decomposition heat balances).
+### 2. Deep Integrated Assessment & Physics-Informed AI (PI-AI) Engine
+* **Unified Assessment Facade (`IntegratedAssessmentEngine`)**: High-level deep module connecting ISO 14040 LCA, CLCC/TLCC TEA, thermodynamic Valorization Pathway Modules (VPMs), and MCDA ranking (TOPSIS/VIKOR) in a single unified entry point.
+* **Physical Governing Equations (VPMs)**: Modules in `pgloop/pathways/vpms/` capture governing thermodynamics and chemical kinetics (shrinking core acid leaching, carbonation rate laws, and thermal decomposition heat balances).
 * **PINNs & Density Solvers**: Resolve density evolution and transport boundaries using Physics-Informed Neural Networks (PINNs) and Fokker-Planck partial differential equation (PDE) solvers (`pgloop/stochastic_dynamics/`).
 * **MCMC Parameter Calibration**: Calibrates and refines joint parameter uncertainty using Metropolis-Hastings, Hamiltonian Monte Carlo, and Gibbs sampling.
 
@@ -28,7 +30,8 @@ By integrating physical conservation laws, Bayesian Markov Chain Monte Carlo (MC
 * **Benefit Compensation Model**: Internalizes avoided environmental damage (CE Delft shadow prices) to optimize stakeholder incentive structures (tipping fees, carbon credits, governmental subsidies).
 * **5D TEPES Decision Matrix**: Multi-criteria decision ranking across Technical (TRL), Economic (NPV/IRR), Environmental (ISO 14040 LCA), Policy (carbon tax/subsidies), and Social (job creation/health risk) metrics.
 
-### 4. SOTA Ingestion & Materials Potential
+### 4. SOTA Ingestion, Materials Potential & DataHub
+* **Industrial Medallion DataHub (`pgloop/iodata/DataHub`)**: Structured repository architecture separating `raw/`, `interim/papers/parsed/`, `processed/`, `cache/`, and `templates/` to ensure zero input pollution.
 * **High-Accuracy Paper Ingestion**: Supports **IBM Docling** and MinerU for high-fidelity extraction of complex multi-column tables, reaction kinetics, and chemical equations from scientific literature.
 * **Materials Potential Validation**: Connects to the Materials Project API (`mp-api`) to validate static crystal energies with universal MACE machine-learning interatomic potentials, performing BFGS structural relaxations and Birch-Murnaghan Equation of State (EOS) bulk modulus fitting.
 * **Industrial IoT Telemetry**: Asynchronously streams OPC UA edge sensors to an MQTT broker and persists live data into SQLite WAL databases for sub-second Streamlit monitoring.
@@ -39,19 +42,20 @@ By integrating physical conservation laws, Bayesian Markov Chain Monte Carlo (MC
 
 | Module | Description | Key Classes / Sub-modules |
 | :--- | :--- | :--- |
+| `pgloop.assessment` | Unified Assessment Facade | `IntegratedAssessmentEngine` (Unified LCA + TEA + VPM + Risk evaluation) |
 | `chat_agent/` | Autonomous Plan-and-Solve Agent | `PhosphogypsumAgent`, `AVAILABLE_TOOLS` (10 core tools), `function_to_schema`, CLI shell |
-| `pgloop/pathways` | Treatment Pathways & VPMs | `CementPathway`, `REEExtractionPathway`, `SulfurAcidPathway`, `vpms/` (Carbothermic, Crystallization, Hydration) |
+| `pgloop/iodata` | Medallion DataHub & Ingestion | `DataHub`, `PDFParser` (Docling / MinerU / PyMuPDF), `WebScraper`, `EdgeBridge`, `StreamProcessor` |
+| `pgloop/pathways` | Treatment Pathways & VPMs | `CementPathway`, `REEExtractionPathway`, `SulfurAcidPathway`, `ChemicalRecoveryPathway`, `vpms/` |
 | `pgloop/decision` | Multi-Criteria Decision & Optimization | `PathwayRanker`, `ReverseDesignOptimizer`, `BenefitCompensationModel`, `ScenarioAnalyzer` |
 | `pgloop/uncertainty` | Uncertainty Quantification & MCMC | `MonteCarloSimulator`, `JointUncertaintyPropagator`, `MetropolisHastings`, `HamiltonianMC`, `GibbsSampler` |
 | `pgloop/stochastic_dynamics` | Physics-Informed Solvers | `FP_PINN` (PINN solver), `FokkerPlanck1DSolver`, `FokkerPlanck2DSolver`, `VAE` |
-| `pgloop/lca` | Life Cycle Assessment Engine | `LCAEngine`, `ImpactAssessment`, `LifeCycleInventory` |
+| `pgloop/lca` | Life Cycle Assessment Engine | `LCAEngine`, `ImpactAssessment`, `LifeCycleInventory`, `CharacterizationFactors` |
 | `pgloop/tea` | Techno-Economic Analysis Engine | `TEAEngine`, `CAPEXCalculator`, `OPEXCalculator`, `ExternalCostCalculator` |
-| `pgloop/knowledge` | Knowledge Extraction & Graph | `PhosphogypsumKG`, `RAGAnythingEngine`, `LightRAGEngine`, `llm_extractor`, `embeddings/` |
+| `pgloop/knowledge` | Knowledge Extraction & Graph | `PhosphogypsumKG`, `RAGAnythingEngine`, `LightRAGEngine`, `llm_extractor` |
 | `pgloop/chemicals` | Material Database & ML Properties | `Chemical`, `PropertyPredictor`, `evaluate_mace_on_mp` (MACE validator), `optimize_structure`/`fit_eos` |
 | `pgloop/equipment` | Unit Operations Modeling | `CSTRReactor`, `LeachingTank`, `MixingTank`, `SeparationFilter` |
 | `pgloop/risk` | Micro & Macro Risk Assessment | `TechnicalRisk`, `OperationalRisk`, `PoliticalRisk`, `PolicyRisk`, `RiskAggregator` |
 | `pgloop/visualization` | Interactive Dashboard & Reporting | `run_dashboard` (Streamlit dashboard), `ReportExporter` (Excel/HTML reports) |
-| `pgloop/iodata` | Ingestion & Telemetry | `PDFParser` (Docling / MinerU / PyMuPDF), `WebScraper`, `EdgeBridge` (OPC UA -> MQTT), `StreamProcessor` |
 
 ---
 
@@ -75,15 +79,21 @@ By integrating physical conservation laws, Bayesian Markov Chain Monte Carlo (MC
    ┌───────────────────┬─────────────┴───────┬───────────────────┬──────────────┐
    ▼                   ▼                     ▼                   ▼              ▼
 ┌──────────────┐ ┌──────────────┐ ┌────────────────────┐ ┌──────────────┐ ┌──────────────┐
-│  Docling/    │ │ Forward LCA/ │ │ Bayesian Reverse   │ │ Benefit      │ │ Bayesian     │
-│  LightRAG    │ │ TEA Engine   │ │ Design (GP + UCB)  │ │ Compensation │ │ MCMC (MH)    │
-│  Knowledge   │ │ ISO 14040    │ │ Target GWP / NPV   │ │ Tipping Fee  │ │ Uncertainty  │
-│  Retrieval   │ │ Footprints   │ │ Parameter Inversion│ │ Subsidies    │ │ Calibration  │
+│  Docling /   │ │ Integrated   │ │ Bayesian Reverse   │ │ Benefit      │ │ Bayesian     │
+│  LightRAG    │ │ Assessment   │ │ Design (GP + UCB)  │ │ Compensation │ │ MCMC (MH)    │
+│  Knowledge   │ │ Engine       │ │ Target GWP / NPV   │ │ Tipping Fee  │ │ Uncertainty  │
+│  Retrieval   │ │ LCA/TEA/VPM  │ │ Parameter Inversion│ │ Subsidies    │ │ Calibration  │
 └──────────────┘ └──────────────┘ └────────────────────┘ └──────────────┘ └──────────────┘
                                      │
                                      ▼
        ┌───────────────────────────────────────────────────────────┐
        │      5D TEPES (Tech, Econ, Env, Policy, Social) Report    │
+       └─────────────────────────────┬─────────────────────────────┘
+                                     │
+                                     ▼
+       ┌───────────────────────────────────────────────────────────┐
+       │     Industrial Medallion DataHub (pgloop.iodata.DataHub)  │
+       │       raw/ ──> interim/ (parsed) ──> processed/ ──> cache │
        └───────────────────────────────────────────────────────────┘
 ```
 
@@ -92,8 +102,8 @@ By integrating physical conservation laws, Bayesian Markov Chain Monte Carlo (MC
 ## Installation
 
 ### Prerequisites
-*   Python 3.11+
-*   `llama.cpp` (precompiled binary or via local server)
+* Python 3.11+
+* `llama.cpp` (precompiled binary or local `llama-server`)
 
 ### Standard Setup
 ```bash
@@ -122,7 +132,7 @@ pip install -e ".[dev]"          # Pytest test suite & code linting tools
 ```
 
 ### HPC Deployment on Wuhan University Supercomputing Center (WHU-SCC)
-WHU-SCC supports heterogeneous partitions (`a100x4`, `gpu` V100, and `9a14a` AMD EPYC CPU). PhosphogypsumBot provides a unified, self-contained Slurm script that automatically detects hardware partitions, launches `llama-server` with memory interleaving, and orchestrates the agent:
+WHU-SCC supports heterogeneous partitions (`a100x4`, `gpu` V100, and `9a14a` AMD EPYC CPU). PhosphogypsumBot provides an adaptive Slurm script that automatically detects the target hardware partition, configures `llama-server` with NUMA memory interleaving, and orchestrates the autonomous agent:
 
 ```bash
 # 1. A100 GPU Partition (Recommended):
@@ -139,7 +149,26 @@ sbatch -p gpu --gres=gpu:2 --cpus-per-task=10 slurm_jobs/run_phosphogypsum_agent
 
 ## Quick Start
 
-### 1. Interactive PhosphogypsumBot Agent
+### 1. Unified Integrated Assessment Engine
+Evaluate any valorization pathway across environmental LCA, financial TEA, physical VPM simulation, and composite risk with a single high-level call:
+
+```python
+from pgloop import IntegratedAssessmentEngine
+
+# Initialize facade for target jurisdiction
+engine = IntegratedAssessmentEngine(country="China")
+
+# Run full assessment for 1000 kg phosphogypsum treated via cement pathway
+result = engine.assess("PG-CementProd", functional_unit_kg=1000.0)
+
+print(f"Pathway: {result['pathway_name']}")
+print(f"Carbon Footprint (GWP): {result['lca']['impacts']['climate_change']:.2f} kg CO2-eq")
+print(f"Conventional Cost (CLCC): ${result['tea']['clcc']:.2f} / tonne")
+print(f"Social LCC (SLCC): ${result['tea']['slcc']:.2f} / tonne")
+print(f"Composite Risk Score: {result['risk']['overall_score']:.2f} ({result['risk']['overall_level']})")
+```
+
+### 2. Autonomous PhosphogypsumBot Agent
 Launch the autonomous AI agent in command-line interactive mode or single-query mode:
 
 ```bash
@@ -165,29 +194,6 @@ response = agent.chat(
     "perform Bayesian reverse parameter inversion to satisfy GWP < 120 kg CO2-eq and NPV > $20/t."
 )
 print(response)
-```
-
-### 2. Forward LCA-TEA Assessment
-Define a pathway and run a forward calculation for 1 tonne of phosphogypsum:
-
-```python
-from pgloop.lca import LCAEngine
-from pgloop.tea import TEAEngine
-from pgloop.pathways import CementPathway
-
-# Initialize computational engines
-lca_engine = LCAEngine()
-tea_engine = TEAEngine(country="China")
-
-# Initialize treatment pathway
-pathway = CementPathway(country="China")
-
-# Calculate environmental and financial footprints
-lca_result = lca_engine.calculate(pathway, functional_unit_value=1.0)
-tea_result = tea_engine.calculate(pathway, functional_unit_value=1.0)
-
-print(f"LCA Climate Change Impact: {lca_result.impacts['climate_change']:.2f} kg CO2-eq")
-print(f"TEA Conventional Cost (CLCC): ${tea_result.clcc:.2f} per tonne")
 ```
 
 ### 3. Bayesian Reverse Design
@@ -250,31 +256,41 @@ print("Suggested Tipping Fee (USD/t):", compensation["suggested_tipping_fee"])
 print("Suggested Government Subsidy (USD/t):", compensation["suggested_subsidy"])
 ```
 
-### 5. Scientific Literature Parsing (IBM Docling)
-Parse PDF papers with table structure and formula extraction into clean Markdown:
+### 5. Scientific Literature Parsing via Medallion DataHub
+Parse PDF research papers with table structure and formula extraction into clean Markdown, routed directly into the Medallion DataHub:
 
 ```python
+from pgloop import DataHub
 from pgloop.iodata.pdf_parser import PDFParser
 
-parser = PDFParser(parser_type="docling", output_dir="./datahub/interim/papers/parsed")
-doc = parser.parse_pdf("./datahub/raw/papers/unparsed/paper_sample.pdf")
+# Initialize and ensure all Medallion tiers exist on disk
+DataHub.ensure_directories()
+print("DataHub Root:", DataHub.ROOT)
+print("Unparsed Papers Directory:", DataHub.RAW_PAPERS_UNPARSED)
 
-print(f"Parsed Title: {doc.title}, Total Pages: {doc.pages}")
+# Parse scientific paper directly into interim parsed storage
+parser = PDFParser(parser_type="docling", output_dir=str(DataHub.INTERIM_PAPERS_PARSED))
+sample_pdf = DataHub.RAW_PAPERS_UNPARSED / "sample.pdf"
+if sample_pdf.exists():
+    doc = parser.parse_pdf(sample_pdf)
+    print(f"Parsed Title: {doc.title}, Total Pages: {doc.pages}")
 ```
 
 ---
 
-## Testing
+## Testing & Quality Assurance
 
 Run unit and integration tests across all modules:
 
 ```bash
-# Run full suite (unit and deterministic tests)
+# Run full test suite (unit, regression, and VPM integration)
 pytest tests/ -v -k "not integration and not slow"
 
-# Run agent toolchain tests specifically
-pytest tests/test_agent_full_toolchain.py tests/test_chat_agent.py -v
+# Run agent toolchain and VPM integration tests specifically
+pytest tests/test_agent_full_toolchain.py tests/test_vpm_integration.py -v
 ```
+
+All pull requests are validated through automated GitHub Actions CI testing on Python 3.11 and 3.12.
 
 ---
 
@@ -283,7 +299,7 @@ pytest tests/test_agent_full_toolchain.py tests/test_chat_agent.py -v
 We welcome contributions to PhosphogypsumBot. Please follow our workflow:
 1. **Branching**: Create feature branches from `main` or `feat-phosphogypsum-bot`.
 2. **Formatting & Linting**: Run `ruff check .` and `black --check .` before submitting PRs.
-3. **Testing**: Ensure all 85+ unit tests pass via `pytest`.
+3. **Testing**: Ensure all 110+ unit and integration tests pass via `pytest`.
 
 ---
 
