@@ -42,7 +42,7 @@ By combining physical conservation laws, Bayesian Markov Chain Monte Carlo (MCMC
 
 | Module | Description | Key Classes / Sub-modules |
 | :--- | :--- | :--- |
-| `pgloop.assessment` | Unified Assessment Facade | `IntegratedAssessmentEngine` (Unified LCA + TEA + VPM + Risk evaluation) |
+| `pgloop.integrated_assessment` | Unified Assessment Facade | `IntegratedAssessmentEngine` (Unified LCA + TEA + VPM + Risk evaluation) |
 | `chat_agent/` | Autonomous Plan-and-Solve Agent | `PhosphogypsumAgent`, `AVAILABLE_TOOLS` (10 core tools), `function_to_schema`, CLI shell |
 | `pgloop/iodata` | Medallion DataHub & Ingestion | `DataHub`, `PDFParser` (Docling / MinerU / PyMuPDF), `WebScraper`, `EdgeBridge`, `StreamProcessor` |
 | `pgloop/pathways` | Treatment Pathways & VPMs | `CementPathway`, `REEExtractionPathway`, `SulfurAcidPathway`, `ChemicalRecoveryPathway`, `vpms/` |

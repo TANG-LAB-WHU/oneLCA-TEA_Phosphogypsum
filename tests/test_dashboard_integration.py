@@ -22,7 +22,7 @@ def test_dashboard_pathway_registry_alignment():
 
 
 def test_dashboard_integrated_assessment_call():
-    from pgloop.assessment import IntegratedAssessmentEngine
+    from pgloop.integrated_assessment import IntegratedAssessmentEngine
     engine = IntegratedAssessmentEngine(country="China")
     res = engine.assess("PG-CementProd", functional_unit_kg=1000.0)
     assert "lca" in res

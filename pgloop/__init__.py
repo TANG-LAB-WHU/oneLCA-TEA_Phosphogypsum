@@ -5,7 +5,7 @@ Main package for phosphogypsum life cycle assessment and techno-economic analysi
 """
 
 __version__ = "0.7.0"
-from pgloop.assessment import IntegratedAssessmentEngine
+from pgloop.integrated_assessment import IntegratedAssessmentEngine
 from pgloop.decision.recommender import PathwayRanker
 from pgloop.iodata.datahub import DataHub
 from pgloop.lca.lca_engine import LCAEngine, LCAResult

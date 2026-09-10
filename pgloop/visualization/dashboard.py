@@ -18,7 +18,7 @@ def run_dashboard():
         return
 
     from pgloop import __version__
-    from pgloop.assessment import IntegratedAssessmentEngine
+    from pgloop.integrated_assessment import IntegratedAssessmentEngine
     from pgloop.pathways import PATHWAYS, list_pathways, get_pathway
     from pgloop.iodata import DataHub
 
