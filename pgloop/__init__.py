@@ -28,4 +28,5 @@ __all__ = [
     "PathwayRanker",
     "MonteCarloSimulator",
     "JointUncertaintyPropagator",
+    "__version__",
 ]

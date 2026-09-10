@@ -1,5 +1,5 @@
 """
-Streamlit Dashboard for PG-LCA-TEA (v0.7.0)
+Streamlit Dashboard for PG-LCA-TEA
 
 Interactive, real-time decision dashboard powered by IntegratedAssessmentEngine.
 Run with: streamlit run pgloop/visualization/dashboard.py
@@ -17,12 +17,13 @@ def run_dashboard():
         print("Streamlit or Pandas not installed. Run: pip install streamlit pandas")
         return
 
+    from pgloop import __version__
     from pgloop.assessment import IntegratedAssessmentEngine
     from pgloop.pathways import PATHWAYS, list_pathways, get_pathway
     from pgloop.iodata import DataHub
 
     st.set_page_config(
-        page_title="PhosphogypsumBot Dashboard v0.7.0",
+        page_title=f"PhosphogypsumBot Dashboard v{__version__}",
         page_icon="🔬",
         layout="wide",
         initial_sidebar_state="expanded",
@@ -31,7 +32,7 @@ def run_dashboard():
     st.title("🔬 PhosphogypsumBot: Industrial LCA-TEA Framework")
     st.markdown(
         "**Physics-Informed Decision Intelligence for Industrial Phosphogypsum Engineering** &nbsp;|&nbsp; "
-        "`v0.7.0` &nbsp;|&nbsp; [GitHub](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)"
+        f"`v{__version__}` &nbsp;|&nbsp; [GitHub](https://github.com/TANG-LAB-WHU/oneLCA-TEA_Phosphogypsum)"
     )
 
     # -------------------------------------------------------------------------
@@ -299,7 +300,7 @@ def run_dashboard():
             live_monitor_logic()
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("**PhosphogypsumBot v0.7.0**")
+    st.sidebar.markdown(f"**PhosphogypsumBot v{__version__}**")
     st.sidebar.markdown("TANG Lab at Wuhan University")
 
 
