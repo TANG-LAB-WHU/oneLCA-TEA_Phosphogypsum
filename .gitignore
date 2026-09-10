@@ -93,7 +93,7 @@ chroma_db/
 # Logs
 *.log
 slurm_jobs/*.log
-logs/
+# logs/
 
 # OS files
 .DS_Store
@@ -103,7 +103,8 @@ Thumbs.db
 temp_*
 
 # Local task notes
-TODO_list/slurm_jobs/logs/
+TODO_list/
+# slurm_jobs/logs/
 HELP_docs/
 help/
 
