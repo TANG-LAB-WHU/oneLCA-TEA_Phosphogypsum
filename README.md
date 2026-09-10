@@ -61,40 +61,62 @@ By combining physical conservation laws, Bayesian Markov Chain Monte Carlo (MCMC
 
 ## System Architecture
 
-```text
-┌─════════════════════════════════════════════════════════════════════════════┐
-│                     PHOSPHOGYPSUMBOT AGENTIC ARCHITECTURE                   │
-└─════════════════════════════════════════════════════════════════════════════┘
+```mermaid
+flowchart TD
+    subgraph UI["1. User & Interface Layer"]
+        UQ(["Engineer / Policy Maker Query"])
+        CLI["CLI Interactive Shell<br/><code>chat_agent.cli</code>"]
+        DASH["Streamlit Telemetry Dashboard<br/><code>pgloop.visualization</code>"]
+    end
 
-                                 User Query
-                                     │
-                                     ▼
-       ┌───────────────────────────────────────────────────────────┐
-       │     PhosphogypsumBot Plan-and-Solve Agent (chat_agent/)   │
-       │       Driven by Local llama-server (Qwen3.8-Flash-Next)   │
-       └─────────────────────────────┬─────────────────────────────┘
-                                     │
-                  Function Calling Tool Orchestration Loop
-                                     │
-   ┌───────────────────┬─────────────┴───────┬───────────────────┬──────────────┐
-   ▼                   ▼                     ▼                   ▼              ▼
-┌──────────────┐ ┌──────────────┐ ┌────────────────────┐ ┌──────────────┐ ┌──────────────┐
-│  Docling /   │ │ Integrated   │ │ Bayesian Reverse   │ │ Benefit      │ │ Bayesian     │
-│  LightRAG    │ │ Assessment   │ │ Design (GP + UCB)  │ │ Compensation │ │ MCMC (MH)    │
-│  Knowledge   │ │ Engine       │ │ Target GWP / NPV   │ │ Tipping Fee  │ │ Uncertainty  │
-│  Retrieval   │ │ LCA/TEA/VPM  │ │ Parameter Inversion│ │ Subsidies    │ │ Calibration  │
-└──────────────┘ └──────────────┘ └────────────────────┘ └──────────────┘ └──────────────┘
-                                     │
-                                     ▼
-       ┌───────────────────────────────────────────────────────────┐
-       │      5D TEPES (Tech, Econ, Env, Policy, Social) Report    │
-       └─────────────────────────────┬─────────────────────────────┘
-                                     │
-                                     ▼
-       ┌───────────────────────────────────────────────────────────┐
-       │     Industrial Medallion DataHub (pgloop.iodata.DataHub)  │
-       │       raw/ ──> interim/ (parsed) ──> processed/ ──> cache │
-       └───────────────────────────────────────────────────────────┘
+    subgraph AGENT["2. Autonomous Agent Core (chat_agent/)"]
+        LLM["Local llama-server<br/><b>Qwen/Qwen3.8-Flash-Next</b>"]
+        ROUTER{"PhosphogypsumAgent<br/>Plan-and-Solve Loop"}
+    end
+
+    subgraph TOOLS["3. Deterministic 10-Tool Plan-and-Solve Portfolio"]
+        direction TB
+        subgraph T_ASSESS["Physics & Forward Assessment"]
+            IAE["<b>IntegratedAssessmentEngine</b><br/>LCA (ISO 14040) + TEA (CLCC/TLCC)<br/>+ VPM Thermodynamics & Kinetics"]
+            SD["<b>Stochastic Solvers</b><br/>PINN (FP_PINN) + Fokker-Planck PDE"]
+        end
+        subgraph T_INV["Inversion & Optimization"]
+            REV["<b>ReverseDesignOptimizer</b><br/>Gaussian Process + UCB Acquisition<br/>Target GWP / NPV Parameter Inversion"]
+            BCM["<b>BenefitCompensationModel</b><br/>Avoided Damage Shadow Prices<br/>Subsidies & Tipping Fees"]
+        end
+        subgraph T_INGEST["Knowledge & Telemetry"]
+            RAG["<b>Docling & LightRAG</b><br/>Scientific Paper Table/Formula Mining<br/>Neo4j Knowledge Graph"]
+            IOT["<b>EdgeBridge & IoT</b><br/>OPC UA ➔ MQTT Telemetry<br/>MACE Crystal Potential (ASE)"]
+            MCMC["<b>Uncertainty Quantification</b><br/>MCMC (MH / HMC / Gibbs)<br/>Joint Uncertainty Propagation"]
+        end
+    end
+
+    subgraph DECISION["4. Decision Intelligence & Multi-Criteria Ranking"]
+        RANK["<b>5D TEPES Decision Matrix</b><br/>Technical (TRL) · Economic (NPV) · Environmental (LCA)<br/>Policy (Carbon Tax) · Social (Health/Jobs)<br/>TOPSIS / VIKOR Ranking"]
+    end
+
+    subgraph DATA["5. Industrial Medallion DataHub (pgloop.iodata.DataHub)"]
+        direction LR
+        RAW[("<b>raw/</b><br/>Papers, Patents, Telemetry")]
+        INTERIM[("<b>interim/</b><br/>Docling Parsed Papers")]
+        PROCESSED[("<b>processed/</b><br/>KG DB, Parameters, Scenarios")]
+        CACHE[("<b>cache/</b><br/>API Responses, Embeddings")]
+        RAW --> INTERIM --> PROCESSED
+        PROCESSED -.-> CACHE
+    end
+
+    UQ --> CLI
+    UQ --> DASH
+    CLI --> ROUTER
+    DASH --> ROUTER
+    ROUTER <--> LLM
+    ROUTER --> TOOLS
+    IAE --> RANK
+    REV --> RANK
+    BCM --> RANK
+    MCMC --> RANK
+    RANK --> UQ
+    TOOLS <--> DATA
 ```
 
 ---
