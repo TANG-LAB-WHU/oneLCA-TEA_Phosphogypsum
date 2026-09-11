@@ -107,6 +107,3 @@ TODO_list/
 # slurm_jobs/logs/
 HELP_docs/
 help/
-
-# Local agent customizations & skills
-.agents/
