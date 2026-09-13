@@ -10,7 +10,7 @@ This module handles data collection from various sources:
 
 from pgloop.iodata.api_connector import APIConnector
 from pgloop.iodata.data_standardizer import DataStandardizer
-from pgloop.iodata.pdf_parser import PDFParser
+from pgloop.iodata.pdf_parser import IngestionRegistry, PDFParser
 from pgloop.iodata.web_scraper import WebScraper
 
 try:
@@ -28,6 +28,7 @@ from pgloop.iodata.datahub import DataHub
 __all__ = [
     "DataHub",
     "PDFParser",
+    "IngestionRegistry",
     "WebScraper",
     "DataStandardizer",
     "APIConnector",
