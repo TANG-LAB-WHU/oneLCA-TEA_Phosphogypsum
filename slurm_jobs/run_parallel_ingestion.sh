@@ -4,9 +4,7 @@
 #SBATCH --account=tangsiqi
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=32G
-#SBATCH --time=12:00:00
+#SBATCH --cpus-per-task=192
 #SBATCH --array=0-49               # Launch 50 tasks (each processing a subset of files)
 #SBATCH --output=slurm_jobs/logs/ingest_array_%A_%a.log
 
