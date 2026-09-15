@@ -75,6 +75,7 @@ datahub/raw/**/*.pdf
 datahub/raw/**/*.csv
 datahub/interim/papers/parsed/
 datahub/processed/*.json
+!datahub/processed/ingestion_registry.json
 datahub/processed/lightrag_db/
 datahub/processed/raganything_db/
 datahub/processed/knowledge_graph/
@@ -93,7 +94,8 @@ chroma_db/
 # Logs
 *.log
 slurm_jobs/*.log
-# logs/
+!slurm_jobs/logs/*.log
+!logs/*.log
 
 # OS files
 .DS_Store

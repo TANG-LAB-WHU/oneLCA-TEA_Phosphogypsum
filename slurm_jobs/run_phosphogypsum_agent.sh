@@ -280,9 +280,9 @@ elif [ "$SLURM_JOB_PARTITION" == "9a14a" ]; then
         echo "[Info] Allocated 96 dedicated compute threads to llama.cpp across NUMA domain."
     fi
     if command -v numactl &>/dev/null; then
-        SERVER_CMD=("numactl" "--cpunodebind=0" "--membind=0" "$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "16384" "--threads" "$NUM_THREADS" "--n-gpu-layers" "0" "--numa" "isolate")
+        SERVER_CMD=("numactl" "--interleave=all" "$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "16384" "--threads" "$NUM_THREADS" "--n-gpu-layers" "0" "--numa" "distribute")
     else
-        SERVER_CMD=("numactl" "--interleave=all" "$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "16384" "--threads" "$NUM_THREADS" "--n-gpu-layers" "0")
+        SERVER_CMD=("$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "16384" "--threads" "$NUM_THREADS" "--n-gpu-layers" "0")
     fi
 else
     echo "[Info] Standard partition fallback..."

@@ -1,0 +1,128 @@
+============================================================
+ Phosphogypsum Bot Parallel Ingestion Worker
+ Array Job ID: 3353256 | Task ID: 27
+ Host: n0550
+ Partition: 9a14a
+ Working Dir: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+============================================================
+2026-09-13 18:54:14.237 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:209 - Pipeline processing-window multi-file run. doc_count=1, total_pages=20, window_size=64, total_batches=1
+2026-09-13 18:54:14.237 | DEBUG    | mineru.utils.pdf_image_tools:_load_images_from_pdf_bytes_range:289 - PDF image rendering uses 1 processes for pages 1-20: [(0, 19)]
+2026-09-13 18:54:14.237 | DEBUG    | mineru.utils.pdf_image_tools:_create_pdf_render_executor:161 - PDF image rendering switches multiprocessing start method from fork to spawn
+2026-09-13 18:54:14.238 | DEBUG    | mineru.utils.pdf_image_tools:_get_pdf_render_executor:218 - Created persistent PDF render executor with max_workers=3
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-09-13 18:54:12
+Steps to run: ['parse']
+RAG Engine: lightrag
+
+============================================================
+   STEP 1: PDF PARSING WITH INCREMENTAL TRACKING
+============================================================
+Parser type: mineru
+Input:  /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/raw/papers/unparsed
+Output: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/interim/papers/parsed
+Registry: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/ingestion_registry.json
+[Slurm Array] Task 27/50 - Sharding assigned 1 files to this task.
+Propagating deletion: Removing 31. A systematic review of cemented paste backfill technology for cleaner and.pdf from registry state
+
+Found 1 PDF files to check
+
+[1/1] Parsing: 34. Using cemented paste backfill to tackle the ph...
+2026-09-13 18:54:52.902 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:264 - Pipeline processing window batch 1/1: 20/20 pages, batch_pages=20, doc_slices=doc0:1-20
+2026-09-13 18:54:52.915 | INFO     | mineru.backend.pipeline.pipeline_analyze:batch_image_analyze:364 - GPU Memory: 1 GB, Batch Ratio: 1. 
+2026-09-13 18:54:52.915 | INFO     | mineru.backend.pipeline.model_init:__init__:252 - DocAnalysis init, this may take some times......
+2026-09-13 18:54:55.124 | INFO     | mineru.backend.pipeline.model_init:__init__:304 - DocAnalysis init done!
+2026-09-13 18:54:55.124 | INFO     | mineru.backend.pipeline.pipeline_analyze:custom_model_init:83 - model init cost: 2.20939302444458
+Layout Predict:   0%|          | 0/20 [00:00<?, ?it/s]Layout Predict:   5%|▌         | 1/20 [00:01<00:19,  1.04s/it]Layout Predict:  10%|█         | 2/20 [00:01<00:11,  1.60it/s]Layout Predict:  15%|█▌        | 3/20 [00:01<00:08,  2.04it/s]Layout Predict:  20%|██        | 4/20 [00:02<00:06,  2.31it/s]Layout Predict:  25%|██▌       | 5/20 [00:02<00:05,  2.51it/s]Layout Predict:  30%|███       | 6/20 [00:02<00:05,  2.64it/s]Layout Predict:  35%|███▌      | 7/20 [00:03<00:04,  2.73it/s]Layout Predict:  40%|████      | 8/20 [00:03<00:04,  2.77it/s]Layout Predict:  45%|████▌     | 9/20 [00:03<00:03,  2.80it/s]Layout Predict:  50%|█████     | 10/20 [00:04<00:03,  2.86it/s]Layout Predict:  55%|█████▌    | 11/20 [00:04<00:03,  2.90it/s]Layout Predict:  60%|██████    | 12/20 [00:04<00:02,  2.90it/s]Layout Predict:  65%|██████▌   | 13/20 [00:05<00:02,  2.91it/s]Layout Predict:  70%|███████   | 14/20 [00:05<00:02,  2.94it/s]Layout Predict:  75%|███████▌  | 15/20 [00:05<00:01,  2.90it/s]Layout Predict:  80%|████████  | 16/20 [00:06<00:01,  2.94it/s]Layout Predict:  85%|████████▌ | 17/20 [00:06<00:01,  2.94it/s]Layout Predict:  90%|█████████ | 18/20 [00:06<00:00,  2.95it/s]Layout Predict:  95%|█████████▌| 19/20 [00:07<00:00,  2.99it/s]Layout Predict: 100%|██████████| 20/20 [00:07<00:00,  3.02it/s]Layout Predict: 100%|██████████| 20/20 [00:07<00:00,  2.68it/s]
+2026-09-13 18:55:03.127 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.42
+MFR Predict:   0%|          | 0/79 [00:00<?, ?it/s]MFR Predict:  20%|██        | 16/79 [00:10<00:41,  1.52it/s]MFR Predict:  41%|████      | 32/79 [00:14<00:19,  2.37it/s]MFR Predict:  61%|██████    | 48/79 [00:18<00:10,  2.89it/s]MFR Predict: 100%|██████████| 79/79 [00:30<00:00,  2.71it/s]MFR Predict: 100%|██████████| 79/79 [00:30<00:00,  2.57it/s]
+2026-09-13 18:55:34.307 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.42
+Table-ocr det: 0it [00:00, ?it/s]Table-ocr det: 0it [00:00, ?it/s]
+Table-wireless Predict: 0it [00:00, ?it/s]Table-wireless Predict: 0it [00:00, ?it/s]
+OCR-det en:   0%|          | 0/39 [00:00<?, ?it/s]OCR-det en:   3%|▎         | 1/39 [00:00<00:06,  5.63it/s]OCR-det en:   8%|▊         | 3/39 [00:00<00:03,  9.83it/s]OCR-det en:  13%|█▎        | 5/39 [00:00<00:05,  6.15it/s]OCR-det en:  18%|█▊        | 7/39 [00:00<00:04,  7.65it/s]OCR-det en:  23%|██▎       | 9/39 [00:01<00:06,  4.85it/s]OCR-det en:  26%|██▌       | 10/39 [00:02<00:11,  2.51it/s]OCR-det en:  31%|███       | 12/39 [00:03<00:08,  3.30it/s]OCR-det en:  33%|███▎      | 13/39 [00:03<00:06,  3.80it/s]OCR-det en:  36%|███▌      | 14/39 [00:03<00:07,  3.56it/s]OCR-det en:  38%|███▊      | 15/39 [00:04<00:08,  2.89it/s]OCR-det en:  41%|████      | 16/39 [00:04<00:09,  2.48it/s]OCR-det en:  44%|████▎     | 17/39 [00:05<00:10,  2.07it/s]OCR-det en:  49%|████▊     | 19/39 [00:05<00:06,  2.93it/s]OCR-det en:  51%|█████▏    | 20/39 [00:05<00:06,  2.97it/s]OCR-det en:  56%|█████▋    | 22/39 [00:06<00:04,  4.10it/s]OCR-det en:  59%|█████▉    | 23/39 [00:06<00:05,  3.18it/s]OCR-det en:  62%|██████▏   | 24/39 [00:06<00:04,  3.60it/s]OCR-det en:  67%|██████▋   | 26/39 [00:06<00:02,  5.32it/s]OCR-det en:  69%|██████▉   | 27/39 [00:07<00:02,  5.87it/s]OCR-det en:  72%|███████▏  | 28/39 [00:07<00:01,  6.50it/s]OCR-det en:  77%|███████▋  | 30/39 [00:07<00:01,  7.22it/s]OCR-det en:  79%|███████▉  | 31/39 [00:07<00:01,  6.55it/s]OCR-det en:  82%|████████▏ | 32/39 [00:07<00:01,  6.97it/s]OCR-det en:  85%|████████▍ | 33/39 [00:07<00:00,  7.53it/s]OCR-det en:  90%|████████▉ | 35/39 [00:08<00:00,  7.14it/s]OCR-det en:  92%|█████████▏| 36/39 [00:08<00:00,  7.53it/s]OCR-det en:  97%|█████████▋| 38/39 [00:08<00:00,  8.89it/s]OCR-det en: 100%|██████████| 39/39 [00:10<00:00,  1.59it/s]OCR-det en: 100%|██████████| 39/39 [00:10<00:00,  3.60it/s]
+2026-09-13 18:55:46.133 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.42
+Seal Predict: 0it [00:00, ?it/s]Seal Predict: 0it [00:00, ?it/s]
+Processing pages:   0%|          | 0/20 [00:00<?, ?it/s]Processing pages:  10%|█         | 2/20 [00:00<00:07,  2.53it/s]Processing pages:  15%|█▌        | 3/20 [00:02<00:18,  1.11s/it]Processing pages:  25%|██▌       | 5/20 [00:03<00:10,  1.49it/s]Processing pages:  30%|███       | 6/20 [00:03<00:07,  1.82it/s]Processing pages:  40%|████      | 8/20 [00:04<00:05,  2.28it/s]Processing pages:  45%|████▌     | 9/20 [00:04<00:04,  2.43it/s]Processing pages:  50%|█████     | 10/20 [00:04<00:03,  2.63it/s]Processing pages:  55%|█████▌    | 11/20 [00:05<00:03,  2.88it/s]Processing pages:  60%|██████    | 12/20 [00:05<00:02,  3.58it/s]Processing pages:  65%|██████▌   | 13/20 [00:05<00:01,  3.60it/s]Processing pages:  75%|███████▌  | 15/20 [00:05<00:00,  5.10it/s]Processing pages:  80%|████████  | 16/20 [00:05<00:00,  5.74it/s]Processing pages:  85%|████████▌ | 17/20 [00:06<00:00,  3.75it/s]Processing pages:  90%|█████████ | 18/20 [00:06<00:00,  4.46it/s]Processing pages:  95%|█████████▌| 19/20 [00:06<00:00,  5.19it/s]
+OCR-rec Predict:   0%|          | 0/2 [00:00<?, ?it/s][A
+OCR-rec Predict: 100%|██████████| 2/2 [00:00<00:00, 12.43it/s][AOCR-rec Predict: 100%|██████████| 2/2 [00:00<00:00, 12.42it/s]
+2026-09-13 18:55:53.828 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:_finalize_processing_window_context:130 - Pipeline doc ready: doc0 pages=20
+Processing pages: 100%|██████████| 20/20 [00:07<00:00,  2.74it/s]
+2026-09-13 18:55:53.851 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:320 - processing-window multi-file infer finished, cost: 99.61, speed: 0.201 page/s
+    ✓ Saved: 34. Using cemented paste backfill to tackle the phosphogypsum stockpile in China/auto/34. Using cemented paste backfill to tackle the phosphogypsum stockpile in China.md (105683 chars)
+
+========================================
+Parsing Complete: 1 success, 0 skipped, 0 errors
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-09-13 18:55:54
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-09-13 18:57:30
+Steps to run: ['index']
+RAG Engine: lightrag
+
+============================================================
+   STEP 2: LIGHTRAG INDEX CONSTRUCTION
+============================================================
+LightRAG DB: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db
+Source:      /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/interim/papers/parsed
+LLM Model:   Qwen/Qwen3.8-Flash-Next
+
+Note: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).
+[?25l[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠴[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠦[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠧[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠇[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠏[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠴[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠦[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠧[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠇[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠏[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠴[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠦[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠧[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠇[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠏[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠴[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠦[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠧[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠇[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠏[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠴[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠦[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠧[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠇[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠏[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠴[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠦[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠧[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠇[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠏[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠴[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠦[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠧[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠇[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠏[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠴[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠦[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠧[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠇[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠏[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠋[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠙[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠹[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠸[0m 🔄 Updating package: pymilvus>=2.6.2[K[1m[38;2;0;255;255m⠼[0m 🔄 Updating package: pymilvus>=2.6.2[91mERROR:pipmaster.core:❌ Command failed (exit 1): /home/tangsiqi/project/miniconda3/envs/pgbot/bin/python -m pip install --upgrade pymilvus>=2.6.2[0m
+[91mERROR:pipmaster.core:❌ Failed to handle package: pymilvus>=2.6.2[0m
+[?25h[K
+Traceback (most recent call last):
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 527, in <module>
+    main()
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 523, in main
+    run_pipeline(steps, args.parser, args.limit, args.engine)
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 472, in run_pipeline
+    results["index"] = step2_build_rag_index(limit, engine)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 250, in step2_build_rag_index
+    results = rag.add_documents_from_directory(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 565, in add_documents_from_directory
+    self._run_coroutine(_work())
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 261, in _run_coroutine
+    return loop.run_until_complete(coro)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 535, in _work
+    rag = await self._get_initialized_rag()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 355, in _get_initialized_rag
+    rag = self._get_rag_instance()
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 350, in _get_rag_instance
+    self._rag = LightRAG(**kwargs)
+                ^^^^^^^^^^^^^^^^^^
+  File "<string>", line 71, in __init__
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/lightrag.py", line 986, in __post_init__
+    self.vector_db_storage_cls: type[BaseVectorStorage] = get_storage_class(
+                                                          ^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/kg/factory.py", line 41, in get_storage_class
+    module = importlib.import_module(import_path, package="lightrag")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/kg/milvus_impl.py", line 17, in <module>
+    from pymilvus import MilvusClient, DataType, CollectionSchema, FieldSchema  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'pymilvus'
