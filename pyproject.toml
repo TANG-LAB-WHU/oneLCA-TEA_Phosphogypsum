@@ -66,10 +66,15 @@ viz = [
 ]
 kg = [
     "neo4j>=5.0.0",
+    "pymilvus>=2.6.2",
 ]
 rag = [
     "lightrag-hku",
     "raganything[all]",
+    "pymilvus>=2.6.2",
+]
+milvus = [
+    "pymilvus>=2.6.2",
 ]
 dev = [
     "pytest>=7.0.0",
@@ -105,6 +110,7 @@ all = [
     "matplotlib>=3.8.0",
     "pyvis>=0.3.0",
     "neo4j>=5.0.0",
+    "pymilvus>=2.6.2",
     "lightrag-hku",
     "raganything[all]",
     "pytest>=7.0.0",
