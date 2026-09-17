@@ -8,7 +8,21 @@
 #SBATCH --cpus-per-task=32        # Allocate 32 CPU cores (16 cores per GPU maximum)
 #SBATCH --mem=120G                # Allocate 120GB system memory
 #SBATCH --time=72:00:00           # Run time limit (up to 7 days)
-#SBATCH --output=pgbot_a100_%j.log
+#SBATCH --output=logs/slurm/pgbot_a100_%j.log
+
+# Change to project root
+if [ -n "$SLURM_SUBMIT_DIR" ]; then
+    cd "$SLURM_SUBMIT_DIR"
+else
+    cd "$(dirname "$0")"
+fi
+
+if [ "$(basename "$(pwd)")" = "slurm_jobs" ]; then
+    cd ..
+fi
+
+# Ensure logs directories exist
+mkdir -p logs/slurm logs/services
 
 # Load CUDA environment to resolve "libcudart.so.12 => not found"
 module load nvidia/cuda/12.9 2>/dev/null || module load nvidia/cuda/12.2 2>/dev/null || module load cuda/12.1 2>/dev/null || module load cuda/12.2 2>/dev/null || module load cuda/12.0 2>/dev/null || module load cuda 2>/dev/null

@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=192
 #SBATCH --array=0-49               # Launch 50 tasks (each processing a subset of files)
-#SBATCH --output=slurm_jobs/logs/ingest_array_%A_%a.log
+#SBATCH --output=logs/slurm/ingest_array_%A_%a.log
 
 # Note: %A is main Job ID, %a is Slurm Array Task ID
 
@@ -37,7 +37,7 @@ echo " Working Dir: $(pwd)"
 echo "============================================================"
 
 # Ensure logs dir exists
-mkdir -p slurm_jobs/logs
+mkdir -p logs/slurm
 
 # Set shared tiktoken cache directory
 export TIKTOKEN_CACHE_DIR="/home/tangsiqi/.cache/tiktoken"

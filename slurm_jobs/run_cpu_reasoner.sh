@@ -7,7 +7,21 @@
 #SBATCH --cpus-per-task=32        # Allocate 32 physical EPYC cores
 #SBATCH --mem=120G                # Allocate 120GB system memory
 #SBATCH --time=120:00:00          # Run time limit (up to 5 days)
-#SBATCH --output=pgbot_cpu_%j.log
+#SBATCH --output=logs/slurm/pgbot_cpu_%j.log
+
+# Change to project root
+if [ -n "$SLURM_SUBMIT_DIR" ]; then
+    cd "$SLURM_SUBMIT_DIR"
+else
+    cd "$(dirname "$0")"
+fi
+
+if [ "$(basename "$(pwd)")" = "slurm_jobs" ]; then
+    cd ..
+fi
+
+# Ensure logs directory exists
+mkdir -p logs/slurm
 
 # 1. Start Reasoner LLM (Qwen3.6-35B-A3B-UD-Q8_K_XL) on CPU, Port 11434
 /project/tangsiqi/software/llama.cpp/build_cpu/bin/llama-server \

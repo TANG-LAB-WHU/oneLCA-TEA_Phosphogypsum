@@ -91,11 +91,12 @@ models/**/*.pkl
 # ChromaDB
 chroma_db/
 
-# Logs
+# Logs & Slurm outputs
 *.log
-slurm_jobs/*.log
-!slurm_jobs/logs/*.log
-!logs/*.log
+*.err
+logs/**/*.log
+logs/**/*.err
+!logs/**/.gitkeep
 
 # OS files
 .DS_Store

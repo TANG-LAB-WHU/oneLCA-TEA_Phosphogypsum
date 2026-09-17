@@ -7,10 +7,21 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=64G
 #SBATCH --time=48:00:00
-#SBATCH --output=slurm_jobs/logs/neo4j_%j.log
+#SBATCH --output=logs/slurm/neo4j_%j.log
+
+# Change to project root
+if [ -n "$SLURM_SUBMIT_DIR" ]; then
+    cd "$SLURM_SUBMIT_DIR"
+else
+    cd "$(dirname "$0")"
+fi
+
+if [ "$(basename "$(pwd)")" = "slurm_jobs" ]; then
+    cd ..
+fi
 
 # Ensure logs directory exists
-mkdir -p slurm_jobs/logs
+mkdir -p logs/slurm
 
 # Set directory variables for persistence
 DATA_DIR="$(pwd)/datahub/processed/neo4j/data"

@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=192
 #SBATCH --time=04:00:00           # CPU is slower, give it 4 hours
-#SBATCH --output=logs/test_kg_pipeline_cpu/kg_test_cpu_%j.log
+#SBATCH --output=logs/tests/kg_test_cpu_%j.log
 
 # Load environment
 module load nvidia/cuda/12.9 2>/dev/null || module load nvidia/cuda/12.2 2>/dev/null
@@ -46,6 +46,9 @@ echo "  Phosphogypsum Knowledge Graph Pipeline Quick Test (CPU Mode)"
 echo "  Node: $(hostname)  |  Partition: CPU (9a14a)"
 echo "  Working Dir: $(pwd)"
 echo "============================================================"
+
+# Ensure log directories exist
+mkdir -p logs/tests logs/services
 
 # Force CPU mode for PyTorch/MinerU
 export CUDA_VISIBLE_DEVICES=""
@@ -91,7 +94,7 @@ numactl --cpunodebind=0 --membind=0 \
   --threads 80 \
   --ctx-size 65536 \
   --parallel 4 \
-  --n-gpu-layers 0 > slurm_jobs/logs/test_kg_pipeline_cpu/reasoner_server_${SLURM_JOB_ID}.log 2>&1 &
+  --n-gpu-layers 0 > logs/services/reasoner_server_${SLURM_JOB_ID}.log 2>&1 &
 PID_REASONER=$!
 
 # 2. Start Embedding Model (Qwen3-Embedding-8B-Q8_0) on CPU (Bound to NUMA node 1: CPU 96-191)
@@ -105,7 +108,7 @@ numactl --cpunodebind=1 --membind=1 \
   --threads 80 \
   --ctx-size 32768 \
   --parallel 8 \
-  --n-gpu-layers 0 > slurm_jobs/logs/test_kg_pipeline_cpu/embed_server_${SLURM_JOB_ID}.log 2>&1 &
+  --n-gpu-layers 0 > logs/services/embed_server_${SLURM_JOB_ID}.log 2>&1 &
 PID_EMBED=$!
 
 echo "Waiting for llama-servers to initialize on CPU (polling every 5 seconds, max 10 minutes)..."
@@ -134,9 +137,9 @@ while true; do
     if [ $ELAPSED -ge $TIMEOUT ]; then
         echo "[ERROR] llama-servers failed to initialize within ${TIMEOUT} seconds."
         echo "===== Reasoner Server Log (last 20 lines) ====="
-        tail -n 20 slurm_jobs/logs/test_kg_pipeline_cpu/reasoner_server_${SLURM_JOB_ID}.log
+        tail -n 20 logs/services/reasoner_server_${SLURM_JOB_ID}.log
         echo "===== Embedding Server Log (last 20 lines) ====="
-        tail -n 20 slurm_jobs/logs/test_kg_pipeline_cpu/embed_server_${SLURM_JOB_ID}.log
+        tail -n 20 logs/services/embed_server_${SLURM_JOB_ID}.log
         kill $PID_REASONER 2>/dev/null
         kill $PID_EMBED 2>/dev/null
         exit 1

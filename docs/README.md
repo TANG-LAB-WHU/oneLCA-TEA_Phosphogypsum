@@ -125,7 +125,9 @@ For developers running the pipeline on the **Wuhan University Supercomputing Pla
 
 **3. Monitor logs** in real-time:
 ```bash
-tail -f slurm_jobs/logs/test_kg_pipeline_cpu/kg_test_cpu_<job_id>.log
+tail -f logs/tests/kg_test_cpu_<job_id>.log
+# or inspect central Slurm array logs:
+tail -f logs/slurm/ingest_array_<job_id>_0.log
 ```
 
 > **⚠️ Critical Architecture Note**: 

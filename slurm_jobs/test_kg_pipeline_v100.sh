@@ -8,7 +8,7 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=60G
 #SBATCH --time=02:00:00           # 2 hours should be enough for 1 paper
-#SBATCH --output=logs/test_kg_pipeline_v100/kg_test_v100_%j.log
+#SBATCH --output=logs/tests/kg_test_v100_%j.log
 
 # Load CUDA environment
 module load nvidia/cuda/12.9 2>/dev/null || module load nvidia/cuda/12.2 2>/dev/null || module load cuda/12.1 2>/dev/null || module load cuda/12.2 2>/dev/null || module load cuda/12.0 2>/dev/null || module load cuda 2>/dev/null
@@ -51,6 +51,9 @@ echo "  Phosphogypsum Knowledge Graph Pipeline Quick Test (1 Paper)"
 echo "  Node: $(hostname)"
 echo "  Working Dir: $(pwd)"
 echo "============================================================"
+
+# Ensure log directories exist
+mkdir -p logs/tests logs/services
 
 # =============================================================================
 # PHASE 1: PDF Parsing with MinerU (GPU-accelerated)
@@ -108,7 +111,7 @@ numactl --cpunodebind=0 --membind=0 \
   --threads 4 \
   --ctx-size 32768 \
   --parallel 8 \
-  --n-gpu-layers 99 > slurm_jobs/logs/test_kg_pipeline_v100/embed_server_${SLURM_JOB_ID}.log 2>&1 &
+  --n-gpu-layers 99 > logs/services/embed_server_${SLURM_JOB_ID}.log 2>&1 &
 PID_EMBED=$!
 
 # 2. Start Reasoner LLM (Qwen3.6-27B) on GPU 1,2,3
@@ -124,7 +127,7 @@ numactl --cpunodebind=1 --membind=1 \
   --ctx-size 65536 \
   --parallel 4 \
   --split-mode layer \
-  --n-gpu-layers 99 > slurm_jobs/logs/test_kg_pipeline_v100/reasoner_server_${SLURM_JOB_ID}.log 2>&1 &
+  --n-gpu-layers 99 > logs/services/reasoner_server_${SLURM_JOB_ID}.log 2>&1 &
 PID_REASONER=$!
 
 echo "Waiting for llama-servers to initialize (polling every 5 seconds, max 10 minutes)..."
@@ -152,9 +155,9 @@ while true; do
     if [ $ELAPSED -ge $TIMEOUT ]; then
         echo "[ERROR] llama-servers failed to initialize within ${TIMEOUT} seconds."
         echo "===== Reasoner Server Log (last 20 lines) ====="
-        tail -n 20 slurm_jobs/logs/test_kg_pipeline_v100/reasoner_server_${SLURM_JOB_ID}.log
+        tail -n 20 logs/services/reasoner_server_${SLURM_JOB_ID}.log
         echo "===== Embedding Server Log (last 20 lines) ====="
-        tail -n 20 slurm_jobs/logs/test_kg_pipeline_v100/embed_server_${SLURM_JOB_ID}.log
+        tail -n 20 logs/services/embed_server_${SLURM_JOB_ID}.log
         kill $PID_REASONER 2>/dev/null
         kill $PID_EMBED 2>/dev/null
         exit 1
