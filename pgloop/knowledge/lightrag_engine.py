@@ -335,7 +335,25 @@ class LightRAGEngine:
             if self.vector_storage:
                 kwargs["vector_storage"] = self.vector_storage
                 if self.vector_storage == "MilvusVectorDBStorage":
-                    milvus_uri = os.getenv("MILVUS_URI", "http://127.0.0.1:19530")
+                    # PyMilvus's legacy connections.py unconditionally parses Config.MILVUS_URI
+                    # as http[s]:// upon import. If MILVUS_URI points to a local file, remove it from os.environ
+                    # before LightRAG dynamically imports pymilvus, saving it in LIGHTRAG_MILVUS_URI instead.
+                    if "MILVUS_URI" in os.environ:
+                        raw_uri = os.environ["MILVUS_URI"]
+                        if not (
+                            raw_uri.startswith("http://")
+                            or raw_uri.startswith("https://")
+                            or raw_uri.startswith("tcp://")
+                        ):
+                            if not os.environ.get("LIGHTRAG_MILVUS_URI"):
+                                os.environ["LIGHTRAG_MILVUS_URI"] = raw_uri
+                            del os.environ["MILVUS_URI"]
+
+                    milvus_uri = (
+                        os.getenv("LIGHTRAG_MILVUS_URI")
+                        or os.getenv("MILVUS_LITE_PATH")
+                        or os.getenv("MILVUS_URI", "http://127.0.0.1:19530")
+                    )
                     is_local_db = milvus_uri.endswith(".db") or not (
                         milvus_uri.startswith("http://")
                         or milvus_uri.startswith("https://")
@@ -350,7 +368,9 @@ class LightRAGEngine:
                     milvus_db_name = os.getenv("MILVUS_DB_NAME", default_db)
                     kwargs["vector_db_storage_cls_kwargs"] = {
                         "uri": milvus_uri,
+                        "milvus_uri": milvus_uri,
                         "db_name": milvus_db_name,
+                        "milvus_db_name": milvus_db_name,
                         "index_type": "HNSW",
                         "metric_type": "COSINE",
                         "hnsw_m": 16,

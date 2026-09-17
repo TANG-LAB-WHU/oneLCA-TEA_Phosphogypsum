@@ -33,6 +33,18 @@ sys.path.insert(0, str(PROJECT_ROOT))
 # Load environment variables
 load_dotenv(PROJECT_ROOT / ".env")
 
+# Prevent PyMilvus from crashing on import when MILVUS_URI is a local file path
+if "MILVUS_URI" in os.environ:
+    _raw_uri = os.environ["MILVUS_URI"]
+    if not (
+        _raw_uri.startswith("http://")
+        or _raw_uri.startswith("https://")
+        or _raw_uri.startswith("tcp://")
+    ):
+        if not os.environ.get("LIGHTRAG_MILVUS_URI"):
+            os.environ["LIGHTRAG_MILVUS_URI"] = _raw_uri
+        del os.environ["MILVUS_URI"]
+
 from pgloop.iodata import IngestionRegistry, PDFParser  # noqa: E402
 from pgloop.knowledge import LightRAGEngine, LLMExtractor, PhosphogypsumKG  # noqa: E402
 from pgloop.knowledge.parameter_ranges import build_parameter_ranges_from_extracted  # noqa: E402

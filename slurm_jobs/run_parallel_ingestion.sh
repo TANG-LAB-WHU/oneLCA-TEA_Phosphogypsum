@@ -43,6 +43,10 @@ echo " Partition: 9a14a"
 echo " Working Dir: $(pwd)"
 echo "============================================================"
 
+# Prevent ONNX Runtime from attempting invalid thread affinity on Slurm cgroups
+export ORT_DISABLE_THREAD_AFFINITY=1
+export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-64}
+
 # Set shared tiktoken cache directory
 export TIKTOKEN_CACHE_DIR="/home/tangsiqi/.cache/tiktoken"
 
@@ -53,10 +57,13 @@ export MINERU_MODEL_SOURCE=local
 # 向量与图存储配置 (Vector & Graph Storage Configuration)
 # =============================================================================
 # 1. 向量存储: 保持 MilvusVectorDBStorage，使用 Milvus Lite 读写本地 .db 文件
-#    无需外部 Milvus 容器服务或网络端口，PyMilvus 会直接在本地文件创建并操作向量库
+#    【核心避坑】使用 LIGHTRAG_MILVUS_URI 并务必 unset MILVUS_URI！
+#    PyMilvus 内部全局单例在 import pymilvus 时会自动读取 MILVUS_URI 并强制要求以 http[s]:// 开头。
+#    若将 MILVUS_URI 设成本地路径，会导致 PyMilvus 导入时报 ConnectionConfigException。
 export LIGHTRAG_VECTOR_STORAGE="MilvusVectorDBStorage"
-export MILVUS_URI="$(pwd)/datahub/processed/milvus/lightrag_milvus.db"
+export LIGHTRAG_MILVUS_URI="$(pwd)/datahub/processed/milvus/lightrag_milvus.db"
 export MILVUS_DB_NAME="default"
+unset MILVUS_URI
 
 # 2. 图谱存储: 使用纯本地 NetworkX（保存为 GraphML 文件）
 #    因当前计算节点未启动独立 Neo4j 数据库服务，清除 Neo4j 配置以防止产生网络连接拒绝报错
@@ -66,7 +73,7 @@ unset NEO4J_USERNAME
 unset NEO4J_PASSWORD
 
 echo "[Vector Storage] MilvusVectorDBStorage (Milvus Lite)"
-echo "[Milvus DB File] ${MILVUS_URI}"
+echo "[Milvus DB File] ${LIGHTRAG_MILVUS_URI}"
 echo "[Graph Storage]  Local NetworkX (GraphML file in lightrag_db/)"
 
 # =============================================================================
