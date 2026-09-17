@@ -34,6 +34,7 @@ beautifulsoup4>=4.12.0
 # ── Knowledge Graph & Vector DB ─────────────────────────────────────────
 neo4j>=5.0.0
 pymilvus>=2.6.2
+milvus-lite>=2.4.0; sys_platform != "win32"
 
 # ── Visualization ───────────────────────────────────────────────────────
 streamlit>=1.28.0

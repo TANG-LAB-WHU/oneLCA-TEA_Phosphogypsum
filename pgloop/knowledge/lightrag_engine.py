@@ -336,7 +336,18 @@ class LightRAGEngine:
                 kwargs["vector_storage"] = self.vector_storage
                 if self.vector_storage == "MilvusVectorDBStorage":
                     milvus_uri = os.getenv("MILVUS_URI", "http://127.0.0.1:19530")
-                    milvus_db_name = os.getenv("MILVUS_DB_NAME", "lightrag")
+                    is_local_db = milvus_uri.endswith(".db") or not (
+                        milvus_uri.startswith("http://")
+                        or milvus_uri.startswith("https://")
+                        or milvus_uri.startswith("tcp://")
+                    )
+                    if is_local_db:
+                        # Auto-create parent directory for local Milvus Lite file
+                        db_path = Path(milvus_uri)
+                        if db_path.parent:
+                            db_path.parent.mkdir(parents=True, exist_ok=True)
+                    default_db = "default" if is_local_db else "lightrag"
+                    milvus_db_name = os.getenv("MILVUS_DB_NAME", default_db)
                     kwargs["vector_db_storage_cls_kwargs"] = {
                         "uri": milvus_uri,
                         "db_name": milvus_db_name,
