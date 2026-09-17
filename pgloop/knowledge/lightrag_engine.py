@@ -335,19 +335,30 @@ class LightRAGEngine:
             if self.vector_storage:
                 kwargs["vector_storage"] = self.vector_storage
                 if self.vector_storage == "MilvusVectorDBStorage":
-                    # PyMilvus's legacy connections.py unconditionally parses Config.MILVUS_URI
-                    # as http[s]:// upon import. If MILVUS_URI points to a local file, remove it from os.environ
-                    # before LightRAG dynamically imports pymilvus, saving it in LIGHTRAG_MILVUS_URI instead.
-                    if "MILVUS_URI" in os.environ:
-                        raw_uri = os.environ["MILVUS_URI"]
-                        if not (
-                            raw_uri.startswith("http://")
-                            or raw_uri.startswith("https://")
-                            or raw_uri.startswith("tcp://")
-                        ):
-                            if not os.environ.get("LIGHTRAG_MILVUS_URI"):
-                                os.environ["LIGHTRAG_MILVUS_URI"] = raw_uri
-                            del os.environ["MILVUS_URI"]
+                    # Disarm PyMilvus's legacy Config.MILVUS_URI parser
+                    try:
+                        from pymilvus.settings import Config as MilvusConfig
+
+                        MilvusConfig.MILVUS_URI = None
+                    except (ImportError, AttributeError):
+                        pass
+
+                    # Bypass LightRAG's check_storage_env_vars for MilvusVectorDBStorage
+                    try:
+                        import lightrag.lightrag
+                        import lightrag.utils
+
+                        _orig_check = lightrag.utils.check_storage_env_vars
+
+                        def _safe_check_storage_env_vars(storage_name: str):
+                            if storage_name == "MilvusVectorDBStorage":
+                                return
+                            return _orig_check(storage_name)
+
+                        lightrag.utils.check_storage_env_vars = _safe_check_storage_env_vars
+                        lightrag.lightrag.check_storage_env_vars = _safe_check_storage_env_vars
+                    except (ImportError, AttributeError):
+                        pass
 
                     milvus_uri = (
                         os.getenv("LIGHTRAG_MILVUS_URI")
@@ -366,6 +377,10 @@ class LightRAGEngine:
                             db_path.parent.mkdir(parents=True, exist_ok=True)
                     default_db = "default" if is_local_db else "lightrag"
                     milvus_db_name = os.getenv("MILVUS_DB_NAME", default_db)
+
+                    # Ensure MILVUS_URI is in os.environ for any checks expecting it
+                    os.environ["MILVUS_URI"] = milvus_uri
+
                     kwargs["vector_db_storage_cls_kwargs"] = {
                         "uri": milvus_uri,
                         "milvus_uri": milvus_uri,

@@ -33,17 +33,35 @@ sys.path.insert(0, str(PROJECT_ROOT))
 # Load environment variables
 load_dotenv(PROJECT_ROOT / ".env")
 
-# Prevent PyMilvus from crashing on import when MILVUS_URI is a local file path
-if "MILVUS_URI" in os.environ:
-    _raw_uri = os.environ["MILVUS_URI"]
-    if not (
-        _raw_uri.startswith("http://")
-        or _raw_uri.startswith("https://")
-        or _raw_uri.startswith("tcp://")
-    ):
-        if not os.environ.get("LIGHTRAG_MILVUS_URI"):
-            os.environ["LIGHTRAG_MILVUS_URI"] = _raw_uri
-        del os.environ["MILVUS_URI"]
+# -----------------------------------------------------------------------------
+# Fix Milvus Lite compatibility with PyMilvus & LightRAG:
+# 1. PyMilvus's global Config.MILVUS_URI crashes on import if MILVUS_URI is a local file path.
+#    Setting Config.MILVUS_URI = None disarms PyMilvus's legacy connections URL parser.
+# 2. LightRAG's check_storage_env_vars requires MILVUS_URI in os.environ.
+#    We patch check_storage_env_vars to allow Milvus Lite without throwing ValueError.
+# -----------------------------------------------------------------------------
+try:
+    from pymilvus.settings import Config as MilvusConfig
+
+    MilvusConfig.MILVUS_URI = None
+except (ImportError, AttributeError):
+    pass
+
+try:
+    import lightrag.lightrag
+    import lightrag.utils
+
+    _orig_check = lightrag.utils.check_storage_env_vars
+
+    def _safe_check_storage_env_vars(storage_name: str):
+        if storage_name == "MilvusVectorDBStorage":
+            return
+        return _orig_check(storage_name)
+
+    lightrag.utils.check_storage_env_vars = _safe_check_storage_env_vars
+    lightrag.lightrag.check_storage_env_vars = _safe_check_storage_env_vars
+except (ImportError, AttributeError):
+    pass
 
 from pgloop.iodata import IngestionRegistry, PDFParser  # noqa: E402
 from pgloop.knowledge import LightRAGEngine, LLMExtractor, PhosphogypsumKG  # noqa: E402

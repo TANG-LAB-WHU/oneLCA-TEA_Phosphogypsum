@@ -62,8 +62,8 @@ export MINERU_MODEL_SOURCE=local
 #    若将 MILVUS_URI 设成本地路径，会导致 PyMilvus 导入时报 ConnectionConfigException。
 export LIGHTRAG_VECTOR_STORAGE="MilvusVectorDBStorage"
 export LIGHTRAG_MILVUS_URI="$(pwd)/datahub/processed/milvus/lightrag_milvus.db"
+export MILVUS_URI="$(pwd)/datahub/processed/milvus/lightrag_milvus.db"
 export MILVUS_DB_NAME="default"
-unset MILVUS_URI
 
 # 2. 图谱存储: 使用纯本地 NetworkX（保存为 GraphML 文件）
 #    因当前计算节点未启动独立 Neo4j 数据库服务，清除 Neo4j 配置以防止产生网络连接拒绝报错
