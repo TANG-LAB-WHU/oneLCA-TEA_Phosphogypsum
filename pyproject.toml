@@ -67,17 +67,14 @@ viz = [
 kg = [
     "neo4j>=5.0.0",
     "pymilvus>=2.6.2",
-    "milvus-lite>=2.4.0; sys_platform != 'win32'",
 ]
 rag = [
     "lightrag-hku",
     "raganything[all]",
     "pymilvus>=2.6.2",
-    "milvus-lite>=2.4.0; sys_platform != 'win32'",
 ]
 milvus = [
     "pymilvus>=2.6.2",
-    "milvus-lite>=2.4.0; sys_platform != 'win32'",
 ]
 dev = [
     "pytest>=7.0.0",
@@ -114,7 +111,6 @@ all = [
     "pyvis>=0.3.0",
     "neo4j>=5.0.0",
     "pymilvus>=2.6.2",
-    "milvus-lite>=2.4.0; sys_platform != 'win32'",
     "lightrag-hku",
     "raganything[all]",
     "pytest>=7.0.0",

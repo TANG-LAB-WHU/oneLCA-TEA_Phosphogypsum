@@ -335,57 +335,11 @@ class LightRAGEngine:
             if self.vector_storage:
                 kwargs["vector_storage"] = self.vector_storage
                 if self.vector_storage == "MilvusVectorDBStorage":
-                    # Disarm PyMilvus's legacy Config.MILVUS_URI parser
-                    try:
-                        from pymilvus.settings import Config as MilvusConfig
-
-                        MilvusConfig.MILVUS_URI = None
-                    except (ImportError, AttributeError):
-                        pass
-
-                    # Bypass LightRAG's check_storage_env_vars for MilvusVectorDBStorage
-                    try:
-                        import lightrag.lightrag
-                        import lightrag.utils
-
-                        _orig_check = lightrag.utils.check_storage_env_vars
-
-                        def _safe_check_storage_env_vars(storage_name: str):
-                            if storage_name == "MilvusVectorDBStorage":
-                                return
-                            return _orig_check(storage_name)
-
-                        lightrag.utils.check_storage_env_vars = _safe_check_storage_env_vars
-                        lightrag.lightrag.check_storage_env_vars = _safe_check_storage_env_vars
-                    except (ImportError, AttributeError):
-                        pass
-
-                    milvus_uri = (
-                        os.getenv("LIGHTRAG_MILVUS_URI")
-                        or os.getenv("MILVUS_LITE_PATH")
-                        or os.getenv("MILVUS_URI", "http://127.0.0.1:19530")
-                    )
-                    is_local_db = milvus_uri.endswith(".db") or not (
-                        milvus_uri.startswith("http://")
-                        or milvus_uri.startswith("https://")
-                        or milvus_uri.startswith("tcp://")
-                    )
-                    if is_local_db:
-                        # Auto-create parent directory for local Milvus Lite file
-                        db_path = Path(milvus_uri)
-                        if db_path.parent:
-                            db_path.parent.mkdir(parents=True, exist_ok=True)
-                    default_db = "default" if is_local_db else "lightrag"
-                    milvus_db_name = os.getenv("MILVUS_DB_NAME", default_db)
-
-                    # Ensure MILVUS_URI is in os.environ for any checks expecting it
-                    os.environ["MILVUS_URI"] = milvus_uri
-
+                    milvus_uri = os.getenv("MILVUS_URI", "http://127.0.0.1:19530")
+                    milvus_db_name = os.getenv("MILVUS_DB_NAME", "lightrag")
                     kwargs["vector_db_storage_cls_kwargs"] = {
                         "uri": milvus_uri,
-                        "milvus_uri": milvus_uri,
                         "db_name": milvus_db_name,
-                        "milvus_db_name": milvus_db_name,
                         "index_type": "HNSW",
                         "metric_type": "COSINE",
                         "hnsw_m": 16,
