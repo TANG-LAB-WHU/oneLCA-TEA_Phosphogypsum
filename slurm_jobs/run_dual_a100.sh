@@ -5,9 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:2              # Allocate 2 A100 GPU cards (40GB each)
-#SBATCH --cpus-per-task=32        # Allocate 32 CPU cores (16 cores per GPU maximum)
-#SBATCH --mem=120G                # Allocate 120GB system memory
-#SBATCH --time=72:00:00           # Run time limit (up to 7 days)
+#SBATCH --cpus-per-task=192       # Allocate 32 CPU cores (16 cores per GPU maximum)
 #SBATCH --output=logs/slurm/pgbot_a100_%j.log
 
 # Change to project root

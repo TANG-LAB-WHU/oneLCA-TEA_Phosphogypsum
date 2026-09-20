@@ -5,9 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:4              # Use 4 V100s to ensure enough VRAM
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=60G
-#SBATCH --time=02:00:00           # 2 hours should be enough for 1 paper
+#SBATCH --cpus-per-task=192
 #SBATCH --output=logs/tests/kg_test_v100_%j.log
 
 # Load CUDA environment

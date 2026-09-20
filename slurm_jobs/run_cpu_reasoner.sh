@@ -4,9 +4,7 @@
 #SBATCH --account=tangsiqi
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=32        # Allocate 32 physical EPYC cores
-#SBATCH --mem=120G                # Allocate 120GB system memory
-#SBATCH --time=120:00:00          # Run time limit (up to 5 days)
+#SBATCH --cpus-per-task=192        # Allocate 32 physical EPYC cores         # Run time limit (up to 5 days)
 #SBATCH --output=logs/slurm/pgbot_cpu_%j.log
 
 # Change to project root

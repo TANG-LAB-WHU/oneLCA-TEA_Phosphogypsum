@@ -5,9 +5,7 @@
 #SBATCH --nodes=2                 # Default to 2 nodes for dedicated deployment, set to 1 for Single-Node NUMA Isolation, or 4
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:4              # Request all 4 V100 GPU cards on each node (16GB each)
-#SBATCH --cpus-per-task=20        # Allocate 20 CPU cores per node (full node: 5 cores per GPU max)
-#SBATCH --mem=118G                # Max safe RAM per node (~118GB out of 128GB physical)
-#SBATCH --time=72:00:00           # Run time limit (up to 7 days)
+#SBATCH --cpus-per-task=192        # Allocate 20 CPU cores per node (full node: 5 cores per GPU max)
 #SBATCH --output=logs/slurm/pgbot_v100_%j.log
 
 # Change to project root

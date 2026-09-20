@@ -4,9 +4,7 @@
 #SBATCH --account=tangsiqi
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=64G
-#SBATCH --time=48:00:00
+#SBATCH --cpus-per-task=192
 #SBATCH --output=logs/slurm/neo4j_%j.log
 
 # Change to project root

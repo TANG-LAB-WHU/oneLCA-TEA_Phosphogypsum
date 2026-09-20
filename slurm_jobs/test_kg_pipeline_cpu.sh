@@ -5,7 +5,6 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=192
-#SBATCH --time=04:00:00           # CPU is slower, give it 4 hours
 #SBATCH --output=logs/tests/kg_test_cpu_%j.log
 
 # Load environment

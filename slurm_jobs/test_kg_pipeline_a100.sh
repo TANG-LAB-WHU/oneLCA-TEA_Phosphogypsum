@@ -5,9 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:2              # Use 2 A100s (40GB each)
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=120G
-#SBATCH --time=02:00:00           # 2 hours should be enough for 1 paper
+#SBATCH --cpus-per-task=192
 #SBATCH --output=logs/tests/kg_test_a100_%j.log
 
 # Load CUDA environment
