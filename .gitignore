@@ -110,6 +110,7 @@ TODO_list/
 # slurm_jobs/logs/
 HELP_docs/
 help/
+text.md
 
 # Local agent customizations / skills junction
 .agents/
