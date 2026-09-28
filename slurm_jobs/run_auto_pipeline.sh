@@ -5,9 +5,10 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=64G
+#SBATCH --mem=128G
 #SBATCH --time=04:00:00
 #SBATCH --output=logs/slurm/auto_pipeline_%j.log
+
 
 #=============================================================================#
 # Phosphogypsum Knowledge Graph: Self-Contained Ephemeral Pipeline

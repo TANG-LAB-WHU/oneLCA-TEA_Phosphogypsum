@@ -4,8 +4,11 @@
 #SBATCH --account=tangsiqi
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=192
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=128G
+#SBATCH --time=48:00:00
 #SBATCH --output=logs/slurm/milvus_%j.log
+
 
 
 

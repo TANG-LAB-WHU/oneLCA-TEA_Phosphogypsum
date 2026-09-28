@@ -125,10 +125,34 @@ submit_distributed() {
 smart_dispatch() {
     TOTAL_PDFS=$(find "$UNPARSED_DIR" -name "*.pdf" 2>/dev/null | wc -l)
     
+    # Calculate pending new/modified papers using ingestion_registry.json
+    PENDING_PDFS=$(python - << 'EOF'
+import json, glob, os
+reg_file = "datahub/processed/ingestion_registry.json"
+reg = {}
+if os.path.exists(reg_file):
+    try:
+        with open(reg_file, "r", encoding="utf-8") as f:
+            reg = json.load(f)
+    except Exception:
+        reg = {}
+files = glob.glob("datahub/raw/papers/unparsed/*.pdf")
+pending = [f for f in files if os.path.basename(f) not in reg or reg.get(os.path.basename(f), {}).get("status") != "success"]
+print(len(pending))
+EOF
+)
+
     echo "============================================================"
     echo " Analyzing Workload & Compute Cost Optimization"
-    echo " Total raw PDFs found: $TOTAL_PDFS"
+    echo " Total raw PDFs found:    $TOTAL_PDFS"
+    echo " Pending new/unparsed:    $PENDING_PDFS"
     echo "============================================================"
+
+    if [ "$PENDING_PDFS" -eq 0 ] && [ "$TOTAL_PDFS" -gt 0 ]; then
+        echo "[All Up-to-Date] All $TOTAL_PDFS papers are already successfully registered."
+        echo "No new documents to ingest. Exiting without consuming compute quota."
+        return 0
+    fi
 
     # If both DBs are ALREADY active, directly run ingestion array!
     if squeue -u "$USER" -h -o "%j" | grep -q "neo4j_service" && squeue -u "$USER" -h -o "%j" | grep -q "milvus_service"; then
@@ -139,16 +163,17 @@ smart_dispatch() {
     fi
 
     # If small to medium workload, recommend single-node all-in-one pipeline
-    if [ "$TOTAL_PDFS" -le 35 ]; then
-        echo "[Recommendation] Workload is light ($TOTAL_PDFS papers)."
+    if [ "$PENDING_PDFS" -le 35 ]; then
+        echo "[Recommendation] Workload is light ($PENDING_PDFS pending papers)."
         echo "Using single-node ephemeral pipeline: zero queue overhead & zero idle waste."
         submit_auto
     else
-        echo "[Recommendation] Workload is large ($TOTAL_PDFS papers)."
+        echo "[Recommendation] Workload is large ($PENDING_PDFS pending papers)."
         echo "Using multi-node distributed array with autonomous idle-timeout watchdogs."
         submit_distributed
     fi
 }
+
 
 # Command dispatching
 case "$1" in

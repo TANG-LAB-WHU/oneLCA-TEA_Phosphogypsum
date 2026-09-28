@@ -4,10 +4,11 @@
 #SBATCH --account=tangsiqi
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=64G
-#SBATCH --array=0-49%8             # Launch 50 tasks with max 8 concurrent to avoid DB connection exhaustion
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=128G
+#SBATCH --array=0-49%6             # 6 concurrent tasks x 32 cores = 192 cores (perfect 1-node saturation on 9a14a)
 #SBATCH --output=logs/slurm/ingest_array_%A_%a.log
+
 
 
 # Note: %A is main Job ID, %a is Slurm Array Task ID
