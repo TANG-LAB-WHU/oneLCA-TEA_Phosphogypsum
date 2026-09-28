@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=128G
-#SBATCH --time=04:00:00
+#SBATCH --time=06:00:00
 #SBATCH --output=logs/slurm/auto_pipeline_%j.log
 
 
@@ -17,6 +17,7 @@
 #=============================================================================#
 
 # Establish robust workspace anchoring
+SUBMIT_DIR="${SLURM_SUBMIT_DIR:-$(pwd)}"
 if [ -n "$SLURM_SUBMIT_DIR" ]; then
     cd "$SLURM_SUBMIT_DIR"
 else
@@ -28,16 +29,17 @@ if [ "$(basename "$(pwd)")" = "slurm_jobs" ]; then
 fi
 
 PROJECT_ROOT="$(pwd)"
+LOG_DIR="$SUBMIT_DIR/logs/slurm"
+mkdir -p "$LOG_DIR" "$PROJECT_ROOT/logs/slurm" "$PROJECT_ROOT/datahub/processed"
+
 echo "============================================================"
 echo " Phosphogypsum Bot: Autonomous Ephemeral Ingestion Pipeline"
 echo " Job ID:       ${SLURM_JOB_ID:-interactive}"
 echo " Host Node:    $(hostname)"
 echo " Working Dir:  $PROJECT_ROOT"
+echo " Logs Dir:     $LOG_DIR"
 echo " Start Time:   $(date)"
 echo "============================================================"
-
-# Ensure directories exist
-mkdir -p logs/slurm datahub/processed
 
 # 1. Environment Activation
 module load apptainer 2>/dev/null || module load singularity 2>/dev/null
@@ -141,7 +143,7 @@ $CONTAINER_RUNNER run \
     --bind "$NEO4J_LOGS":/logs \
     --bind "$NEO4J_CONF":/var/lib/neo4j/conf \
     --bind "$NEO4J_IMPORT":/import \
-    "$NEO4J_SIF" > "logs/slurm/auto_neo4j_${SLURM_JOB_ID}.log" 2>&1 &
+    "$NEO4J_SIF" > "$LOG_DIR/auto_neo4j_${SLURM_JOB_ID}.log" 2>&1 &
 PID_NEO4J=$!
 
 echo "[2/4] Starting Milvus Standalone background container..."
@@ -149,7 +151,7 @@ $CONTAINER_RUNNER run \
     --writable-tmpfs \
     --bind "$MILVUS_DATA":/var/lib/milvus \
     --bind "$MILVUS_YAML":/milvus/configs/milvus.yaml \
-    "$MILVUS_SIF" milvus run standalone > "logs/slurm/auto_milvus_${SLURM_JOB_ID}.log" 2>&1 &
+    "$MILVUS_SIF" milvus run standalone > "$LOG_DIR/auto_milvus_${SLURM_JOB_ID}.log" 2>&1 &
 PID_MILVUS=$!
 
 # 7. Pre-flight Readiness Check (Poll up to 90 seconds)
