@@ -29,8 +29,8 @@ if [ "$(basename "$(pwd)")" = "slurm_jobs" ]; then
 fi
 
 PROJECT_ROOT="$(pwd)"
-LOG_DIR="$SUBMIT_DIR/logs/slurm"
-mkdir -p "$LOG_DIR" "$PROJECT_ROOT/logs/slurm" "$PROJECT_ROOT/datahub/processed"
+LOG_DIR="$PROJECT_ROOT/logs/slurm"
+mkdir -p "$LOG_DIR" "$PROJECT_ROOT/datahub/processed"
 
 echo "============================================================"
 echo " Phosphogypsum Bot: Autonomous Ephemeral Ingestion Pipeline"
