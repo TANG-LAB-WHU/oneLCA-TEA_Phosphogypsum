@@ -159,7 +159,7 @@ echo "[3/4] Probing database readiness on localhost..."
 python - << 'EOF'
 import socket, time, sys
 
-def wait_port(port, name, timeout=90):
+def wait_port(port, name, timeout=240):
     start = time.time()
     while time.time() - start < timeout:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
