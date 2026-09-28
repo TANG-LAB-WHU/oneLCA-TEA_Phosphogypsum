@@ -4,5 +4,293 @@
     "parser_type": "mineru",
     "parsed_at": "2026-09-13T19:16:04.898699",
     "status": "success"
+  },
+  "1. Environmental impact and management of phosphogypsum.pdf": {
+    "sha256": "e54eb92cbe7c0578f6c442b177d2f648a33364ef9a2950ff60bf4b867bc50b2d",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:48.669801",
+    "status": "success"
+  },
+  "11. Intra-soil waste recycling provides safety of environment.pdf": {
+    "sha256": "b09b567d935b59e054a74f4fac0509d11e43257ff21ab32099c459720a35ea75",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:01.630074",
+    "status": "success"
+  },
+  "12. Treating waste phosphogypsum for cement and plaster manufacture.pdf": {
+    "sha256": "fd3d7c06d08d4f4533f9b0ccf15516fd054e0b3e683400515a740269c81ba8f2",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:37.739801",
+    "status": "success"
+  },
+  "14. Potential use of phosphogypsum in concrete.pdf": {
+    "sha256": "05dfbb3c771068e7548288f4de3ad819437ecc1de94765a36525832462d026da",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:34.821344",
+    "status": "success"
+  },
+  "15. The using of waste phosphogypsum and natural gypsum in.pdf": {
+    "sha256": "ea836f08208fc4fa56e21138205a3dc99094d5fdea2cd92a3b69734ab8af6ffb",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:08.220840",
+    "status": "success"
+  },
+  "17. Phosphogypsum recycling New horizons for a more sustainable road.pdf": {
+    "sha256": "f070b76ca1616cc5d09dbd9569eaeeb01446666641ed03e080c61e44fee57a8e",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:29.694787",
+    "status": "success"
+  },
+  "18. Recent research in utilization of phosphogypsum as building materials Review.pdf": {
+    "sha256": "4ee3ef58c76318d9b2cf6d910fdde9885c98887785f39f7b9ea54d82806f3ed0",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:23.053001",
+    "status": "success"
+  },
+  "19. The influence of the HAP.pdf": {
+    "sha256": "4c834a95c982c44205833f3f625156cd59cecb511fcda0bb6c914dfff459ad9c",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:09.949314",
+    "status": "success"
+  },
+  "2. Phosphogypsum as a construction material.pdf": {
+    "sha256": "7b7ba07e95ad65a41d5456701adaf1ac6c11b9ea255f9d07ad8095afe8d9ca39",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:29.331351",
+    "status": "success"
+  },
+  "20. Characterization of phosphogypsum wastes associated.pdf": {
+    "sha256": "dd2cb2838ca6c29e3fcd43a8243cf20fb9ae2e48ad85a185e2e3dd21415e3eae",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:29.173640",
+    "status": "success"
+  },
+  "24. Treatment of phosphogypsum waste produced from phosphate ore processing.pdf": {
+    "sha256": "08f9a1f241c526acfce0c8e057e496ecce36129811e3b9564fcb913007e17728",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:41.776211",
+    "status": "success"
+  },
+  "26. Thermal behaviour of Moroccan phosphogypsum.pdf": {
+    "sha256": "0dd6a824f5e875c4e13e6fd51c0fe7aa6c15c2058d8835ca70baf54fd03466b6",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:55.197308",
+    "status": "success"
+  },
+  "27. An effective treatment method for phosphogypsum.pdf": {
+    "sha256": "27ad462fbf3710c3e77f945bd0efd338b9627409dff00a2dd8aeb9b45f632d9a",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:53.644096",
+    "status": "success"
+  },
+  "3. Research progress on resource utilization of phosphogypsum.pdf": {
+    "sha256": "b99faa7bbff0f4697c1b165218a91ff6db1660d3abb481c5bf68d76eeff72616",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:17.916665",
+    "status": "success"
+  },
+  "31. A systematic review of cemented paste backfill technology for cleaner and.pdf": {
+    "sha256": "b4dfba04af5b0f039241c9a95300a3b50a3a2accb63baf0ce5c8eca7b4c49d6a",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:12.697922",
+    "status": "success"
+  },
+  "33. Reaction Mechanism and Kinetic Analysis of the Decomposition of.pdf": {
+    "sha256": "fa1e09e17b66de80d674fdab1bb8b04ba87c41f9c82414891b77369fa0cbbe7b",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:12.225235",
+    "status": "success"
+  },
+  "34. Using cemented paste backfill to tackle the phosphogypsum stockpile in China.pdf": {
+    "sha256": "efcbbf80c5b9eb03c73ae1f84975fcf898bcd3e405f556ef11ee227bd10b0adc",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:51.688107",
+    "status": "success"
+  },
+  "35. In vitro bioactivity, mechanical, and cell interaction.pdf": {
+    "sha256": "ffe6651b6522b9f3321bfdf2eff5790f30c6b68186154782d7141dde44282446",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:46.284262",
+    "status": "success"
+  },
+  "36. Life cycle environmental and economic assessment of Phosphogypsum.pdf": {
+    "sha256": "ea3b19527bc16ecb012ec952135d237a8dc240ce7d4c182b11a59a5cd0eb2e97",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:32.289973",
+    "status": "success"
+  },
+  "37. Status and development trends of phosphogypsum utilization in China.pdf": {
+    "sha256": "7f38fbb29e7aea7deeabf3d04fa44513891cbbeedf2dfe99345e613b1643bc5f",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:57.612422",
+    "status": "success"
+  },
+  "38. Surface modification of hierarchical hydroxyapatite fabricated via.pdf": {
+    "sha256": "f3ecb456367a62683f488afc0ac182f0f0be73a6541de8f0c4c5312653dd4fbe",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:03.883930",
+    "status": "success"
+  },
+  "4. Application of phosphogypsum in soil stabilization.pdf": {
+    "sha256": "52a93dcace800ac8b8960a16c6fd690af39dce9649872ee658b2dfc803ce5fe9",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:58.872075",
+    "status": "success"
+  },
+  "40. Synthesis of hydroxyapatite by hydrothermal and.pdf": {
+    "sha256": "d70782945d8ec72003bf7ca9dfda9a04eafd988ae89b461217564ae840b6cad4",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:49.397747",
+    "status": "success"
+  },
+  "42. Investigating effects of phosphogypsum disposal practices on the.pdf": {
+    "sha256": "4f39ad02652eedc43594a3293befb3b2d4c93d63b391b95cee37594ed2e4e39d",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:50.782660",
+    "status": "success"
+  },
+  "43. A facile strategy for one-step hydrothermal.pdf": {
+    "sha256": "a14264aa708b293d028b5fb5b2fe4a98257a0f8215e71f22aa52451c981ac9d3",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:36.350627",
+    "status": "success"
+  },
+  "45. Hydrothermal synthesis of hydroxyapatite coating on the surface of medical.pdf": {
+    "sha256": "535d2484e5324a09f8260239fa3415175617d36cb94bc6439d20e2c29650d261",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:30.545756",
+    "status": "success"
+  },
+  "46. 磷石膏综合利用背景下的环境影响研究现状.pdf": {
+    "sha256": "12cc026f91cc3b0fe4a92fda35c31f2330161c61b9bec833e0282c3bab58e9c5",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:27.654002",
+    "status": "success"
+  },
+  "47. One-step hydrothermal synthesis with in situ milling of biologically relevant.pdf": {
+    "sha256": "cabf489ad2037b3ad93773a16b40896affcbba36bc904306729ef66e3a70b14c",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:46.750211",
+    "status": "success"
+  },
+  "50. Hydrothermal synthesis of nanocrystalline hydroxyapatite from.pdf": {
+    "sha256": "9bb7d3e4affc54f33f826c35f6315ddd967a8ffd17fcf34f572f91c33e0bf235",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:08.677305",
+    "status": "success"
+  },
+  "51. Synthesis of nano-crystalline hydroxyapatite and ammonium sulfate from.pdf": {
+    "sha256": "6c380196bc56077bc0f704fc6ac2cb7d99ceab71198200a93a0d8d1e05fec0a0",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:39.449217",
+    "status": "success"
+  },
+  "52. Hydrothermal synthesis of hydroxyapatite nanopowders using cationic.pdf": {
+    "sha256": "1c1720b16c6dfe76724660fc5e85180ae5d4b8594f86eba145e8f58e2f89dee1",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:03.156168",
+    "status": "success"
+  },
+  "53. Utilization path of bulk industrial solid waste A review on the.pdf": {
+    "sha256": "d807bf72e8e8259ef04d78604bb54ed8ec470b3149528ed08ea294c4b869b189",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:43.333914",
+    "status": "success"
+  },
+  "55. Utilization of waste phosphogypsum to prepare hydroxyapatite nanoparticles.pdf": {
+    "sha256": "821d2899edfdc292298c141b5cfaf7b99c37d560e3bd9a67434889dc30da5e5d",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:35.425247",
+    "status": "success"
+  },
+  "56. Innovative strategy of turning waste into treasure High-efficiency.pdf": {
+    "sha256": "2876979c009f2dba91456934f7cad7b0854be1300a8f6fa449c94e995b77f85f",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:32.585053",
+    "status": "success"
+  },
+  "57. An Evaluation of Phosphogypsum (PG) -Derived Nanohydroxyapatite (HAP).pdf": {
+    "sha256": "ed53620ac63c5c135cb1ebc2d8466052b77d6b30f184311d50d49b3b96b411c8",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:11.337501",
+    "status": "success"
+  },
+  "58. A novel process approach of a circular economy.pdf": {
+    "sha256": "89db0413d62f0dec7fa02d97c023be0078f9599df5084e979f8e976ab0b33634",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:17.315933",
+    "status": "success"
+  },
+  "59. Competitive adsorption of Pb(II), Cu(II), and Zn(II) ions onto.pdf": {
+    "sha256": "c6c5a538a77a7347af025a5ca4d9479f24f05d11906106fef92e503be686cdfa",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:00.015704",
+    "status": "success"
+  },
+  "6. Environmental impacts of phosphogypsum.pdf": {
+    "sha256": "a4d79c4bbf8fd044ea35acf4d06f7c691e135a2a58e514ec70c4f9d263c4548c",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:03.448881",
+    "status": "success"
+  },
+  "60. Effect of surfactant and heat treatment on morphology, surface area.pdf": {
+    "sha256": "94a882fc7e4a190342823194c05fcdabb51bb2c4540b7dc721c3033ae56ceafa",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:49.631991",
+    "status": "success"
+  },
+  "61. Morphology control of hydroxyapatite microcrystals Synergistic effects.pdf": {
+    "sha256": "2c8324507a34c9fd09ffcf720d37c776d70eccb34d9c50c0287aaae4c9905d1d",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:56.949377",
+    "status": "success"
+  },
+  "62. Rod-shaped hydroxyapatite with mesoporous structure as drug.pdf": {
+    "sha256": "014fd3a7ab2dc598b088ab5357bdc245e6c20ea93c6731a9525636c621fac2bd",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:54.202768",
+    "status": "success"
+  },
+  "63. Hydrothermal synthesis of nanocrystalline hydroxyapatite from.pdf": {
+    "sha256": "4c0b3fc73a03a156d3d3bc9739b211e25db4d6cfc43a4a0111e1f4b3e718204b",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:21.224957",
+    "status": "success"
+  },
+  "64. Hydroxyapatite, a multifunctional material for air, water and soil pollution.pdf": {
+    "sha256": "c083ec3b391500d4b5a2a26c9dc64f6889fcfa30d991d2d538ca24401e7fa0ff",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:43.627325",
+    "status": "success"
+  },
+  "69. 磷石膏 GBT 23456-2018.pdf": {
+    "sha256": "0af5c2e3958e78dcb9c89b44a8a415cefd4756a230f4dcd1e6d73650391a7def",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:41:34.425278",
+    "status": "success"
+  },
+  "70. 石膏化学分析方法 GBT 5484-2012.pdf": {
+    "sha256": "c244ae45e12d947e9f19a955a040873b9f815e783e9d0256c84101a3931cc997",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:38.513535",
+    "status": "success"
+  },
+  "71. 我国磷石膏污染特性、利用及环境管理研究.pdf": {
+    "sha256": "7c718029e480e091dd7013447db718aca4d262e7f75ebabe881bee776dea8661",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:40:56.633917",
+    "status": "success"
+  },
+  "72. Comprehensive recovery of rare earth elements and gypsum from.pdf": {
+    "sha256": "96d58a3d3bf3b43ea39d43f1deb5d1c3db6a34115c9f0b3b2272305988c8d8a1",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:05.117375",
+    "status": "success"
+  },
+  "8. Exploring the potential reuse of phosphogypsum A waste or a resource.pdf": {
+    "sha256": "0fe4da7ddbc9431340afddf4559bd52d4448720ffe57f6a35490af5b757ed094",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-28T10:42:30.459975",
+    "status": "success"
   }
 }
