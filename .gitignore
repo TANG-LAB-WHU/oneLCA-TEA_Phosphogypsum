@@ -80,7 +80,12 @@ datahub/processed/lightrag_db/
 datahub/processed/raganything_db/
 datahub/processed/knowledge_graph/
 datahub/processed/telemetry.db
+datahub/processed/neo4j/
+datahub/processed/milvus/
+datahub/processed/.*_endpoint
+datahub/processed/.keepalive
 !datahub/**/.gitkeep
+
 
 # Model files
 models/**/*.pt
