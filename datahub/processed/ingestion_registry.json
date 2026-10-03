@@ -292,5 +292,143 @@
     "parser_type": "mineru",
     "parsed_at": "2026-09-28T10:42:30.459975",
     "status": "success"
+  },
+  "10. Geochemical and mineralogical characterization of phosphogypsum and leaching tests for the prediction of the mobility of trace elements.pdf": {
+    "sha256": "26e9582dc865c36444d7c17e57649a007e1e915d9d87606f0bdb173fc53d7426",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:16:35.521126",
+    "status": "success"
+  },
+  "13. Phosphorus flows through the Australian food system Identifying intervention points as a roadmap to phosphorus security.pdf": {
+    "sha256": "a1992951ec3cfa3b97076a0a360bf2f498f48fc4e60222d0075a08a9ab8efd94",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:17:55.280892",
+    "status": "success"
+  },
+  "16. Distribution of uranium and thorium chains radionuclides in different fractions of phosphogypsum grains.pdf": {
+    "sha256": "90a16ce696441d1bc2c61b217cd98d8e1b87ce4724ce78b71ef7fbef611481d3",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:20:30.191884",
+    "status": "success"
+  },
+  "21. Modification mechanism, heavy metal coupling and ecological security risk assessment of phosphogypsum utilization in self-leveling mortar.pdf": {
+    "sha256": "4c764991a57236dce7ff538ad75f4ad617d34bb6d0971459bb796fd197f1da80",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:25:07.288900",
+    "status": "success"
+  },
+  "22. The effects of admixtures on the durability properties of phosphogypsum-based cementitious materials.pdf": {
+    "sha256": "8982e799dab3ec1ced426bde71ff1be0b88509858b3d398070a45cd96f9a4e61",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:26:08.482220",
+    "status": "success"
+  },
+  "23. Preparation of Biofertilizer with Phosphogypsum and Straw Microbial Community Changes and Plant Growth Effects.pdf": {
+    "sha256": "d528635b01b888788d2f362f6dd862e328a84f330f296b41211f6267d1008e47",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:27:35.441255",
+    "status": "success"
+  },
+  "25. Process Optimization and Mechanism Study for Sulfur Recovery from High-Silica Phosphogypsum via Carbothermal Reduction Smelting.pdf": {
+    "sha256": "ece00d954343e44f384439e7ff7b12e2b368204a800628c571328a354b6ccb97",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:29:50.467457",
+    "status": "success"
+  },
+  "28. Utilization of phosphogypsum in CO2 mineral sequestration by producing potassium sulphate and calcium carbonate.pdf": {
+    "sha256": "7c9f964d5a80751a3f39f785294305219d83f111651c3da4d1ec0f3f6f94c32a",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:31:37.824340",
+    "status": "success"
+  },
+  "29. Chemical treatment of phosphogypsum and its potential application for building and construction.pdf": {
+    "sha256": "87d9d6162f218bdb16bb3c91a3629105a1c8eb8cf3b18bc0648ca2d58e27dbe4",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:32:31.715918",
+    "status": "success"
+  },
+  "30. Effective and innovative procedures to use phosphogypsum waste in different application domains review of the environmental, economic challenges and life cycle assessment.pdf": {
+    "sha256": "5b4fc8ceee0a5b26d929195ffff5b4ad60768bbaaaf3fa22dcc5d384360a4167",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:35:07.544728",
+    "status": "success"
+  },
+  "32. Comparison of alternative management methods for phosphogypsum waste using life cycle analysis.pdf": {
+    "sha256": "6f0b8e969c90b66b19c2d1a9844b4914a1dfbe6c47936a6011b6fea700441d93",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:36:28.977350",
+    "status": "success"
+  },
+  "39. A systematic review of phosphogypsum recycling industry based on the survey data in China – applications, drivers, obstacles, and solutions.pdf": {
+    "sha256": "e6e6024becb92dd717686594de87af2677ed6a61b717aba2bac3e903ae7af0a8",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:38:05.275204",
+    "status": "success"
+  },
+  "41. Crystal structure modification of nano-hydroxyapatite using organic modifiers and hydrothermal technique.pdf": {
+    "sha256": "5eb734f89a48c1bd86b727bd88ac73cebcd688e3cdc40057412f2c3d687214ff",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:39:51.996911",
+    "status": "success"
+  },
+  "44. Integrated evaluation of the performance of phosphogypsum recycling technologies in China.pdf": {
+    "sha256": "20a5a700aa6e2eae044c530102abdafab46675fcd215669423ce8c6072947d58",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:41:23.196646",
+    "status": "success"
+  },
+  "48. Influence of hydrothermal synthesis parameters on the properties of hydroxyapatite nanoparticles.pdf": {
+    "sha256": "a4acb56f881dd4ebdd45bc27801c183496bb6bb85a3833c64d8c2e7250c25577",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:43:16.359975",
+    "status": "success"
+  },
+  "49. A novel process approach of a circular economy practice in the production of hydroxyapatite from phosphogypsum.pdf": {
+    "sha256": "fd081fc2dde3d14a3bcd35effa72d484d072a9603d510e521669ec248315d136",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:43:57.059442",
+    "status": "success"
+  },
+  "5. Utilization path of bulk industrial solid waste A review on the multi-directional resource utilization path of phosphogypsum.pdf": {
+    "sha256": "85c4f10eabc54b5be5b6f784bcc3cecbad24e4e15727b5e19a3147ba9f1ed372",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:45:12.430398",
+    "status": "success"
+  },
+  "65. Review on high-value utilization of phosphogypsum Utilization of calcium and oxygen resources present in phosphogypusm.pdf": {
+    "sha256": "f28a640ef9ff7ec911f4499267e4b533d36781dc349878f71b95f147f0051869",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:47:13.576262",
+    "status": "success"
+  },
+  "66. Conversion of waste phosphogypsum into value-added 1D2D homojunction hydroxyapatite with enhanced structural, morphology, and photoelectrochemical performance.pdf": {
+    "sha256": "1dd6936bbdf1f5274146e6eb7d1c1f4a4196b91be94c2b47c1d75140005a1b5d",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:48:32.662840",
+    "status": "success"
+  },
+  "67. Beneficiation of rare earth elements contained in phosphogypsum using sequenced treatment process.pdf": {
+    "sha256": "13d1daba0c7a4e78cdcd3072b9ad8c4917f5c9a3fa8df23ccf705bc819290d06",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:50:19.198204",
+    "status": "success"
+  },
+  "68. Extraction of lanthanum, cerium, and neodymium using an ionic liquid and its application to rare earth leachate derived from phosphogypsum.pdf": {
+    "sha256": "e705d1a326fc355772fbc4dc0d10d2debacb9012cbf06333a7ee716dbef5b48e",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:51:33.770106",
+    "status": "success"
+  },
+  "7. Chemical Soil-Biological Engineering Theoretical Foundations, Technical Means, and Technology for Safe Intrasoil Waste Recycling and Long-Term Higher Soil Productivity.pdf": {
+    "sha256": "b2b91f5bd2dfdc6b2567df8cf2bf2ee30cc3bb1313d00bc9e47ff2cb5c6131a5",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:53:38.543957",
+    "status": "success"
+  },
+  "9. Phosphogypsum circular economy considerations A critical review from more than 65 storage sites worldwide.pdf": {
+    "sha256": "1185504d1513481e88885ca0c2090be67f4e2b6dcd3a13738e4a4d73f66aaedd",
+    "parser_type": "mineru",
+    "parsed_at": "2026-09-30T15:56:03.327186",
+    "status": "success"
   }
 }

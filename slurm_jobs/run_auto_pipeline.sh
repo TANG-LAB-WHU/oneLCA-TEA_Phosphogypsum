@@ -53,29 +53,11 @@ export ORT_DISABLE_THREAD_AFFINITY=1
 export MINERU_MODEL_SOURCE=local
 export LIGHTRAG_GRAPH_STORAGE="Neo4JStorage"
 export LIGHTRAG_VECTOR_STORAGE="MilvusVectorDBStorage"
-
-# Dynamically resolve available ports on localhost to prevent "bind: address already in use"
-eval $(python - << 'EOF'
-import socket
-
-def find_free_port(preferred):
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.settimeout(1.0)
-            if s.connect_ex(('127.0.0.1', preferred)) != 0:
-                return preferred
-    except Exception:
-        pass
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind(('127.0.0.1', 0))
-        return s.getsockname()[1]
-
-print(f"export NEO4J_PORT={find_free_port(7687)}")
-print(f"export MILVUS_PORT={find_free_port(19530)}")
-EOF
-)
-
-echo "Assigned Ports: Neo4j Bolt -> $NEO4J_PORT, Milvus gRPC -> $MILVUS_PORT"
+export NEO4J_URI="bolt://127.0.0.1:7687"
+export NEO4J_USERNAME="neo4j"
+export NEO4J_PASSWORD="password123"
+export MILVUS_URI="http://127.0.0.1:19530"
+export MILVUS_DB_NAME="lightrag"
 
 # 3. Locate Container Images
 CONTAINER_RUNNER="apptainer"
@@ -107,15 +89,9 @@ if [ ! -f "$NEO4J_CONF/neo4j.conf" ]; then
     $CONTAINER_RUNNER exec "$NEO4J_SIF" cp -r /var/lib/neo4j/conf/. "$NEO4J_CONF/" 2>/dev/null || true
 fi
 
-# Clean up any stale or invalid settings from previous runs
-if [ -f "$NEO4J_CONF/neo4j.conf" ]; then
-    sed -i '/^USERNAME=/d' "$NEO4J_CONF/neo4j.conf" 2>/dev/null || true
-    sed -i '/^URI=/d' "$NEO4J_CONF/neo4j.conf" 2>/dev/null || true
-    sed -i '/^PASSWORD=/d' "$NEO4J_CONF/neo4j.conf" 2>/dev/null || true
-fi
-
-# Generate Milvus configuration with dynamic port binding
-cat <<EOF > "$MILVUS_YAML"
+# Seed Milvus configuration if not present
+if [ ! -f "$MILVUS_YAML" ]; then
+    cat <<EOF > "$MILVUS_YAML"
 etcd:
   use: embed
   data.dir: /var/lib/milvus/etcd
@@ -127,12 +103,8 @@ queryNode:
   gracefulTimeOut: 0
 dataNode:
   gracefulTimeOut: 0
-proxy:
-  port: ${MILVUS_PORT}
 EOF
-
-# Clean up stale locks or pid files if any
-rm -f /tmp/milvus/standalone.pid 2>/dev/null || true
+fi
 
 # 5. Lifecycle Management: Trap Cleanup
 PID_NEO4J=""
@@ -160,15 +132,11 @@ trap cleanup EXIT SIGINT SIGTERM
 echo "[1/4] Starting Neo4j background container..."
 export NEO4J_AUTH="neo4j/password123"
 export NEO4J_server_default__listen__address="0.0.0.0"
-export NEO4J_server_bolt_listen__address="0.0.0.0:${NEO4J_PORT}"
-export NEO4J_server_config_strict__validation_enabled="false"
 export TINI_SUBREAPER=1
 export NEO4J_server_memory_heap_initial__size="2G"
 export NEO4J_server_memory_heap_max__size="8G"
 export NEO4J_server_memory_pagecache_size="4G"
 
-# Launch container with clean environment (prevent host NEO4J_USERNAME from polluting neo4j.conf)
-env -u NEO4J_USERNAME -u NEO4J_URI -u NEO4J_PASSWORD \
 $CONTAINER_RUNNER run \
     --writable-tmpfs \
     --bind "$NEO4J_DATA":/data \
@@ -186,10 +154,10 @@ $CONTAINER_RUNNER run \
     "$MILVUS_SIF" milvus run standalone > "$LOG_DIR/auto_milvus_${SLURM_JOB_ID}.log" 2>&1 &
 PID_MILVUS=$!
 
-# 7. Pre-flight Readiness Check (Poll up to 240 seconds)
+# 7. Pre-flight Readiness Check (Poll up to 90 seconds)
 echo "[3/4] Probing database readiness on localhost..."
 python - << 'EOF'
-import socket, time, sys, os
+import socket, time, sys
 
 def wait_port(port, name, timeout=240):
     start = time.time()
@@ -205,10 +173,7 @@ def wait_port(port, name, timeout=240):
     print(f"  [TIMEOUT] {name} failed to become ready on port {port} within {timeout}s.")
     return False
 
-neo_port = int(os.environ.get("NEO4J_PORT", 7687))
-mil_port = int(os.environ.get("MILVUS_PORT", 19530))
-
-if not (wait_port(neo_port, "Neo4j") and wait_port(mil_port, "Milvus")):
+if not (wait_port(7687, "Neo4j") and wait_port(19530, "Milvus")):
     sys.exit(1)
 EOF
 
@@ -226,12 +191,6 @@ python scripts/build_knowledge_graph.py \
   --parser mineru
 
 echo "--- Phase B: LightRAG Indexing (Graph + Vector) ---"
-export NEO4J_URI="bolt://127.0.0.1:${NEO4J_PORT}"
-export NEO4J_USERNAME="neo4j"
-export NEO4J_PASSWORD="password123"
-export MILVUS_URI="http://127.0.0.1:${MILVUS_PORT}"
-export MILVUS_DB_NAME="lightrag"
-
 python scripts/build_knowledge_graph.py \
   --step index \
   --engine lightrag
