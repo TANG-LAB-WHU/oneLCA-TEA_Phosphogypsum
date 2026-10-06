@@ -1,0 +1,187 @@
+============================================================
+ Phosphogypsum Bot Parallel Ingestion Worker
+ Array Job ID: 3397510 | Task ID: 18
+ Host: n0535
+ Partition: 9a14a
+ Working Dir: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+============================================================
+2026-09-16 23:57:22.471 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:209 - Pipeline processing-window multi-file run. doc_count=1, total_pages=7, window_size=64, total_batches=1
+2026-09-16 23:57:22.471 | DEBUG    | mineru.utils.pdf_image_tools:_load_images_from_pdf_bytes_range:289 - PDF image rendering uses 1 processes for pages 1-7: [(0, 6)]
+2026-09-16 23:57:22.471 | DEBUG    | mineru.utils.pdf_image_tools:_create_pdf_render_executor:161 - PDF image rendering switches multiprocessing start method from fork to spawn
+2026-09-16 23:57:22.472 | DEBUG    | mineru.utils.pdf_image_tools:_get_pdf_render_executor:218 - Created persistent PDF render executor with max_workers=3
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-09-16 23:57:20
+Steps to run: ['parse']
+RAG Engine: lightrag
+
+============================================================
+   STEP 1: PDF PARSING WITH INCREMENTAL TRACKING
+============================================================
+Parser type: mineru
+Input:  /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/raw/papers/unparsed
+Output: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/interim/papers/parsed
+Registry: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/ingestion_registry.json
+[Slurm Array] Task 18/50 - Sharding assigned 2 files to this task.
+Propagating deletion: Removing 2. Phosphogypsum as a construction material.pdf from registry state
+
+Found 2 PDF files to check
+
+[1/2] Parsing: 26. Thermal behaviour of Moroccan phosphogypsum.pd...
+2026-09-16 23:57:59.031 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:264 - Pipeline processing window batch 1/1: 7/7 pages, batch_pages=7, doc_slices=doc0:1-7
+2026-09-16 23:57:59.043 | INFO     | mineru.backend.pipeline.pipeline_analyze:batch_image_analyze:364 - GPU Memory: 1 GB, Batch Ratio: 1. 
+2026-09-16 23:57:59.043 | INFO     | mineru.backend.pipeline.model_init:__init__:252 - DocAnalysis init, this may take some times......
+2026-09-16 23:58:00.862 | INFO     | mineru.backend.pipeline.model_init:__init__:304 - DocAnalysis init done!
+2026-09-16 23:58:00.862 | INFO     | mineru.backend.pipeline.pipeline_analyze:custom_model_init:83 - model init cost: 1.819046974182129
+Layout Predict:   0%|          | 0/7 [00:00<?, ?it/s]Layout Predict:  14%|█▍        | 1/7 [00:01<00:07,  1.33s/it]Layout Predict:  29%|██▊       | 2/7 [00:01<00:03,  1.35it/s]Layout Predict:  43%|████▎     | 3/7 [00:02<00:02,  1.78it/s]Layout Predict:  57%|█████▋    | 4/7 [00:02<00:01,  2.13it/s]Layout Predict:  71%|███████▏  | 5/7 [00:02<00:00,  2.36it/s]Layout Predict:  86%|████████▌ | 6/7 [00:03<00:00,  2.52it/s]Layout Predict: 100%|██████████| 7/7 [00:03<00:00,  2.63it/s]Layout Predict: 100%|██████████| 7/7 [00:03<00:00,  2.08it/s]
+2026-09-16 23:58:04.724 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.45
+MFR Predict:   0%|          | 0/103 [00:00<?, ?it/s]MFR Predict:  16%|█▌        | 16/103 [00:04<00:22,  3.79it/s]MFR Predict:  31%|███       | 32/103 [00:07<00:16,  4.38it/s]MFR Predict:  47%|████▋     | 48/103 [00:10<00:12,  4.48it/s]MFR Predict:  62%|██████▏   | 64/103 [00:13<00:07,  4.92it/s]MFR Predict:  78%|███████▊  | 80/103 [00:17<00:04,  4.85it/s]MFR Predict: 100%|██████████| 103/103 [00:38<00:00,  1.92it/s]MFR Predict: 100%|██████████| 103/103 [00:38<00:00,  2.65it/s]
+2026-09-16 23:58:43.996 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.37
+Table-ocr det:   0%|          | 0/5 [00:00<?, ?it/s]Table-ocr det:  20%|██        | 1/5 [00:00<00:00,  7.73it/s]Table-ocr det:  60%|██████    | 3/5 [00:00<00:00, 12.70it/s]Table-ocr det: 100%|██████████| 5/5 [00:00<00:00, 12.38it/s]Table-ocr det: 100%|██████████| 5/5 [00:00<00:00, 11.99it/s]
+Table-ocr rec en:   0%|          | 0/173 [00:00<?, ?it/s]Table-ocr rec en:   3%|▎         | 6/173 [00:00<00:05, 29.92it/s]Table-ocr rec en:   7%|▋         | 12/173 [00:00<00:04, 33.07it/s]Table-ocr rec en:  10%|█         | 18/173 [00:00<00:04, 33.75it/s]Table-ocr rec en:  14%|█▍        | 24/173 [00:00<00:04, 34.45it/s]Table-ocr rec en:  17%|█▋        | 30/173 [00:00<00:04, 34.64it/s]Table-ocr rec en:  21%|██        | 36/173 [00:01<00:04, 33.91it/s]Table-ocr rec en:  24%|██▍       | 42/173 [00:01<00:03, 33.86it/s]Table-ocr rec en:  28%|██▊       | 48/173 [00:01<00:03, 33.28it/s]Table-ocr rec en:  31%|███       | 54/173 [00:01<00:03, 32.60it/s]Table-ocr rec en:  35%|███▍      | 60/173 [00:01<00:03, 32.71it/s]Table-ocr rec en:  38%|███▊      | 66/173 [00:01<00:03, 33.38it/s]Table-ocr rec en:  42%|████▏     | 72/173 [00:02<00:02, 33.85it/s]Table-ocr rec en:  45%|████▌     | 78/173 [00:02<00:02, 33.90it/s]Table-ocr rec en:  49%|████▊     | 84/173 [00:02<00:02, 34.23it/s]Table-ocr rec en:  52%|█████▏    | 90/173 [00:02<00:02, 33.96it/s]Table-ocr rec en:  55%|█████▌    | 96/173 [00:02<00:02, 33.20it/s]Table-ocr rec en:  59%|█████▉    | 102/173 [00:03<00:02, 32.99it/s]Table-ocr rec en:  62%|██████▏   | 108/173 [00:03<00:01, 33.35it/s]Table-ocr rec en:  66%|██████▌   | 114/173 [00:03<00:01, 33.21it/s]Table-ocr rec en:  69%|██████▉   | 120/173 [00:03<00:01, 33.01it/s]Table-ocr rec en:  73%|███████▎  | 126/173 [00:03<00:01, 33.20it/s]Table-ocr rec en:  76%|███████▋  | 132/173 [00:03<00:01, 33.06it/s]Table-ocr rec en:  80%|███████▉  | 138/173 [00:04<00:01, 33.00it/s]Table-ocr rec en:  83%|████████▎ | 144/173 [00:04<00:00, 33.62it/s]Table-ocr rec en:  87%|████████▋ | 150/173 [00:04<00:00, 33.80it/s]Table-ocr rec en:  90%|█████████ | 156/173 [00:04<00:00, 33.21it/s]Table-ocr rec en:  94%|█████████▎| 162/173 [00:04<00:00, 33.79it/s]Table-ocr rec en:  97%|█████████▋| 168/173 [00:05<00:00, 33.13it/s]Table-ocr rec en: 100%|██████████| 173/173 [00:05<00:00, 30.78it/s]Table-ocr rec en: 100%|██████████| 173/173 [00:05<00:00, 33.11it/s]
+Table-wireless Predict:   0%|          | 0/5 [00:00<?, ?it/s]Table-wireless Predict:  80%|████████  | 4/5 [00:00<00:00, 23.60it/s]Table-wireless Predict: 100%|██████████| 5/5 [00:00<00:00, 22.11it/s]
+Table-wired Predict:   0%|          | 0/4 [00:00<?, ?it/s]Table-wired Predict:  50%|█████     | 2/4 [00:00<00:00, 12.99it/s]Table-wired Predict: 100%|██████████| 4/4 [00:00<00:00,  8.19it/s]Table-wired Predict: 100%|██████████| 4/4 [00:00<00:00,  8.66it/s]
+OCR-det en:   0%|          | 0/32 [00:00<?, ?it/s]OCR-det en:   6%|▋         | 2/32 [00:00<00:02, 13.36it/s]OCR-det en:  12%|█▎        | 4/32 [00:00<00:02, 12.27it/s]OCR-det en:  19%|█▉        | 6/32 [00:00<00:02, 12.37it/s]OCR-det en:  25%|██▌       | 8/32 [00:00<00:01, 13.75it/s]OCR-det en:  31%|███▏      | 10/32 [00:00<00:01, 12.86it/s]OCR-det en:  38%|███▊      | 12/32 [00:01<00:02,  6.94it/s]OCR-det en:  41%|████      | 13/32 [00:01<00:02,  7.23it/s]OCR-det en:  44%|████▍     | 14/32 [00:01<00:02,  7.15it/s]OCR-det en:  47%|████▋     | 15/32 [00:01<00:02,  5.95it/s]OCR-det en:  50%|█████     | 16/32 [00:02<00:03,  4.98it/s]OCR-det en:  56%|█████▋    | 18/32 [00:02<00:02,  5.56it/s]OCR-det en:  62%|██████▎   | 20/32 [00:02<00:02,  5.90it/s]OCR-det en:  66%|██████▌   | 21/32 [00:03<00:02,  5.09it/s]OCR-det en:  72%|███████▏  | 23/32 [00:03<00:01,  6.48it/s]OCR-det en:  78%|███████▊  | 25/32 [00:03<00:00,  8.16it/s]OCR-det en:  84%|████████▍ | 27/32 [00:03<00:00,  8.28it/s]OCR-det en:  88%|████████▊ | 28/32 [00:03<00:00,  8.41it/s]OCR-det en:  94%|█████████▍| 30/32 [00:03<00:00, 10.51it/s]OCR-det en: 100%|██████████| 32/32 [00:03<00:00, 10.62it/s]OCR-det en: 100%|██████████| 32/32 [00:03<00:00,  8.06it/s]
+2026-09-16 23:58:55.517 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.39
+OCR-rec Predict:   0%|          | 0/429 [00:00<?, ?it/s]OCR-rec Predict:   1%|▏         | 6/429 [00:00<00:14, 30.05it/s]OCR-rec Predict:   3%|▎         | 12/429 [00:00<00:13, 31.63it/s]OCR-rec Predict:   4%|▍         | 18/429 [00:00<00:12, 32.56it/s]OCR-rec Predict:   6%|▌         | 24/429 [00:00<00:12, 32.83it/s]OCR-rec Predict:   7%|▋         | 30/429 [00:00<00:11, 33.33it/s]OCR-rec Predict:   8%|▊         | 36/429 [00:01<00:12, 32.62it/s]OCR-rec Predict:  10%|▉         | 42/429 [00:01<00:11, 33.22it/s]OCR-rec Predict:  11%|█         | 48/429 [00:01<00:11, 33.08it/s]OCR-rec Predict:  13%|█▎        | 54/429 [00:01<00:11, 32.79it/s]OCR-rec Predict:  14%|█▍        | 60/429 [00:01<00:11, 33.17it/s]OCR-rec Predict:  15%|█▌        | 66/429 [00:02<00:11, 31.55it/s]OCR-rec Predict:  17%|█▋        | 72/429 [00:02<00:12, 29.66it/s]OCR-rec Predict:  18%|█▊        | 78/429 [00:02<00:12, 28.94it/s]OCR-rec Predict:  20%|█▉        | 84/429 [00:02<00:12, 27.92it/s]OCR-rec Predict:  21%|██        | 90/429 [00:02<00:12, 27.22it/s]OCR-rec Predict:  22%|██▏       | 96/429 [00:03<00:12, 26.67it/s]OCR-rec Predict:  24%|██▍       | 102/429 [00:03<00:12, 26.27it/s]OCR-rec Predict:  25%|██▌       | 108/429 [00:03<00:12, 25.37it/s]OCR-rec Predict:  27%|██▋       | 114/429 [00:03<00:12, 25.08it/s]OCR-rec Predict:  28%|██▊       | 120/429 [00:04<00:12, 24.69it/s]OCR-rec Predict:  29%|██▉       | 126/429 [00:04<00:12, 24.34it/s]OCR-rec Predict:  31%|███       | 132/429 [00:04<00:12, 24.02it/s]OCR-rec Predict:  32%|███▏      | 138/429 [00:04<00:12, 23.66it/s]OCR-rec Predict:  34%|███▎      | 144/429 [00:05<00:12, 23.36it/s]OCR-rec Predict:  35%|███▍      | 150/429 [00:05<00:12, 22.91it/s]OCR-rec Predict:  36%|███▋      | 156/429 [00:05<00:12, 21.78it/s]OCR-rec Predict:  38%|███▊      | 162/429 [00:06<00:13, 20.52it/s]OCR-rec Predict:  39%|███▉      | 168/429 [00:06<00:13, 19.59it/s]OCR-rec Predict:  41%|████      | 174/429 [00:06<00:12, 19.73it/s]OCR-rec Predict:  42%|████▏     | 180/429 [00:07<00:12, 20.15it/s]OCR-rec Predict:  43%|████▎     | 186/429 [00:07<00:11, 20.54it/s]OCR-rec Predict:  45%|████▍     | 192/429 [00:07<00:11, 20.55it/s]OCR-rec Predict:  46%|████▌     | 198/429 [00:07<00:11, 20.56it/s]OCR-rec Predict:  48%|████▊     | 204/429 [00:08<00:10, 20.50it/s]OCR-rec Predict:  49%|████▉     | 210/429 [00:08<00:10, 20.25it/s]OCR-rec Predict:  50%|█████     | 216/429 [00:08<00:10, 20.75it/s]OCR-rec Predict:  52%|█████▏    | 222/429 [00:09<00:09, 20.88it/s]OCR-rec Predict:  53%|█████▎    | 228/429 [00:09<00:09, 20.77it/s]OCR-rec Predict:  55%|█████▍    | 234/429 [00:09<00:09, 20.65it/s]OCR-rec Predict:  56%|█████▌    | 240/429 [00:09<00:08, 21.23it/s]OCR-rec Predict:  57%|█████▋    | 246/429 [00:10<00:08, 21.55it/s]OCR-rec Predict:  59%|█████▊    | 252/429 [00:10<00:08, 21.56it/s]OCR-rec Predict:  60%|██████    | 258/429 [00:10<00:08, 21.05it/s]OCR-rec Predict:  62%|██████▏   | 264/429 [00:11<00:07, 20.88it/s]OCR-rec Predict:  63%|██████▎   | 270/429 [00:11<00:07, 20.79it/s]OCR-rec Predict:  64%|██████▍   | 276/429 [00:11<00:07, 20.19it/s]OCR-rec Predict:  66%|██████▌   | 282/429 [00:11<00:07, 20.33it/s]OCR-rec Predict:  67%|██████▋   | 288/429 [00:12<00:06, 20.74it/s]OCR-rec Predict:  69%|██████▊   | 294/429 [00:12<00:06, 21.35it/s]OCR-rec Predict:  70%|██████▉   | 300/429 [00:12<00:05, 21.92it/s]OCR-rec Predict:  71%|███████▏  | 306/429 [00:13<00:05, 21.90it/s]OCR-rec Predict:  73%|███████▎  | 312/429 [00:13<00:05, 21.91it/s]OCR-rec Predict:  74%|███████▍  | 318/429 [00:13<00:05, 21.86it/s]OCR-rec Predict:  76%|███████▌  | 324/429 [00:13<00:04, 21.97it/s]OCR-rec Predict:  77%|███████▋  | 330/429 [00:14<00:04, 21.53it/s]OCR-rec Predict:  78%|███████▊  | 336/429 [00:14<00:04, 21.74it/s]OCR-rec Predict:  80%|███████▉  | 342/429 [00:14<00:03, 22.06it/s]OCR-rec Predict:  81%|████████  | 348/429 [00:14<00:03, 21.55it/s]OCR-rec Predict:  83%|████████▎ | 354/429 [00:15<00:03, 21.49it/s]OCR-rec Predict:  84%|████████▍ | 360/429 [00:15<00:03, 21.38it/s]OCR-rec Predict:  85%|████████▌ | 366/429 [00:15<00:02, 21.30it/s]OCR-rec Predict:  87%|████████▋ | 372/429 [00:16<00:02, 21.21it/s]OCR-rec Predict:  88%|████████▊ | 378/429 [00:16<00:02, 20.97it/s]OCR-rec Predict:  90%|████████▉ | 384/429 [00:16<00:02, 20.54it/s]OCR-rec Predict:  91%|█████████ | 390/429 [00:16<00:01, 20.75it/s]OCR-rec Predict:  92%|█████████▏| 396/429 [00:17<00:01, 20.17it/s]OCR-rec Predict:  94%|█████████▎| 402/429 [00:17<00:01, 19.92it/s]OCR-rec Predict:  95%|█████████▌| 408/429 [00:17<00:01, 19.94it/s]OCR-rec Predict:  97%|█████████▋| 414/429 [00:18<00:00, 20.23it/s]OCR-rec Predict:  98%|█████████▊| 420/429 [00:18<00:00, 19.62it/s]OCR-rec Predict:  99%|█████████▉| 426/429 [00:19<00:00, 11.06it/s]OCR-rec Predict: 100%|██████████| 429/429 [00:19<00:00, 11.09it/s]OCR-rec Predict: 100%|██████████| 429/429 [00:19<00:00, 21.58it/s]
+Seal Predict: 0it [00:00, ?it/s]Seal Predict: 0it [00:00, ?it/s]
+Processing pages:   0%|          | 0/7 [00:00<?, ?it/s]Processing pages:  29%|██▊       | 2/7 [00:00<00:02,  2.13it/s]Processing pages:  43%|████▎     | 3/7 [00:01<00:02,  1.89it/s]Processing pages:  57%|█████▋    | 4/7 [00:02<00:02,  1.24it/s]Processing pages:  71%|███████▏  | 5/7 [00:03<00:01,  1.21it/s]Processing pages:  86%|████████▌ | 6/7 [00:04<00:00,  1.17it/s]Processing pages: 100%|██████████| 7/7 [00:04<00:00,  1.48it/s]2026-09-16 23:59:20.791 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:_finalize_processing_window_context:130 - Pipeline doc ready: doc0 pages=7
+Processing pages: 100%|██████████| 7/7 [00:04<00:00,  1.42it/s]
+2026-09-16 23:59:20.799 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:320 - processing-window multi-file infer finished, cost: 118.33, speed: 0.059 page/s
+2026-09-16 23:59:22.202 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:209 - Pipeline processing-window multi-file run. doc_count=1, total_pages=11, window_size=64, total_batches=1
+2026-09-16 23:59:22.202 | DEBUG    | mineru.utils.pdf_image_tools:_load_images_from_pdf_bytes_range:289 - PDF image rendering uses 1 processes for pages 1-11: [(0, 10)]
+2026-09-16 23:59:23.169 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:264 - Pipeline processing window batch 1/1: 11/11 pages, batch_pages=11, doc_slices=doc0:1-11
+2026-09-16 23:59:23.169 | INFO     | mineru.backend.pipeline.pipeline_analyze:batch_image_analyze:364 - GPU Memory: 1 GB, Batch Ratio: 1. 
+    ✓ Saved: 26. Thermal behaviour of Moroccan phosphogypsum/auto/26. Thermal behaviour of Moroccan phosphogypsum.md (26883 chars)
+
+[2/2] Parsing: 71. 我国磷石膏污染特性、利用及环境管理研究.pdf...
+Layout Predict:   0%|          | 0/11 [00:00<?, ?it/s]Layout Predict:   9%|▉         | 1/11 [00:00<00:03,  3.18it/s]Layout Predict:  18%|█▊        | 2/11 [00:00<00:02,  3.33it/s]Layout Predict:  27%|██▋       | 3/11 [00:00<00:02,  3.38it/s]Layout Predict:  36%|███▋      | 4/11 [00:01<00:02,  3.39it/s]Layout Predict:  45%|████▌     | 5/11 [00:01<00:01,  3.40it/s]Layout Predict:  55%|█████▍    | 6/11 [00:01<00:01,  3.40it/s]Layout Predict:  64%|██████▎   | 7/11 [00:02<00:01,  3.43it/s]Layout Predict:  73%|███████▎  | 8/11 [00:02<00:00,  3.41it/s]Layout Predict:  82%|████████▏ | 9/11 [00:02<00:00,  3.41it/s]Layout Predict:  91%|█████████ | 10/11 [00:02<00:00,  3.41it/s]Layout Predict: 100%|██████████| 11/11 [00:03<00:00,  3.41it/s]Layout Predict: 100%|██████████| 11/11 [00:03<00:00,  3.40it/s]
+2026-09-16 23:59:26.903 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.47
+MFR Predict:   0%|          | 0/28 [00:00<?, ?it/s]MFR Predict:  57%|█████▋    | 16/28 [00:03<00:02,  4.84it/s]MFR Predict: 100%|██████████| 28/28 [00:07<00:00,  3.79it/s]MFR Predict: 100%|██████████| 28/28 [00:07<00:00,  3.94it/s]
+2026-09-16 23:59:34.404 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.39
+Table-ocr det:   0%|          | 0/4 [00:00<?, ?it/s]Table-ocr det:  25%|██▌       | 1/4 [00:00<00:00,  6.28it/s]Table-ocr det:  50%|█████     | 2/4 [00:00<00:00,  8.04it/s]Table-ocr det: 100%|██████████| 4/4 [00:00<00:00, 10.76it/s]Table-ocr det: 100%|██████████| 4/4 [00:00<00:00,  9.81it/s]
+Table-ocr rec en:   0%|          | 0/355 [00:00<?, ?it/s]Table-ocr rec en:   2%|▏         | 6/355 [00:00<00:11, 29.77it/s]Table-ocr rec en:   3%|▎         | 12/355 [00:00<00:10, 32.11it/s]Table-ocr rec en:   5%|▌         | 18/355 [00:00<00:10, 33.19it/s]Table-ocr rec en:   7%|▋         | 24/355 [00:00<00:10, 32.97it/s]Table-ocr rec en:   8%|▊         | 30/355 [00:00<00:09, 33.06it/s]Table-ocr rec en:  10%|█         | 36/355 [00:01<00:09, 33.88it/s]Table-ocr rec en:  12%|█▏        | 42/355 [00:01<00:09, 33.64it/s]Table-ocr rec en:  14%|█▎        | 48/355 [00:01<00:09, 33.73it/s]Table-ocr rec en:  15%|█▌        | 54/355 [00:01<00:08, 33.50it/s]Table-ocr rec en:  17%|█▋        | 60/355 [00:01<00:08, 33.38it/s]Table-ocr rec en:  19%|█▊        | 66/355 [00:01<00:08, 33.74it/s]Table-ocr rec en:  20%|██        | 72/355 [00:02<00:08, 33.63it/s]Table-ocr rec en:  22%|██▏       | 78/355 [00:02<00:08, 33.91it/s]Table-ocr rec en:  24%|██▎       | 84/355 [00:02<00:07, 34.35it/s]Table-ocr rec en:  25%|██▌       | 90/355 [00:02<00:07, 34.73it/s]Table-ocr rec en:  27%|██▋       | 96/355 [00:02<00:07, 33.96it/s]Table-ocr rec en:  29%|██▊       | 102/355 [00:03<00:07, 33.84it/s]Table-ocr rec en:  30%|███       | 108/355 [00:03<00:07, 34.09it/s]Table-ocr rec en:  32%|███▏      | 114/355 [00:03<00:07, 33.63it/s]Table-ocr rec en:  34%|███▍      | 120/355 [00:03<00:06, 34.39it/s]Table-ocr rec en:  35%|███▌      | 126/355 [00:03<00:06, 34.46it/s]Table-ocr rec en:  37%|███▋      | 132/355 [00:03<00:06, 34.34it/s]Table-ocr rec en:  39%|███▉      | 138/355 [00:04<00:06, 34.51it/s]Table-ocr rec en:  41%|████      | 144/355 [00:04<00:06, 34.68it/s]Table-ocr rec en:  42%|████▏     | 150/355 [00:04<00:05, 34.86it/s]Table-ocr rec en:  44%|████▍     | 156/355 [00:04<00:05, 34.55it/s]Table-ocr rec en:  46%|████▌     | 162/355 [00:04<00:05, 33.90it/s]Table-ocr rec en:  47%|████▋     | 168/355 [00:04<00:05, 34.00it/s]Table-ocr rec en:  49%|████▉     | 174/355 [00:05<00:05, 33.75it/s]Table-ocr rec en:  51%|█████     | 180/355 [00:05<00:05, 33.69it/s]Table-ocr rec en:  52%|█████▏    | 186/355 [00:05<00:04, 34.01it/s]Table-ocr rec en:  54%|█████▍    | 192/355 [00:05<00:04, 34.11it/s]Table-ocr rec en:  56%|█████▌    | 198/355 [00:05<00:04, 34.41it/s]Table-ocr rec en:  57%|█████▋    | 204/355 [00:06<00:04, 33.98it/s]Table-ocr rec en:  59%|█████▉    | 210/355 [00:06<00:04, 33.86it/s]Table-ocr rec en:  61%|██████    | 216/355 [00:06<00:04, 33.89it/s]Table-ocr rec en:  63%|██████▎   | 222/355 [00:06<00:03, 33.46it/s]Table-ocr rec en:  64%|██████▍   | 228/355 [00:06<00:03, 33.12it/s]Table-ocr rec en:  66%|██████▌   | 234/355 [00:06<00:03, 31.53it/s]Table-ocr rec en:  68%|██████▊   | 240/355 [00:07<00:03, 31.27it/s]Table-ocr rec en:  69%|██████▉   | 246/355 [00:07<00:03, 31.78it/s]Table-ocr rec en:  71%|███████   | 252/355 [00:07<00:03, 32.24it/s]Table-ocr rec en:  73%|███████▎  | 258/355 [00:07<00:02, 32.88it/s]Table-ocr rec en:  74%|███████▍  | 264/355 [00:07<00:02, 33.16it/s]Table-ocr rec en:  76%|███████▌  | 270/355 [00:08<00:02, 33.79it/s]Table-ocr rec en:  78%|███████▊  | 276/355 [00:08<00:02, 33.59it/s]Table-ocr rec en:  79%|███████▉  | 282/355 [00:08<00:02, 34.10it/s]Table-ocr rec en:  81%|████████  | 288/355 [00:08<00:01, 34.32it/s]Table-ocr rec en:  83%|████████▎ | 294/355 [00:08<00:01, 33.89it/s]Table-ocr rec en:  85%|████████▍ | 300/355 [00:08<00:01, 33.46it/s]Table-ocr rec en:  86%|████████▌ | 306/355 [00:09<00:01, 33.72it/s]Table-ocr rec en:  88%|████████▊ | 312/355 [00:09<00:01, 34.02it/s]Table-ocr rec en:  90%|████████▉ | 318/355 [00:09<00:01, 32.59it/s]Table-ocr rec en:  91%|█████████▏| 324/355 [00:09<00:01, 29.94it/s]Table-ocr rec en:  93%|█████████▎| 330/355 [00:09<00:00, 29.14it/s]Table-ocr rec en:  95%|█████████▍| 336/355 [00:10<00:00, 28.44it/s]Table-ocr rec en:  96%|█████████▋| 342/355 [00:10<00:00, 27.46it/s]Table-ocr rec en:  98%|█████████▊| 348/355 [00:10<00:00, 26.16it/s]Table-ocr rec en: 100%|█████████▉| 354/355 [00:10<00:00, 25.03it/s]Table-ocr rec en: 100%|██████████| 355/355 [00:11<00:00, 32.22it/s]
+Table-wireless Predict:   0%|          | 0/4 [00:00<?, ?it/s]Table-wireless Predict: 100%|██████████| 4/4 [00:00<00:00, 19.94it/s]Table-wireless Predict: 100%|██████████| 4/4 [00:00<00:00, 19.92it/s]
+Table-wired Predict:   0%|          | 0/4 [00:00<?, ?it/s]Table-wired Predict:  25%|██▌       | 1/4 [00:00<00:00,  3.22it/s]Table-wired Predict:  50%|█████     | 2/4 [00:00<00:00,  4.03it/s]Table-wired Predict:  75%|███████▌  | 3/4 [00:00<00:00,  4.63it/s]Table-wired Predict: 100%|██████████| 4/4 [00:00<00:00,  4.37it/s]Table-wired Predict: 100%|██████████| 4/4 [00:00<00:00,  4.25it/s]
+OCR-det en:   0%|          | 0/43 [00:00<?, ?it/s]OCR-det en:   5%|▍         | 2/43 [00:00<00:03, 11.26it/s]OCR-det en:   9%|▉         | 4/43 [00:00<00:04,  8.21it/s]OCR-det en:  14%|█▍        | 6/43 [00:00<00:04,  8.56it/s]OCR-det en:  16%|█▋        | 7/43 [00:00<00:04,  8.03it/s]OCR-det en:  21%|██        | 9/43 [00:01<00:04,  8.08it/s]OCR-det en:  26%|██▌       | 11/43 [00:01<00:04,  7.79it/s]OCR-det en:  28%|██▊       | 12/43 [00:01<00:04,  7.69it/s]OCR-det en:  33%|███▎      | 14/43 [00:01<00:03,  8.13it/s]OCR-det en:  37%|███▋      | 16/43 [00:01<00:02,  9.16it/s]OCR-det en:  40%|███▉      | 17/43 [00:02<00:03,  8.53it/s]OCR-det en:  42%|████▏     | 18/43 [00:02<00:03,  7.89it/s]OCR-det en:  44%|████▍     | 19/43 [00:02<00:02,  8.18it/s]OCR-det en:  49%|████▉     | 21/43 [00:02<00:02,  9.35it/s]OCR-det en:  53%|█████▎    | 23/43 [00:02<00:01, 11.15it/s]OCR-det en:  60%|██████    | 26/43 [00:02<00:01, 12.70it/s]OCR-det en:  65%|██████▌   | 28/43 [00:02<00:01, 12.37it/s]OCR-det en:  70%|██████▉   | 30/43 [00:03<00:01,  9.70it/s]OCR-det en:  74%|███████▍  | 32/43 [00:03<00:01,  8.87it/s]OCR-det en:  77%|███████▋  | 33/43 [00:03<00:01,  8.40it/s]OCR-det en:  81%|████████▏ | 35/43 [00:03<00:00,  8.89it/s]OCR-det en:  84%|████████▎ | 36/43 [00:04<00:00,  8.25it/s]OCR-det en:  86%|████████▌ | 37/43 [00:04<00:00,  7.93it/s]OCR-det en:  88%|████████▊ | 38/43 [00:04<00:00,  7.23it/s]OCR-det en:  93%|█████████▎| 40/43 [00:05<00:00,  4.73it/s]OCR-det en:  95%|█████████▌| 41/43 [00:05<00:00,  4.15it/s]OCR-det en: 100%|██████████| 43/43 [00:05<00:00,  5.60it/s]OCR-det en: 100%|██████████| 43/43 [00:05<00:00,  7.81it/s]
+2026-09-16 23:59:52.966 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.4
+Seal Predict: 0it [00:00, ?it/s]Seal Predict: 0it [00:00, ?it/s]
+Processing pages:   0%|          | 0/11 [00:00<?, ?it/s]Processing pages:   9%|▉         | 1/11 [00:00<00:02,  3.43it/s]Processing pages:  27%|██▋       | 3/11 [00:01<00:02,  2.68it/s]Processing pages:  36%|███▋      | 4/11 [00:01<00:02,  2.97it/s]Processing pages:  45%|████▌     | 5/11 [00:01<00:02,  2.45it/s]Processing pages:  55%|█████▍    | 6/11 [00:02<00:02,  2.36it/s]Processing pages:  64%|██████▎   | 7/11 [00:02<00:01,  2.32it/s]Processing pages:  82%|████████▏ | 9/11 [00:02<00:00,  3.87it/s]Processing pages: 100%|██████████| 11/11 [00:03<00:00,  5.52it/s]
+OCR-rec Predict:   0%|          | 0/6 [00:00<?, ?it/s][A
+OCR-rec Predict: 100%|██████████| 6/6 [00:00<00:00, 24.86it/s][AOCR-rec Predict: 100%|██████████| 6/6 [00:00<00:00, 24.83it/s]
+2026-09-16 23:59:57.035 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:_finalize_processing_window_context:130 - Pipeline doc ready: doc0 pages=11
+Processing pages: 100%|██████████| 11/11 [00:03<00:00,  2.98it/s]
+2026-09-16 23:59:57.055 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:320 - processing-window multi-file infer finished, cost: 34.85, speed: 0.316 page/s
+    ✓ Saved: 71. 我国磷石膏污染特性、利用及环境管理研究/auto/71. 我国磷石膏污染特性、利用及环境管理研究.md (39278 chars)
+
+========================================
+Parsing Complete: 2 success, 0 skipped, 0 errors
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-09-16 23:59:57
+INFO: Role LLM Configuration (initialized):
+INFO:  - extract: None/None, host=None, max_async=4, timeout=180
+INFO:  - keyword: None/None, host=None, max_async=4, timeout=180
+INFO:  - query: None/None, host=None, max_async=4, timeout=180
+INFO:  - vlm: None/None, host=None, max_async=4, timeout=180
+INFO: [] Process 1383870 KV load full_docs with 0 records
+INFO: [] Process 1383870 KV load text_chunks with 0 records
+INFO: [] Process 1383870 KV load full_entities with 0 records
+INFO: [] Process 1383870 KV load full_relations with 0 records
+INFO: [] Process 1383870 KV load entity_chunks with 0 records
+INFO: [] Process 1383870 KV load relation_chunks with 0 records
+ERROR: [] Failed to initialize Milvus collection 'entities': <MilvusException: (code=2, message=Fail connecting to server on localhost:19530, illegal connection params or server unavailable)>
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-09-17 00:01:12
+Steps to run: ['index']
+RAG Engine: lightrag
+
+============================================================
+   STEP 2: LIGHTRAG INDEX CONSTRUCTION
+============================================================
+LightRAG DB: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db
+Source:      /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/interim/papers/parsed
+LLM Model:   Qwen/Qwen3.8-Flash-Next
+
+Note: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).
+Traceback (most recent call last):
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 257, in _wait_for_channel_ready
+    target_final_channel, target_stub = self._setup_identifier_interceptor(
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 448, in _setup_identifier_interceptor
+    self.__internal_register(user, host, timeout=timeout)
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/decorators.py", line 606, in handler
+    raise e from e
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/decorators.py", line 595, in handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 3273, in __internal_register
+    return self._internal_register(user, host, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 3267, in _internal_register
+    response = target_stub.Connect(request=req, timeout=kwargs.get("timeout"))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/grpc/_channel.py", line 1159, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/grpc/_channel.py", line 990, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:19530: Failed to connect to remote host: Connection refused"
+	debug_error_string = "UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:19530: Failed to connect to remote host: Connection refused"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 527, in <module>
+    main()
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 523, in main
+    run_pipeline(steps, args.parser, args.limit, args.engine)
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 472, in run_pipeline
+    results["index"] = step2_build_rag_index(limit, engine)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 250, in step2_build_rag_index
+    results = rag.add_documents_from_directory(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 565, in add_documents_from_directory
+    self._run_coroutine(_work())
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 261, in _run_coroutine
+    return loop.run_until_complete(coro)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 535, in _work
+    rag = await self._get_initialized_rag()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 356, in _get_initialized_rag
+    await rag.initialize_storages()
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/lightrag.py", line 1183, in initialize_storages
+    await storage.initialize()
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/kg/milvus_impl.py", line 1498, in initialize
+    self._client = self._create_milvus_client()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/kg/milvus_impl.py", line 404, in _create_milvus_client
+    client = MilvusClient(
+             ^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/milvus_client/milvus_client.py", line 98, in __init__
+    self._handler = self._manager.get_or_create(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/connection_manager.py", line 502, in get_or_create
+    return self._create_shared(config, client, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/connection_manager.py", line 526, in _create_shared
+    handler._wait_for_channel_ready(timeout=timeout)
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 264, in _wait_for_channel_ready
+    raise MilvusException(
+pymilvus.exceptions.MilvusException: <MilvusException: (code=2, message=Fail connecting to server on localhost:19530, illegal connection params or server unavailable)>

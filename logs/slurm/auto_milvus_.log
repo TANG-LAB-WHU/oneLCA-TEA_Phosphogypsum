@@ -1,0 +1,891 @@
+INFO:    gocryptfs not found, will not be able to use gocryptfs
+2026/09/28 18:31:58 maxprocs: Leaving GOMAXPROCS=40: CPU quota undefined
+Set runtime dir at /run/milvus failed, set it to /tmp/milvus directory
+
+    __  _________ _   ____  ______    
+   /  |/  /  _/ /| | / / / / / __/    
+  / /|_/ // // /_| |/ / /_/ /\ \    
+ /_/  /_/___/____/___/\____/___/     
+
+Welcome to use Milvus!
+Version:   v2.3.10
+Built:     Sat Feb 24 02:05:45 UTC 2024
+GitCommit: 2f4a13a7
+GoVersion: go version go1.20.7 linux/amd64
+
+TotalMem: 134530813952
+UsedMem: 27197440
+
+open pid file: /tmp/milvus/standalone.pid
+lock pid file: /tmp/milvus/standalone.pid
+[2026/09/28 18:31:58.095 +08:00] [INFO] [roles/roles.go:306] ["starting running Milvus components"]
+[2026/09/28 18:31:58.097 +08:00] [INFO] [roles/roles.go:169] ["Enable Jemalloc"] ["Jemalloc Path"=/milvus/lib/libjemalloc.so]
+[2026/09/28 18:31:58.101 +08:00] [INFO] [config/refresher.go:66] ["start refreshing configurations"] [source=FileSource]
+[2026/09/28 18:31:58.101 +08:00] [DEBUG] [config/etcd_source.go:49] ["init etcd source"] [etcdInfo="{\"UseEmbed\":false,\"UseSSL\":false,\"Endpoints\":[\"localhost:2379\"],\"KeyPrefix\":\"by-dev\",\"CertFile\":\"\",\"KeyFile\":\"\",\"CaCertFile\":\"\",\"MinVersion\":\"1.3\",\"RefreshInterval\":5000000000}"]
+[2026/09/28 18:31:58.102 +08:00] [INFO] [etcd/etcd_util.go:47] ["create etcd client"] [useEmbedEtcd=false] [useSSL=false] [endpoints="[localhost:2379]"] [minVersion=1.3]
+[2026/09/28 18:31:58.112 +08:00] [DEBUG] [config/etcd_source.go:85] ["etcd refreshConfigurations"] [prefix=by-dev/config] [endpoints="[localhost:2379]"]
+{"level":"warn","ts":"2026-09-28T18:32:01.113+0800","logger":"etcd-client","caller":"v3@v3.5.5/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"etcd-endpoints://0xc0014ac000/localhost:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: last connection error: connection error: desc = \"transport: Error while dialing: dial tcp [::1]:2379: connect: connection refused\""}
+[2026/09/28 18:32:01.114 +08:00] [ERROR] [config/manager.go:236] ["Get configuration by items failed"] [error="context deadline exceeded"] [stack="github.com/milvus-io/milvus/pkg/config.(*Manager).pullSourceConfigs\n\t/go/src/github.com/milvus-io/milvus/pkg/config/manager.go:236\ngithub.com/milvus-io/milvus/pkg/config.(*Manager).AddSource\n\t/go/src/github.com/milvus-io/milvus/pkg/config/manager.go:179\ngithub.com/milvus-io/milvus/pkg/util/paramtable.(*BaseTable).initConfigsFromRemote\n\t/go/src/github.com/milvus-io/milvus/pkg/util/paramtable/base_table.go:195\ngithub.com/milvus-io/milvus/pkg/util/paramtable.(*BaseTable).init\n\t/go/src/github.com/milvus-io/milvus/pkg/util/paramtable/base_table.go:148\ngithub.com/milvus-io/milvus/pkg/util/paramtable.NewBaseTable\n\t/go/src/github.com/milvus-io/milvus/pkg/util/paramtable/base_table.go:123\ngithub.com/milvus-io/milvus/pkg/util/paramtable.Init.func1\n\t/go/src/github.com/milvus-io/milvus/pkg/util/paramtable/runtime.go:35\nsync.(*Once).doSlow\n\t/usr/local/go/src/sync/once.go:74\nsync.(*Once).Do\n\t/usr/local/go/src/sync/once.go:65\ngithub.com/milvus-io/milvus/pkg/util/paramtable.Init\n\t/go/src/github.com/milvus-io/milvus/pkg/util/paramtable/runtime.go:34\ngithub.com/milvus-io/milvus/cmd/roles.(*MilvusRoles).Run\n\t/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:322\ngithub.com/milvus-io/milvus/cmd/milvus.(*run).execute\n\t/go/src/github.com/milvus-io/milvus/cmd/milvus/run.go:47\ngithub.com/milvus-io/milvus/cmd/milvus.RunMilvus\n\t/go/src/github.com/milvus-io/milvus/cmd/milvus/milvus.go:60\nmain.main\n\t/go/src/github.com/milvus-io/milvus/cmd/main.go:95\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:250"]
+[2026/09/28 18:32:01.116 +08:00] [INFO] [paramtable/hook_config.go:21] ["hook config"] [hook={}]
+[2026/09/28 18:32:01.116 +08:00] [INFO] [roles/roles.go:255] [setupPrometheusHTTPServer]
+[2026/09/28 18:32:01.116 +08:00] [INFO] [config/refresher.go:66] ["start refreshing configurations"] [source=FileSource]
+[2026/09/28 18:32:01.116 +08:00] [INFO] [http/server.go:112] ["management listen"] [addr=:9091]
+[2026/09/28 18:32:01.119 +08:00] [INFO] [rootcoord/root_coord.go:156] ["update rootcoord state"] [state=Abnormal]
+[2026/09/28 18:32:01.119 +08:00] [DEBUG] [rootcoord/service.go:176] ["init params done.."]
+[2026/09/28 18:32:01.119 +08:00] [INFO] [etcd/etcd_util.go:47] ["create etcd client"] [useEmbedEtcd=false] [useSSL=false] [endpoints="[localhost:2379]"] [minVersion=1.3]
+[2026/09/28 18:32:01.122 +08:00] [INFO] [etcd/etcd_util.go:47] ["create etcd client"] [useEmbedEtcd=false] [useSSL=false] [endpoints="[localhost:2379]"] [minVersion=1.3]
+[2026/09/28 18:32:01.122 +08:00] [INFO] [components/index_coord.go:38] ["IndexCoord running ..."]
+[2026/09/28 18:32:01.124 +08:00] [DEBUG] [rootcoord/service.go:193] ["etcd connect done ..."]
+[2026/09/28 18:32:01.124 +08:00] [DEBUG] [rootcoord/service.go:253] ["start grpc "] [port=19530]
+[2026/09/28 18:32:01.126 +08:00] [DEBUG] [datacoord/service.go:147] ["network port"] [port=19530]
+[2026/09/28 18:32:01.126 +08:00] [INFO] [etcd/etcd_util.go:47] ["create etcd client"] [useEmbedEtcd=false] [useSSL=false] [endpoints="[localhost:2379]"] [minVersion=1.3]
+[2026/09/28 18:32:01.126 +08:00] [ERROR] [datacoord/service.go:150] ["grpc server failed to listen error"] [error="listen tcp :19530: bind: address already in use"] [stack="github.com/milvus-io/milvus/internal/distributed/datacoord.(*Server).startGrpcLoop\n\t/go/src/github.com/milvus-io/milvus/internal/distributed/datacoord/service.go:150"]
+[2026/09/28 18:32:01.126 +08:00] [DEBUG] [datacoord/service.go:122] ["DataCoord startGrpc failed"] [error="listen tcp :19530: bind: address already in use"]
+[2026/09/28 18:32:01.126 +08:00] [ERROR] [components/data_coord.go:53] ["DataCoord starts error"] [error="listen tcp :19530: bind: address already in use"] [stack="github.com/milvus-io/milvus/cmd/components.(*DataCoord).Run\n\t/go/src/github.com/milvus-io/milvus/cmd/components/data_coord.go:53\ngithub.com/milvus-io/milvus/cmd/roles.runComponent[...].func1\n\t/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:115"]
+panic: listen tcp :19530: bind: address already in use
+
+goroutine 288 [running]:
+panic({0x4c54760, 0xc001696b40})
+	/usr/local/go/src/runtime/panic.go:987 +0x3bb fp=0xc000f6ff58 sp=0xc000f6fe98 pc=0x1a99cdb
+github.com/milvus-io/milvus/cmd/roles.runComponent[...].func1()
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:116 +0x186 fp=0xc000f6ffe0 sp=0xc000f6ff58 pc=0x464dbc6
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000f6ffe8 sp=0xc000f6ffe0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/cmd/roles.runComponent[...]
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:102 +0x158
+
+goroutine 1 [chan receive]:
+runtime.gopark(0xc0007316d8?, 0x1a6ca0a?, 0x8?, 0x0?, 0xc0007316f0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000731670 sp=0xc000731650 pc=0x1a9d256
+runtime.chanrecv(0xc0005569c0, 0x0, 0x1)
+	/usr/local/go/src/runtime/chan.go:583 +0x49d fp=0xc000731700 sp=0xc000731670 pc=0x1a655fd
+runtime.chanrecv1(0x4bb09e0?, 0x0?)
+	/usr/local/go/src/runtime/chan.go:442 +0x18 fp=0xc000731728 sp=0xc000731700 pc=0x1a650f8
+github.com/milvus-io/milvus/cmd/roles.runComponent[...]({0x56e8cd0, 0xc00141c000?}, 0x1, 0xc001691aa0, 0x5271870, 0x5272778)
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:121 +0x165 fp=0xc000731798 sp=0xc000731728 pc=0x464dde5
+github.com/milvus-io/milvus/cmd/roles.(*MilvusRoles).runDataNode(0xc0013422e0?, {0x56e8cd0, 0xc00141c000}, 0x5?, 0xa?)
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:210 +0x65 fp=0xc0007317f0 sp=0xc000731798 pc=0x464b925
+github.com/milvus-io/milvus/cmd/roles.(*MilvusRoles).Run(0xc00139c500)
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:374 +0x838 fp=0xc000731c70 sp=0xc0007317f0 pc=0x464cdf8
+github.com/milvus-io/milvus/cmd/milvus.(*run).execute(0x10?, {0xc000132150?, 0x3, 0x3}, 0xc0004f86c0)
+	/go/src/github.com/milvus-io/milvus/cmd/milvus/run.go:47 +0x2e5 fp=0xc000731d40 sp=0xc000731c70 pc=0x4657e25
+github.com/milvus-io/milvus/cmd/milvus.RunMilvus({0xc000132150?, 0x3, 0x3})
+	/go/src/github.com/milvus-io/milvus/cmd/milvus/milvus.go:60 +0x20e fp=0xc000731db8 sp=0xc000731d40 pc=0x4657aae
+main.main()
+	/go/src/github.com/milvus-io/milvus/cmd/main.go:95 +0x3e5 fp=0xc000731f80 sp=0xc000731db8 pc=0x465c7c5
+runtime.main()
+	/usr/local/go/src/runtime/proc.go:250 +0x207 fp=0xc000731fe0 sp=0xc000731f80 pc=0x1a9ce27
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000731fe8 sp=0xc000731fe0 pc=0x1ad3b21
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000dcfb0 sp=0xc0000dcf90 pc=0x1a9d256
+runtime.goparkunlock(...)
+	/usr/local/go/src/runtime/proc.go:387
+runtime.forcegchelper()
+	/usr/local/go/src/runtime/proc.go:305 +0xb0 fp=0xc0000dcfe0 sp=0xc0000dcfb0 pc=0x1a9d090
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000dcfe8 sp=0xc0000dcfe0 pc=0x1ad3b21
+created by runtime.init.6
+	/usr/local/go/src/runtime/proc.go:293 +0x25
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000d8780 sp=0xc0000d8760 pc=0x1a9d256
+runtime.goparkunlock(...)
+	/usr/local/go/src/runtime/proc.go:387
+runtime.bgsweep(0x0?)
+	/usr/local/go/src/runtime/mgcsweep.go:319 +0xde fp=0xc0000d87c8 sp=0xc0000d8780 pc=0x1a8591e
+runtime.gcenable.func1()
+	/usr/local/go/src/runtime/mgc.go:178 +0x26 fp=0xc0000d87e0 sp=0xc0000d87c8 pc=0x1a7a9e6
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000d87e8 sp=0xc0000d87e0 pc=0x1ad3b21
+created by runtime.gcenable
+	/usr/local/go/src/runtime/mgc.go:178 +0x6b
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0xc00011e000?, 0x569baf0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000d8f70 sp=0xc0000d8f50 pc=0x1a9d256
+runtime.goparkunlock(...)
+	/usr/local/go/src/runtime/proc.go:387
+runtime.(*scavengerState).park(0x75f4080)
+	/usr/local/go/src/runtime/mgcscavenge.go:400 +0x53 fp=0xc0000d8fa0 sp=0xc0000d8f70 pc=0x1a83753
+runtime.bgscavenge(0x0?)
+	/usr/local/go/src/runtime/mgcscavenge.go:633 +0x65 fp=0xc0000d8fc8 sp=0xc0000d8fa0 pc=0x1a83d65
+runtime.gcenable.func2()
+	/usr/local/go/src/runtime/mgc.go:179 +0x26 fp=0xc0000d8fe0 sp=0xc0000d8fc8 pc=0x1a7a986
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000d8fe8 sp=0xc0000d8fe0 pc=0x1ad3b21
+created by runtime.gcenable
+	/usr/local/go/src/runtime/mgc.go:179 +0xaa
+
+goroutine 20 [finalizer wait]:
+runtime.gopark(0x0?, 0x5275c28?, 0xa0?, 0x62?, 0x2000000020?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000dc628 sp=0xc0000dc608 pc=0x1a9d256
+runtime.runfinq()
+	/usr/local/go/src/runtime/mfinal.go:193 +0x107 fp=0xc0000dc7e0 sp=0xc0000dc628 pc=0x1a799a7
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000dc7e8 sp=0xc0000dc7e0 pc=0x1ad3b21
+created by runtime.createfing
+	/usr/local/go/src/runtime/mfinal.go:163 +0x45
+
+goroutine 21 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000d9750 sp=0xc0000d9730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000d97e0 sp=0xc0000d9750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000d97e8 sp=0xc0000d97e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 3 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000dd750 sp=0xc0000dd730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000dd7e0 sp=0xc0000dd750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000dd7e8 sp=0xc0000dd7e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 22 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000d9f50 sp=0xc0000d9f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000d9fe0 sp=0xc0000d9f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000d9fe8 sp=0xc0000d9fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 34 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e8750 sp=0xc0004e8730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e87e0 sp=0xc0004e8750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e87e8 sp=0xc0004e87e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 23 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000da750 sp=0xc0000da730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000da7e0 sp=0xc0000da750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000da7e8 sp=0xc0000da7e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 35 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e8f50 sp=0xc0004e8f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e8fe0 sp=0xc0004e8f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e8fe8 sp=0xc0004e8fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 24 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000daf50 sp=0xc0000daf30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000dafe0 sp=0xc0000daf50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000dafe8 sp=0xc0000dafe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 36 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e9750 sp=0xc0004e9730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e97e0 sp=0xc0004e9750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e97e8 sp=0xc0004e97e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 4 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000ddf50 sp=0xc0000ddf30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000ddfe0 sp=0xc0000ddf50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000ddfe8 sp=0xc0000ddfe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 5 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000de750 sp=0xc0000de730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000de7e0 sp=0xc0000de750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000de7e8 sp=0xc0000de7e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 37 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e9f50 sp=0xc0004e9f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e9fe0 sp=0xc0004e9f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e9fe8 sp=0xc0004e9fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 25 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000db750 sp=0xc0000db730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000db7e0 sp=0xc0000db750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000db7e8 sp=0xc0000db7e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 26 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000dbf50 sp=0xc0000dbf30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000dbfe0 sp=0xc0000dbf50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000dbfe8 sp=0xc0000dbfe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 6 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000def50 sp=0xc0000def30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000defe0 sp=0xc0000def50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000defe8 sp=0xc0000defe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 27 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e4750 sp=0xc0004e4730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e47e0 sp=0xc0004e4750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e47e8 sp=0xc0004e47e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 38 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004ea750 sp=0xc0004ea730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004ea7e0 sp=0xc0004ea750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004ea7e8 sp=0xc0004ea7e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 39 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004eaf50 sp=0xc0004eaf30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004eafe0 sp=0xc0004eaf50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004eafe8 sp=0xc0004eafe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 28 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e4f50 sp=0xc0004e4f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e4fe0 sp=0xc0004e4f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e4fe8 sp=0xc0004e4fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 7 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000df750 sp=0xc0000df730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000df7e0 sp=0xc0000df750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000df7e8 sp=0xc0000df7e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 8 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000dff50 sp=0xc0000dff30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0000dffe0 sp=0xc0000dff50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000dffe8 sp=0xc0000dffe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 9 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000504750 sp=0xc000504730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0005047e0 sp=0xc000504750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0005047e8 sp=0xc0005047e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 10 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000504f50 sp=0xc000504f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc000504fe0 sp=0xc000504f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000504fe8 sp=0xc000504fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 11 [GC worker (idle)]:
+runtime.gopark(0x7641920?, 0x3?, 0xbe?, 0x31?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000505750 sp=0xc000505730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0005057e0 sp=0xc000505750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0005057e8 sp=0xc0005057e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 12 [GC worker (idle)]:
+runtime.gopark(0xf165345f90d7c?, 0x3?, 0xcd?, 0x24?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000505f50 sp=0xc000505f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc000505fe0 sp=0xc000505f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000505fe8 sp=0xc000505fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 40 [GC worker (idle)]:
+runtime.gopark(0xf165345f90cba?, 0x3?, 0xcf?, 0x4d?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004eb750 sp=0xc0004eb730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004eb7e0 sp=0xc0004eb750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004eb7e8 sp=0xc0004eb7e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 41 [GC worker (idle)]:
+runtime.gopark(0xf165345f90c2a?, 0x1?, 0xb9?, 0xcb?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004ebf50 sp=0xc0004ebf30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004ebfe0 sp=0xc0004ebf50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004ebfe8 sp=0xc0004ebfe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 13 [GC worker (idle)]:
+runtime.gopark(0xf16534627d31a?, 0x1?, 0x93?, 0xfe?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000506750 sp=0xc000506730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0005067e0 sp=0xc000506750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0005067e8 sp=0xc0005067e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 29 [GC worker (idle)]:
+runtime.gopark(0x7641920?, 0x1?, 0x17?, 0xbd?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e5750 sp=0xc0004e5730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e57e0 sp=0xc0004e5750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e57e8 sp=0xc0004e57e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 42 [GC worker (idle)]:
+runtime.gopark(0xf1653462793d9?, 0x1?, 0x68?, 0x96?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000500750 sp=0xc000500730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0005007e0 sp=0xc000500750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0005007e8 sp=0xc0005007e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 43 [GC worker (idle)]:
+runtime.gopark(0xf165346278bc1?, 0x1?, 0xfc?, 0xc?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000500f50 sp=0xc000500f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc000500fe0 sp=0xc000500f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000500fe8 sp=0xc000500fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 44 [GC worker (idle)]:
+runtime.gopark(0x7641920?, 0x1?, 0x10?, 0x6e?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000501750 sp=0xc000501730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0005017e0 sp=0xc000501750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0005017e8 sp=0xc0005017e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 45 [GC worker (idle)]:
+runtime.gopark(0xf165345f911cb?, 0x3?, 0x7a?, 0xb3?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000501f50 sp=0xc000501f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc000501fe0 sp=0xc000501f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000501fe8 sp=0xc000501fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 46 [GC worker (idle)]:
+runtime.gopark(0x7641920?, 0x3?, 0xae?, 0x1b?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000502750 sp=0xc000502730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0005027e0 sp=0xc000502750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0005027e8 sp=0xc0005027e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 14 [GC worker (idle)]:
+runtime.gopark(0xf165345f90889?, 0x3?, 0x15?, 0xc1?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000506f50 sp=0xc000506f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc000506fe0 sp=0xc000506f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000506fe8 sp=0xc000506fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 47 [GC worker (idle)]:
+runtime.gopark(0x7641920?, 0x1?, 0x59?, 0x9e?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000502f50 sp=0xc000502f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc000502fe0 sp=0xc000502f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000502fe8 sp=0xc000502fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 30 [GC worker (idle)]:
+runtime.gopark(0xf165345f9086a?, 0x1?, 0x71?, 0x9f?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e5f50 sp=0xc0004e5f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e5fe0 sp=0xc0004e5f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e5fe8 sp=0xc0004e5fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 31 [GC worker (idle)]:
+runtime.gopark(0xf16534627bbca?, 0x1?, 0x92?, 0xef?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e6750 sp=0xc0004e6730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e67e0 sp=0xc0004e6750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e67e8 sp=0xc0004e67e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 32 [GC worker (idle)]:
+runtime.gopark(0x7641920?, 0x1?, 0xfc?, 0x9b?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e6f50 sp=0xc0004e6f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e6fe0 sp=0xc0004e6f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e6fe8 sp=0xc0004e6fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 33 [GC worker (idle)]:
+runtime.gopark(0xf16534627d1ef?, 0x1?, 0x2b?, 0x26?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e7750 sp=0xc0004e7730 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e77e0 sp=0xc0004e7750 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e77e8 sp=0xc0004e77e0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 50 [GC worker (idle)]:
+runtime.gopark(0x7641920?, 0x1?, 0x5f?, 0xbb?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004e7f50 sp=0xc0004e7f30 pc=0x1a9d256
+runtime.gcBgMarkWorker()
+	/usr/local/go/src/runtime/mgc.go:1275 +0xf1 fp=0xc0004e7fe0 sp=0xc0004e7f50 pc=0x1a7c751
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004e7fe8 sp=0xc0004e7fe0 pc=0x1ad3b21
+created by runtime.gcBgMarkStartWorkers
+	/usr/local/go/src/runtime/mgc.go:1199 +0x25
+
+goroutine 161 [select]:
+runtime.gopark(0xc000468780?, 0x2?, 0x68?, 0xcb?, 0xc000468754?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004685c0 sp=0xc0004685a0 pc=0x1a9d256
+runtime.selectgo(0xc000468780, 0xc000468750, 0x0?, 0x0, 0x0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc000468700 sp=0xc0004685c0 pc=0x1aadd7e
+github.com/panjf2000/ants/v2.(*Pool).purgeStaleWorkers(0xc0003d55e0, {0x56e8cd0, 0xc000276730})
+	/go/pkg/mod/github.com/panjf2000/ants/v2@v2.7.2/pool.go:83 +0x10a fp=0xc0004687b8 sp=0xc000468700 pc=0x34b746a
+github.com/panjf2000/ants/v2.(*Pool).goPurge.func1()
+	/go/pkg/mod/github.com/panjf2000/ants/v2@v2.7.2/pool.go:147 +0x2e fp=0xc0004687e0 sp=0xc0004687b8 pc=0x34b7a6e
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004687e8 sp=0xc0004687e0 pc=0x1ad3b21
+created by github.com/panjf2000/ants/v2.(*Pool).goPurge
+	/go/pkg/mod/github.com/panjf2000/ants/v2@v2.7.2/pool.go:147 +0xe5
+
+goroutine 178 [select]:
+runtime.gopark(0xc000468f80?, 0x2?, 0x8b?, 0x63?, 0xc000468f44?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000468dc8 sp=0xc000468da8 pc=0x1a9d256
+runtime.selectgo(0xc000468f80, 0xc000468f40, 0xc0016a2108?, 0x0, 0x0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc000468f08 sp=0xc000468dc8 pc=0x1aadd7e
+github.com/panjf2000/ants/v2.(*Pool).ticktock(0xc0003d55e0, {0x56e8cd0, 0xc000276780})
+	/go/pkg/mod/github.com/panjf2000/ants/v2@v2.7.2/pool.go:125 +0x145 fp=0xc000468fb8 sp=0xc000468f08 pc=0x34b7805
+github.com/panjf2000/ants/v2.(*Pool).goTicktock.func1()
+	/go/pkg/mod/github.com/panjf2000/ants/v2@v2.7.2/pool.go:154 +0x2e fp=0xc000468fe0 sp=0xc000468fb8 pc=0x34b7c0e
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000468fe8 sp=0xc000468fe0 pc=0x1ad3b21
+created by github.com/panjf2000/ants/v2.(*Pool).goTicktock
+	/go/pkg/mod/github.com/panjf2000/ants/v2@v2.7.2/pool.go:154 +0x115
+
+goroutine 210 [select, locked to thread]:
+runtime.gopark(0xc0004677a8?, 0x2?, 0x60?, 0x76?, 0xc0004677a4?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000467618 sp=0xc0004675f8 pc=0x1a9d256
+runtime.selectgo(0xc0004677a8, 0xc0004677a0, 0x0?, 0x0, 0xc000467701?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc000467758 sp=0xc000467618 pc=0x1aadd7e
+runtime.ensureSigM.func1()
+	/usr/local/go/src/runtime/signal_unix.go:1004 +0x1b0 fp=0xc0004677e0 sp=0xc000467758 pc=0x1ac8f50
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004677e8 sp=0xc0004677e0 pc=0x1ad3b21
+created by runtime.ensureSigM
+	/usr/local/go/src/runtime/signal_unix.go:987 +0xbd
+
+goroutine 211 [syscall]:
+runtime.notetsleepg(0x7571655273746e65?, 0x62040a3012747365?)
+	/usr/local/go/src/runtime/lock_futex.go:236 +0x34 fp=0xc0004637a0 sp=0xc000463768 pc=0x1a6b4f4
+os/signal.signal_recv()
+	/usr/local/go/src/runtime/sigqueue.go:152 +0x2f fp=0xc0004637c0 sp=0xc0004637a0 pc=0x1acf8cf
+os/signal.loop()
+	/usr/local/go/src/os/signal/signal_unix.go:23 +0x19 fp=0xc0004637e0 sp=0xc0004637c0 pc=0x1b9fc79
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004637e8 sp=0xc0004637e0 pc=0x1ad3b21
+created by os/signal.Notify.func1.1
+	/usr/local/go/src/os/signal/signal.go:151 +0x2a
+
+goroutine 169 [select]:
+runtime.gopark(0xc001405768?, 0x2?, 0x0?, 0x0?, 0xc001405714?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc001405598 sp=0xc001405578 pc=0x1a9d256
+runtime.selectgo(0xc001405768, 0xc001405710, 0x0?, 0x0, 0x0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc0014056d8 sp=0xc001405598 pc=0x1aadd7e
+github.com/milvus-io/milvus/cmd/roles.(*MilvusRoles).handleSignals.func1()
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:280 +0xf0 fp=0xc0014057e0 sp=0xc0014056d8 pc=0x464c310
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0014057e8 sp=0xc0014057e0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/cmd/roles.(*MilvusRoles).handleSignals
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:277 +0x165
+
+goroutine 170 [select]:
+runtime.gopark(0xc0000eae78?, 0x2?, 0xf0?, 0xac?, 0xc0000eae34?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000eacb8 sp=0xc0000eac98 pc=0x1a9d256
+runtime.selectgo(0xc0000eae78, 0xc0000eae30, 0xc0012a1dc0?, 0x0, 0x0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc0000eadf8 sp=0xc0000eacb8 pc=0x1aadd7e
+github.com/milvus-io/milvus/pkg/config.(*refresher).refreshPeriodically(0xc00147e000, {0x511eb79, 0xa})
+	/go/src/github.com/milvus-io/milvus/pkg/config/refresher.go:68 +0x1fd fp=0xc0000eafb8 sp=0xc0000eadf8 pc=0x27b5bfd
+github.com/milvus-io/milvus/pkg/config.(*refresher).start.func1.1()
+	/go/src/github.com/milvus-io/milvus/pkg/config/refresher.go:50 +0x2e fp=0xc0000eafe0 sp=0xc0000eafb8 pc=0x27b58ee
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000eafe8 sp=0xc0000eafe0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/pkg/config.(*refresher).start.func1
+	/go/src/github.com/milvus-io/milvus/pkg/config/refresher.go:50 +0xae
+
+goroutine 171 [select]:
+runtime.gopark(0xc0014c5f98?, 0x2?, 0x3?, 0x0?, 0xc0014c5f7c?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0014c5e00 sp=0xc0014c5de0 pc=0x1a9d256
+runtime.selectgo(0xc0014c5f98, 0xc0014c5f78, 0xc000578588?, 0x0, 0x56c07c0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc0014c5f40 sp=0xc0014c5e00 pc=0x1aadd7e
+google.golang.org/grpc.(*ccBalancerWrapper).watcher(0xc00140e600)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:115 +0x73 fp=0xc0014c5fc8 sp=0xc0014c5f40 pc=0x21a6cd3
+google.golang.org/grpc.newCCBalancerWrapper.func1()
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:76 +0x26 fp=0xc0014c5fe0 sp=0xc0014c5fc8 pc=0x21a6c26
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0014c5fe8 sp=0xc0014c5fe0 pc=0x1ad3b21
+created by google.golang.org/grpc.newCCBalancerWrapper
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:76 +0x22a
+
+goroutine 265 [select]:
+runtime.gopark(0xc0014c3f38?, 0x3?, 0x32?, 0x5d?, 0xc0014c3efa?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0014c3d40 sp=0xc0014c3d20 pc=0x1a9d256
+runtime.selectgo(0xc0014c3f38, 0xc0014c3ef4, 0x56c07c0?, 0x0, 0xc0002b63c0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc0014c3e80 sp=0xc0014c3d40 pc=0x1aadd7e
+google.golang.org/grpc.(*addrConn).resetTransport(0xc0014c0000)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/clientconn.go:1184 +0x3b8 fp=0xc0014c3f78 sp=0xc0014c3e80 pc=0x21b03f8
+google.golang.org/grpc.(*addrConn).connect(0xc0014c0000)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/clientconn.go:819 +0x185 fp=0xc0014c3fc8 sp=0xc0014c3f78 pc=0x21ae465
+google.golang.org/grpc.(*acBalancerWrapper).Connect.func2()
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:413 +0x26 fp=0xc0014c3fe0 sp=0xc0014c3fc8 pc=0x21a8846
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0014c3fe8 sp=0xc0014c3fe0 pc=0x1ad3b21
+created by google.golang.org/grpc.(*acBalancerWrapper).Connect
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:413 +0xbc
+
+goroutine 252 [chan receive]:
+runtime.gopark(0x51357f7?, 0x11?, 0xb8?, 0x3b?, 0xc000f73c00?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000f73b80 sp=0xc000f73b60 pc=0x1a9d256
+runtime.chanrecv(0xc00147cba0, 0xc000f73c48, 0x1)
+	/usr/local/go/src/runtime/chan.go:583 +0x49d fp=0xc000f73c10 sp=0xc000f73b80 pc=0x1a655fd
+runtime.chanrecv1(0xc000f73c58?, 0x28e7f1e?)
+	/usr/local/go/src/runtime/chan.go:442 +0x18 fp=0xc000f73c38 sp=0xc000f73c10 pc=0x1a650f8
+github.com/milvus-io/milvus/internal/distributed/rootcoord.(*Server).startGrpc(0xc0014a8120, 0x4c4a)
+	/go/src/github.com/milvus-io/milvus/internal/distributed/rootcoord/service.go:237 +0x98 fp=0xc000f73c68 sp=0xc000f73c38 pc=0x4643498
+github.com/milvus-io/milvus/internal/distributed/rootcoord.(*Server).init(0xc0014a8120)
+	/go/src/github.com/milvus-io/milvus/internal/distributed/rootcoord/service.go:206 +0x598 fp=0xc000f73e48 sp=0xc000f73c68 pc=0x4643238
+github.com/milvus-io/milvus/internal/distributed/rootcoord.(*Server).Run(0xc0016794d0?)
+	/go/src/github.com/milvus-io/milvus/internal/distributed/rootcoord/service.go:158 +0x25 fp=0xc000f73e88 sp=0xc000f73e48 pc=0x4642c05
+github.com/milvus-io/milvus/cmd/components.(*RootCoord).Run(0xc00147cae0?)
+	/go/src/github.com/milvus-io/milvus/cmd/components/root_coord.go:54 +0x2f fp=0xc000f73f58 sp=0xc000f73e88 pc=0x4647e8f
+github.com/milvus-io/milvus/cmd/roles.runComponent[...].func1()
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:115 +0x15a fp=0xc000f73fe0 sp=0xc000f73f58 pc=0x464db9a
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000f73fe8 sp=0xc000f73fe0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/cmd/roles.runComponent[...]
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:102 +0x158
+
+goroutine 247 [select]:
+runtime.gopark(0xc0000f1e78?, 0x2?, 0x18?, 0x57?, 0xc0000f1e34?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000f1cb8 sp=0xc0000f1c98 pc=0x1a9d256
+runtime.selectgo(0xc0000f1e78, 0xc0000f1e30, 0xc000420480?, 0x0, 0x49403c0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc0000f1df8 sp=0xc0000f1cb8 pc=0x1aadd7e
+github.com/milvus-io/milvus/pkg/config.(*refresher).refreshPeriodically(0xc00147ef60, {0x511eb79, 0xa})
+	/go/src/github.com/milvus-io/milvus/pkg/config/refresher.go:68 +0x1fd fp=0xc0000f1fb8 sp=0xc0000f1df8 pc=0x27b5bfd
+github.com/milvus-io/milvus/pkg/config.(*refresher).start.func1.1()
+	/go/src/github.com/milvus-io/milvus/pkg/config/refresher.go:50 +0x2e fp=0xc0000f1fe0 sp=0xc0000f1fb8 pc=0x27b58ee
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000f1fe8 sp=0xc0000f1fe0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/pkg/config.(*refresher).start.func1
+	/go/src/github.com/milvus-io/milvus/pkg/config/refresher.go:50 +0xae
+
+goroutine 248 [IO wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0000ecb18 sp=0xc0000ecaf8 pc=0x1a9d256
+runtime.netpollblock(0x14b3035653f8?, 0x1a617af?, 0x0?)
+	/usr/local/go/src/runtime/netpoll.go:527 +0xf7 fp=0xc0000ecb50 sp=0xc0000ecb18 pc=0x1a953b7
+internal/poll.runtime_pollWait(0x14b305527dc8, 0x72)
+	/usr/local/go/src/runtime/netpoll.go:306 +0x89 fp=0xc0000ecb70 sp=0xc0000ecb50 pc=0x1acc929
+internal/poll.(*pollDesc).wait(0xc001408800?, 0xc0000ecc58?, 0x0)
+	/usr/local/go/src/internal/poll/fd_poll_runtime.go:84 +0x32 fp=0xc0000ecb98 sp=0xc0000ecb70 pc=0x1b58df2
+internal/poll.(*pollDesc).waitRead(...)
+	/usr/local/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Accept(0xc001408800)
+	/usr/local/go/src/internal/poll/fd_unix.go:614 +0x2bd fp=0xc0000ecc40 sp=0xc0000ecb98 pc=0x1b5e87d
+net.(*netFD).accept(0xc001408800)
+	/usr/local/go/src/net/fd_unix.go:172 +0x35 fp=0xc0000eccf8 sp=0xc0000ecc40 pc=0x1d84b75
+net.(*TCPListener).accept(0xc0016a2168)
+	/usr/local/go/src/net/tcpsock_posix.go:148 +0x25 fp=0xc0000ecd20 sp=0xc0000eccf8 pc=0x1da2f85
+net.(*TCPListener).Accept(0xc0016a2168)
+	/usr/local/go/src/net/tcpsock.go:297 +0x3d fp=0xc0000ecd50 sp=0xc0000ecd20 pc=0x1da1f1d
+net/http.(*onceCloseListener).Accept(0x56e8d08?)
+	<autogenerated>:1 +0x2a fp=0xc0000ecd68 sp=0xc0000ecd50 pc=0x1edca2a
+net/http.(*Server).Serve(0xc000000690, {0x56e4280, 0xc0016a2168})
+	/usr/local/go/src/net/http/server.go:3059 +0x385 fp=0xc0000ece98 sp=0xc0000ecd68 pc=0x1eb12a5
+net/http.(*Server).ListenAndServe(0xc000000690)
+	/usr/local/go/src/net/http/server.go:2988 +0x7d fp=0xc0000ecec8 sp=0xc0000ece98 pc=0x1eb0e1d
+github.com/milvus-io/milvus/internal/http.ServeHTTP.func1()
+	/go/src/github.com/milvus-io/milvus/internal/http/server.go:114 +0x1a5 fp=0xc0000ecfe0 sp=0xc0000ecec8 pc=0x41f4d65
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0000ecfe8 sp=0xc0000ecfe0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/internal/http.ServeHTTP
+	/go/src/github.com/milvus-io/milvus/internal/http/server.go:110 +0x25
+
+goroutine 304 [runnable]:
+fmt.(*pp).free(0xc0014200d0?)
+	/usr/local/go/src/fmt/print.go:161 +0x110 fp=0xc001092540 sp=0xc001092538 pc=0x1b71690
+fmt.Sprintf({0x5112563, 0x6}, {0xc00024c5d0, 0x2, 0x2})
+	/usr/local/go/src/fmt/print.go:241 +0x85 fp=0xc001092598 sp=0xc001092540 pc=0x1b71b25
+google.golang.org/grpc/internal/channelz.newIdentifer(0x1, 0x9, 0x0)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/internal/channelz/id.go:70 +0x85 fp=0xc001092600 sp=0xc001092598 pc=0x20c5d65
+google.golang.org/grpc/internal/channelz.RegisterChannel({0x56bcb40?, 0xc001428f28?}, 0xc001428ee8?, {0xc00142c660?, 0xc00024c6e8?})
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/internal/channelz/funcs.go:205 +0x2ac fp=0xc001092690 sp=0xc001092600 pc=0x20c148c
+google.golang.org/grpc.DialContext({0x56e8d40, 0xc0002b6bd0}, {0xc00142c660, 0x2c}, {0xc000420900, 0x4, 0x1?})
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/clientconn.go:177 +0x59d fp=0xc001093190 sp=0xc001092690 pc=0x21a9c7d
+go.etcd.io/etcd/client/v3.(*Client).dial(0xc0001fe700, {0x0?, 0x0?}, {0xc0014ce880?, 0x4b7d420?, 0xc000580400?})
+	/go/pkg/mod/go.etcd.io/etcd/client/v3@v3.5.5/client.go:302 +0x417 fp=0xc0010932b0 sp=0xc001093190 pc=0x2275637
+go.etcd.io/etcd/client/v3.(*Client).dialWithBalancer(0xc0001fe700, {0x0, 0x0, 0x0})
+	/go/pkg/mod/go.etcd.io/etcd/client/v3@v3.5.5/client.go:280 +0x1ba fp=0xc001093328 sp=0xc0010932b0 pc=0x227509a
+go.etcd.io/etcd/client/v3.newClient(0x272c3fb?)
+	/go/pkg/mod/go.etcd.io/etcd/client/v3@v3.5.5/client.go:413 +0xa55 fp=0xc0010937b8 sp=0xc001093328 pc=0x22765d5
+go.etcd.io/etcd/client/v3.New(...)
+	/go/pkg/mod/go.etcd.io/etcd/client/v3@v3.5.5/client.go:81
+github.com/milvus-io/milvus/pkg/util/etcd.GetRemoteEtcdClient({0xc0014ce720?, 0x9?, 0xc001198200?})
+	/go/src/github.com/milvus-io/milvus/pkg/util/etcd/etcd_util.go:63 +0x92 fp=0xc001093888 sp=0xc0010937b8 pc=0x272c5f2
+github.com/milvus-io/milvus/pkg/util/etcd.GetEtcdClient(0x0, 0x0, {0xc0014ce720, 0x1, 0x1}, {0x0, 0x0}, {0x0, 0x0}, {0x0, ...}, ...)
+	/go/src/github.com/milvus-io/milvus/pkg/util/etcd/etcd_util.go:58 +0x46b fp=0xc001093a38 sp=0xc001093888 pc=0x272c4ab
+github.com/milvus-io/milvus/internal/distributed/querycoord.(*Server).init(0xc0001b9560)
+	/go/src/github.com/milvus-io/milvus/internal/distributed/querycoord/service.go:120 +0x19f fp=0xc001093e48 sp=0xc001093a38 pc=0x450f05f
+github.com/milvus-io/milvus/internal/distributed/querycoord.(*Server).Run(0xc0014ce6a0?)
+	/go/src/github.com/milvus-io/milvus/internal/distributed/querycoord/service.go:100 +0x25 fp=0xc001093e88 sp=0xc001093e48 pc=0x450ee25
+github.com/milvus-io/milvus/cmd/components.(*QueryCoord).Run(0xc0002d8c60?)
+	/go/src/github.com/milvus-io/milvus/cmd/components/query_coord.go:55 +0x2f fp=0xc001093f58 sp=0xc001093e88 pc=0x464768f
+github.com/milvus-io/milvus/cmd/roles.runComponent[...].func1()
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:115 +0x15a fp=0xc001093fe0 sp=0xc001093f58 pc=0x464db9a
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc001093fe8 sp=0xc001093fe0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/cmd/roles.runComponent[...]
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:102 +0x158
+
+goroutine 253 [select]:
+runtime.gopark(0xc0014c7f98?, 0x2?, 0x3?, 0x0?, 0xc0014c7f7c?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0014c7e00 sp=0xc0014c7de0 pc=0x1a9d256
+runtime.selectgo(0xc0014c7f98, 0xc0014c7f78, 0xc0010217b8?, 0x0, 0x56c07c0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc0014c7f40 sp=0xc0014c7e00 pc=0x1aadd7e
+google.golang.org/grpc.(*ccBalancerWrapper).watcher(0xc000ead5c0)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:115 +0x73 fp=0xc0014c7fc8 sp=0xc0014c7f40 pc=0x21a6cd3
+google.golang.org/grpc.newCCBalancerWrapper.func1()
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:76 +0x26 fp=0xc0014c7fe0 sp=0xc0014c7fc8 pc=0x21a6c26
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0014c7fe8 sp=0xc0014c7fe0 pc=0x1ad3b21
+created by google.golang.org/grpc.newCCBalancerWrapper
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:76 +0x22a
+
+goroutine 289 [select]:
+runtime.gopark(0xc000249f98?, 0x2?, 0x3?, 0x0?, 0xc000249f7c?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000249e00 sp=0xc000249de0 pc=0x1a9d256
+runtime.selectgo(0xc000249f98, 0xc000249f78, 0xc0006d04f8?, 0x0, 0x56c07c0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc000249f40 sp=0xc000249e00 pc=0x1aadd7e
+google.golang.org/grpc.(*ccBalancerWrapper).watcher(0xc0014e6400)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:115 +0x73 fp=0xc000249fc8 sp=0xc000249f40 pc=0x21a6cd3
+google.golang.org/grpc.newCCBalancerWrapper.func1()
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:76 +0x26 fp=0xc000249fe0 sp=0xc000249fc8 pc=0x21a6c26
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000249fe8 sp=0xc000249fe0 pc=0x1ad3b21
+created by google.golang.org/grpc.newCCBalancerWrapper
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:76 +0x22a
+
+goroutine 254 [select]:
+runtime.gopark(0xc000fd1f38?, 0x3?, 0x0?, 0x0?, 0xc000fd1efa?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000fd1d40 sp=0xc000fd1d20 pc=0x1a9d256
+runtime.selectgo(0xc000fd1f38, 0xc000fd1ef4, 0x56c07c0?, 0x0, 0xc000364f90?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc000fd1e80 sp=0xc000fd1d40 pc=0x1aadd7e
+google.golang.org/grpc.(*addrConn).resetTransport(0xc0014c02c0)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/clientconn.go:1184 +0x3b8 fp=0xc000fd1f78 sp=0xc000fd1e80 pc=0x21b03f8
+google.golang.org/grpc.(*addrConn).connect(0xc0014c02c0)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/clientconn.go:819 +0x185 fp=0xc000fd1fc8 sp=0xc000fd1f78 pc=0x21ae465
+google.golang.org/grpc.(*acBalancerWrapper).Connect.func2()
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:413 +0x26 fp=0xc000fd1fe0 sp=0xc000fd1fc8 pc=0x21a8846
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000fd1fe8 sp=0xc000fd1fe0 pc=0x1ad3b21
+created by google.golang.org/grpc.(*acBalancerWrapper).Connect
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:413 +0xbc
+
+goroutine 306 [select]:
+runtime.gopark(0xc000fa9f38?, 0x3?, 0x36?, 0x5d?, 0xc000fa9efa?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000fa9d40 sp=0xc000fa9d20 pc=0x1a9d256
+runtime.selectgo(0xc000fa9f38, 0xc000fa9ef4, 0x56c07c0?, 0x0, 0xc0002e0480?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc000fa9e80 sp=0xc000fa9d40 pc=0x1aadd7e
+google.golang.org/grpc.(*addrConn).resetTransport(0xc0012e0580)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/clientconn.go:1184 +0x3b8 fp=0xc000fa9f78 sp=0xc000fa9e80 pc=0x21b03f8
+google.golang.org/grpc.(*addrConn).connect(0xc0012e0580)
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/clientconn.go:819 +0x185 fp=0xc000fa9fc8 sp=0xc000fa9f78 pc=0x21ae465
+google.golang.org/grpc.(*acBalancerWrapper).Connect.func2()
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:413 +0x26 fp=0xc000fa9fe0 sp=0xc000fa9fc8 pc=0x21a8846
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000fa9fe8 sp=0xc000fa9fe0 pc=0x1ad3b21
+created by google.golang.org/grpc.(*acBalancerWrapper).Connect
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/balancer_conn_wrappers.go:413 +0xbc
+
+goroutine 256 [IO wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc000fad980 sp=0xc000fad960 pc=0x1a9d256
+runtime.netpollblock(0xc000fad9f0?, 0x1a617af?, 0x0?)
+	/usr/local/go/src/runtime/netpoll.go:527 +0xf7 fp=0xc000fad9b8 sp=0xc000fad980 pc=0x1a953b7
+internal/poll.runtime_pollWait(0x14b305527cd8, 0x72)
+	/usr/local/go/src/runtime/netpoll.go:306 +0x89 fp=0xc000fad9d8 sp=0xc000fad9b8 pc=0x1acc929
+internal/poll.(*pollDesc).wait(0xc001081100?, 0xc0002d5260?, 0x0)
+	/usr/local/go/src/internal/poll/fd_poll_runtime.go:84 +0x32 fp=0xc000fada00 sp=0xc000fad9d8 pc=0x1b58df2
+internal/poll.(*pollDesc).waitRead(...)
+	/usr/local/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Accept(0xc001081100)
+	/usr/local/go/src/internal/poll/fd_unix.go:614 +0x2bd fp=0xc000fadaa8 sp=0xc000fada00 pc=0x1b5e87d
+net.(*netFD).accept(0xc001081100)
+	/usr/local/go/src/net/fd_unix.go:172 +0x35 fp=0xc000fadb60 sp=0xc000fadaa8 pc=0x1d84b75
+net.(*TCPListener).accept(0xc0010217e8)
+	/usr/local/go/src/net/tcpsock_posix.go:148 +0x25 fp=0xc000fadb88 sp=0xc000fadb60 pc=0x1da2f85
+net.(*TCPListener).Accept(0xc0010217e8)
+	/usr/local/go/src/net/tcpsock.go:297 +0x3d fp=0xc000fadbb8 sp=0xc000fadb88 pc=0x1da1f1d
+google.golang.org/grpc.(*Server).Serve(0xc000efa000, {0x56e4280?, 0xc0010217e8})
+	/go/pkg/mod/google.golang.org/grpc@v1.54.0/server.go:824 +0x475 fp=0xc000fadd00 sp=0xc000fadbb8 pc=0x21bbf35
+github.com/milvus-io/milvus/internal/distributed/rootcoord.(*Server).startGrpcLoop(0xc0014a8120, 0x4c4a)
+	/go/src/github.com/milvus-io/milvus/internal/distributed/rootcoord/service.go:295 +0x9eb fp=0xc000fadfc0 sp=0xc000fadd00 pc=0x4643f2b
+github.com/milvus-io/milvus/internal/distributed/rootcoord.(*Server).startGrpc.func1()
+	/go/src/github.com/milvus-io/milvus/internal/distributed/rootcoord/service.go:235 +0x2a fp=0xc000fadfe0 sp=0xc000fadfc0 pc=0x464350a
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000fadfe8 sp=0xc000fadfe0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/internal/distributed/rootcoord.(*Server).startGrpc
+	/go/src/github.com/milvus-io/milvus/internal/distributed/rootcoord/service.go:235 +0x7f
+
+goroutine 257 [select]:
+runtime.gopark(0xc000469780?, 0x2?, 0xa?, 0xca?, 0xc00046975c?)
+	/usr/local/go/src/runtime/proc.go:381 +0xd6 fp=0xc0004695e0 sp=0xc0004695c0 pc=0x1a9d256
+runtime.selectgo(0xc000469780, 0xc000469758, 0x0?, 0x0, 0x0?, 0x1)
+	/usr/local/go/src/runtime/select.go:327 +0x7be fp=0xc000469720 sp=0xc0004695e0 pc=0x1aadd7e
+github.com/milvus-io/milvus/pkg/util/funcutil.CheckGrpcReady({0x56e8cd0, 0xc0002e5400}, 0x4c4a?)
+	/go/src/github.com/milvus-io/milvus/pkg/util/funcutil/func.go:46 +0xdb fp=0xc0004697b8 sp=0xc000469720 pc=0x27bbafb
+github.com/milvus-io/milvus/internal/distributed/rootcoord.(*Server).startGrpcLoop.func9()
+	/go/src/github.com/milvus-io/milvus/internal/distributed/rootcoord/service.go:294 +0x2e fp=0xc0004697e0 sp=0xc0004697b8 pc=0x464400e
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0004697e8 sp=0xc0004697e0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/internal/distributed/rootcoord.(*Server).startGrpcLoop
+	/go/src/github.com/milvus-io/milvus/internal/distributed/rootcoord/service.go:294 +0x9ca
+
+goroutine 335 [runnable]:
+runtime.pcdatavalue1({0x74710b8?, 0x7514880?}, 0x2?, 0x45a052d?, 0x0?, 0x0?)
+	/usr/local/go/src/runtime/symtab.go:1113 +0x76 fp=0xc000fcd488 sp=0xc000fcd480 pc=0x1abaef6
+runtime.(*Frames).Next(0xc000764000)
+	/usr/local/go/src/runtime/symtab.go:125 +0x2e8 fp=0xc000fcd5a8 sp=0xc000fcd488 pc=0x1ab86a8
+go.uber.org/zap.getCallerFrame(0x3)
+	/go/pkg/mod/go.uber.org/zap@v1.20.0/logger.go:346 +0x138 fp=0xc000fcd678 sp=0xc000fcd5a8 pc=0x1ee9678
+go.uber.org/zap.(*Logger).check(0xc0001247e0, 0x1, {0x5197f5f, 0x26})
+	/go/pkg/mod/go.uber.org/zap@v1.20.0/logger.go:311 +0x4e5 fp=0xc000fcdaa0 sp=0xc000fcd678 pc=0x1ee9185
+go.uber.org/zap.(*Logger).Warn(0xc000600800?, {0x5197f5f?, 0x0?}, {0xc000738280, 0x1, 0x1})
+	/go/pkg/mod/go.uber.org/zap@v1.20.0/logger.go:199 +0x3e fp=0xc000fcdad0 sp=0xc000fcdaa0 pc=0x1ee881e
+github.com/milvus-io/milvus/pkg/log.Warn({0x5197f5f?, 0xc0016751b0?}, {0xc000738280?, 0xc00037e170?, 0x5?})
+	/go/src/github.com/milvus-io/milvus/pkg/log/global.go:42 +0x8b fp=0xc000fcdb20 sp=0xc000fcdad0 pc=0x207d40b
+github.com/milvus-io/milvus/internal/distributed/querynode.(*Server).init(0xc0007521e0)
+	/go/src/github.com/milvus-io/milvus/internal/distributed/querynode/service.go:97 +0x1ae fp=0xc000fcde48 sp=0xc000fcdb20 pc=0x45a052e
+github.com/milvus-io/milvus/internal/distributed/querynode.(*Server).Run(0xc0005ca2a0?)
+	/go/src/github.com/milvus-io/milvus/internal/distributed/querynode/service.go:223 +0x25 fp=0xc000fcde88 sp=0xc000fcde48 pc=0x45a20c5
+github.com/milvus-io/milvus/cmd/components.(*QueryNode).Run(0xc000734480?)
+	/go/src/github.com/milvus-io/milvus/cmd/components/query_node.go:55 +0x2f fp=0xc000fcdf58 sp=0xc000fcde88 pc=0x4647a8f
+github.com/milvus-io/milvus/cmd/roles.runComponent[...].func1()
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:115 +0x15a fp=0xc000fcdfe0 sp=0xc000fcdf58 pc=0x464db9a
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc000fcdfe8 sp=0xc000fcdfe0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/cmd/roles.runComponent[...]
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:102 +0x158
+
+goroutine 386 [runnable]:
+runtime.asyncPreempt2()
+	/usr/local/go/src/runtime/preempt.go:307 +0x3f fp=0xc0005f3528 sp=0xc0005f3508 pc=0x1a9b89f
+runtime.asyncPreempt()
+	/usr/local/go/src/runtime/preempt_amd64.s:53 +0xdb fp=0xc0005f36b0 sp=0xc0005f3528 pc=0x1ad519b
+github.com/milvus-io/milvus/internal/datanode.NewDataNode({0x56e8cd0, 0x0}, {0xc000610d20, 0x30})
+	/go/src/github.com/milvus-io/milvus/internal/datanode/data_node.go:121 fp=0xc0005f36b8 sp=0xc0005f36b0 pc=0x4014ac0
+github.com/milvus-io/milvus/internal/distributed/datanode.NewServer({0x56e8cd0?, 0xc00141c000?}, {0x56efc20?, 0xc000610d20})
+	/go/src/github.com/milvus-io/milvus/internal/distributed/datanode/service.go:93 +0x1d6 fp=0xc0005f3718 sp=0xc0005f36b8 pc=0x4073a56
+github.com/milvus-io/milvus/cmd/components.NewDataNode({0x56e8cd0?, 0xc00141c000}, {0x56efc20?, 0xc000610d20?})
+	/go/src/github.com/milvus-io/milvus/cmd/components/data_node.go:42 +0x36 fp=0xc0005f3758 sp=0xc0005f3718 pc=0x4646896
+github.com/milvus-io/milvus/cmd/roles.runComponent[...].func1()
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:105 +0x94 fp=0xc0005f37e0 sp=0xc0005f3758 pc=0x464dad4
+runtime.goexit()
+	/usr/local/go/src/runtime/asm_amd64.s:1598 +0x1 fp=0xc0005f37e8 sp=0xc0005f37e0 pc=0x1ad3b21
+created by github.com/milvus-io/milvus/cmd/roles.runComponent[...]
+	/go/src/github.com/milvus-io/milvus/cmd/roles/roles.go:102 +0x158

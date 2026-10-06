@@ -1,0 +1,29 @@
+============================================================
+ Phosphogypsum Bot: Autonomous Ephemeral Ingestion Pipeline
+ Job ID:       3547301
+ Host Node:    n0515
+ Working Dir:  /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+ Logs Dir:     /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/logs/slurm
+ Start Time:   Tue Sep 29 08:03:56 PM CST 2026
+============================================================
+Assigned Ports:
+  - Neo4j Bolt:  7687
+  - Milvus gRPC: 19530 (Proxy)
+  - Embed Etcd:  2379
+  - RootCoord:   53100
+  - DataCoord:   13333
+  - QueryCoord:  19531
+  - IndexCoord:  31000
+[1/4] Starting Neo4j background container...
+[2/4] Starting Milvus Standalone background container...
+[3/4] Probing database readiness on localhost...
+  [OK] Milvus is ready on 127.0.0.1:19530 (elapsed: 22s)
+  [FATAL] Milvus process (PID 2632274) died prematurely!
+          Inspect log: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/logs/slurm/auto_milvus_3547301.log
+[ABORT] Database services failed to initialize in time.
+
+============================================================
+ [TEARDOWN] Stopping ephemeral databases and flushing state...
+============================================================
+ Databases cleanly shutdown. Data safely preserved on disk.
+ Finished at: Tue Sep 29 08:04:31 PM CST 2026

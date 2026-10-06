@@ -1,0 +1,185 @@
+============================================================
+ Phosphogypsum Bot Parallel Ingestion Worker
+ Array Job ID: 3397510 | Task ID: 40
+ Host: n0527
+ Partition: 9a14a
+ Working Dir: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+============================================================
+2026-09-17 00:15:16,217 [WARNING] pypdf.generic._data_structures: Multiple definitions in dictionary at byte 0x1812bb for key /MediaBox
+2026-09-17 00:15:16.309 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:209 - Pipeline processing-window multi-file run. doc_count=1, total_pages=12, window_size=64, total_batches=1
+2026-09-17 00:15:16.309 | DEBUG    | mineru.utils.pdf_image_tools:_load_images_from_pdf_bytes_range:289 - PDF image rendering uses 1 processes for pages 1-12: [(0, 11)]
+2026-09-17 00:15:16.309 | DEBUG    | mineru.utils.pdf_image_tools:_create_pdf_render_executor:161 - PDF image rendering switches multiprocessing start method from fork to spawn
+2026-09-17 00:15:16.310 | DEBUG    | mineru.utils.pdf_image_tools:_get_pdf_render_executor:218 - Created persistent PDF render executor with max_workers=3
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-09-17 00:15:14
+Steps to run: ['parse']
+RAG Engine: lightrag
+
+============================================================
+   STEP 1: PDF PARSING WITH INCREMENTAL TRACKING
+============================================================
+Parser type: mineru
+Input:  /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/raw/papers/unparsed
+Output: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/interim/papers/parsed
+Registry: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/ingestion_registry.json
+[Slurm Array] Task 40/50 - Sharding assigned 1 files to this task.
+Propagating deletion: Removing 44. Integrated evaluation of the performance of phosphogypsum recycling technologies in China.pdf from registry state
+
+Found 1 PDF files to check
+
+[1/1] Parsing: 46. 磷石膏综合利用背景下的环境影响研究现状.pdf...
+2026-09-17 00:15:53.946 | INFO     | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:264 - Pipeline processing window batch 1/1: 12/12 pages, batch_pages=12, doc_slices=doc0:1-12
+2026-09-17 00:15:53.958 | INFO     | mineru.backend.pipeline.pipeline_analyze:batch_image_analyze:364 - GPU Memory: 1 GB, Batch Ratio: 1. 
+2026-09-17 00:15:53.959 | INFO     | mineru.backend.pipeline.model_init:__init__:252 - DocAnalysis init, this may take some times......
+2026-09-17 00:15:55.854 | INFO     | mineru.backend.pipeline.model_init:__init__:304 - DocAnalysis init done!
+2026-09-17 00:15:55.855 | INFO     | mineru.backend.pipeline.pipeline_analyze:custom_model_init:83 - model init cost: 1.895979881286621
+Layout Predict:   0%|          | 0/12 [00:00<?, ?it/s]Layout Predict:   8%|▊         | 1/12 [00:00<00:08,  1.34it/s]Layout Predict:  17%|█▋        | 2/12 [00:01<00:05,  1.97it/s]Layout Predict:  25%|██▌       | 3/12 [00:01<00:03,  2.37it/s]Layout Predict:  33%|███▎      | 4/12 [00:01<00:03,  2.58it/s]Layout Predict:  42%|████▏     | 5/12 [00:02<00:02,  2.74it/s]Layout Predict:  50%|█████     | 6/12 [00:02<00:02,  2.81it/s]Layout Predict:  58%|█████▊    | 7/12 [00:02<00:01,  2.87it/s]Layout Predict:  67%|██████▋   | 8/12 [00:03<00:01,  2.91it/s]Layout Predict:  75%|███████▌  | 9/12 [00:03<00:01,  3.00it/s]Layout Predict:  83%|████████▎ | 10/12 [00:03<00:00,  3.02it/s]Layout Predict:  92%|█████████▏| 11/12 [00:04<00:00,  3.05it/s]Layout Predict: 100%|██████████| 12/12 [00:04<00:00,  3.05it/s]Layout Predict: 100%|██████████| 12/12 [00:04<00:00,  2.75it/s]
+2026-09-17 00:16:00.704 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.45
+MFR Predict:   0%|          | 0/45 [00:00<?, ?it/s]MFR Predict:  36%|███▌      | 16/45 [00:08<00:15,  1.82it/s]MFR Predict: 100%|██████████| 45/45 [00:16<00:00,  2.91it/s]MFR Predict: 100%|██████████| 45/45 [00:16<00:00,  2.73it/s]
+2026-09-17 00:16:17.562 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.38
+Table-ocr det:   0%|          | 0/7 [00:00<?, ?it/s]Table-ocr det:  14%|█▍        | 1/7 [00:00<00:00,  7.16it/s]Table-ocr det:  43%|████▎     | 3/7 [00:00<00:00, 10.92it/s]Table-ocr det:  71%|███████▏  | 5/7 [00:00<00:00, 10.74it/s]Table-ocr det: 100%|██████████| 7/7 [00:00<00:00, 11.76it/s]Table-ocr det: 100%|██████████| 7/7 [00:00<00:00, 11.17it/s]
+Table-ocr rec en:   0%|          | 0/218 [00:00<?, ?it/s]Table-ocr rec en:   3%|▎         | 6/218 [00:00<00:06, 30.35it/s]Table-ocr rec en:   6%|▌         | 12/218 [00:00<00:06, 31.17it/s]Table-ocr rec en:   8%|▊         | 18/218 [00:00<00:06, 30.87it/s]Table-ocr rec en:  11%|█         | 24/218 [00:00<00:06, 30.89it/s]Table-ocr rec en:  14%|█▍        | 30/218 [00:00<00:05, 31.60it/s]Table-ocr rec en:  17%|█▋        | 36/218 [00:01<00:05, 32.62it/s]Table-ocr rec en:  19%|█▉        | 42/218 [00:01<00:05, 32.92it/s]Table-ocr rec en:  22%|██▏       | 48/218 [00:01<00:05, 32.53it/s]Table-ocr rec en:  25%|██▍       | 54/218 [00:01<00:05, 31.98it/s]Table-ocr rec en:  28%|██▊       | 60/218 [00:01<00:04, 31.85it/s]Table-ocr rec en:  30%|███       | 66/218 [00:02<00:04, 32.02it/s]Table-ocr rec en:  33%|███▎      | 72/218 [00:02<00:04, 31.61it/s]Table-ocr rec en:  36%|███▌      | 78/218 [00:02<00:04, 31.64it/s]Table-ocr rec en:  39%|███▊      | 84/218 [00:02<00:04, 31.42it/s]Table-ocr rec en:  41%|████▏     | 90/218 [00:02<00:04, 31.83it/s]Table-ocr rec en:  44%|████▍     | 96/218 [00:03<00:03, 31.86it/s]Table-ocr rec en:  47%|████▋     | 102/218 [00:03<00:03, 31.89it/s]Table-ocr rec en:  50%|████▉     | 108/218 [00:03<00:03, 32.07it/s]Table-ocr rec en:  52%|█████▏    | 114/218 [00:03<00:03, 32.13it/s]Table-ocr rec en:  55%|█████▌    | 120/218 [00:03<00:03, 32.53it/s]Table-ocr rec en:  58%|█████▊    | 126/218 [00:03<00:02, 31.31it/s]Table-ocr rec en:  61%|██████    | 132/218 [00:04<00:02, 31.07it/s]Table-ocr rec en:  63%|██████▎   | 138/218 [00:04<00:02, 31.02it/s]Table-ocr rec en:  66%|██████▌   | 144/218 [00:04<00:02, 31.72it/s]Table-ocr rec en:  69%|██████▉   | 150/218 [00:04<00:02, 31.54it/s]Table-ocr rec en:  72%|███████▏  | 156/218 [00:04<00:02, 30.94it/s]Table-ocr rec en:  74%|███████▍  | 162/218 [00:05<00:01, 31.20it/s]Table-ocr rec en:  77%|███████▋  | 168/218 [00:05<00:01, 31.00it/s]Table-ocr rec en:  80%|███████▉  | 174/218 [00:05<00:01, 31.35it/s]Table-ocr rec en:  83%|████████▎ | 180/218 [00:05<00:01, 31.41it/s]Table-ocr rec en:  85%|████████▌ | 186/218 [00:05<00:01, 31.21it/s]Table-ocr rec en:  88%|████████▊ | 192/218 [00:06<00:00, 30.44it/s]Table-ocr rec en:  91%|█████████ | 198/218 [00:06<00:00, 29.87it/s]Table-ocr rec en:  94%|█████████▎| 204/218 [00:06<00:00, 28.32it/s]Table-ocr rec en:  96%|█████████▋| 210/218 [00:06<00:00, 26.04it/s]Table-ocr rec en:  99%|█████████▉| 216/218 [00:07<00:00, 23.62it/s]Table-ocr rec en: 100%|██████████| 218/218 [00:07<00:00, 29.75it/s]
+Table-wireless Predict:   0%|          | 0/7 [00:00<?, ?it/s]Table-wireless Predict:  57%|█████▋    | 4/7 [00:00<00:00, 26.73it/s]Table-wireless Predict: 100%|██████████| 7/7 [00:00<00:00, 26.86it/s]Table-wireless Predict: 100%|██████████| 7/7 [00:00<00:00, 26.81it/s]
+Table-wired Predict:   0%|          | 0/4 [00:00<?, ?it/s]Table-wired Predict:  25%|██▌       | 1/4 [00:00<00:00,  3.81it/s]Table-wired Predict:  50%|█████     | 2/4 [00:00<00:00,  5.94it/s]Table-wired Predict:  75%|███████▌  | 3/4 [00:00<00:00,  6.42it/s]Table-wired Predict: 100%|██████████| 4/4 [00:00<00:00,  4.81it/s]Table-wired Predict: 100%|██████████| 4/4 [00:00<00:00,  5.04it/s]
+OCR-det en:   0%|          | 0/35 [00:00<?, ?it/s]OCR-det en:   3%|▎         | 1/35 [00:00<00:11,  3.04it/s]OCR-det en:   6%|▌         | 2/35 [00:00<00:06,  4.98it/s]OCR-det en:  11%|█▏        | 4/35 [00:00<00:03,  8.88it/s]OCR-det en:  17%|█▋        | 6/35 [00:00<00:02,  9.83it/s]OCR-det en:  23%|██▎       | 8/35 [00:01<00:05,  5.33it/s]OCR-det en:  29%|██▊       | 10/35 [00:01<00:03,  6.98it/s]OCR-det en:  34%|███▍      | 12/35 [00:01<00:03,  7.66it/s]OCR-det en:  40%|████      | 14/35 [00:01<00:02,  8.55it/s]OCR-det en:  46%|████▌     | 16/35 [00:02<00:01, 10.02it/s]OCR-det en:  51%|█████▏    | 18/35 [00:02<00:02,  7.87it/s]OCR-det en:  57%|█████▋    | 20/35 [00:02<00:02,  7.20it/s]OCR-det en:  60%|██████    | 21/35 [00:03<00:02,  4.68it/s]OCR-det en:  63%|██████▎   | 22/35 [00:03<00:02,  4.47it/s]OCR-det en:  66%|██████▌   | 23/35 [00:04<00:03,  3.08it/s]OCR-det en:  69%|██████▊   | 24/35 [00:04<00:03,  3.58it/s]OCR-det en:  71%|███████▏  | 25/35 [00:04<00:02,  3.80it/s]OCR-det en:  74%|███████▍  | 26/35 [00:04<00:02,  4.13it/s]OCR-det en:  77%|███████▋  | 27/35 [00:05<00:02,  2.85it/s]OCR-det en:  80%|████████  | 28/35 [00:05<00:02,  2.40it/s]OCR-det en:  83%|████████▎ | 29/35 [00:06<00:02,  2.74it/s]OCR-det en:  86%|████████▌ | 30/35 [00:06<00:01,  3.47it/s]OCR-det en:  91%|█████████▏| 32/35 [00:06<00:00,  5.43it/s]OCR-det en:  97%|█████████▋| 34/35 [00:06<00:00,  7.12it/s]OCR-det en: 100%|██████████| 35/35 [00:06<00:00,  5.25it/s]
+2026-09-17 00:16:34.476 | DEBUG    | mineru.utils.model_utils:clean_vram:214 - gc time: 0.47
+Seal Predict: 0it [00:00, ?it/s]Seal Predict: 0it [00:00, ?it/s]
+Processing pages:   0%|          | 0/12 [00:00<?, ?it/s]Processing pages:  17%|█▋        | 2/12 [00:00<00:01,  5.35it/s]Processing pages:  25%|██▌       | 3/12 [00:00<00:02,  3.17it/s]Processing pages:  33%|███▎      | 4/12 [00:03<00:09,  1.23s/it]Processing pages:  42%|████▏     | 5/12 [00:04<00:07,  1.05s/it]Processing pages:  50%|█████     | 6/12 [00:04<00:05,  1.18it/s]Processing pages:  58%|█████▊    | 7/12 [00:05<00:04,  1.13it/s]Processing pages:  75%|███████▌  | 9/12 [00:05<00:01,  2.01it/s]Processing pages:  92%|█████████▏| 11/12 [00:06<00:00,  3.04it/s]
+OCR-rec Predict:   0%|          | 0/121 [00:00<?, ?it/s][A
+OCR-rec Predict:   5%|▍         | 6/121 [00:00<00:04, 27.47it/s][A
+OCR-rec Predict:  10%|▉         | 12/121 [00:00<00:03, 30.53it/s][A
+OCR-rec Predict:  15%|█▍        | 18/121 [00:00<00:03, 32.08it/s][A
+OCR-rec Predict:  20%|█▉        | 24/121 [00:00<00:03, 30.29it/s][A
+OCR-rec Predict:  25%|██▍       | 30/121 [00:01<00:03, 29.19it/s][A
+OCR-rec Predict:  30%|██▉       | 36/121 [00:01<00:02, 28.72it/s][A
+OCR-rec Predict:  35%|███▍      | 42/121 [00:01<00:02, 27.38it/s][A
+OCR-rec Predict:  40%|███▉      | 48/121 [00:01<00:02, 26.48it/s][A
+OCR-rec Predict:  45%|████▍     | 54/121 [00:01<00:02, 25.21it/s][A
+OCR-rec Predict:  50%|████▉     | 60/121 [00:02<00:02, 24.39it/s][A
+OCR-rec Predict:  55%|█████▍    | 66/121 [00:02<00:02, 23.25it/s][A
+OCR-rec Predict:  60%|█████▉    | 72/121 [00:02<00:02, 22.40it/s][A
+OCR-rec Predict:  64%|██████▍   | 78/121 [00:03<00:01, 21.80it/s][A
+OCR-rec Predict:  69%|██████▉   | 84/121 [00:03<00:01, 21.34it/s][A
+OCR-rec Predict:  74%|███████▍  | 90/121 [00:03<00:01, 20.77it/s][A
+OCR-rec Predict:  79%|███████▉  | 96/121 [00:04<00:01, 20.39it/s][A
+OCR-rec Predict:  84%|████████▍ | 102/121 [00:04<00:00, 20.17it/s][A
+OCR-rec Predict:  89%|████████▉ | 108/121 [00:04<00:00, 19.52it/s][A
+OCR-rec Predict:  94%|█████████▍| 114/121 [00:04<00:00, 19.28it/s][A
+OCR-rec Predict:  99%|█████████▉| 120/121 [00:05<00:00, 17.45it/s][AOCR-rec Predict: 100%|██████████| 121/121 [00:06<00:00, 20.09it/s]
+2026-09-17 00:16:47.468 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:_finalize_processing_window_context:130 - Pipeline doc ready: doc0 pages=12
+Processing pages: 100%|██████████| 12/12 [00:12<00:00,  1.04s/it]
+2026-09-17 00:16:47.472 | DEBUG    | mineru.backend.pipeline.pipeline_analyze:doc_analyze_streaming:320 - processing-window multi-file infer finished, cost: 91.16, speed: 0.132 page/s
+    ✓ Saved: 46. 磷石膏综合利用背景下的环境影响研究现状/auto/46. 磷石膏综合利用背景下的环境影响研究现状.md (38874 chars)
+
+========================================
+Parsing Complete: 1 success, 0 skipped, 0 errors
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-09-17 00:16:48
+INFO: Role LLM Configuration (initialized):
+INFO:  - extract: None/None, host=None, max_async=4, timeout=180
+INFO:  - keyword: None/None, host=None, max_async=4, timeout=180
+INFO:  - query: None/None, host=None, max_async=4, timeout=180
+INFO:  - vlm: None/None, host=None, max_async=4, timeout=180
+INFO: [] Process 2231413 KV load full_docs with 0 records
+INFO: [] Process 2231413 KV load text_chunks with 0 records
+INFO: [] Process 2231413 KV load full_entities with 0 records
+INFO: [] Process 2231413 KV load full_relations with 0 records
+INFO: [] Process 2231413 KV load entity_chunks with 0 records
+INFO: [] Process 2231413 KV load relation_chunks with 0 records
+ERROR: [] Failed to initialize Milvus collection 'entities': <MilvusException: (code=2, message=Fail connecting to server on localhost:19530, illegal connection params or server unavailable)>
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-09-17 00:18:48
+Steps to run: ['index']
+RAG Engine: lightrag
+
+============================================================
+   STEP 2: LIGHTRAG INDEX CONSTRUCTION
+============================================================
+LightRAG DB: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db
+Source:      /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/interim/papers/parsed
+LLM Model:   Qwen/Qwen3.8-Flash-Next
+
+Note: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).
+Traceback (most recent call last):
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 257, in _wait_for_channel_ready
+    target_final_channel, target_stub = self._setup_identifier_interceptor(
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 448, in _setup_identifier_interceptor
+    self.__internal_register(user, host, timeout=timeout)
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/decorators.py", line 606, in handler
+    raise e from e
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/decorators.py", line 595, in handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 3273, in __internal_register
+    return self._internal_register(user, host, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 3267, in _internal_register
+    response = target_stub.Connect(request=req, timeout=kwargs.get("timeout"))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/grpc/_channel.py", line 1159, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/grpc/_channel.py", line 990, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:19530: Failed to connect to remote host: Connection refused"
+	debug_error_string = "UNAVAILABLE:failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:19530: Failed to connect to remote host: Connection refused"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 527, in <module>
+    main()
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 523, in main
+    run_pipeline(steps, args.parser, args.limit, args.engine)
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 472, in run_pipeline
+    results["index"] = step2_build_rag_index(limit, engine)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/scripts/build_knowledge_graph.py", line 250, in step2_build_rag_index
+    results = rag.add_documents_from_directory(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 565, in add_documents_from_directory
+    self._run_coroutine(_work())
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 261, in _run_coroutine
+    return loop.run_until_complete(coro)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 535, in _work
+    rag = await self._get_initialized_rag()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/pgloop/knowledge/lightrag_engine.py", line 356, in _get_initialized_rag
+    await rag.initialize_storages()
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/lightrag.py", line 1183, in initialize_storages
+    await storage.initialize()
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/kg/milvus_impl.py", line 1498, in initialize
+    self._client = self._create_milvus_client()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/lightrag/kg/milvus_impl.py", line 404, in _create_milvus_client
+    client = MilvusClient(
+             ^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/milvus_client/milvus_client.py", line 98, in __init__
+    self._handler = self._manager.get_or_create(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/connection_manager.py", line 502, in get_or_create
+    return self._create_shared(config, client, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/connection_manager.py", line 526, in _create_shared
+    handler._wait_for_channel_ready(timeout=timeout)
+  File "/home/tangsiqi/project/miniconda3/envs/pgbot/lib/python3.12/site-packages/pymilvus/client/grpc_handler.py", line 264, in _wait_for_channel_ready
+    raise MilvusException(
+pymilvus.exceptions.MilvusException: <MilvusException: (code=2, message=Fail connecting to server on localhost:19530, illegal connection params or server unavailable)>

@@ -1,0 +1,24 @@
+============================================================
+ Starting Neo4j Database Service via Singularity/Apptainer
+ Job ID:   3526572
+ Host:     n0523
+ Ports:    7474 (HTTP), 7687 (Bolt)
+ Data Dir: /scratch/tangsiqi/liyi_folder/updated_by_SQ/oneLCA-TEA_Phosphogypsum/datahub/processed/neo4j/data
+============================================================
+Published endpoint: bolt://n0523:7687 -> /scratch/tangsiqi/liyi_folder/updated_by_SQ/oneLCA-TEA_Phosphogypsum/datahub/processed/.neo4j_endpoint
+Using container runner: apptainer
+Using Neo4j image: /scratch/tangsiqi/containers/images/neo4j_5.12.0.sif
+Seeding default configuration into /scratch/tangsiqi/liyi_folder/updated_by_SQ/oneLCA-TEA_Phosphogypsum/datahub/processed/neo4j/conf from container...
+INFO:    gocryptfs not found, will not be able to use gocryptfs
+Changed password for user 'neo4j'. IMPORTANT: this change will only take effect if performed before the database is started for the first time.
+2026-09-27 11:08:47.669+0000 INFO  Logging config in use: File '/var/lib/neo4j/conf/user-logs.xml'
+2026-09-27 11:08:47.738+0000 INFO  Starting...
+2026-09-27 11:08:48.958+0000 INFO  This instance is ServerId{30f5e234} (30f5e234-707b-4d37-8a74-20fe1a51250a)
+2026-09-27 11:08:50.071+0000 INFO  ======== Neo4j 5.12.0 ========
+2026-09-27 11:11:45.491+0000 INFO  Bolt enabled on 0.0.0.0:7687.
+2026-09-27 11:11:46.045+0000 INFO  HTTP enabled on 0.0.0.0:7474.
+2026-09-27 11:11:46.046+0000 INFO  Remote interface available at http://localhost:7474/
+2026-09-27 11:11:46.048+0000 INFO  id: ECED62B2666AC14D2F5A263C831F508B8555290A3CDBEBA54FAECD191BD4F142
+2026-09-27 11:11:46.048+0000 INFO  name: system
+2026-09-27 11:11:46.048+0000 INFO  creationDate: 2026-09-27T11:09:00.955Z
+2026-09-27 11:11:46.048+0000 INFO  Started.

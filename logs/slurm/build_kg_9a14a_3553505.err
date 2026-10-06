@@ -1,0 +1,915 @@
+INFO: [] Created new empty graph file: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db/graph_chunk_entity_relation.graphml
+2026-10-01 10:40:56,525 [INFO] nano-vectordb: Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': '/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db/vdb_entities.json'} 0 data
+2026-10-01 10:40:56,526 [INFO] nano-vectordb: Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': '/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db/vdb_relationships.json'} 0 data
+2026-10-01 10:40:56,526 [INFO] nano-vectordb: Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': '/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db/vdb_chunks.json'} 0 data
+INFO: Role LLM Configuration (initialized):
+INFO:  - extract: None/None, host=None, max_async=4, timeout=3600
+INFO:  - keyword: None/None, host=None, max_async=4, timeout=3600
+INFO:  - query: None/None, host=None, max_async=4, timeout=3600
+INFO:  - vlm: None/None, host=None, max_async=4, timeout=3600
+INFO: [] Process 1313019 KV load full_docs with 0 records
+INFO: [] Process 1313019 KV load text_chunks with 0 records
+INFO: [] Process 1313019 KV load full_entities with 0 records
+INFO: [] Process 1313019 KV load full_relations with 0 records
+INFO: [] Process 1313019 KV load entity_chunks with 0 records
+INFO: [] Process 1313019 KV load relation_chunks with 0 records
+INFO: [] Process 1313019 KV load llm_response_cache with 0 records
+INFO: [] Process 1313019 doc status load doc_status with 0 records
+INFO: Processing 1 document(s)
+INFO: Parsing (native): doc-a7ec54d376b079eceb4eab9d1f23165e
+INFO: Extracting stage 1/1: unknown_source
+INFO: Processing d-id: doc-a7ec54d376b079eceb4eab9d1f23165e
+INFO: Chunking F(legacy): size=1200, split_only=False, overlap=100, doc_id: doc-a7ec54d376b079eceb4eab9d1f23165e
+INFO: extract LLM func: 4 new workers initialized (Timeouts: Func: 3600s, Worker: 7200s, Health Check: 7215s)
+INFO:  == LLM cache == saving: default:extract:e26695ce87b8acdb879ffc8bdb7538e4
+INFO:  == LLM cache == saving: default:extract:eae46071b80c47c8cd5b7f7f4b0a7281
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-000: Complete delimiter can not be found in extraction result
+INFO:  == LLM cache == saving: default:extract:e08b5aef6bc5e04d7cae53e68fde4d93
+INFO:  == LLM cache == saving: default:extract:7c00feacf6ab66f052f7428e30f3f551
+INFO:  == LLM cache == saving: default:extract:dd5cf64c3b30e6abc1dbe3f29a025fc0
+INFO:  == LLM cache == saving: default:extract:610f7434b9c48a7ca98d656633818e4f
+INFO:  == LLM cache == saving: default:extract:2b56e75303fb3cfbd6253e45cbaf78b7
+INFO:  == LLM cache == saving: default:extract:985133db590683e85cd791c1b5d8bef3
+INFO: Chunk 1 of 30 extracted 35 Ent + 20 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-000
+INFO: Chunk 2 of 30 extracted 26 Ent + 25 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-003
+INFO:  == LLM cache == saving: default:extract:bfa54c45d5932c17b839a5339dacec1c
+INFO: Chunk 3 of 30 extracted 44 Ent + 39 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-001
+INFO: Chunk 4 of 30 extracted 42 Ent + 48 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-002
+INFO:  == LLM cache == saving: default:extract:7cf89f7db89b65988fe0624b535d8b44
+INFO:  == LLM cache == saving: default:extract:f5c47304a6433e6fe6ecca1b09074ac3
+INFO:  == LLM cache == saving: default:extract:af523159933dac37d2b2a1655c0f3097
+INFO:  == LLM cache == saving: default:extract:871236eb04f27f3bb37a80fae3103d53
+INFO:  == LLM cache == saving: default:extract:19dc95cf11c6a7521ce1bb8fd79c5540
+INFO: Chunk 5 of 30 extracted 24 Ent + 23 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-004
+INFO:  == LLM cache == saving: default:extract:04343cbec6f60323d68ccc14c680e168
+INFO: Chunk 6 of 30 extracted 30 Ent + 31 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-005
+INFO:  == LLM cache == saving: default:extract:bcb7f29a1b35dbf199e649e93fe117d1
+INFO:  == LLM cache == saving: default:extract:0b8769e43dde9e600deac986dcf807c2
+INFO: Chunk 7 of 30 extracted 24 Ent + 24 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-006
+INFO: Chunk 8 of 30 extracted 28 Ent + 23 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-007
+INFO:  == LLM cache == saving: default:extract:706552c3985b1c8e78c5caeda3ac19bd
+INFO:  == LLM cache == saving: default:extract:5bb031e296524a91920ff3ceb327867c
+INFO:  == LLM cache == saving: default:extract:7df4c2f77b707ab8560b8c93a69929e2
+INFO:  == LLM cache == saving: default:extract:6e468159354d9036795c8935b7f6a7b8
+INFO:  == LLM cache == saving: default:extract:ccae916adcec13c8e8cfae76d14b848b
+INFO: Chunk 9 of 30 extracted 40 Ent + 37 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-008
+INFO:  == LLM cache == saving: default:extract:e2168321c50c8190d5895f481f0bd230
+INFO: Chunk 10 of 30 extracted 27 Ent + 21 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-009
+INFO:  == LLM cache == saving: default:extract:890c97108910bb05593e2cc7f11daacc
+INFO:  == LLM cache == saving: default:extract:17f9698a7aabe7e68095ff6be0aec41c
+INFO:  == LLM cache == saving: default:extract:7ca3e571b9156d4c28ce6ac9e9374f6f
+INFO: Chunk 11 of 30 extracted 45 Ent + 29 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-010
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-013: Complete delimiter can not be found in extraction result
+INFO: Chunk 12 of 30 extracted 42 Ent + 41 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-011
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-013: LLM output format error; found 4/5 fields on RELATION `Leaching Of Rare Earth Elements And Impurities From Phosphogypsum`~`Phosphogypsum`
+INFO:  == LLM cache == saving: default:extract:c83e9f2551fbf432d569fda60fbe5407
+INFO:  == LLM cache == saving: default:extract:ef29e75770ca378098146130f6dd7c20
+INFO:  == LLM cache == saving: default:extract:cef8ac49d3bdc631af2d158f8e412b9b
+INFO:  == LLM cache == saving: default:extract:b1c00eb743a5f5815a388ab3154e5fb2
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-013: Complete delimiter can not be found in extraction result
+INFO: Chunk 13 of 30 extracted 29 Ent + 26 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-012
+INFO: Chunk 14 of 30 extracted 23 Ent + 23 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-013
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-015: Complete delimiter can not be found in extraction result
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-014: Complete delimiter can not be found in extraction result
+INFO: Chunk 15 of 30 extracted 19 Ent + 11 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-015
+INFO: Chunk 16 of 30 extracted 34 Ent + 22 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-014
+INFO:  == LLM cache == saving: default:extract:14d31389d6bfc6ed2ef53a79c6c39dac
+INFO:  == LLM cache == saving: default:extract:a23ee864f116114bc6f616d87fcb76b2
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-018: Complete delimiter can not be found in extraction result
+INFO:  == LLM cache == saving: default:extract:a58a069f63ae3dece05d578e0a62ec8e
+INFO:  == LLM cache == saving: default:extract:9774b6bda40961b794acec6909883e96
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-016: Complete delimiter can not be found in extraction result
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-018: Complete delimiter can not be found in extraction result
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-017: Complete delimiter can not be found in extraction result
+INFO: Chunk 17 of 30 extracted 20 Ent + 15 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-016
+INFO: Chunk 18 of 30 extracted 24 Ent + 16 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-017
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-018: LLM output format error; found 2/4 fields on ENTITY `Supersulfated Cement<|#` @ `N/A`
+INFO:  == LLM cache == saving: default:extract:294c0e385c03baeeae59af5f01da0291
+INFO: Chunk 19 of 30 extracted 35 Ent + 0 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-018
+INFO:  == LLM cache == saving: default:extract:eae68b3b4107ba675e52d61d8ccc3156
+INFO:  == LLM cache == saving: default:extract:3a51dd1293a7cd126dbfd8d40c39b25e
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-021: Complete delimiter can not be found in extraction result
+INFO:  == LLM cache == saving: default:extract:f7af36ac9d28952f13e8a7f16086dfdf
+INFO: Chunk 20 of 30 extracted 39 Ent + 37 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-019
+INFO:  == LLM cache == saving: default:extract:0927810953f84e43a979cb3f659755fa
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-021: Complete delimiter can not be found in extraction result
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-020: Complete delimiter can not be found in extraction result
+INFO: Chunk 21 of 30 extracted 34 Ent + 27 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-021
+INFO:  == LLM cache == saving: default:extract:3ae528f9602cb10bfe12f732931b4416
+INFO:  == LLM cache == saving: default:extract:5e946fcdc31e6642d2fb6a45bcad6024
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-022: Complete delimiter can not be found in extraction result
+INFO:  == LLM cache == saving: default:extract:83b55d2bd6f4b691c83145d0474ef277
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-023: Complete delimiter can not be found in extraction result
+INFO: Chunk 22 of 30 extracted 65 Ent + 29 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-020
+INFO: Chunk 23 of 30 extracted 50 Ent + 15 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-022
+INFO: Chunk 24 of 30 extracted 19 Ent + 15 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-023
+INFO:  == LLM cache == saving: default:extract:85c5da1cc73f5832c818aa4f5e1cd1eb
+INFO:  == LLM cache == saving: default:extract:d75f3b84d8a46d0d8067dc81161fa38c
+INFO:  == LLM cache == saving: default:extract:5be7fdd85475d0b0708abbeaa250beb4
+INFO:  == LLM cache == saving: default:extract:3a7b461bc522dc151cddf903a88a9996
+INFO: Chunk 25 of 30 extracted 34 Ent + 25 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-024
+INFO:  == LLM cache == saving: default:extract:ef508844c39dda41925d0f764aad8d21
+INFO:  == LLM cache == saving: default:extract:fc75fa6db0aead19eb156e148d049c17
+INFO:  == LLM cache == saving: default:extract:835829f12b9ecea40903683e25ea4364
+INFO:  == LLM cache == saving: default:extract:d9da173ede2552f351d4891882687a76
+WARNING: doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-027: Complete delimiter can not be found in extraction result
+INFO: Chunk 26 of 30 extracted 33 Ent + 23 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-025
+INFO: Chunk 27 of 30 extracted 35 Ent + 30 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-026
+INFO: Chunk 28 of 30 extracted 44 Ent + 19 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-027
+INFO:  == LLM cache == saving: default:extract:424bd93d14ca2f0fcde635406727eee2
+INFO:  == LLM cache == saving: default:extract:447c12448b927ce703c4fb1f869bf9f4
+INFO: Chunk 29 of 30 extracted 18 Ent + 17 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-028
+INFO:  == LLM cache == saving: default:extract:489dd330bdd4ef0a6e4455bc871200b9
+INFO: Chunk 30 of 30 extracted 19 Ent + 16 Rel doc-a7ec54d376b079eceb4eab9d1f23165e-chunk-029
+INFO: Merging stage 1/1: unknown_source
+INFO: Phase 1: Processing 824 entities from doc-a7ec54d376b079eceb4eab9d1f23165e (async: 8)
+INFO:  == LLM cache == saving: default:summary:03d32921dca1304dc8fa783a0aadc0ab
+INFO: LLMmrg: `Phosphogypsum` | 0+26
+INFO:  == LLM cache == saving: default:summary:e5ed1710d1ce87acbe16caa78df23b53
+INFO: LLMmrg: `Rare Earth Elements` | 0+9
+INFO: Phase 2: Processing 711 relations from doc-a7ec54d376b079eceb4eab9d1f23165e (async: 8)
+INFO: Upserting relation VDB: `Degirmenci N.->Utilization of Phosphogypsum in Building Products`
+INFO: Upserting relation VDB: `Dias N.M.P.->Radiological Impact of Phosphogypsum Application`
+INFO: Upserting relation VDB: `Ding W.->Modified Mineral Carbonation of Phosphogypsum`
+INFO: Upserting relation VDB: `Ennaciri Y.->Procedure to Convert Phosphogypsum Waste`
+INFO: Upserting relation VDB: `Development of Alpha Plaster from Phosphogypsum->Garg M.`
+INFO: Upserting relation VDB: `The Role and Implications of Bassanite->Van Driessche A.E.S.`
+INFO: Upserting relation VDB: `Carbon Dioxide Sequestration->Phosphogypsum`
+INFO: Upserting relation VDB: `Bassanite->Gypsum`
+INFO: Upserting relation VDB: `Construct. Build. Mater.->Utilization of Phosphogypsum in Building Products`
+INFO: Upserting relation VDB: `Science->The Role and Implications of Bassanite`
+INFO: Upserting relation VDB: `Phosphogypsum->Wet Conversion`
+INFO: Upserting relation VDB: `Calcium Ions->Hydroxide Ions`
+INFO: Upserting relation VDB: `Hydrocalumite->Tetrahydroxoaluminate Ions`
+INFO: Upserting relation VDB: `C-CaSO4-K-Feldspar Pellets->Calcination`
+INFO: Upserting relation VDB: `Methane->Rice Paddy Ecosystem`
+INFO: Upserting relation VDB: `Aluminum Industry Caustic Liquid Waste->Phosphogypsum`
+INFO: Upserting relation VDB: `C-CaSO4-K-Feldspar Pellets->Potassium Sulfate`
+INFO: Upserting relation VDB: `El Zrelli, R.->Marine Pollution Bulletin`
+INFO: Upserting relation VDB: `Methane->Methanotrophs`
+INFO: Upserting relation VDB: `Extraction of Potassium and Mineralization of CO2->Milling`
+INFO: Upserting relation VDB: `C-CaSO4-K-Feldspar Pellets->Calcium Carbonate-Rich Slag`
+INFO: Upserting relation VDB: `Aerenchymal Transport->Methane`
+INFO: Upserting relation VDB: `Carbon Dioxide->Extraction of Potassium and Mineralization of CO2`
+INFO: Upserting relation VDB: `C-CaSO4-K-Feldspar Pellets->Milling`
+INFO: Upserting relation VDB: `Filtration->Potassium Sulfate`
+INFO: Upserting relation VDB: `PGA Solid Phase->Weathering`
+INFO: Upserting relation VDB: `Deionized Water->Extraction of Potassium and Mineralization of CO2`
+INFO: Upserting relation VDB: `Calcium Carbonate-Rich Slag->Filtration`
+INFO: Upserting relation VDB: `Diffusion->Methane`
+INFO: Upserting relation VDB: `Bubbling->PGA Solid Phase`
+INFO: Upserting relation VDB: `Extraction of Potassium and Mineralization of CO2->Sulfur Dioxide`
+INFO: Upserting relation VDB: `Floodwater->Rice Paddy Ecosystem`
+INFO: Upserting relation VDB: `Ebullition->Methane`
+INFO: Upserting relation VDB: `El Zrelli, R.->Tunisia`
+INFO: Upserting relation VDB: `Extraction of Potassium and Mineralization of CO2->Filtration`
+INFO: Upserting relation VDB: `Aerobic Layer->Rice Paddy Ecosystem`
+INFO: Upserting relation VDB: `Marine Pollution Bulletin->Rabaoui, L.`
+INFO: Upserting relation VDB: `El Zrelli, R.->Southern Mediterranean Sea`
+INFO: Upserting relation VDB: `Building Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Facultative Anaerobic Layer->Rice Paddy Ecosystem`
+INFO: Upserting relation VDB: `Marine Pollution Bulletin->Van Beek, P.`
+INFO: Upserting relation VDB: `Coastal Phosphate Treatment Plants->El Zrelli, R.`
+INFO: Upserting relation VDB: `Dissolution Crystallization->Phosphogypsum`
+INFO: Upserting relation VDB: `Building Materials->Hemihydrate`
+INFO: Upserting relation VDB: `Dehydration Rehydration->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Sulfate Dihydrate->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Sulfuric Acid`
+INFO: Upserting relation VDB: `Calcium Sulfate Dihydrate->Hemihydrate`
+INFO: Upserting relation VDB: `Building Materials->Solid Waste`
+INFO: Upserting relation VDB: `Cement->Phosphogypsum`
+INFO: Upserting relation VDB: `Anhydrous Calcium Sulfate->Calcium Sulfate Dihydrate`
+INFO: Upserting relation VDB: `Building Materials->Environmental Protection`
+INFO: Upserting relation VDB: `PG-Sulfur Polymer Cements->Phosphogypsum`
+INFO: Upserting relation VDB: `Anhydrous Calcium Sulfate->Building Materials`
+INFO: Upserting relation VDB: `Calcium Sulfate Whiskers->Phosphogypsum`
+INFO: Upserting relation VDB: `PG-Sulfur Polymer Cements->Sulfur Polymer Matrix`
+INFO: Upserting relation VDB: `Chemical Raw Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Waterproof material`
+INFO: Upserting relation VDB: `Burn-free bricks and gypsum blocks->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Road material`
+INFO: Upserting relation VDB: `Dissolution Crystallization->Salt solution`
+INFO: Upserting relation VDB: `Phosphogypsum->Self-leveling mortar`
+INFO: Upserting relation VDB: `Solid-solid reaction->Sulfuric Acid`
+INFO: Upserting relation VDB: `Foam concrete->Phosphogypsum`
+INFO: Upserting relation VDB: `Cement->Solid-solid reaction`
+INFO: Upserting relation VDB: `Building Materials->Government support`
+INFO: Upserting relation VDB: `Non-autoclaved aerated concrete->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Sulfate->Calcium Sulfate Whiskers`
+INFO: Upserting relation VDB: `Building Materials->Natural materials`
+INFO: Upserting relation VDB: `Calcination Parameters On Phosphogypsum Waste Recycling->Geraldo, R.H.`
+INFO: Upserting relation VDB: `Europes Rare Earth Element Resource Potential: An Overview Of REE Metallogenetic Provinces And Their Geodynamic Setting->Goodenough, K.M.`
+INFO: Upserting relation VDB: `Hydraulic binder->Phosphogypsum`
+INFO: Upserting relation VDB: `Hammas-Nasri, I.->Rare Earths Concentration From Phosphogypsum Waste By Two-Step Leaching Method`
+INFO: Upserting relation VDB: `Rare Earth Elements->Two-Step Leaching Method`
+INFO: Upserting relation VDB: `Iron-rich calcium sulfoaluminate cement->Phosphogypsum`
+INFO: Upserting relation VDB: `Gypsum->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcination->Phosphogypsum`
+INFO: Upserting relation VDB: `Evaluation Of The Radioactive Pollution In The Salt-Marshes Under A Phosphogypsum Stack System->Radioactive Pollution`
+INFO: Upserting relation VDB: `Phosphogypsum->α-Calcium Sulfate Hemihydrate`
+INFO: Upserting relation VDB: `Europes Rare Earth Element Resource Potential: An Overview Of REE Metallogenetic Provinces And Their Geodynamic Setting->Rare Earth Elements`
+INFO: Upserting relation VDB: `Nano-CaSO4->Phosphogypsum`
+INFO: Upserting relation VDB: `Effects Of Phosphogypsum And Calcined Phosphogypsum Content On The Basic Physical And Mechanical Properties Of Portland Cement Mortar->Portland Cement Mortar`
+INFO: Upserting relation VDB: `Phosphate Industry->Raw PG`
+INFO: Upserting relation VDB: `Ettringite-Based Mortar->Phosphogypsum`
+INFO: Upserting relation VDB: `HDPE->Nano-CaSO4`
+INFO: Upserting relation VDB: `Washed PG->Washing Process`
+INFO: Upserting relation VDB: `Phosphogypsum->Portland Cement Mortar`
+INFO: Upserting relation VDB: `Raw PG->Washing Process`
+INFO: Upserting relation VDB: `KOH->Washed PG`
+INFO: Upserting relation VDB: `Loess Stabilization->Phosphogypsum`
+INFO: Upserting relation VDB: `Portlandite Solution->Washed PG`
+INFO: Upserting relation VDB: `Phosphogypsum->Radioactive Pollution`
+INFO: Upserting relation VDB: `CO2 Dissolution->Precipitation`
+INFO: Upserting relation VDB: `Carbonation Process->Portlandite Solution`
+INFO: Upserting relation VDB: `Methanotrophs->Rhizosphere`
+INFO: Upserting relation VDB: `Anaerobic Layer->Methanogens`
+INFO: Upserting relation VDB: `Hydrolysis->Portlandite Solution`
+INFO: Upserting relation VDB: `Calcium Carbonate->Carbonation Process`
+INFO: Upserting relation VDB: `Methanogenesis->Methanogens`
+INFO: Upserting relation VDB: `Ca3Al2(OH)12->Calcium Hydroxide`
+INFO: Upserting relation VDB: `Aerobic Layer->Floodwater`
+INFO: Upserting relation VDB: `Carbonation Process->Carbonation System`
+INFO: Upserting relation VDB: `Calcite->Calcium Carbonate`
+INFO: Upserting relation VDB: `Anaerobic Layer->Rhizosphere`
+INFO: Upserting relation VDB: `Crystalline Calcium Sulfate->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Carbonate->Precipitation`
+INFO: Upserting relation VDB: `Aerobic Layer->Rhizosphere`
+INFO: Upserting relation VDB: `Calcium Sulfate Whiskers->Crystalline Calcium Sulfate`
+INFO: Upserting relation VDB: `Phosphogypsum->Potassium Sulfate`
+INFO: Upserting relation VDB: `Calcium Sulfate Whiskers->Solution Growth`
+INFO: Upserting relation VDB: `Salt Marshes Soil->Sulfate-Reducing Bacteria`
+INFO: Upserting relation VDB: `Calcium Sulfate Whiskers->Melt Growth`
+INFO: Upserting relation VDB: `Potassium Sulfate->Sulfate-Reducing Bacteria`
+INFO: Upserting relation VDB: `Phosphogypsum->Salt Marshes Soil`
+INFO: Upserting relation VDB: `Calcium Sulfate Whiskers->Vapor Growth`
+INFO: Upserting relation VDB: `238U Series Natural Radionuclides->Salt Marshes Soil`
+INFO: Upserting relation VDB: `Calcium Based Cementitious Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Biochemical Activation Method->Calcium Sulfate Whiskers`
+INFO: Upserting relation VDB: `Phosphogypsum->Pyrolysis`
+INFO: Upserting relation VDB: `Calcium Sulfate Whiskers->Hydrothermal Synthesis`
+INFO: Upserting relation VDB: `Chemical Looping Gasification->Phosphogypsum`
+INFO: Upserting relation VDB: `Ammonium Sulfate->Phosphogypsum`
+INFO: Upserting relation VDB: `K-feldspar->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Pure Calcium Chemicals`
+INFO: Upserting relation VDB: `Springer International Publishing->Zhang, J.`
+INFO: Upserting relation VDB: `Phosphogypsum->Saline Alkali Soil`
+INFO: Upserting relation VDB: `Non-fired Bricks->Zhou, J.`
+INFO: Upserting relation VDB: `Alkaline Soil->Phosphogypsum`
+INFO: Upserting relation VDB: `Hardened Tiles->Zhou, J.`
+INFO: Upserting relation VDB: `Hydration–Recrystallization Process->Non-fired Bricks`
+INFO: Upserting relation VDB: `Non-food Crop Soil->Phosphogypsum`
+INFO: Upserting relation VDB: `Plasterboard->Zhou, J.`
+INFO: Upserting relation VDB: `Non-fired Bricks->Two-step Hydration Process`
+INFO: Upserting relation VDB: `Hardened Tiles->Intermittent Pressing Hydration`
+INFO: Upserting relation VDB: `Composting->Phosphogypsum`
+INFO: Upserting relation VDB: `Cu(II)->J. Hazard Mater.`
+INFO: Upserting relation VDB: `CaS->Zhao, L.`
+INFO: Upserting relation VDB: `Inert Atmosphere->Phosphogypsum`
+INFO: Upserting relation VDB: `Composting->pH`
+INFO: Upserting relation VDB: `SO2->Zheng, S.`
+INFO: Upserting relation VDB: `Sodium dodecyl benzene sulfonate->Zhao, L.`
+INFO: Upserting relation VDB: `Fe->Zheng, D.`
+INFO: Upserting relation VDB: `Cr(VI)->Zheng, J.`
+INFO: Upserting relation VDB: `Fly Ash->Phosphogypsum`
+INFO: Upserting relation VDB: `Constant magnetic field->Zielinski, M.`
+INFO: Upserting relation VDB: `Cr(VI)->Hydrothermal treatment`
+INFO: Upserting relation VDB: `Gabes->Phosphogypsum`
+INFO: Upserting relation VDB: `Industrial wastes->Radiation hazard assessment`
+INFO: Upserting relation VDB: `Calcium Aluminum Hydroxide->Calcium Hydroxide`
+INFO: Upserting relation VDB: `Flue gas desulfurisation gypsum->Phosphogypsum`
+INFO: Upserting relation VDB: `El Zrelli, R.->Radiation hazard assessment`
+INFO: Upserting relation VDB: `Calcium Aluminum Silicate Hydroxide->Water`
+INFO: Upserting relation VDB: `Aluminum Hydroxide->Calcium Aluminum Hydroxide`
+INFO: Upserting relation VDB: `Cemented paste backfill->Flue gas desulfurisation gypsum`
+INFO: Upserting relation VDB: `Calcium Aluminum Silicate Hydroxide->Calcium Ions`
+INFO: Upserting relation VDB: `Sulfuric Acid->Thorium(IV) Phosphate`
+INFO: Upserting relation VDB: `Cemented paste backfill->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Aluminum Silicate Hydroxide->Hydroxide Ions`
+INFO: Upserting relation VDB: `Thorium Sulfate->Thorium(IV) Phosphate`
+INFO: Upserting relation VDB: `Calcium Aluminum Hydroxide->Thermal Decomposition`
+INFO: Upserting relation VDB: `Calcium Aluminum Silicate Hydroxide->Silicic Acid`
+INFO: Upserting relation VDB: `Phosphoric Acid->Thorium(IV) Phosphate`
+INFO: Upserting relation VDB: `Sulfuric Acid->Thorium Sulfate`
+INFO: Upserting relation VDB: `Orthosilicic Acid->Silicic Acid`
+INFO: Upserting relation VDB: `Calcium Aluminum Silicate Hydroxide->Hydrolysis`
+INFO: Upserting relation VDB: `Phosphogypsum->Thorium(IV) Phosphate`
+INFO: Upserting relation VDB: `Phosphoric Acid->Sulfuric Acid`
+INFO: Upserting relation VDB: `Guerrero JL->Salt Marshes`
+INFO: Upserting relation VDB: `Aluminum Hydroxide->Calcium Aluminum Silicate Hydroxide`
+INFO: Upserting relation VDB: `Cementitious Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Castillo->SRB`
+INFO: Upserting relation VDB: `Sodium Dodecyl Sulfonate->Zhao L`
+INFO: Upserting relation VDB: `Phosphogypsum->pH`
+INFO: Upserting relation VDB: `Syczewski->Uranium (VI)`
+INFO: Upserting relation VDB: `Hydroxyapatite Nanoparticles->Zhang`
+INFO: Upserting relation VDB: `Copper->Sodium Dodecyl Sulfonate`
+INFO: Upserting relation VDB: `Phosphogypsum->Salt Marshes`
+INFO: Upserting relation VDB: `Gong->Nano-CaSO4`
+INFO: Upserting relation VDB: `Fluorine->Hydroxyapatite Nanoparticles`
+INFO: Upserting relation VDB: `Lei->pH`
+INFO: Upserting relation VDB: `238U Series Radionuclides->Papaslioti`
+INFO: Upserting relation VDB: `Bauxite Residue->Phosphogypsum`
+INFO: Upserting relation VDB: `Hydroxyapatite Nanoparticles->Microwave Irradiation Technology`
+INFO: Upserting relation VDB: `Environmental Functional Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Bauxite Residue->Poultry Manure`
+INFO: Upserting relation VDB: `Ma->Porous Sound Absorbent Material`
+INFO: Upserting relation VDB: `238U Series Radionuclides->Phosphogypsum`
+INFO: Upserting relation VDB: `Bauxite Residue->Xue`
+INFO: Upserting relation VDB: `Organic Amendment->SRB`
+INFO: Upserting relation VDB: `Dr. Hua->Phosphogypsum-slag based cementitious materials`
+INFO: Upserting relation VDB: `Kadirova->Phosphogypsum`
+INFO: Upserting relation VDB: `238U Series Radionuclides->Salt Marshes`
+INFO: Upserting relation VDB: `Chemical looping gasification->Dr. Jing`
+INFO: Upserting relation VDB: `Dr. John->Sulfuric acid baking`
+INFO: Upserting relation VDB: `Dr. Kadirova->Inorganic sorption materials`
+INFO: Upserting relation VDB: `Phosphogypsum->Porous Sound Absorbent Material`
+INFO: Upserting relation VDB: `Dr. Kovler->Radioactive materials`
+INFO: Upserting relation VDB: `DFT method->Dr. Jing`
+INFO: Upserting relation VDB: `Dr. Kumar->Greenhouse gas emissions`
+INFO: Upserting relation VDB: `Dr. Hentati->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Two-step leaching method`
+INFO: Upserting relation VDB: `Chemical looping gasification->Phosphogypsum`
+INFO: Upserting relation VDB: `Inorganic sorption materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Thermal Treatment->α-Hemihydrate`
+INFO: Upserting relation VDB: `Alpha-calcium sulfate hemihydrate->Phosphogypsum`
+INFO: Upserting relation VDB: `Autoclave Method->α-Hemihydrate`
+INFO: Upserting relation VDB: `Calcium sulfoaluminate cement->Phosphogypsum`
+INFO: Upserting relation VDB: `Solution Method->α-Hemihydrate`
+INFO: Upserting relation VDB: `Phosphogypsum->Phosphogypsum-slag based cementitious materials`
+INFO: Upserting relation VDB: `Organic Acid->α-Hemihydrate`
+INFO: Upserting relation VDB: `Crystallization Agent->Solution Method`
+INFO: Upserting relation VDB: `Bacteria->Phosphogypsum`
+INFO: Upserting relation VDB: `Sucinic Acid->α-Hemihydrate`
+INFO: Upserting relation VDB: `Mediterranean red soil->Phosphogypsum`
+INFO: Upserting relation VDB: `Table 1->α-Hemihydrate`
+INFO: Upserting relation VDB: `Mixed Salts->Solution Method`
+INFO: Upserting relation VDB: `Phosphogypsum->α-Hemihydrate`
+INFO: Upserting relation VDB: `Inorganic Salt->Solution Method`
+INFO: Upserting relation VDB: `Phosphogypsum->Retarder`
+INFO: Upserting relation VDB: `Solution Method->Surfactant`
+INFO: Upserting relation VDB: `Phosphogypsum->Waterproof Material`
+INFO: Upserting relation VDB: `Alcohols->Solution Method`
+INFO: Upserting relation VDB: `Burn-free Bricks->Phosphogypsum`
+INFO: Upserting relation VDB: `Multistep Particle Formation Model->α-Hemihydrate`
+INFO: Upserting relation VDB: `Macromolecule->Solution Method`
+INFO: Upserting relation VDB: `Gypsum Blocks->Phosphogypsum`
+INFO: Upserting relation VDB: `Burn-free Bricks->Two-Step Hydration Process`
+INFO: Upserting relation VDB: `Tail Gas Treatment->Thermal Treatment`
+INFO: Upserting relation VDB: `Sulfuric Acid->Thorium Phosphate`
+INFO: Upserting relation VDB: `Construction Industry->Phosphogypsum`
+INFO: Upserting relation VDB: `Gypsum Blocks->Two-Step Hydration Process`
+INFO: Upserting relation VDB: `Thorium Phosphate->Thorium(IV) Sulfate`
+INFO: Upserting relation VDB: `Dissolution and Re-nucleation Mechanism->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphoric Acid->Thorium Phosphate`
+INFO: Upserting relation VDB: `Reagent->Sulfuric Acid`
+INFO: Upserting relation VDB: `Acid Leaching->Thorium Phosphate`
+INFO: Upserting relation VDB: `Desired Product->Phosphoric Acid`
+INFO: Upserting relation VDB: `Phosphogypsum->Thorium Phosphate`
+INFO: Upserting relation VDB: `Acid Leaching->Radioactive Waste`
+INFO: Upserting relation VDB: `Chemical Change->Reaction Arrow`
+INFO: Upserting relation VDB: `Thorium->Thorium(IV) Sulfate`
+INFO: Upserting relation VDB: `Contaminant->Thorium Phosphate`
+INFO: Upserting relation VDB: `Byproduct->Phosphogypsum`
+INFO: Upserting relation VDB: `Acid Leaching->Phosphoric Acid`
+INFO: Upserting relation VDB: `Phosphate->Sulfuric Acid`
+INFO: Upserting relation VDB: `Ma et al.->Porous Sound Absorbing Material`
+INFO: Upserting relation VDB: `Gong et al.->Nano-CaSO4`
+INFO: Upserting relation VDB: `Phosphogypsum->Zhang et al.`
+INFO: Upserting relation VDB: `Acid Leaching->Equation`
+INFO: Upserting relation VDB: `Carbon Dioxide->Tianjin Institute of Industrial Biotechnology`
+INFO: Upserting relation VDB: `Carbon Solidification Mechanism->Kumar et al.`
+INFO: Upserting relation VDB: `Carbon Emission Reduction->Gan et al.`
+INFO: Upserting relation VDB: `Phosphogypsum->Rong et al.`
+INFO: Upserting relation VDB: `Carbon Dioxide->Solidification Transformation`
+INFO: Upserting relation VDB: `Phosphogypsum->Porous Sound Absorbing Material`
+INFO: Upserting relation VDB: `Carbon Solidification Mechanism->Potassium Feldspar`
+INFO: Upserting relation VDB: `Carbon Dioxide->Separation and Purification`
+INFO: Upserting relation VDB: `Acid Leaching->Phosphogypsum`
+INFO: Upserting relation VDB: `Carbon Dioxide->Carbon Solidification Mechanism`
+INFO: Upserting relation VDB: `Cement Retarder->Phosphogypsum`
+INFO: Upserting relation VDB: `Carbon Dioxide->Global Warming`
+INFO: Upserting relation VDB: `Building Gypsum Cementitious Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Carbon Emission Reduction->Phosphogypsum`
+INFO: Upserting relation VDB: `Carbon dioxide->Greenhouse effect`
+INFO: Upserting relation VDB: `Environmental functional materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Starch->Tianjin Institute of Industrial Biotechnology`
+INFO: Upserting relation VDB: `Carbon dioxide->Solvent absorption method`
+INFO: Upserting relation VDB: `Phosphogypsum->Toxic and harmful substances`
+INFO: Upserting relation VDB: `Adsorption method->Carbon dioxide`
+INFO: Upserting relation VDB: `Phosphogypsum->Secondary pollution`
+INFO: Upserting relation VDB: `Carbon dioxide->Membrane separation method`
+INFO: Upserting relation VDB: `Ecological restoration materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Carbon dioxide->Low-temperature distillation method`
+INFO: Upserting relation VDB: `Climate change->Global warming`
+INFO: Upserting relation VDB: `Phosphogypsum->Pit filling`
+INFO: Upserting relation VDB: `Carbon Neutralization->Industrial solid waste`
+INFO: Upserting relation VDB: `Carbon dioxide->Electrochemical method`
+INFO: Upserting relation VDB: `China->Tail gas`
+INFO: Upserting relation VDB: `Natural gypsum->Phosphogypsum`
+INFO: Upserting relation VDB: `Industrial Carbon Dioxide->Waste Gypsum`
+INFO: Upserting relation VDB: `Biological carbon dioxide recovery technology->Carbon dioxide`
+INFO: Upserting relation VDB: `PG->Rare Earth Elements`
+INFO: Upserting relation VDB: `Phosphogypsum->Tail gas`
+INFO: Upserting relation VDB: `Carbon Emission Reduction->Waste Gypsum`
+INFO: Upserting relation VDB: `Carbon dioxide->Hydrate method`
+INFO: Upserting relation VDB: `PG->Rare And Precious Heavy Metals`
+INFO: Upserting relation VDB: `Leaching Solution->Rare Earth Elements`
+INFO: Upserting relation VDB: `Green Water And Green Mountains Are Golden Mountains And Silver Mountains->Waste Gypsum`
+INFO: Upserting relation VDB: `Carbonate And Bicarbonate Salts->Hydrated REE Carbonates`
+INFO: Upserting relation VDB: `Caustic Soda->Monazite`
+INFO: Upserting relation VDB: `Leaching->PG`
+INFO: Upserting relation VDB: `Carbon Dioxide Solidification->Process And Mechanism Of Carbon Dioxide Solidification`
+INFO: Upserting relation VDB: `Industrial Carbon Dioxide->Tail Gas`
+INFO: Upserting relation VDB: `Carbonate And Bicarbonate Salts->REE Hydroxy Carbonates`
+INFO: Upserting relation VDB: `Chemical Formula (10)->Rare Earth Elements`
+INFO: Upserting relation VDB: `Leaching->Leaching Solution`
+INFO: Upserting relation VDB: `Equation (12)->Hydrated REE Carbonates`
+INFO: Upserting relation VDB: `Equations (13) And (14)->Monazite`
+INFO: Upserting relation VDB: `Environmental Protection->Extracting Rare And Precious Heavy Metals`
+INFO: Upserting relation VDB: `Chemical Formula (11)->Rare Earth Elements`
+INFO: Upserting relation VDB: `Acids->Leaching`
+INFO: Upserting relation VDB: `Liu, S.->Phosphogypsum`
+INFO: Upserting relation VDB: `Extracting Rare And Precious Heavy Metals->High Value-Added Treatment`
+INFO: Upserting relation VDB: `Lopez, F.I.A.->Sulfur Polymer Matrix`
+INFO: Upserting relation VDB: `Ouyang, J.->Phosphogypsum`
+INFO: Upserting relation VDB: `Extracting Rare And Precious Heavy Metals->Market Demand`
+INFO: Upserting relation VDB: `Lu, W.->α-Hemihydrate Gypsum`
+INFO: Upserting relation VDB: `Gazquez, M.->Sulfur Polymer Matrix`
+INFO: Upserting relation VDB: `Phosphogypsum->Ren, J.`
+INFO: Upserting relation VDB: `Fly Ash->Lime`
+INFO: Upserting relation VDB: `Ma, B.->α-Hemihydrate Gypsum`
+INFO: Upserting relation VDB: `Alguacil, F.J.->Sulfur Polymer Matrix`
+INFO: Upserting relation VDB: `Hydrothermal Conversion->Rare Earths`
+INFO: Upserting relation VDB: `Lime->Phosphogypsum`
+INFO: Upserting relation VDB: `Su, Y.->α-Hemihydrate Gypsum`
+INFO: Upserting relation VDB: `Nano Structured Biphasic Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Construct. Build. Mater.->Phosphogypsum`
+INFO: Upserting relation VDB: `Hydrothermal Conversion->Phosphogypsum`
+INFO: Upserting relation VDB: `J. Hazard Mater.->Phosphogypsum`
+INFO: Upserting relation VDB: `Salt Solution Method->α-Hemihydrate Gypsum`
+INFO: Upserting relation VDB: `J. Clean. Prod.->Phosphogypsum`
+INFO: Upserting relation VDB: `Jin, Z.->Porous Sound Absorbing Material`
+INFO: Upserting relation VDB: `Phosphogypsum->Tunisia`
+INFO: Upserting relation VDB: `Chen, D.->Phosphorus Impurities`
+INFO: Upserting relation VDB: `Calcination Modification->Phosphogypsum`
+INFO: Upserting relation VDB: `Case Stud. Construct. Mater.->Undisturbed Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphorus Impurities->Wang, A.`
+INFO: Upserting relation VDB: `Microencapsulation->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcination Modification->Supersulfated Cement`
+INFO: Upserting relation VDB: `Chemistry Africa->Rare Earths`
+INFO: Upserting relation VDB: `CrystEngComm->Phosphorus Impurities`
+INFO: Upserting relation VDB: `Mater. Res. Bull.->Nano Structured Biphasic Materials`
+INFO: Upserting relation VDB: `Phosphogypsum->Salt Solution Method`
+INFO: Upserting relation VDB: `Microencapsulation->Sulfur Polymer Matrix`
+INFO: Upserting relation VDB: `CaCl2 Solution->α-Hemihydrate Gypsum`
+INFO: Upserting relation VDB: `Fenghui Wu->Kunming University of Science and Technology`
+INFO: Upserting relation VDB: `Phosphogypsum->Procedia Manuf.`
+INFO: Upserting relation VDB: `Phosphorus Impurities->α-Hemihydrate Gypsum`
+INFO: Upserting relation VDB: `Apatite->Phosphoric Acid`
+INFO: Upserting relation VDB: `Fenghui Wu->National Regional Engineering Research Center-NCW`
+INFO: Upserting relation VDB: `Phosphogypsum->Undisturbed Phosphogypsum`
+INFO: Upserting relation VDB: `Cleaner Phosphogypsum->α-Hemihydrate Gypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Phosphoric Acid`
+INFO: Upserting relation VDB: `Dry Method->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Wet Method`
+INFO: Upserting relation VDB: `Agriculture->Phosphogypsum`
+INFO: Upserting relation VDB: `Filling Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Carbon Sequestration->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Rare and Precious Extraction`
+INFO: Upserting relation VDB: `Phosphogypsum->Prefabricated Building Materials`
+INFO: Upserting relation VDB: `Eco-friendly Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Soil Materials`
+INFO: Upserting relation VDB: `New Green Functional Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Ion-Exchange Resins->Rare Earth Element Purification and Separation`
+INFO: Upserting relation VDB: `Chemical Fillers->Phosphogypsum`
+INFO: Upserting relation VDB: `China->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Rare Earth Elements`
+INFO: Upserting relation VDB: `Chemical Looping Gasification->Lignite`
+INFO: Upserting relation VDB: `Phosphogypsum->Pretreatment Stage`
+INFO: Upserting relation VDB: `Chemical Looping Gasification->Syngas`
+INFO: Upserting relation VDB: `Dissolution of Rare Earth Elements->Phosphogypsum`
+INFO: Upserting relation VDB: `Biphasic Calcium Phosphate->Phosphogypsum`
+INFO: Upserting relation VDB: `Dissolution of Rare Earth Elements->Rare Earth Element Purification and Separation`
+INFO: Upserting relation VDB: `Hydroxyapatite->Phosphogypsum`
+INFO: Upserting relation VDB: `Dissolution of Rare Earth Elements->Leaching Agents`
+INFO: Upserting relation VDB: `Biphasic Calcium Phosphate->Mohamed et al.`
+INFO: Upserting relation VDB: `Phosphogypsum->Voncken`
+INFO: Upserting relation VDB: `Bensalah et al.->Hydroxyapatite`
+INFO: Upserting relation VDB: `Chemical Looping Gasification->Yang et al.`
+INFO: Upserting relation VDB: `Monazite->Zhang et al.`
+INFO: Upserting relation VDB: `Phosphogypsum->Virolainen et al.`
+INFO: Upserting relation VDB: `Chemical Looping Gasification->PG Oxygen Carrier`
+INFO: Upserting relation VDB: `Monazite->Sadri et al.`
+INFO: Upserting relation VDB: `Omodara et al.->Phosphogypsum`
+INFO: Upserting relation VDB: `Fig. 4->Rare Earth Elements`
+INFO: Upserting relation VDB: `Equation 13->Monazite`
+INFO: Upserting relation VDB: `Chemical Formulas (15) - (22)->Lignite`
+INFO: Upserting relation VDB: `Hydrothermal Synthesis->Hydroxyapatite`
+INFO: Upserting relation VDB: `Phosphogypsum->Riddle et al.`
+INFO: Upserting relation VDB: `Equilibrium Batch Experiments->Ion-Exchange Resins`
+INFO: Upserting relation VDB: `Eluents->Rare Earth Element Purification and Separation`
+INFO: Upserting relation VDB: `Equation 14->Monazite`
+INFO: Upserting relation VDB: `Fabrication of Nano Structured Biphasic Materials->Mohamed, K.R.`
+INFO: Upserting relation VDB: `Potential Use of Phosphogypsum in Alkali-Activated Fly Ash->Rashad, A.M.`
+INFO: Upserting relation VDB: `Costis et al.->Phosphogypsum`
+INFO: Upserting relation VDB: `Perez-Lopez, R.->Pollutant Flows From A Phosphogypsum Disposal Area`
+INFO: Upserting relation VDB: `Hydrometallurgy of Rare Earths->Qi, D.`
+INFO: Upserting relation VDB: `Electrodialysis->Enhancing the Sustainability of Phosphogypsum Recycling`
+INFO: Upserting relation VDB: `Phosphogypsum as a Construction Material->Rashad, A.M.`
+INFO: Upserting relation VDB: `Raman Spectroscopic Study of Phosphogypsum Thermal Reduction->Raman Spectroscopy`
+INFO: Upserting relation VDB: `Biochemical Recycling->The Process of Environmentally Safe Biochemical Recycling of Phosphogypsum`
+INFO: Upserting relation VDB: `Hydrometallurgy->Hydrometallurgy of Rare Earths`
+INFO: Upserting relation VDB: `Rare Earth Elements->Recycling and Substitution of Light Rare Earth Elements`
+INFO: Upserting relation VDB: `Fabrication of Nano Structured Biphasic Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Raman Spectroscopic Study of Phosphogypsum Thermal Reduction->Thermal Reduction`
+INFO: Upserting relation VDB: `Hydrometallurgy of Rare Earths->Rare Earth Elements`
+INFO: Upserting relation VDB: `Enhancing the Sustainability of Phosphogypsum Recycling->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Raman Spectroscopic Study of Phosphogypsum Thermal Reduction`
+INFO: Upserting relation VDB: `Fabrication of Nano Structured Biphasic Materials->Mater. Res. Bull.`
+INFO: Upserting relation VDB: `ACS Sustainable Chemistry and Engineering->Enhancing the Sustainability of Phosphogypsum Recycling`
+INFO: Upserting relation VDB: `Phosphogypsum->Potential Use of Phosphogypsum in Alkali-Activated Fly Ash`
+INFO: Upserting relation VDB: `Minerals->Recycling and Substitution of Light Rare Earth Elements`
+INFO: Upserting relation VDB: `Journal of Cleaner Production->Potential Use of Phosphogypsum in Alkali-Activated Fly Ash`
+INFO: Upserting relation VDB: `Phosphogypsum->Phosphogypsum as a Construction Material`
+INFO: Upserting relation VDB: `Pollutant Flows From A Phosphogypsum Disposal Area->Science of the Total Environment`
+INFO: Upserting relation VDB: `Journal of Cleaner Production->Phosphogypsum as a Construction Material`
+INFO: Upserting relation VDB: `Phosphogypsum->The Process of Environmentally Safe Biochemical Recycling of Phosphogypsum`
+INFO: Upserting relation VDB: `Elsevier->Hydrometallurgy of Rare Earths`
+INFO: Upserting relation VDB: `Fabrication of Nano Structured Biphasic Materials->Mousa, S.M.`
+INFO: Upserting relation VDB: `Dissolution->PG`
+INFO: Upserting relation VDB: `Effects of Redox Oscillations on the Phosphogypsum Waste->Phosphogypsum`
+INFO: Upserting relation VDB: `Decomposition->PG`
+INFO: Upserting relation VDB: `Phosphogypsum->Pollutant Flows From A Phosphogypsum Disposal Area`
+INFO: Upserting relation VDB: `Chemosphere->Effects of Redox Oscillations on the Phosphogypsum Waste`
+INFO: Upserting relation VDB: `PG->Ultrasonic Field`
+INFO: Upserting relation VDB: `Heavy Metals->Hydroxide Precipitation`
+INFO: Upserting relation VDB: `PG->Temperature`
+INFO: Upserting relation VDB: `Hydroxide Precipitation->Phosphorus`
+INFO: Upserting relation VDB: `Electromagnetic Field->PG`
+INFO: Upserting relation VDB: `Fluorine->Hydroxide Precipitation`
+INFO: Upserting relation VDB: `Magnetic Field->PG`
+INFO: Upserting relation VDB: `Ammonium Magnesium Phosphate Hexahydrate->Hydroxide Precipitation`
+INFO: Upserting relation VDB: `Electric Field->PG`
+INFO: Upserting relation VDB: `Fig. 5->Resource Utilization Mechanism`
+INFO: Upserting relation VDB: `Calcium Hydroxide->Hydroxide Precipitation`
+INFO: Upserting relation VDB: `Crystallization Mechanism->PG`
+INFO: Upserting relation VDB: `Fig. 6->Resource Utilization Mechanism`
+INFO: Upserting relation VDB: `Hydroxide Precipitation->Magnesium Fluoride`
+INFO: Upserting relation VDB: `Electric Field->Secondary Electrons`
+INFO: Upserting relation VDB: `Crystal Lattice->PG`
+INFO: Upserting relation VDB: `Calcium Fluoride->Hydroxide Precipitation`
+INFO: Upserting relation VDB: `Chemical Bond Fracture->Secondary Electrons`
+INFO: Upserting relation VDB: `Crystal Lattice->Ultrasonic Field`
+INFO: Upserting relation VDB: `Calcium Phosphate->Hydroxide Precipitation`
+INFO: Upserting relation VDB: `Secondary Electrons->Suprathreshold Ionization`
+INFO: Upserting relation VDB: `Heavy Metals->Normal Acid Salt Precipitation`
+INFO: Upserting relation VDB: `Secondary Electrons->Suprathreshold Dissociation`
+INFO: Upserting relation VDB: `Normal Acid Salt Precipitation->Phosphorus`
+INFO: Upserting relation VDB: `Bond Softening->Secondary Electrons`
+INFO: Upserting relation VDB: `Fluorine->Normal Acid Salt Precipitation`
+INFO: Upserting relation VDB: `Coulomb Explosion->Secondary Electrons`
+INFO: Upserting relation VDB: `Mn5(PO4)2(OH)4->Normal Acid Salt Precipitation`
+INFO: Upserting relation VDB: `Complexes->PG`
+INFO: Upserting relation VDB: `Mn3(PO4)2·3H2O->Normal Acid Salt Precipitation`
+INFO: Upserting relation VDB: `Coordination->Heavy Metals`
+INFO: Upserting relation VDB: `Gelling Active Substances->PG`
+INFO: Upserting relation VDB: `Capsule Wrapping->Phosphorus`
+INFO: Upserting relation VDB: `Adsorption->Fluorine`
+INFO: Upserting relation VDB: `Mn(OH)2->Normal Acid Salt Precipitation`
+INFO: Upserting relation VDB: `Phosphogypsum->Rashad, A.M.`
+INFO: Upserting relation VDB: `Rare Earths->Riddle, M.E.`
+INFO: Upserting relation VDB: `Mg2(PO4)F->Normal Acid Salt Precipitation`
+INFO: Upserting relation VDB: `Gypsum Mortars->del Río-Merino, M.`
+INFO: Upserting relation VDB: `Phosphogypsum->Reijnders, L.`
+INFO: Upserting relation VDB: `Carbon Dioxide Mineralization->Romero-Hermida, I.`
+INFO: Upserting relation VDB: `CaMgPO4F->Normal Acid Salt Precipitation`
+INFO: Upserting relation VDB: `Hemihydrate Phosphogypsum->Rong, K.`
+INFO: Upserting relation VDB: `Cement Production->Rosales, J.`
+INFO: Upserting relation VDB: `Phosphogypsum->Romero-Hermida, I.`
+INFO: Upserting relation VDB: `Gypsum Mortars->Rubio-Avalos, J.C.`
+INFO: Upserting relation VDB: `Normal Acid Salt Precipitation->Release Efficiency`
+INFO: Upserting relation VDB: `Monazite Concentrate->Sadri, F.`
+INFO: Upserting relation VDB: `Phosphogypsum->Rosales, J.`
+INFO: Upserting relation VDB: `Calcium Sulfate Hemihydrate->Saha, A.`
+INFO: Upserting relation VDB: `Fly Ash->Saleh, E.`
+INFO: Upserting relation VDB: `Long-term Solidification and Stabilization Effect->Normal Acid Salt Precipitation`
+INFO: Upserting relation VDB: `Rare Earths->Sadri, F.`
+INFO: Upserting relation VDB: `Flue Gas Desulfurization Gypsum->Shen BHG, Z.X.`
+INFO: Upserting relation VDB: `Phosphogypsum->Saadaoui, E.`
+INFO: Upserting relation VDB: `Journal of Cleaner Production->Rashad, A.M.`
+INFO: Upserting relation VDB: `Journal of Building Engineering->del Río-Merino, M.`
+INFO: Upserting relation VDB: `Minerals->Rong, K.`
+INFO: Upserting relation VDB: `Calcium Sulfate Hemihydrate->Shen BHG, Z.X.`
+INFO: Upserting relation VDB: `Phosphogypsum->Samet, M.`
+INFO: Upserting relation VDB: `Journal of CO2 Utilization->Romero-Hermida, I.`
+INFO: Upserting relation VDB: `International Journal of Mineral Processing->Sadri, F.`
+INFO: Upserting relation VDB: `Journal of Cleaner Production->Rosales, J.`
+INFO: Upserting relation VDB: `Langmuir->Saha, A.`
+INFO: Upserting relation VDB: `Journal of the American Ceramic Society->Shen BHG, Z.X.`
+INFO: Upserting relation VDB: `Environmental Science and Pollution Control Series->Samet, M.`
+INFO: Upserting relation VDB: `Electrodialysis->Phosphogypsum`
+INFO: Upserting relation VDB: `3D Printing->Prefabricated Building Materials`
+INFO: Upserting relation VDB: `Green Functional Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Bipolar Membrane->Electrodialysis`
+INFO: Upserting relation VDB: `Ecological Filling Materials->Phosphogypsum`
+INFO: Upserting relation VDB: `Electrodialysis->Sodium Hydroxide`
+INFO: Upserting relation VDB: `Chemical Filler->Phosphogypsum`
+INFO: Upserting relation VDB: `Electrodialysis->Sulfuric Acid`
+INFO: Upserting relation VDB: `Phosphogypsum->The National Key Research and Development Plan`
+INFO: Upserting relation VDB: `Phosphogypsum->The National Natural Science Foundation of China`
+INFO: Upserting relation VDB: `Potassium Chloride->Potassium Sulfate`
+INFO: Upserting relation VDB: `Monat et al., 2020->Phosphogypsum`
+INFO: Upserting relation VDB: `Double Decomposition Reaction->Potassium Sulfate`
+INFO: Upserting relation VDB: `Chen et al., 2020b->Phosphogypsum`
+INFO: Upserting relation VDB: `Abril et al., 2009->South West Spain`
+INFO: Upserting relation VDB: `Phosphogypsum->Phosphorus`
+INFO: Upserting relation VDB: `Abu-Eishah et al., 2000->Potassium Sulfate`
+INFO: Upserting relation VDB: `Fluorine->Phosphogypsum`
+INFO: Upserting relation VDB: `Singh M->Treating waste phosphogypsum for cement and plaster manufacture`
+INFO: Upserting relation VDB: `Effect of potassium sodium tartrate and sodium citrate on the preparation of α-calcium sulfate hemihydrate from flue gas desulfurization gypsum in a concentrated electrolyte solution->Shen BHG`
+INFO: Upserting relation VDB: `Heavy Metals->Phosphogypsum`
+INFO: Upserting relation VDB: `Environmental impact and management of phosphogypsum->Tavibi H`
+INFO: Upserting relation VDB: `Tian Yan->Utilization of original phosphogypsum for the preparation of foam concrete`
+INFO: Upserting relation VDB: `Thermal conductivity and strength of foamed gypsum formulated using aluminum sulfate and sodium bicarbonate as gasproducing additives->Umponpanarat P`
+INFO: Upserting relation VDB: `Clay Bricks->Phosphogypsum`
+INFO: Upserting relation VDB: `Comparison of alternative management methods for phosphogypsum waste using life cycle analysis->Life cycle analysis`
+INFO: Upserting relation VDB: `Phosphogypsum->Rheological Property Control`
+INFO: Upserting relation VDB: `Ajam et al., 2009->Clay Bricks`
+INFO: Upserting relation VDB: `Harmless Treatment->Phosphogypsum`
+INFO: Upserting relation VDB: `Flue gas desulfurization gypsum->α-calcium sulfate hemihydrate`
+INFO: Upserting relation VDB: `Distribution of uranium and thorium chains radionuclides in different fractions of phosphogypsum grains->Uranium`
+INFO: Upserting relation VDB: `Calcium sulphoaluminate cements->Phosphogypsum`
+INFO: Upserting relation VDB: `Distribution of uranium and thorium chains radionuclides in different fractions of phosphogypsum grains->Thorium chains radionuclides`
+INFO: Upserting relation VDB: `Calcium Sulfate Dihydrate->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum->Selenite plaster`
+INFO: Upserting relation VDB: `Phosphogypsum (PG)->Silica`
+INFO: Upserting relation VDB: `Anhydrite plaster->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Phosphate->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum->Uranium`
+INFO: Upserting relation VDB: `Iron Oxide->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum->Thorium chains radionuclides`
+INFO: Upserting relation VDB: `Metal Trace Elements->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum (PG)->Rare Earth Elements`
+INFO: Upserting relation VDB: `Cement->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum (PG)->Sulfuric Acid`
+INFO: Upserting relation VDB: `Building Materials->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum (PG)->Soil Conditioner`
+INFO: Upserting relation VDB: `High-Strength Gypsum->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Harmless Treatment->Solid Waste Treatment`
+INFO: Upserting relation VDB: `Calcium Carbonate->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Characterization Methods->Particle Size Distribution`
+INFO: Upserting relation VDB: `Calcium Sulfate Whiskers->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Characterization Methods->Moisture Content`
+INFO: Upserting relation VDB: `Agricultural Fertilizer->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum (PG)->Soil Amendments`
+INFO: Upserting relation VDB: `Environmental Problems->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Magnesium->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Environmental Problems->Resource Utilization`
+INFO: Upserting relation VDB: `Aluminum->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum (PG)->Sulfides`
+INFO: Upserting relation VDB: `Organic matter->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Atom replacement->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Interstitial filling->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Lattice morphology->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum (PG)->Phosphorus`
+INFO: Upserting relation VDB: `Fluorine->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Arsenic->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Chromium->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Cadmium->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Phosphogypsum (PG)->Phosphorus chemical enterprises`
+INFO: Upserting relation VDB: `Ajam, L.->Characterization Of The Tunisian Phosphogypsum And Its Valorization In Clay Bricks`
+INFO: Upserting relation VDB: `Micro morphology->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Characterization Of The Tunisian Phosphogypsum And Its Valorization In Clay Bricks->Phosphogypsum`
+INFO: Upserting relation VDB: `Fine powder->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Characterization Of The Tunisian Phosphogypsum And Its Valorization In Clay Bricks->Clay Bricks`
+INFO: Upserting relation VDB: `Akın Altun, I.->Utilization Of Weathered Phosphogypsum As Set Retarder In Portland Cement`
+INFO: Upserting relation VDB: `Agglomeration->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Characterization Of The Tunisian Phosphogypsum And Its Valorization In Clay Bricks->Construct. Build. Mater.`
+INFO: Upserting relation VDB: `Portland Cement->Utilization Of Weathered Phosphogypsum As Set Retarder In Portland Cement`
+INFO: Upserting relation VDB: `Aly, M.M.->Recovery Of Lanthanides From Abu Tartur Phosphate Rock, Egypt`
+INFO: Upserting relation VDB: `Dust->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Lanthanides->Recovery Of Lanthanides From Abu Tartur Phosphate Rock, Egypt`
+INFO: Upserting relation VDB: `Binnemans, K.->Towards Zero-Waste Valorisation Of Rare-Earth-Containing Industrial Process Residues`
+INFO: Upserting relation VDB: `Massive stacking->Phosphogypsum (PG)`
+INFO: Upserting relation VDB: `Abu Tartur Phosphate Rock->Recovery Of Lanthanides From Abu Tartur Phosphate Rock, Egypt`
+INFO: Upserting relation VDB: `Rare Earth Elements->Towards Zero-Waste Valorisation Of Rare-Earth-Containing Industrial Process Residues`
+INFO: Upserting relation VDB: `PG treatment technology->Phosphogypsum (PG)`
+INFO: Chunks appended from relation: `Leaching Of Rare Earth Elements And Impurities From Phosphogypsum`
+INFO: Upserting relation VDB: `Canovas, C.R.->Leaching Of Rare Earth Elements And Impurities From Phosphogypsum`
+INFO: Upserting relation VDB: `Egypt->Recovery Of Lanthanides From Abu Tartur Phosphate Rock, Egypt`
+INFO: Upserting relation VDB: `Industrial Process Residues->Towards Zero-Waste Valorisation Of Rare-Earth-Containing Industrial Process Residues`
+INFO: Upserting relation VDB: `Cement Concr. Res.->Utilization Of Weathered Phosphogypsum As Set Retarder In Portland Cement`
+INFO: Upserting relation VDB: `Leaching->Leaching Of Rare Earth Elements And Impurities From Phosphogypsum`
+INFO: Chunks appended from relation: `Hydrometallurgy`
+INFO: Upserting relation VDB: `Andreev, V.A.->Phosphogypsum Technology With The Extraction Of Valuable Components`
+INFO: Upserting relation VDB: `J. Clean. Prod.->Towards Zero-Waste Valorisation Of Rare-Earth-Containing Industrial Process Residues`
+INFO: Upserting relation VDB: `Hydrometallurgy->Recovery Of Lanthanides From Abu Tartur Phosphate Rock, Egypt`
+INFO: Upserting relation VDB: `Leaching Of Rare Earth Elements And Impurities From Phosphogypsum->Phosphogypsum`
+INFO: Upserting relation VDB: `Azouazi, M.->Natural Radioactivity In Phosphates, Phosphogypsum And Natural Waters In Morocco`
+INFO: Upserting relation VDB: `Life Cycle Analysis->Phosphogypsum Waste`
+INFO: Upserting relation VDB: `Aluminum Sulfate->Foamed Gypsum`
+INFO: Upserting relation VDB: `A. V. Procedia Chemistry->Phosphogypsum Technology With The Extraction Of Valuable Components`
+INFO: Upserting relation VDB: `Electrical Resistivity Tomography->Heavy Metals`
+INFO: Upserting relation VDB: `J. Environ. Radioact.->Natural Radioactivity In Phosphates, Phosphogypsum And Natural Waters In Morocco`
+INFO: Upserting relation VDB: `Rare Earth Elements->Resin-in-Leach Process`
+INFO: Upserting relation VDB: `Foamed Gypsum->Sodium Bicarbonate`
+INFO: Upserting relation VDB: `Computable General Equilibrium Analysis->Environmental Regulations`
+INFO: Upserting relation VDB: `Calcium Sulfoaluminate->Phosphogypsum Waste`
+INFO: Upserting relation VDB: `Heavy Metals->Multivariate Analysis`
+INFO: Upserting relation VDB: `J. Clean. Prod.->Wang, Q.`
+INFO: Upserting relation VDB: `Acid Leaching->Rare Earth Elements`
+INFO: Upserting relation VDB: `Hydrometallurgy->Virolainen, S.`
+INFO: Upserting relation VDB: `Construct. Build. Mater.->Wang, Q.`
+INFO: Upserting relation VDB: `Environmental Regulations->J. Clean. Prod.`
+INFO: Upserting relation VDB: `Phosphogypsum->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Hydrometallurgy->Resin-in-Leach Process`
+INFO: Upserting relation VDB: `Lime->Precipitation Method`
+INFO: Upserting relation VDB: `Construct. Build. Mater.->Foamed Gypsum`
+INFO: Upserting relation VDB: `Soluble Phosphorus->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Flotation Method->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Pyrophosphate->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Phosphogypsum->Precipitation Method`
+INFO: Upserting relation VDB: `Anhydrous Calcium Sulfate->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Flotation Method->Secondary Wastewater`
+INFO: Upserting relation VDB: `Hemihydrate Gypsum->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Energy Consumption->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Azouazi->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Liu->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Rodrigo H. Geraldo->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Ren->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Cesniene->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Azouazi->Radionuclide Leaching Rate`
+INFO: Upserting relation VDB: `Singh and Garg->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Min->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Degirmenci->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Cao, W.->Preparation Of Anhydrite From Phosphogypsum`
+INFO: Upserting relation VDB: `Canut->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Preparation Of Anhydrite From Phosphogypsum->Yi, W.`
+INFO: Upserting relation VDB: `Garg->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Peng, J.->Preparation Of Anhydrite From Phosphogypsum`
+INFO: Upserting relation VDB: `Cao, W.->Recycling Of Phosphogypsum To Prepare Gypsum Plaster`
+INFO: Upserting relation VDB: `Bumanis->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Recycling Of Phosphogypsum To Prepare Gypsum Plaster->Yi, W.`
+INFO: Upserting relation VDB: `Castillo, J.->Evaluation Of Organic Substrates To Enhance The Sulfate-Reducing Activity In Phosphogypsum`
+INFO: Upserting relation VDB: `Radionuclide Leaching Rate->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Chen, X.->Effect Of Neutralization On The Setting And Hardening Characters Of Hemihydrate Phosphogypsum Plaster`
+INFO: Upserting relation VDB: `Peng, J.->Recycling Of Phosphogypsum To Prepare Gypsum Plaster`
+INFO: Upserting relation VDB: `Evaluation Of Organic Substrates To Enhance The Sulfate-Reducing Activity In Phosphogypsum->Perez-Lopez, R.`
+INFO: Upserting relation VDB: `Chen, Q.->Utilization Of Phosphogypsum To Prepare Highpurity CaCO3`
+INFO: Upserting relation VDB: `A Novel Method For The Stabilization Of Soluble Contaminants In Electrolytic Manganese Residue->Chen, H.`
+INFO: Upserting relation VDB: `Tail Gas Treatment->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Chi, R.->Solution-Chemistry Analysis Of Ammonium Bicarbonate Consumption In Rare-Earth-Element Precipitation`
+INFO: Upserting relation VDB: `Colak, A.->Density And Strength Characteristics Of Foamed Gypsum`
+INFO: Upserting relation VDB: `Contreras, M.->Fractionation And Fluxes Of Metals And Radionuclides During The Recycling Process Of Phosphogypsum Wastes Applied To Mineral CO2 Sequestration`
+INFO: Upserting relation VDB: `Costis, S.->Recovery Potential Of Rare Earth Elements From Mining And Industrial Residues`
+INFO: Upserting relation VDB: `Crusciol, C.A.C.->Soil Fertility, Plant Nutrition, And Grain Yield Of Upland Rice Affected By Surface Application Of Lime, Silicate, And Phosphogypsum`
+INFO: Upserting relation VDB: `Leaching Of Rare Earth Elements And Impurities From Phosphogypsum->Rare Earth Elements`
+INFO: Upserting relation VDB: `2CaHPO4.2H2O->Thermal Pretreatment`
+INFO: Upserting relation VDB: `Anhydrite->Preparation Of Anhydrite From Phosphogypsum`
+INFO: Upserting relation VDB: `Gypsum Plaster->Recycling Of Phosphogypsum To Prepare Gypsum Plaster`
+INFO: Upserting relation VDB: `Fractionation And Fluxes Of Metals And Radionuclides During The Recycling Process Of Phosphogypsum Wastes Applied To Mineral CO2 Sequestration->Mineral CO2 Sequestration`
+INFO: Upserting relation VDB: `Soil Fertility, Plant Nutrition, And Grain Yield Of Upland Rice Affected By Surface Application Of Lime, Silicate, And Phosphogypsum->Upland Rice`
+INFO: Upserting relation VDB: `Calcium Sulfoaluminate Cement->S. Wu`
+INFO: Upserting relation VDB: `D. Zhang->Hydroxyapatite Nanoparticles`
+INFO: Upserting relation VDB: `J. Zhang->Rare Earth Elements`
+INFO: Upserting relation VDB: `Phosphogypsum->S. Wu`
+INFO: Upserting relation VDB: `D. Zhang->Fluoride`
+INFO: Upserting relation VDB: `Rare Earth Elements->Springer International Publishing`
+INFO: Upserting relation VDB: `Lignite Chemical Looping Gasification->Phosphogypsum`
+INFO: Upserting relation VDB: `Hydroxyapatite Nanoparticles->Journal of Hazardous Materials`
+INFO: Upserting relation VDB: `Journal of Environmental Management->Phosphogypsum`
+INFO: Upserting relation VDB: `J. Yang->Lignite Chemical Looping Gasification`
+INFO: Upserting relation VDB: `Bauxite Residue->Xue, S.`
+INFO: Upserting relation VDB: `Journal of Cleaner Production->Phosphogypsum`
+INFO: Upserting relation VDB: `Construction and Building Materials->J. Yang`
+INFO: Upserting relation VDB: `Self-Leveling Mortar->Yang, L.`
+INFO: Upserting relation VDB: `Persulphated Phosphogypsum-Slag Cement Concrete->Youqiang, Huang`
+INFO: Upserting relation VDB: `Kaolin->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Sulfoaluminate Cement->Construction and Building Materials`
+INFO: Upserting relation VDB: `Handb. Phys. Chem. Rare Earths->Rare Earth Elements`
+INFO: Upserting relation VDB: `Aluminum Powder Composites->SN Appl. Sci.`
+INFO: Upserting relation VDB: `J. Wuhan Uniy, Technol, Mater, Sci.->Persulphated Phosphogypsum-Slag Cement Concrete`
+INFO: Upserting relation VDB: `CaO–Al2O3–SiO2 System->ZCKA, B.`
+INFO: Upserting relation VDB: `Carbon Dioxide->Phosphogypsum`
+INFO: Upserting relation VDB: `Secondary Wastewater->Water Washing Method`
+INFO: Upserting relation VDB: `CaO–Al2O3–SiO2 System->Kaolin`
+INFO: Upserting relation VDB: `Carbon Dioxide->Zhang, W.`
+INFO: Upserting relation VDB: `Flotation Method->Organic Matter`
+INFO: Upserting relation VDB: `Phosphorus->Water Washing Method`
+INFO: Upserting relation VDB: `Fluorine->Water Washing Method`
+INFO: Upserting relation VDB: `Flotation Method->Phosphorus`
+INFO: Upserting relation VDB: `Heavy Metals->Water Washing Method`
+INFO: Upserting relation VDB: `Phosphogypsum->Water Washing Method`
+INFO: Upserting relation VDB: `Lime Addition->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Sulphate Dihydrate->Phosphogypsum`
+INFO: Upserting relation VDB: `Lime Addition->Phosphorus`
+INFO: Upserting relation VDB: `Phosphogypsum->Ultrasonic Pretreatment`
+INFO: Upserting relation VDB: `Calcium Sulphate Dihydrate->Phosphorus`
+INFO: Upserting relation VDB: `Fluorine->Lime Addition`
+INFO: Upserting relation VDB: `Microwave Treatment->Phosphogypsum`
+INFO: Upserting relation VDB: `Flotation Method->Fluorine`
+INFO: Upserting relation VDB: `Phosphogypsum->Thermal Treatment`
+INFO: Upserting relation VDB: `Calcium Sulphate Dihydrate->Fluorine`
+INFO: Upserting relation VDB: `Chemical Conditioning->Phosphogypsum`
+INFO: Upserting relation VDB: `Calcium Sulphate Dihydrate->Heavy Metals`
+INFO: Upserting relation VDB: `Kavitha et al., 2013->Microwave Treatment`
+INFO: Upserting relation VDB: `Ségalen et al., 2015->Thermal Treatment`
+INFO: Upserting relation VDB: `Phosphogypsum->Water Leaching`
+INFO: Upserting relation VDB: `Chemical Conditioning->ColomboPalumboJZet al., 2014`
+INFO: Upserting relation VDB: `Singh, 2002->Water Washing Method`
+INFO: Upserting relation VDB: `Phosphogypsum->SEM-EDS`
+INFO: Upserting relation VDB: `ColomboPalumboJZet al., 2014->Water Leaching`
+INFO: Upserting relation VDB: `Phosphogypsum->XRD`
+INFO: Upserting relation VDB: `Phosphogypsum->XRF`
+INFO: Upserting relation VDB: `Phosphogypsum->Sulfur Trioxide`
+INFO: Upserting relation VDB: `Calcium Oxide->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Silicon Dioxide`
+INFO: Upserting relation VDB: `Phosphogypsum->Phosphorus Pentoxide`
+INFO: Upserting relation VDB: `Iron(III) Oxide->Phosphogypsum`
+INFO: Upserting relation VDB: `Aluminium Oxide->Phosphogypsum`
+INFO: Upserting relation VDB: `Magnesium Oxide->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Sodium Oxide`
+INFO: Upserting relation VDB: `Phosphogypsum->Potassium Oxide`
+INFO: Upserting relation VDB: `Manganese(II) Oxide->Phosphogypsum`
+INFO: Upserting relation VDB: `Free Water->Phosphogypsum`
+INFO: Upserting relation VDB: `Flotation Agents->Flotation Method`
+INFO: Upserting relation VDB: `Crystal Water->Phosphogypsum`
+INFO: Upserting relation VDB: `Washing Liquid->Water Washing Method`
+INFO: Upserting relation VDB: `Acid Insoluble Matter->Phosphogypsum`
+INFO: Upserting relation VDB: `Mi et al., 2019->Phosphogypsum`
+INFO: Upserting relation VDB: `Gong et al., 2020a->Phosphogypsum`
+INFO: Upserting relation VDB: `Phosphogypsum->Wu et al., 2020`
+INFO: Upserting relation VDB: `Particle Size Distribution->Phosphogypsum`
+INFO: Phase 2 relation processing completed for doc-a7ec54d376b079eceb4eab9d1f23165e: edges=711 added_entities=19
+INFO: Phase 3: Updating final 843(824+19) entities and  711 relations from doc-a7ec54d376b079eceb4eab9d1f23165e
+INFO: Completed merging: 824 entities, 19 extra entities, 711 relations
+INFO: [] entities flush: embedding 843 vectors in 85 batch(es) (batch_num=10)
+INFO: [] relationships flush: embedding 711 vectors in 72 batch(es) (batch_num=10)
+INFO: [] chunks flush: embedding 30 vectors in 3 batch(es) (batch_num=10)
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 1200s, Worker: 2400s, Health Check: 2415s)
+INFO: [] Writing graph with 843 nodes, 711 edges
+INFO: In memory DB persist to disk
+INFO: Completed processing file 1/1: unknown_source
+INFO: Enqueued document processing pipeline stopped
+INFO: Processing 1 document(s)
+INFO: Parsing (native): doc-ce9090f230bcd0bfeefe92db7a576442
+INFO: Extracting stage 1/1: unknown_source
+INFO: Processing d-id: doc-ce9090f230bcd0bfeefe92db7a576442
+INFO: Chunking F(legacy): size=1200, split_only=False, overlap=100, doc_id: doc-ce9090f230bcd0bfeefe92db7a576442
+INFO:  == LLM cache == saving: default:extract:60dd69426c25d2e6d4c1dc3330a42af2
+INFO:  == LLM cache == saving: default:extract:c22b056a5f97355f3c00c82f6926e87e
+INFO:  == LLM cache == saving: default:extract:722dbc07f00675f04a85f40b202adfdf
+INFO:  == LLM cache == saving: default:extract:1308b88d9d90a0f93c2f64f51553ba3b
+INFO:  == LLM cache == saving: default:extract:65329e5d027f0aa2faaeaa622ed5a799
+INFO:  == LLM cache == saving: default:extract:7166ecdb303cf4b55cf275e556787c56
+WARNING: doc-ce9090f230bcd0bfeefe92db7a576442-chunk-003: Complete delimiter can not be found in extraction result
+INFO:  == LLM cache == saving: default:extract:6607717d3e71f627ff72edc9eff8598f
+INFO: Chunk 1 of 26 extracted 19 Ent + 16 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-003
+INFO: Chunk 2 of 26 extracted 31 Ent + 27 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-002
+INFO:  == LLM cache == saving: default:extract:2e95ca219e9a2e799d6a90909edac26e
+INFO: Chunk 3 of 26 extracted 39 Ent + 36 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-000
+INFO: Chunk 4 of 26 extracted 37 Ent + 29 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-001
+INFO:  == LLM cache == saving: default:extract:19a750fcf2f1b528e7ff9f379bd464ba
+INFO:  == LLM cache == saving: default:extract:c2752d803095a357d80d8a411dec3579
+INFO:  == LLM cache == saving: default:extract:5695fa3ca6744993f2c17a60593d041e
+WARNING: doc-ce9090f230bcd0bfeefe92db7a576442-chunk-004: Complete delimiter can not be found in extraction result
+INFO: Chunk 5 of 26 extracted 30 Ent + 24 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-004
+INFO:  == LLM cache == saving: default:extract:338b89ac6d070a46530732fac026ea84
+WARNING: doc-ce9090f230bcd0bfeefe92db7a576442-chunk-007: Complete delimiter can not be found in extraction result
+INFO:  == LLM cache == saving: default:extract:35fdecb842e0c92028cbe74358d74a19
+INFO: Chunk 6 of 26 extracted 20 Ent + 15 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-007
+INFO:  == LLM cache == saving: default:extract:43dd71cdf027b898f47752ed34c3116c
+INFO: Chunk 7 of 26 extracted 21 Ent + 18 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-006
+INFO: Chunk 8 of 26 extracted 40 Ent + 28 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-005
+INFO:  == LLM cache == saving: default:extract:aeb8ffea479cf647ec41180848779f3a
+INFO:  == LLM cache == saving: default:extract:2e23036ff577bc87da6794992a8bde6a
+INFO:  == LLM cache == saving: default:extract:488e89d0711824bc9cb46810d67f3314
+INFO:  == LLM cache == saving: default:extract:d4a7944f7b6d364be30baa1d0a8a92db
+INFO:  == LLM cache == saving: default:extract:ea17db861c726b385ec91476a7418f05
+INFO: Chunk 9 of 26 extracted 34 Ent + 32 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-008
+INFO:  == LLM cache == saving: default:extract:42d8ed7aa32672797144f1db094985ee
+INFO: Chunk 10 of 26 extracted 29 Ent + 23 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-009
+INFO:  == LLM cache == saving: default:extract:71f58ebd7e20fad1d96b640443121f65
+INFO:  == LLM cache == saving: default:extract:682587b390b4b31e69b95fda270c561a
+INFO: Chunk 11 of 26 extracted 33 Ent + 29 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-010
+INFO:  == LLM cache == saving: default:extract:f752db6daba8db2508487f67e544d5af
+INFO: Chunk 12 of 26 extracted 27 Ent + 21 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-011
+INFO:  == LLM cache == saving: default:extract:50ff2e941e794897c541b2a4b0bb31b0
+INFO:  == LLM cache == saving: default:extract:b377ab9687977c978a512255170a603c
+INFO:  == LLM cache == saving: default:extract:2991c2c6104c7578e07426391ad5758f
+INFO:  == LLM cache == saving: default:extract:664b4a0e3cb45637add68a8016424eed
+INFO: Chunk 13 of 26 extracted 32 Ent + 29 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-012
+INFO:  == LLM cache == saving: default:extract:b11daeebe439d83b90cefee1fd88a4d9
+INFO: Chunk 14 of 26 extracted 39 Ent + 23 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-013
+INFO:  == LLM cache == saving: default:extract:7e7165dcaa3ef5d67c1164acdecacfd3
+WARNING: doc-ce9090f230bcd0bfeefe92db7a576442-chunk-015: Complete delimiter can not be found in extraction result
+INFO: Chunk 15 of 26 extracted 26 Ent + 22 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-015
+INFO: Chunk 16 of 26 extracted 31 Ent + 25 Rel doc-ce9090f230bcd0bfeefe92db7a576442-chunk-014
+INFO:  == LLM cache == saving: default:extract:8e5b7b37210a9fce55a0735afc8790b2
+WARNING: doc-ce9090f230bcd0bfeefe92db7a576442-chunk-017: Complete delimiter can not be found in extraction result
+INFO:  == LLM cache == saving: default:extract:df2c34032e677d10a98fd59bc11fa479
+INFO:  == LLM cache == saving: default:extract:d720755e92d357089132af751c1e5899
+INFO:  == LLM cache == saving: default:extract:93002ecaadea0f1b2c6da68792237f1d
+WARNING: doc-ce9090f230bcd0bfeefe92db7a576442-chunk-017: LLM output format error; found 3/5 fields on RELATION `Kluwer Academic Publishers`~`Contaminants and the Soil Environment in the Austral`
+[2026-10-01T22:33:32.018] error: *** JOB 3553505 ON n0519 CANCELLED AT 2026-10-01T22:33:32 DUE TO TIME LIMIT ***

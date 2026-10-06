@@ -1,0 +1,19 @@
+============================================================
+ Phosphogypsum Bot: Autonomous Ephemeral Ingestion Pipeline
+ Job ID:       3541264
+ Host Node:    n0531
+ Working Dir:  /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+ Logs Dir:     /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/logs/slurm
+ Start Time:   Mon Sep 28 10:18:42 PM CST 2026
+============================================================
+[1/4] Starting Neo4j background container...
+[2/4] Starting Milvus Standalone background container...
+[3/4] Probing database readiness on localhost...
+  [TIMEOUT] Neo4j failed to become ready on port 7687 within 240s.
+[ABORT] Database services failed to initialize in time.
+
+============================================================
+ [TEARDOWN] Stopping ephemeral databases and flushing state...
+============================================================
+ Databases cleanly shutdown. Data safely preserved on disk.
+ Finished at: Mon Sep 28 10:22:48 PM CST 2026

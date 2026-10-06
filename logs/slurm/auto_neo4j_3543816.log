@@ -1,0 +1,9 @@
+INFO:    gocryptfs not found, will not be able to use gocryptfs
+Changed password for user 'neo4j'. IMPORTANT: this change will only take effect if performed before the database is started for the first time.
+2026-09-29 03:10:36.853+0000 INFO  Logging config in use: File '/var/lib/neo4j/conf/user-logs.xml'
+2026-09-29 03:10:36.924+0000 WARN  Unrecognized setting. No declared setting with name: PORT.
+2026-09-29 03:10:36.934+0000 INFO  Starting...
+2026-09-29 03:10:37.980+0000 INFO  This instance is ServerId{30f5e234} (30f5e234-707b-4d37-8a74-20fe1a51250a)
+2026-09-29 03:10:38.956+0000 INFO  ======== Neo4j 5.12.0 ========
+2026-09-29 03:13:58.498+0000 INFO  Neo4j Server shutdown initiated by request
+2026-09-29 03:13:58.499+0000 INFO  Stopped.

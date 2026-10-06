@@ -97,10 +97,10 @@ models/**/*.pkl
 chroma_db/
 
 # Logs & Slurm outputs
-*.log
-*.err
-logs/**/*.log
-logs/**/*.err
+#*.log
+#*.err
+#logs/**/*.log
+#logs/**/*.err
 !logs/**/.gitkeep
 
 # OS files

@@ -1,0 +1,8 @@
+INFO:    gocryptfs not found, will not be able to use gocryptfs
+Changed password for user 'neo4j'. IMPORTANT: this change will only take effect if performed before the database is started for the first time.
+2026-09-29 12:04:23.425+0000 INFO  Logging config in use: File '/var/lib/neo4j/conf/user-logs.xml'
+2026-09-29 12:04:23.541+0000 INFO  Starting...
+2026-09-29 12:04:25.125+0000 INFO  This instance is ServerId{30f5e234} (30f5e234-707b-4d37-8a74-20fe1a51250a)
+2026-09-29 12:04:26.307+0000 INFO  ======== Neo4j 5.12.0 ========
+2026-09-29 12:04:29.622+0000 INFO  Neo4j Server shutdown initiated by request
+2026-09-29 12:04:29.622+0000 INFO  Stopped.

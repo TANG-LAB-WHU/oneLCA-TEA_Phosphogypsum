@@ -1,0 +1,13 @@
+============================================================
+ Phosphogypsum Bot: Autonomous Ephemeral Ingestion Pipeline
+ Job ID:       3541846
+ Host Node:    n0531
+ Working Dir:  /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+ Logs Dir:     /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/logs/slurm
+ Start Time:   Mon Sep 28 11:16:44 PM CST 2026
+============================================================
+Assigned Ports: Neo4j Bolt -> 7687, Milvus gRPC -> 19530
+[1/4] Starting Neo4j background container...
+[2/4] Starting Milvus Standalone background container...
+[3/4] Probing database readiness on localhost...
+[2026-09-28T23:17:00.293] error: *** JOB 3541846 ON n0531 CANCELLED AT 2026-09-28T23:17:00 DUE to SIGNAL Terminated ***

@@ -1,0 +1,23 @@
+============================================================
+  Phosphogypsum Knowledge Graph Full Pipeline (9a14a CPU)
+  Job ID:       3553505
+  Compute Node: n0519
+  Partition:    9a14a (192 Cores, NUMA Dual-Socket)
+  Project Root: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+  Start Time:   Thu Oct  1 10:33:30 AM CST 2026
+============================================================
+
+[1/4] Launching Dual NUMA Model Servers...
+  - Starting Qwen3.6-35B Reasoner on Socket 0 (Port 11434, 80 threads)...
+  - Starting Qwen3-Embedding-8B on Socket 1 (Port 11436, 80 threads)...
+
+[2/4] Awaiting model server health status...
+  ... Initializing weights: 30/600s (Reasoner: 0, Embed: 0)
+  ... Initializing weights: 60/600s (Reasoner: 0, Embed: 1)
+  ... Initializing weights: 90/600s (Reasoner: 0, Embed: 1)
+  ... Initializing weights: 120/600s (Reasoner: 0, Embed: 1)
+  [OK] Both Reasoner (11434) and Embedding (11436) servers active and healthy! (Elapsed: 140s)
+
+[3/4] Executing Full-Scale Knowledge Graph & Parameter Synthesis...
+
+>>> [Phase 1/4] Step 2: Full LightRAG Index Construction (72 Papers) <<<
