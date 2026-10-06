@@ -1,4 +1,4 @@
-# Byte-compiled / optimized / DLL files
+﻿# Byte-compiled / optimized / DLL files
 __pycache__
 *.py[cod]
 *$py.class
@@ -76,13 +76,15 @@ datahub/raw/**/*.csv
 datahub/interim/papers/parsed/
 datahub/processed/*.json
 !datahub/processed/ingestion_registry.json
-datahub/processed/lightrag_db/
+datahub/processed/lightrag_db/*.json
+!datahub/processed/lightrag_db/graph_chunk_entity_relation.graphml
 datahub/processed/raganything_db/
 datahub/processed/knowledge_graph/
 datahub/processed/telemetry.db
 datahub/processed/neo4j/
 datahub/processed/milvus/
 datahub/processed/.*_endpoint
+datahub/processed/.neo4j_endpoint
 datahub/processed/.keepalive
 !datahub/**/.gitkeep
 
@@ -97,10 +99,10 @@ models/**/*.pkl
 chroma_db/
 
 # Logs & Slurm outputs
-#*.log
-#*.err
-#logs/**/*.log
-#logs/**/*.err
+*.log
+*.err
+logs/**/*.log
+logs/**/*.err
 !logs/**/.gitkeep
 
 # OS files
