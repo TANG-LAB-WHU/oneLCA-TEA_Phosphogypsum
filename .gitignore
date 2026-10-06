@@ -122,5 +122,5 @@ text.md
 .agents/
 
 # Local Slurm execution scripts (cluster-specific)
-slurm_jobs/run_build_kg_9a14a.sh
-slurm_jobs/run_parse_papers.sh
+#slurm_jobs/run_build_kg_9a14a.sh
+#slurm_jobs/run_parse_papers.sh
