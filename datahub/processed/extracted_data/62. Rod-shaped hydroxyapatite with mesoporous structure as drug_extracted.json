@@ -1,0 +1,48 @@
+{
+  "composition": {
+    "CaSO4": null,
+    "P2O5": null,
+    "F": null,
+    "SiO2": null,
+    "Fe2O3": null,
+    "Al2O3": null,
+    "MgO": null,
+    "K2O": null,
+    "Na2O": null,
+    "heavy_metals": null,
+    "ra226": null,
+    "pH": null,
+    "moisture": null,
+    "particle_size_d50": null,
+    "whiteness": null
+  },
+  "lci": {
+    "functional_unit": null,
+    "energy_consumption": null,
+    "chemical_consumption": null,
+    "water_consumption": null,
+    "emissions_air": null,
+    "emissions_water": null,
+    "solid_waste": null,
+    "yield": null
+  },
+  "cost": {
+    "capex": null,
+    "opex": null,
+    "revenue": null,
+    "payback_period": null,
+    "irr": null,
+    "npv": null,
+    "chemical_cost": null,
+    "energy_cost": null,
+    "labor_cost": null
+  },
+  "policy": {
+    "subsidy_dependency": null,
+    "carbon_credits": null,
+    "regulatory_status": null,
+    "standards_compliance": [],
+    "trade_exposure": null,
+    "market_status": null
+  }
+}

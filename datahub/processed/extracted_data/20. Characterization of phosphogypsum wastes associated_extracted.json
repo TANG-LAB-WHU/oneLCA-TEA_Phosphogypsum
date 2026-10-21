@@ -1,0 +1,43 @@
+{
+  "technology": {
+    "name": null,
+    "description": null,
+    "type": null,
+    "trl": null,
+    "scale_factor": null,
+    "complexity": null,
+    "novel_technology": null,
+    "input_materials": null,
+    "output_products": null,
+    "process_conditions": null
+  },
+  "lci": {
+    "functional_unit": null,
+    "energy_consumption": {},
+    "chemical_consumption": [],
+    "water_consumption": null,
+    "emissions_air": [],
+    "emissions_water": [],
+    "solid_waste": [],
+    "yield": null
+  },
+  "cost": {
+    "capex": null,
+    "opex": null,
+    "revenue": null,
+    "payback_period": null,
+    "irr": null,
+    "npv": null,
+    "chemical_cost": null,
+    "energy_cost": null,
+    "labor_cost": null
+  },
+  "policy": {
+    "subsidy_dependency": null,
+    "carbon_credits": null,
+    "regulatory_status": "restricted (exceeds permissible radiation safety levels for civil use)",
+    "standards_compliance": null,
+    "trade_exposure": null,
+    "market_status": null
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "lci": {
+    "functional_unit": null,
+    "energy_consumption": null,
+    "chemical_consumption": null,
+    "water_consumption": null,
+    "emissions_air": null,
+    "emissions_water": null,
+    "solid_waste": null,
+    "yield": null
+  },
+  "cost": {
+    "capex": null,
+    "opex": null,
+    "revenue": null,
+    "payback_period": null,
+    "irr": null,
+    "npv": null,
+    "chemical_cost": null,
+    "energy_cost": null,
+    "labor_cost": null
+  },
+  "policy": {
+    "subsidy_dependency": null,
+    "carbon_credits": null,
+    "regulatory_status": null,
+    "standards_compliance": null,
+    "trade_exposure": null,
+    "market_status": null
+  }
+}

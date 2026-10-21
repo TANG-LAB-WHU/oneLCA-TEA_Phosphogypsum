@@ -1,0 +1,1151 @@
+{
+  "generated_at": "2026-10-21T03:32:08",
+  "source_directory": "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/extracted_data",
+  "source_file_count": 72,
+  "pathways": {
+    "PG-Stack": {
+      "coverage": 0.0,
+      "inferred_parameters": 0,
+      "total_parameters": 12,
+      "missing_parameters": [
+        "diesel_kg_per_t",
+        "electricity_kwh_per_t",
+        "co2_factor",
+        "radon_emission_rate",
+        "stack_area_m2_per_t",
+        "caso4_fraction",
+        "p2o5_fraction",
+        "f_fraction",
+        "ra226_bq_kg",
+        "leachate_m3_per_t",
+        "p_leach_fraction",
+        "f_leach_fraction"
+      ],
+      "parameters": {
+        "diesel_kg_per_t": {
+          "value": 2.0,
+          "range": [
+            2.0,
+            2.0
+          ],
+          "sample_count": 0,
+          "default_value": 2.0,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "electricity_kwh_per_t": {
+          "value": 5.0,
+          "range": [
+            5.0,
+            5.0
+          ],
+          "sample_count": 0,
+          "default_value": 5.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kWh/t"
+        },
+        "co2_factor": {
+          "value": 3.2,
+          "range": [
+            3.2,
+            3.2
+          ],
+          "sample_count": 0,
+          "default_value": 3.2,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "radon_emission_rate": {
+          "value": 0.5,
+          "range": [
+            0.5,
+            0.5
+          ],
+          "sample_count": 0,
+          "default_value": 0.5,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "stack_area_m2_per_t": {
+          "value": 2.0,
+          "range": [
+            2.0,
+            2.0
+          ],
+          "sample_count": 0,
+          "default_value": 2.0,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "caso4_fraction": {
+          "value": 0.92,
+          "range": [
+            0.92,
+            0.92
+          ],
+          "sample_count": 0,
+          "default_value": 0.92,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "mass_fraction"
+        },
+        "p2o5_fraction": {
+          "value": 0.01,
+          "range": [
+            0.01,
+            0.01
+          ],
+          "sample_count": 0,
+          "default_value": 0.01,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "mass_fraction"
+        },
+        "f_fraction": {
+          "value": 0.006,
+          "range": [
+            0.006,
+            0.006
+          ],
+          "sample_count": 0,
+          "default_value": 0.006,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "mass_fraction"
+        },
+        "ra226_bq_kg": {
+          "value": 500,
+          "range": [
+            500,
+            500
+          ],
+          "sample_count": 0,
+          "default_value": 500,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "Bq/kg"
+        },
+        "leachate_m3_per_t": {
+          "value": 0.1,
+          "range": [
+            0.1,
+            0.1
+          ],
+          "sample_count": 0,
+          "default_value": 0.1,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "m3/t"
+        },
+        "p_leach_fraction": {
+          "value": 0.001,
+          "range": [
+            0.001,
+            0.001
+          ],
+          "sample_count": 0,
+          "default_value": 0.001,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "f_leach_fraction": {
+          "value": 0.01,
+          "range": [
+            0.01,
+            0.01
+          ],
+          "sample_count": 0,
+          "default_value": 0.01,
+          "fallback_used": true,
+          "source_parameters": []
+        }
+      },
+      "parameter_distributions": {
+        "diesel_kg_per_t": {
+          "type": "triangular",
+          "min": 1.6,
+          "mode": 2.0,
+          "max": 2.4
+        },
+        "electricity_kwh_per_t": {
+          "type": "triangular",
+          "min": 4.0,
+          "mode": 5.0,
+          "max": 6.0
+        },
+        "co2_factor": {
+          "type": "triangular",
+          "min": 2.5600000000000005,
+          "mode": 3.2,
+          "max": 3.84
+        },
+        "radon_emission_rate": {
+          "type": "triangular",
+          "min": 0.4,
+          "mode": 0.5,
+          "max": 0.6
+        },
+        "stack_area_m2_per_t": {
+          "type": "triangular",
+          "min": 1.6,
+          "mode": 2.0,
+          "max": 2.4
+        },
+        "caso4_fraction": {
+          "type": "triangular",
+          "min": 0.7360000000000001,
+          "mode": 0.92,
+          "max": 1.104
+        },
+        "p2o5_fraction": {
+          "type": "triangular",
+          "min": 0.008,
+          "mode": 0.01,
+          "max": 0.012
+        },
+        "f_fraction": {
+          "type": "triangular",
+          "min": 0.0048000000000000004,
+          "mode": 0.006,
+          "max": 0.0072
+        },
+        "ra226_bq_kg": {
+          "type": "triangular",
+          "min": 400.0,
+          "mode": 500,
+          "max": 600.0
+        },
+        "leachate_m3_per_t": {
+          "type": "triangular",
+          "min": 0.08000000000000002,
+          "mode": 0.1,
+          "max": 0.12
+        },
+        "p_leach_fraction": {
+          "type": "triangular",
+          "min": 0.0008,
+          "mode": 0.001,
+          "max": 0.0012
+        },
+        "f_leach_fraction": {
+          "type": "triangular",
+          "min": 0.008,
+          "mode": 0.01,
+          "max": 0.012
+        }
+      }
+    },
+    "PG-CementProd": {
+      "coverage": 0.0,
+      "inferred_parameters": 0,
+      "total_parameters": 9,
+      "missing_parameters": [
+        "drying_energy_mj_per_t",
+        "electricity_kwh_per_t",
+        "transport_km",
+        "gypsum_substitution_ratio",
+        "caso4_fraction",
+        "moisture_fraction",
+        "ra226_bq_kg",
+        "drying_co2_kg_per_mj",
+        "usable_fraction"
+      ],
+      "parameters": {
+        "drying_energy_mj_per_t": {
+          "value": 150,
+          "range": [
+            150,
+            150
+          ],
+          "sample_count": 0,
+          "default_value": 150,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "electricity_kwh_per_t": {
+          "value": 20,
+          "range": [
+            20,
+            20
+          ],
+          "sample_count": 0,
+          "default_value": 20,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kWh/t"
+        },
+        "transport_km": {
+          "value": 50,
+          "range": [
+            50,
+            50
+          ],
+          "sample_count": 0,
+          "default_value": 50,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "gypsum_substitution_ratio": {
+          "value": 0.95,
+          "range": [
+            0.95,
+            0.95
+          ],
+          "sample_count": 0,
+          "default_value": 0.95,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "caso4_fraction": {
+          "value": 0.92,
+          "range": [
+            0.92,
+            0.92
+          ],
+          "sample_count": 0,
+          "default_value": 0.92,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "mass_fraction"
+        },
+        "moisture_fraction": {
+          "value": 0.2,
+          "range": [
+            0.2,
+            0.2
+          ],
+          "sample_count": 0,
+          "default_value": 0.2,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "mass_fraction"
+        },
+        "ra226_bq_kg": {
+          "value": 500,
+          "range": [
+            500,
+            500
+          ],
+          "sample_count": 0,
+          "default_value": 500,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "Bq/kg"
+        },
+        "drying_co2_kg_per_mj": {
+          "value": 0.055,
+          "range": [
+            0.055,
+            0.055
+          ],
+          "sample_count": 0,
+          "default_value": 0.055,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "usable_fraction": {
+          "value": 0.9,
+          "range": [
+            0.9,
+            0.9
+          ],
+          "sample_count": 0,
+          "default_value": 0.9,
+          "fallback_used": true,
+          "source_parameters": []
+        }
+      },
+      "parameter_distributions": {
+        "drying_energy_mj_per_t": {
+          "type": "triangular",
+          "min": 120.0,
+          "mode": 150,
+          "max": 180.0
+        },
+        "electricity_kwh_per_t": {
+          "type": "triangular",
+          "min": 16.0,
+          "mode": 20,
+          "max": 24.0
+        },
+        "transport_km": {
+          "type": "triangular",
+          "min": 40.0,
+          "mode": 50,
+          "max": 60.0
+        },
+        "gypsum_substitution_ratio": {
+          "type": "triangular",
+          "min": 0.76,
+          "mode": 0.95,
+          "max": 1.14
+        },
+        "caso4_fraction": {
+          "type": "triangular",
+          "min": 0.7360000000000001,
+          "mode": 0.92,
+          "max": 1.104
+        },
+        "moisture_fraction": {
+          "type": "triangular",
+          "min": 0.16000000000000003,
+          "mode": 0.2,
+          "max": 0.24
+        },
+        "ra226_bq_kg": {
+          "type": "triangular",
+          "min": 400.0,
+          "mode": 500,
+          "max": 600.0
+        },
+        "drying_co2_kg_per_mj": {
+          "type": "triangular",
+          "min": 0.044000000000000004,
+          "mode": 0.055,
+          "max": 0.066
+        },
+        "usable_fraction": {
+          "type": "triangular",
+          "min": 0.7200000000000001,
+          "mode": 0.9,
+          "max": 1.08
+        }
+      }
+    },
+    "PG-ConstructMat": {
+      "coverage": 0.0,
+      "inferred_parameters": 0,
+      "total_parameters": 5,
+      "missing_parameters": [
+        "processing_energy_kwh_per_t",
+        "binder_kg_per_t",
+        "water_kg_per_t",
+        "product_yield",
+        "avoided_aggregate_kg"
+      ],
+      "parameters": {
+        "processing_energy_kwh_per_t": {
+          "value": 50,
+          "range": [
+            50,
+            50
+          ],
+          "sample_count": 0,
+          "default_value": 50,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "binder_kg_per_t": {
+          "value": 50,
+          "range": [
+            50,
+            50
+          ],
+          "sample_count": 0,
+          "default_value": 50,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kg/t"
+        },
+        "water_kg_per_t": {
+          "value": 200,
+          "range": [
+            200,
+            200
+          ],
+          "sample_count": 0,
+          "default_value": 200,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "product_yield": {
+          "value": 0.95,
+          "range": [
+            0.95,
+            0.95
+          ],
+          "sample_count": 0,
+          "default_value": 0.95,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "avoided_aggregate_kg": {
+          "value": 0.8,
+          "range": [
+            0.8,
+            0.8
+          ],
+          "sample_count": 0,
+          "default_value": 0.8,
+          "fallback_used": true,
+          "source_parameters": []
+        }
+      },
+      "parameter_distributions": {
+        "processing_energy_kwh_per_t": {
+          "type": "triangular",
+          "min": 40.0,
+          "mode": 50,
+          "max": 60.0
+        },
+        "binder_kg_per_t": {
+          "type": "triangular",
+          "min": 40.0,
+          "mode": 50,
+          "max": 60.0
+        },
+        "water_kg_per_t": {
+          "type": "triangular",
+          "min": 160.0,
+          "mode": 200,
+          "max": 240.0
+        },
+        "product_yield": {
+          "type": "triangular",
+          "min": 0.76,
+          "mode": 0.95,
+          "max": 1.14
+        },
+        "avoided_aggregate_kg": {
+          "type": "triangular",
+          "min": 0.6400000000000001,
+          "mode": 0.8,
+          "max": 0.96
+        }
+      }
+    },
+    "PG-Soil": {
+      "coverage": 0.0,
+      "inferred_parameters": 0,
+      "total_parameters": 5,
+      "missing_parameters": [
+        "transport_km",
+        "application_energy_kwh_per_t",
+        "ca_available_fraction",
+        "s_available_fraction",
+        "avoided_lime_factor"
+      ],
+      "parameters": {
+        "transport_km": {
+          "value": 30,
+          "range": [
+            30,
+            30
+          ],
+          "sample_count": 0,
+          "default_value": 30,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "application_energy_kwh_per_t": {
+          "value": 5,
+          "range": [
+            5,
+            5
+          ],
+          "sample_count": 0,
+          "default_value": 5,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "ca_available_fraction": {
+          "value": 0.23,
+          "range": [
+            0.23,
+            0.23
+          ],
+          "sample_count": 0,
+          "default_value": 0.23,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "s_available_fraction": {
+          "value": 0.18,
+          "range": [
+            0.18,
+            0.18
+          ],
+          "sample_count": 0,
+          "default_value": 0.18,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "avoided_lime_factor": {
+          "value": 0.5,
+          "range": [
+            0.5,
+            0.5
+          ],
+          "sample_count": 0,
+          "default_value": 0.5,
+          "fallback_used": true,
+          "source_parameters": []
+        }
+      },
+      "parameter_distributions": {
+        "transport_km": {
+          "type": "triangular",
+          "min": 24.0,
+          "mode": 30,
+          "max": 36.0
+        },
+        "application_energy_kwh_per_t": {
+          "type": "triangular",
+          "min": 4.0,
+          "mode": 5,
+          "max": 6.0
+        },
+        "ca_available_fraction": {
+          "type": "triangular",
+          "min": 0.18400000000000002,
+          "mode": 0.23,
+          "max": 0.276
+        },
+        "s_available_fraction": {
+          "type": "triangular",
+          "min": 0.144,
+          "mode": 0.18,
+          "max": 0.216
+        },
+        "avoided_lime_factor": {
+          "type": "triangular",
+          "min": 0.4,
+          "mode": 0.5,
+          "max": 0.6
+        }
+      }
+    },
+    "PG-ChemReco": {
+      "coverage": 0.0,
+      "inferred_parameters": 0,
+      "total_parameters": 5,
+      "missing_parameters": [
+        "ammonia_kg_per_t",
+        "co2_input_kg_per_t",
+        "energy_kwh_per_t",
+        "ammonium_sulfate_yield",
+        "caco3_yield"
+      ],
+      "parameters": {
+        "ammonia_kg_per_t": {
+          "value": 200,
+          "range": [
+            200,
+            200
+          ],
+          "sample_count": 0,
+          "default_value": 200,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kg/t"
+        },
+        "co2_input_kg_per_t": {
+          "value": 500,
+          "range": [
+            500,
+            500
+          ],
+          "sample_count": 0,
+          "default_value": 500,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kg/t"
+        },
+        "energy_kwh_per_t": {
+          "value": 100,
+          "range": [
+            100,
+            100
+          ],
+          "sample_count": 0,
+          "default_value": 100,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "ammonium_sulfate_yield": {
+          "value": 0.8,
+          "range": [
+            0.8,
+            0.8
+          ],
+          "sample_count": 0,
+          "default_value": 0.8,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "caco3_yield": {
+          "value": 0.6,
+          "range": [
+            0.6,
+            0.6
+          ],
+          "sample_count": 0,
+          "default_value": 0.6,
+          "fallback_used": true,
+          "source_parameters": []
+        }
+      },
+      "parameter_distributions": {
+        "ammonia_kg_per_t": {
+          "type": "triangular",
+          "min": 160.0,
+          "mode": 200,
+          "max": 240.0
+        },
+        "co2_input_kg_per_t": {
+          "type": "triangular",
+          "min": 400.0,
+          "mode": 500,
+          "max": 600.0
+        },
+        "energy_kwh_per_t": {
+          "type": "triangular",
+          "min": 80.0,
+          "mode": 100,
+          "max": 120.0
+        },
+        "ammonium_sulfate_yield": {
+          "type": "triangular",
+          "min": 0.6400000000000001,
+          "mode": 0.8,
+          "max": 0.96
+        },
+        "caco3_yield": {
+          "type": "triangular",
+          "min": 0.48,
+          "mode": 0.6,
+          "max": 0.72
+        }
+      }
+    },
+    "PG-REEextract": {
+      "coverage": 0.0,
+      "inferred_parameters": 0,
+      "total_parameters": 13,
+      "missing_parameters": [
+        "ree_content_ppm",
+        "moisture_content",
+        "leaching_efficiency",
+        "purification_efficiency",
+        "h2so4_kg_per_t",
+        "sodium_hydroxide_kg_per_t",
+        "extractant_l_per_t",
+        "process_water_m3_per_t",
+        "electricity_kwh_per_t",
+        "steam_mj_per_t",
+        "residue_treatment_cost_usd_t",
+        "liquid_effluent_m3_per_t",
+        "ree_market_price_usd_kg"
+      ],
+      "parameters": {
+        "ree_content_ppm": {
+          "value": 350.0,
+          "range": [
+            350.0,
+            350.0
+          ],
+          "sample_count": 0,
+          "default_value": 350.0,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "moisture_content": {
+          "value": 0.2,
+          "range": [
+            0.2,
+            0.2
+          ],
+          "sample_count": 0,
+          "default_value": 0.2,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "leaching_efficiency": {
+          "value": 0.65,
+          "range": [
+            0.65,
+            0.65
+          ],
+          "sample_count": 0,
+          "default_value": 0.65,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "purification_efficiency": {
+          "value": 0.9,
+          "range": [
+            0.9,
+            0.9
+          ],
+          "sample_count": 0,
+          "default_value": 0.9,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "h2so4_kg_per_t": {
+          "value": 250.0,
+          "range": [
+            250.0,
+            250.0
+          ],
+          "sample_count": 0,
+          "default_value": 250.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kg/t"
+        },
+        "sodium_hydroxide_kg_per_t": {
+          "value": 40.0,
+          "range": [
+            40.0,
+            40.0
+          ],
+          "sample_count": 0,
+          "default_value": 40.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kg/t"
+        },
+        "extractant_l_per_t": {
+          "value": 0.5,
+          "range": [
+            0.5,
+            0.5
+          ],
+          "sample_count": 0,
+          "default_value": 0.5,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "L/t"
+        },
+        "process_water_m3_per_t": {
+          "value": 5.0,
+          "range": [
+            5.0,
+            5.0
+          ],
+          "sample_count": 0,
+          "default_value": 5.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "m3/t"
+        },
+        "electricity_kwh_per_t": {
+          "value": 120.0,
+          "range": [
+            120.0,
+            120.0
+          ],
+          "sample_count": 0,
+          "default_value": 120.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kWh/t"
+        },
+        "steam_mj_per_t": {
+          "value": 450.0,
+          "range": [
+            450.0,
+            450.0
+          ],
+          "sample_count": 0,
+          "default_value": 450.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "MJ/t"
+        },
+        "residue_treatment_cost_usd_t": {
+          "value": 5.0,
+          "range": [
+            5.0,
+            5.0
+          ],
+          "sample_count": 0,
+          "default_value": 5.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "USD/t"
+        },
+        "liquid_effluent_m3_per_t": {
+          "value": 4.5,
+          "range": [
+            4.5,
+            4.5
+          ],
+          "sample_count": 0,
+          "default_value": 4.5,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "ree_market_price_usd_kg": {
+          "value": 45.0,
+          "range": [
+            45.0,
+            45.0
+          ],
+          "sample_count": 0,
+          "default_value": 45.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "USD/kg"
+        }
+      },
+      "parameter_distributions": {
+        "ree_content_ppm": {
+          "type": "triangular",
+          "min": 280.0,
+          "mode": 350.0,
+          "max": 420.0
+        },
+        "moisture_content": {
+          "type": "triangular",
+          "min": 0.16000000000000003,
+          "mode": 0.2,
+          "max": 0.24
+        },
+        "leaching_efficiency": {
+          "type": "triangular",
+          "min": 0.52,
+          "mode": 0.65,
+          "max": 0.78
+        },
+        "purification_efficiency": {
+          "type": "triangular",
+          "min": 0.7200000000000001,
+          "mode": 0.9,
+          "max": 1.08
+        },
+        "h2so4_kg_per_t": {
+          "type": "triangular",
+          "min": 200.0,
+          "mode": 250.0,
+          "max": 300.0
+        },
+        "sodium_hydroxide_kg_per_t": {
+          "type": "triangular",
+          "min": 32.0,
+          "mode": 40.0,
+          "max": 48.0
+        },
+        "extractant_l_per_t": {
+          "type": "triangular",
+          "min": 0.4,
+          "mode": 0.5,
+          "max": 0.6
+        },
+        "process_water_m3_per_t": {
+          "type": "triangular",
+          "min": 4.0,
+          "mode": 5.0,
+          "max": 6.0
+        },
+        "electricity_kwh_per_t": {
+          "type": "triangular",
+          "min": 96.0,
+          "mode": 120.0,
+          "max": 144.0
+        },
+        "steam_mj_per_t": {
+          "type": "triangular",
+          "min": 360.0,
+          "mode": 450.0,
+          "max": 540.0
+        },
+        "residue_treatment_cost_usd_t": {
+          "type": "triangular",
+          "min": 4.0,
+          "mode": 5.0,
+          "max": 6.0
+        },
+        "liquid_effluent_m3_per_t": {
+          "type": "triangular",
+          "min": 3.6,
+          "mode": 4.5,
+          "max": 5.3999999999999995
+        },
+        "ree_market_price_usd_kg": {
+          "type": "triangular",
+          "min": 36.0,
+          "mode": 45.0,
+          "max": 54.0
+        }
+      }
+    },
+    "PG-SulfurAcid": {
+      "coverage": 0.0,
+      "inferred_parameters": 0,
+      "total_parameters": 9,
+      "missing_parameters": [
+        "coal_reducing_kg_per_t",
+        "coal_heating_kg_per_t",
+        "additives_kg_per_t",
+        "electricity_kwh_per_t",
+        "sulfuric_acid_yield",
+        "sulfur_yield",
+        "clinker_yield",
+        "co2_emissions_kg_per_t",
+        "moisture_fraction"
+      ],
+      "parameters": {
+        "coal_reducing_kg_per_t": {
+          "value": 80.0,
+          "range": [
+            80.0,
+            80.0
+          ],
+          "sample_count": 0,
+          "default_value": 80.0,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "coal_heating_kg_per_t": {
+          "value": 100.0,
+          "range": [
+            100.0,
+            100.0
+          ],
+          "sample_count": 0,
+          "default_value": 100.0,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "additives_kg_per_t": {
+          "value": 180.0,
+          "range": [
+            180.0,
+            180.0
+          ],
+          "sample_count": 0,
+          "default_value": 180.0,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "electricity_kwh_per_t": {
+          "value": 80.0,
+          "range": [
+            80.0,
+            80.0
+          ],
+          "sample_count": 0,
+          "default_value": 80.0,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "kWh/t"
+        },
+        "sulfuric_acid_yield": {
+          "value": 0.55,
+          "range": [
+            0.55,
+            0.55
+          ],
+          "sample_count": 0,
+          "default_value": 0.55,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "sulfur_yield": {
+          "value": 0.1,
+          "range": [
+            0.1,
+            0.1
+          ],
+          "sample_count": 0,
+          "default_value": 0.1,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "clinker_yield": {
+          "value": 0.35,
+          "range": [
+            0.35,
+            0.35
+          ],
+          "sample_count": 0,
+          "default_value": 0.35,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "co2_emissions_kg_per_t": {
+          "value": 350.0,
+          "range": [
+            350.0,
+            350.0
+          ],
+          "sample_count": 0,
+          "default_value": 350.0,
+          "fallback_used": true,
+          "source_parameters": []
+        },
+        "moisture_fraction": {
+          "value": 0.2,
+          "range": [
+            0.2,
+            0.2
+          ],
+          "sample_count": 0,
+          "default_value": 0.2,
+          "fallback_used": true,
+          "source_parameters": [],
+          "unit": "mass_fraction"
+        }
+      },
+      "parameter_distributions": {
+        "coal_reducing_kg_per_t": {
+          "type": "triangular",
+          "min": 64.0,
+          "mode": 80.0,
+          "max": 96.0
+        },
+        "coal_heating_kg_per_t": {
+          "type": "triangular",
+          "min": 80.0,
+          "mode": 100.0,
+          "max": 120.0
+        },
+        "additives_kg_per_t": {
+          "type": "triangular",
+          "min": 144.0,
+          "mode": 180.0,
+          "max": 216.0
+        },
+        "electricity_kwh_per_t": {
+          "type": "triangular",
+          "min": 64.0,
+          "mode": 80.0,
+          "max": 96.0
+        },
+        "sulfuric_acid_yield": {
+          "type": "triangular",
+          "min": 0.44000000000000006,
+          "mode": 0.55,
+          "max": 0.66
+        },
+        "sulfur_yield": {
+          "type": "triangular",
+          "min": 0.08000000000000002,
+          "mode": 0.1,
+          "max": 0.12
+        },
+        "clinker_yield": {
+          "type": "triangular",
+          "min": 0.27999999999999997,
+          "mode": 0.35,
+          "max": 0.42
+        },
+        "co2_emissions_kg_per_t": {
+          "type": "triangular",
+          "min": 280.0,
+          "mode": 350.0,
+          "max": 420.0
+        },
+        "moisture_fraction": {
+          "type": "triangular",
+          "min": 0.16000000000000003,
+          "mode": 0.2,
+          "max": 0.24
+        }
+      }
+    }
+  }
+}

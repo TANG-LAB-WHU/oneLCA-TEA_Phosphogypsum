@@ -20,3 +20,1131 @@
 [3/4] Executing Full-Scale Knowledge Graph & Parameter Synthesis...
 
 >>> [Phase 1/4] Step 2: Full LightRAG Index Construction (72 Papers) <<<
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-10-02 12:08:37
+Steps to run: ['index']
+RAG Engine: lightrag
+
+============================================================
+   STEP 2: LIGHTRAG INDEX CONSTRUCTION
+============================================================
+LightRAG DB: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db
+Source:      /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/interim/papers/parsed
+LLM Model:   Qwen/Qwen3.8-Flash-Next
+
+Note: Entity extraction uses your LLM (see LLM_BASE_URL / LLM_MODEL in .env).
+[1/72] Processing: 5. Utilization path of bulk industrial solid waste...
+    ✓ Indexed successfully
+[2/72] Processing: 11. Intra-soil waste recycling provides safety of ...
+    ✓ Indexed successfully
+[3/72] Processing: 12. Treating waste phosphogypsum for cement and pl...
+    ✓ Indexed successfully
+[4/72] Processing: 67. Beneficiation of rare earth elements contained...
+    ✓ Indexed successfully
+[5/72] Processing: 20. Characterization of phosphogypsum wastes assoc...
+    ✓ Indexed successfully
+[6/72] Processing: 34. Using cemented paste backfill to tackle the ph...
+    ✓ Indexed successfully
+[7/72] Processing: 72. Comprehensive recovery of rare earth elements ...
+    ✓ Indexed successfully
+[8/72] Processing: 35. In vitro bioactivity, mechanical, and cell int...
+    ✓ Indexed successfully
+[9/72] Processing: 65. Review on high-value utilization of phosphogyp...
+    ✓ Indexed successfully
+[10/72] Processing: 46. 磷石膏综合利用背景下的环境影响研究现状.md...
+    ✓ Indexed successfully
+[11/72] Processing: 53. Utilization path of bulk industrial solid wast...
+    ✓ Indexed successfully
+[12/72] Processing: 23. Preparation of Biofertilizer with Phosphogypsu...
+    ✓ Indexed successfully
+[13/72] Processing: 6. Environmental impacts of phosphogypsum.md...
+    ✓ Indexed successfully
+[14/72] Processing: 36. Life cycle environmental and economic assessme...
+    ✓ Indexed successfully
+[15/72] Processing: 64. Hydroxyapatite, a multifunctional material for...
+    ✓ Indexed successfully
+[16/72] Processing: 69. 磷石膏 GBT 23456-2018.md...
+    ✓ Indexed successfully
+[17/72] Processing: 61. Morphology control of hydroxyapatite microcrys...
+    ✓ Indexed successfully
+[18/72] Processing: 57. An Evaluation of Phosphogypsum (PG) -Derived N...
+    ✓ Indexed successfully
+[19/72] Processing: 59. Competitive adsorption of Pb(II), Cu(II), and ...
+    ✓ Indexed successfully
+[20/72] Processing: 16. Distribution of uranium and thorium chains rad...
+    ✓ Indexed successfully
+[21/72] Processing: 60. Effect of surfactant and heat treatment on mor...
+    ✓ Indexed successfully
+[22/72] Processing: 18. Recent research in utilization of phosphogypsu...
+    ✓ Indexed successfully
+[23/72] Processing: 8. Exploring the potential reuse of phosphogypsum ...
+    ✓ Indexed successfully
+[24/72] Processing: 39. A systematic review of phosphogypsum recycling...
+    ✓ Indexed successfully
+[25/72] Processing: 38. Surface modification of hierarchical hydroxyap...
+    ✓ Indexed successfully
+[26/72] Processing: 62. Rod-shaped hydroxyapatite with mesoporous stru...
+    ✓ Indexed successfully
+[27/72] Processing: 26. Thermal behaviour of Moroccan phosphogypsum.md...
+    ✓ Indexed successfully
+[28/72] Processing: 22. The effects of admixtures on the durability pr...
+    ✓ Indexed successfully
+[29/72] Processing: 40. Synthesis of hydroxyapatite by hydrothermal an...
+    ✓ Indexed successfully
+[30/72] Processing: 63. Hydrothermal synthesis of nanocrystalline hydr...
+    ✓ Indexed successfully
+[31/72] Processing: 58. A novel process approach of a circular economy...
+    ✓ Indexed successfully
+[32/72] Processing: 30. Effective and innovative procedures to use pho...
+    ✓ Indexed successfully
+[33/72] Processing: 37. Status and development trends of phosphogypsum...
+    ✓ Indexed successfully
+[34/72] Processing: 50. Hydrothermal synthesis of nanocrystalline hydr...
+    ✓ Indexed successfully
+[35/72] Processing: 56. Innovative strategy of turning waste into trea...
+    ✓ Indexed successfully
+[36/72] Processing: 52. Hydrothermal synthesis of hydroxyapatite nanop...
+    ✓ Indexed successfully
+[37/72] Processing: 27. An effective treatment method for phosphogypsu...
+    ✓ Indexed successfully
+[38/72] Processing: 31. A systematic review of cemented paste backfill...
+    ✓ Indexed successfully
+[39/72] Processing: 15. The using of waste phosphogypsum and natural g...
+    ✓ Indexed successfully
+[40/72] Processing: 19. The influence of the HAP.md...
+    ✓ Indexed successfully
+[41/72] Processing: 3. Research progress on resource utilization of ph...
+    ✓ Indexed successfully
+[42/72] Processing: 24. Treatment of phosphogypsum waste produced from...
+    ✓ Indexed successfully
+[43/72] Processing: 68. Extraction of lanthanum, cerium, and neodymium...
+    ✓ Indexed successfully
+[44/72] Processing: 41. Crystal structure modification of nano-hydroxy...
+    ✓ Indexed successfully
+[45/72] Processing: 48. Influence of hydrothermal synthesis parameters...
+    ✓ Indexed successfully
+[46/72] Processing: 32. Comparison of alternative management methods f...
+    ✓ Indexed successfully
+[47/72] Processing: 71. 我国磷石膏污染特性、利用及环境管理研究.md...
+    ✓ Indexed successfully
+[48/72] Processing: 29. Chemical treatment of phosphogypsum and its po...
+    ✓ Indexed successfully
+[49/72] Processing: 17. Phosphogypsum recycling New horizons for a mor...
+    ✓ Indexed successfully
+[50/72] Processing: 54. Conversion of waste phosphogypsum into value-a...
+    ✓ Indexed successfully
+[51/72] Processing: 43. A facile strategy for one-step hydrothermal.md...
+    ✓ Indexed successfully
+[52/72] Processing: 51. Synthesis of nano-crystalline hydroxyapatite a...
+    ✓ Indexed successfully
+[53/72] Processing: 10. Geochemical and mineralogical characterization...
+    ✓ Indexed successfully
+[54/72] Processing: 70. 石膏化学分析方法 GBT 5484-2012.md...
+    ✓ Indexed successfully
+[55/72] Processing: 25. Process Optimization and Mechanism Study for S...
+    ✓ Indexed successfully
+[56/72] Processing: 28. Utilization of phosphogypsum in CO2 mineral se...
+    ✓ Indexed successfully
+[57/72] Processing: 4. Application of phosphogypsum in soil stabilizat...
+    ✓ Indexed successfully
+[58/72] Processing: 44. Integrated evaluation of the performance of ph...
+    ✓ Indexed successfully
+[59/72] Processing: 49. A novel process approach of a circular economy...
+    ✓ Indexed successfully
+[60/72] Processing: 66. Conversion of waste phosphogypsum into value-a...
+    ✓ Indexed successfully
+[61/72] Processing: 42. Investigating effects of phosphogypsum disposa...
+    ✓ Indexed successfully
+[62/72] Processing: 13. Phosphorus flows through the Australian food s...
+    ✓ Indexed successfully
+[63/72] Processing: 45. Hydrothermal synthesis of hydroxyapatite coati...
+    ✓ Indexed successfully
+[64/72] Processing: 21. Modification mechanism, heavy metal coupling a...
+    ✓ Indexed successfully
+[65/72] Processing: 55. Utilization of waste phosphogypsum to prepare ...
+    ✓ Indexed successfully
+[66/72] Processing: 7. Chemical Soil-Biological Engineering Theoretica...
+    ✓ Indexed successfully
+[67/72] Processing: 33. Reaction Mechanism and Kinetic Analysis of the...
+    ✓ Indexed successfully
+[68/72] Processing: 9. Phosphogypsum circular economy considerations A...
+    ✓ Indexed successfully
+[69/72] Processing: 47. One-step hydrothermal synthesis with in situ m...
+    ✓ Indexed successfully
+[70/72] Processing: 2. Phosphogypsum as a construction material.md...
+    ✓ Indexed successfully
+[71/72] Processing: 1. Environmental impact and management of phosphog...
+    ✓ Indexed successfully
+[72/72] Processing: 14. Potential use of phosphogypsum in concrete.md...
+    ✓ Indexed successfully
+
+========================================
+Indexed 72 / 72 documents
+Working dir: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/lightrag_db
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-10-20 22:07:29
+
+>>> [Phase 2/4] Step 3: Structured Engineering Parameter Extraction <<<
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-10-20 22:15:39
+Steps to run: ['extract']
+RAG Engine: lightrag
+
+============================================================
+   STEP 3: LLM DATA EXTRACTION
+============================================================
+LLM: http://127.0.0.1:11434/v1 (model=Qwen/Qwen3.8-Flash-Next)
+RAG Engine: lightrag
+Source: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/interim/papers/parsed (recursive)
+Output: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/extracted_data
+
+Processing 72 documents...
+
+[1/72] ⏭ Skipping: 1. Environmental impact and management o (already extracted)
+
+[2/72] Extracting from: 10. Geochemical and mineralogical charac...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30574 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30574, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30542 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30542, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30579 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30579, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30489 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30489, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30499 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30499, 'n_ctx': 16384}}"]
+
+[3/72] Extracting from: 11. Intra-soil waste recycling provides ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26316 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26316, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26284 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26284, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26321 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26321, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26231 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26231, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26241 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26241, 'n_ctx': 16384}}"]
+
+[4/72] Extracting from: 12. Treating waste phosphogypsum for cem...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[5/72] Extracting from: 13. Phosphorus flows through the Austral...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20478 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20478, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20446 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20446, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20483 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20483, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20393 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20393, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20403 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20403, 'n_ctx': 16384}}"]
+
+[6/72] Extracting from: 14. Potential use of phosphogypsum in co...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[7/72] Extracting from: 15. The using of waste phosphogypsum and...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[8/72] Extracting from: 16. Distribution of uranium and thorium ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29767 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29767, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29735 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29735, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29772 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29772, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29682 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29682, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29692 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29692, 'n_ctx': 16384}}"]
+
+[9/72] Extracting from: 17. Phosphogypsum recycling New horizons...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22950 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22950, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22918 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22918, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22955 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22955, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22865 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22865, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22875 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22875, 'n_ctx': 16384}}"]
+
+[10/72] Extracting from: 18. Recent research in utilization of ph...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (45870 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 45870, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (45838 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 45838, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (45875 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 45875, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (45785 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 45785, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (45795 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 45795, 'n_ctx': 16384}}"]
+
+[11/72] Extracting from: 19. The influence of the HAP.md...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✓ composition: 15 items
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[12/72] Extracting from: 2. Phosphogypsum as a construction mater...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (28858 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 28858, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (28826 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 28826, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (28863 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 28863, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (28773 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 28773, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (28783 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 28783, 'n_ctx': 16384}}"]
+
+[13/72] Extracting from: 20. Characterization of phosphogypsum wa...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✓ technology: 10 items
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[14/72] Extracting from: 21. Modification mechanism, heavy metal ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43121 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43121, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43089 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43089, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43126 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43126, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43036 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43036, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43046 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43046, 'n_ctx': 16384}}"]
+
+[15/72] Extracting from: 22. The effects of admixtures on the dur...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19688 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19688, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19656 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19656, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19693 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19693, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19603 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19603, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19613 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19613, 'n_ctx': 16384}}"]
+
+[16/72] Extracting from: 23. Preparation of Biofertilizer with Ph...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21275 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21275, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21243 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21243, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21280 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21280, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21190 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21190, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21200 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21200, 'n_ctx': 16384}}"]
+
+[17/72] Extracting from: 24. Treatment of phosphogypsum waste pro...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[18/72] Extracting from: 25. Process Optimization and Mechanism S...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25978 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25978, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25946 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25946, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25983 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25983, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25893 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25893, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25903 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25903, 'n_ctx': 16384}}"]
+
+[19/72] Extracting from: 26. Thermal behaviour of Moroccan phosph...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[20/72] Extracting from: 27. An effective treatment method for ph...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✓ composition: 15 items
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[21/72] Extracting from: 28. Utilization of phosphogypsum in CO2 ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22389 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22389, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22357 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22357, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22394 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22394, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22304 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22304, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22314 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22314, 'n_ctx': 16384}}"]
+
+[22/72] Extracting from: 29. Chemical treatment of phosphogypsum ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[23/72] Extracting from: 3. Research progress on resource utiliza...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25331 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25331, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25299 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25299, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25336 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25336, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25246 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25246, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (25256 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 25256, 'n_ctx': 16384}}"]
+
+[24/72] Extracting from: 30. Effective and innovative procedures ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35532 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35532, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35500 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35500, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35537 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35537, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35447 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35447, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35457 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35457, 'n_ctx': 16384}}"]
+
+[25/72] Extracting from: 31. A systematic review of cemented past...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (50210 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 50210, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (50178 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 50178, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (50215 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 50215, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (50125 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 50125, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (50135 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 50135, 'n_ctx': 16384}}"]
+
+[26/72] Extracting from: 32. Comparison of alternative management...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19759 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19759, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19727 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19727, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19764 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19764, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19674 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19674, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19684 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19684, 'n_ctx': 16384}}"]
+
+[27/72] Extracting from: 33. Reaction Mechanism and Kinetic Analy...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[28/72] Extracting from: 34. Using cemented paste backfill to tac...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30478 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30478, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30446 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30446, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30483 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30483, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30393 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30393, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30403 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30403, 'n_ctx': 16384}}"]
+
+[29/72] Extracting from: 35. In vitro bioactivity, mechanical, an...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26229 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26229, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26197 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26197, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26234 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26234, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26144 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26144, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (26154 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 26154, 'n_ctx': 16384}}"]
+
+[30/72] Extracting from: 36. Life cycle environmental and economi...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17592 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17592, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17560 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17560, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17597 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17597, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17507 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17507, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17517 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17517, 'n_ctx': 16384}}"]
+
+[31/72] Extracting from: 37. Status and development trends of pho...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17336 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17336, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17304 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17304, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17341 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17341, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17251 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17251, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17261 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17261, 'n_ctx': 16384}}"]
+
+[32/72] Extracting from: 38. Surface modification of hierarchical...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21160 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21160, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21128 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21128, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21165 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21165, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21075 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21075, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (21085 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 21085, 'n_ctx': 16384}}"]
+
+[33/72] Extracting from: 39. A systematic review of phosphogypsum...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20274 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20274, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20242 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20242, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20279 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20279, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20189 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20189, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20199 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20199, 'n_ctx': 16384}}"]
+
+[34/72] Extracting from: 4. Application of phosphogypsum in soil ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[35/72] Extracting from: 40. Synthesis of hydroxyapatite by hydro...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✓ composition: 15 items
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[36/72] Extracting from: 41. Crystal structure modification of na...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20147 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20147, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20115 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20115, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20152 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20152, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20062 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20062, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (20072 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 20072, 'n_ctx': 16384}}"]
+
+[37/72] Extracting from: 42. Investigating effects of phosphogyps...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (36340 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 36340, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (36308 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 36308, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (36345 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 36345, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (36255 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 36255, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (36265 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 36265, 'n_ctx': 16384}}"]
+
+[38/72] Extracting from: 43. A facile strategy for one-step hydro...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✓ composition: 15 items
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[39/72] Extracting from: 44. Integrated evaluation of the perform...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19217 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19217, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19185 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19185, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19222 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19222, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19132 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19132, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (19142 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 19142, 'n_ctx': 16384}}"]
+
+[40/72] Extracting from: 45. Hydrothermal synthesis of hydroxyapa...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[41/72] Extracting from: 46. 磷石膏综合利用背景下的环境影响研究现状.md...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17865 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17865, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17833 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17833, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17870 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17870, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17780 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17780, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17790 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17790, 'n_ctx': 16384}}"]
+
+[42/72] Extracting from: 47. One-step hydrothermal synthesis with...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✓ composition: 15 items
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[43/72] Extracting from: 48. Influence of hydrothermal synthesis ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22441 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22441, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22409 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22409, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22446 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22446, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22356 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22356, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (22366 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 22366, 'n_ctx': 16384}}"]
+
+[44/72] Extracting from: 49. A novel process approach of a circul...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[45/72] Extracting from: 5. Utilization path of bulk industrial s...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (33053 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 33053, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (33021 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 33021, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (33058 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 33058, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (32968 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 32968, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (32978 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 32978, 'n_ctx': 16384}}"]
+
+[46/72] Extracting from: 50. Hydrothermal synthesis of nanocrysta...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[47/72] Extracting from: 51. Synthesis of nano-crystalline hydrox...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[48/72] Extracting from: 52. Hydrothermal synthesis of hydroxyapa...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[49/72] Extracting from: 53. Utilization path of bulk industrial ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (33053 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 33053, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (33021 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 33021, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (33058 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 33058, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (32968 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 32968, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (32978 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 32978, 'n_ctx': 16384}}"]
+
+[50/72] Extracting from: 54. Conversion of waste phosphogypsum in...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27280 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27280, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27248 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27248, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27285 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27285, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27195 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27195, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27205 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27205, 'n_ctx': 16384}}"]
+
+[51/72] Extracting from: 55. Utilization of waste phosphogypsum t...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (16555 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 16555, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (16523 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 16523, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (16560 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 16560, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (16470 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 16470, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (16480 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 16480, 'n_ctx': 16384}}"]
+
+[52/72] Extracting from: 56. Innovative strategy of turning waste...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29855 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29855, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29823 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29823, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29860 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29860, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29770 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29770, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29780 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29780, 'n_ctx': 16384}}"]
+
+[53/72] Extracting from: 57. An Evaluation of Phosphogypsum (PG) ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[54/72] Extracting from: 58. A novel process approach of a circul...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[55/72] Extracting from: 59. Competitive adsorption of Pb(II), Cu...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18362 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18362, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18330 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18330, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18367 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18367, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18277 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18277, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18287 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18287, 'n_ctx': 16384}}"]
+
+[56/72] Extracting from: 6. Environmental impacts of phosphogypsu...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (54386 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 54386, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (54354 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 54354, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (54391 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 54391, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (54301 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 54301, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (54311 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 54311, 'n_ctx': 16384}}"]
+
+[57/72] Extracting from: 60. Effect of surfactant and heat treatm...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17947 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17947, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17915 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17915, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17952 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17952, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17862 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17862, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17872 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17872, 'n_ctx': 16384}}"]
+
+[58/72] Extracting from: 61. Morphology control of hydroxyapatite...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✓ composition: 15 items
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[59/72] Extracting from: 62. Rod-shaped hydroxyapatite with mesop...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✓ composition: 15 items
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[60/72] Extracting from: 63. Hydrothermal synthesis of nanocrysta...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✓ cost: 9 items
+    ✓ policy: 6 items
+
+[61/72] Extracting from: 64. Hydroxyapatite, a multifunctional ma...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (47648 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 47648, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (47616 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 47616, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (47653 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 47653, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (47563 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 47563, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (47573 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 47573, 'n_ctx': 16384}}"]
+
+[62/72] Extracting from: 65. Review on high-value utilization of ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35662 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35662, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35630 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35630, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35667 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35667, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35577 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35577, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (35587 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 35587, 'n_ctx': 16384}}"]
+
+[63/72] Extracting from: 66. Conversion of waste phosphogypsum in...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27280 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27280, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27248 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27248, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27285 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27285, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27195 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27195, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (27205 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 27205, 'n_ctx': 16384}}"]
+
+[64/72] Extracting from: 67. Beneficiation of rare earth elements...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29774 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29774, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29742 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29742, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29779 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29779, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29689 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29689, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (29699 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 29699, 'n_ctx': 16384}}"]
+
+[65/72] Extracting from: 68. Extraction of lanthanum, cerium, and...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18218 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18218, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18186 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18186, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18223 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18223, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18133 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18133, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (18143 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 18143, 'n_ctx': 16384}}"]
+
+[66/72] Extracting from: 69. 磷石膏 GBT 23456-2018.md...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✓ lci: 8 items
+    ✓ cost: 9 items
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[67/72] Extracting from: 7. Chemical Soil-Biological Engineering ...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (24175 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 24175, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (24143 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 24143, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (24180 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 24180, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (24090 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 24090, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (24100 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 24100, 'n_ctx': 16384}}"]
+
+[68/72] Extracting from: 70. 石膏化学分析方法 GBT 5484-2012.md...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30250 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30250, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30218 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30218, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30255 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30255, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30165 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30165, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (30175 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 30175, 'n_ctx': 16384}}"]
+
+[69/72] Extracting from: 71. 我国磷石膏污染特性、利用及环境管理研究.md...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17784 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17784, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17752 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17752, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17789 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17789, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17699 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17699, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (17709 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 17709, 'n_ctx': 16384}}"]
+
+[70/72] Extracting from: 72. Comprehensive recovery of rare earth...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ['Failed to parse JSON from LLM response']
+    ✗ technology: ['Failed to parse JSON from LLM response']
+    ✗ lci: ['Failed to parse JSON from LLM response']
+    ✗ cost: ['Failed to parse JSON from LLM response']
+    ✗ policy: ['Failed to parse JSON from LLM response']
+
+[71/72] Extracting from: 8. Exploring the potential reuse of phos...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (68731 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 68731, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (68699 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 68699, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (68736 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 68736, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (68646 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 68646, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (68656 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 68656, 'n_ctx': 16384}}"]
+
+[72/72] Extracting from: 9. Phosphogypsum circular economy consid...
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+DEBUG: LLM extraction (model=Qwen/Qwen3.8-Flash-Next, base_url=http://127.0.0.1:11434/v1)
+    ✗ composition: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43447 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43447, 'n_ctx': 16384}}"]
+    ✗ technology: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43415 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43415, 'n_ctx': 16384}}"]
+    ✗ lci: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43452 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43452, 'n_ctx': 16384}}"]
+    ✗ cost: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43362 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43362, 'n_ctx': 16384}}"]
+    ✗ policy: ["Error code: 400 - {'error': {'code': 400, 'message': 'request (43372 tokens) exceeds the available context size (16384 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 43372, 'n_ctx': 16384}}"]
+
+========================================
+Extracted data from 72 documents
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-10-21 03:28:50
+
+>>> [Phase 3/4] Step 4: Parameter Range & Uncertainty Synthesis <<<
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-10-21 03:31:50
+Steps to run: ['ranges']
+RAG Engine: lightrag
+
+============================================================
+   STEP 4: PARAMETER RANGE SYNTHESIS
+============================================================
+Input:  /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/extracted_data
+Output: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/parameter_ranges
+
+========================================
+Processed extraction files: 72
+Valid extraction files: 25
+Inferred global parameters: 0
+Generated files:
+  - /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/parameter_ranges/parameter_ranges.json
+  - /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/parameter_ranges/pathway_parameter_profiles.json
+  - /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/parameter_ranges/pathway_parameter_distributions.json
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-10-21 03:32:08
+
+>>> [Phase 4/4] Step 5: Knowledge Graph Assembly <<<
+
+============================================================
+   PG-LCA-TEA KNOWLEDGE GRAPH PIPELINE
+============================================================
+Start time: 2026-10-21 03:32:43
+Steps to run: ['build']
+RAG Engine: lightrag
+
+============================================================
+   STEP 5: KNOWLEDGE GRAPH CONSTRUCTION
+============================================================
+KG Storage: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/knowledge_graph
+Extracted Data: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/extracted_data
+
+Loading 72 extraction files...
+
+========================================
+Knowledge Graph Statistics:
+  Nodes: 80
+  Edges: 8
+  Node types: {'Source': 72, 'Composition': 7, 'Technology': 1}
+
+============================================================
+   PIPELINE COMPLETE
+============================================================
+End time: 2026-10-21 03:32:54
+
+============================================================
+  [4/4] Full Pipeline Execution Summary
+  - LightRAG Index (Step 2):  Exit 0
+  - Data Extract (Step 3):    Exit 0
+  - Parameter Ranges (Step 4): Exit 0
+  - Knowledge Graph (Step 5):  Exit 0
+============================================================
+  Output Metrics on Disk:
+    * Input Parsed Papers:      72 / 72
+    * Extracted Parameter Sets: 72
+    * Synthesized Range Files:  3
+  Finished at: Wed Oct 21 03:34:00 AM CST 2026
+============================================================
+
+============================================================
+ [TEARDOWN] Stopping background llama-server instances...
+============================================================
+  - Terminating Reasoner Server (PID: 653105)...
+  - Terminating Embedding Server (PID: 653106)...
+ [TEARDOWN] Background services stopped cleanly.

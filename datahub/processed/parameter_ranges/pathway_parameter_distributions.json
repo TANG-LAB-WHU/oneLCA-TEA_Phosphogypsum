@@ -1,0 +1,369 @@
+{
+  "generated_at": "2026-10-21T03:32:08",
+  "source_directory": "/scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum/datahub/processed/extracted_data",
+  "source_file_count": 72,
+  "distributions": {
+    "PG-Stack": {
+      "diesel_kg_per_t": {
+        "type": "triangular",
+        "min": 1.6,
+        "mode": 2.0,
+        "max": 2.4
+      },
+      "electricity_kwh_per_t": {
+        "type": "triangular",
+        "min": 4.0,
+        "mode": 5.0,
+        "max": 6.0
+      },
+      "co2_factor": {
+        "type": "triangular",
+        "min": 2.5600000000000005,
+        "mode": 3.2,
+        "max": 3.84
+      },
+      "radon_emission_rate": {
+        "type": "triangular",
+        "min": 0.4,
+        "mode": 0.5,
+        "max": 0.6
+      },
+      "stack_area_m2_per_t": {
+        "type": "triangular",
+        "min": 1.6,
+        "mode": 2.0,
+        "max": 2.4
+      },
+      "caso4_fraction": {
+        "type": "triangular",
+        "min": 0.7360000000000001,
+        "mode": 0.92,
+        "max": 1.104
+      },
+      "p2o5_fraction": {
+        "type": "triangular",
+        "min": 0.008,
+        "mode": 0.01,
+        "max": 0.012
+      },
+      "f_fraction": {
+        "type": "triangular",
+        "min": 0.0048000000000000004,
+        "mode": 0.006,
+        "max": 0.0072
+      },
+      "ra226_bq_kg": {
+        "type": "triangular",
+        "min": 400.0,
+        "mode": 500,
+        "max": 600.0
+      },
+      "leachate_m3_per_t": {
+        "type": "triangular",
+        "min": 0.08000000000000002,
+        "mode": 0.1,
+        "max": 0.12
+      },
+      "p_leach_fraction": {
+        "type": "triangular",
+        "min": 0.0008,
+        "mode": 0.001,
+        "max": 0.0012
+      },
+      "f_leach_fraction": {
+        "type": "triangular",
+        "min": 0.008,
+        "mode": 0.01,
+        "max": 0.012
+      }
+    },
+    "PG-CementProd": {
+      "drying_energy_mj_per_t": {
+        "type": "triangular",
+        "min": 120.0,
+        "mode": 150,
+        "max": 180.0
+      },
+      "electricity_kwh_per_t": {
+        "type": "triangular",
+        "min": 16.0,
+        "mode": 20,
+        "max": 24.0
+      },
+      "transport_km": {
+        "type": "triangular",
+        "min": 40.0,
+        "mode": 50,
+        "max": 60.0
+      },
+      "gypsum_substitution_ratio": {
+        "type": "triangular",
+        "min": 0.76,
+        "mode": 0.95,
+        "max": 1.14
+      },
+      "caso4_fraction": {
+        "type": "triangular",
+        "min": 0.7360000000000001,
+        "mode": 0.92,
+        "max": 1.104
+      },
+      "moisture_fraction": {
+        "type": "triangular",
+        "min": 0.16000000000000003,
+        "mode": 0.2,
+        "max": 0.24
+      },
+      "ra226_bq_kg": {
+        "type": "triangular",
+        "min": 400.0,
+        "mode": 500,
+        "max": 600.0
+      },
+      "drying_co2_kg_per_mj": {
+        "type": "triangular",
+        "min": 0.044000000000000004,
+        "mode": 0.055,
+        "max": 0.066
+      },
+      "usable_fraction": {
+        "type": "triangular",
+        "min": 0.7200000000000001,
+        "mode": 0.9,
+        "max": 1.08
+      }
+    },
+    "PG-ConstructMat": {
+      "processing_energy_kwh_per_t": {
+        "type": "triangular",
+        "min": 40.0,
+        "mode": 50,
+        "max": 60.0
+      },
+      "binder_kg_per_t": {
+        "type": "triangular",
+        "min": 40.0,
+        "mode": 50,
+        "max": 60.0
+      },
+      "water_kg_per_t": {
+        "type": "triangular",
+        "min": 160.0,
+        "mode": 200,
+        "max": 240.0
+      },
+      "product_yield": {
+        "type": "triangular",
+        "min": 0.76,
+        "mode": 0.95,
+        "max": 1.14
+      },
+      "avoided_aggregate_kg": {
+        "type": "triangular",
+        "min": 0.6400000000000001,
+        "mode": 0.8,
+        "max": 0.96
+      }
+    },
+    "PG-Soil": {
+      "transport_km": {
+        "type": "triangular",
+        "min": 24.0,
+        "mode": 30,
+        "max": 36.0
+      },
+      "application_energy_kwh_per_t": {
+        "type": "triangular",
+        "min": 4.0,
+        "mode": 5,
+        "max": 6.0
+      },
+      "ca_available_fraction": {
+        "type": "triangular",
+        "min": 0.18400000000000002,
+        "mode": 0.23,
+        "max": 0.276
+      },
+      "s_available_fraction": {
+        "type": "triangular",
+        "min": 0.144,
+        "mode": 0.18,
+        "max": 0.216
+      },
+      "avoided_lime_factor": {
+        "type": "triangular",
+        "min": 0.4,
+        "mode": 0.5,
+        "max": 0.6
+      }
+    },
+    "PG-ChemReco": {
+      "ammonia_kg_per_t": {
+        "type": "triangular",
+        "min": 160.0,
+        "mode": 200,
+        "max": 240.0
+      },
+      "co2_input_kg_per_t": {
+        "type": "triangular",
+        "min": 400.0,
+        "mode": 500,
+        "max": 600.0
+      },
+      "energy_kwh_per_t": {
+        "type": "triangular",
+        "min": 80.0,
+        "mode": 100,
+        "max": 120.0
+      },
+      "ammonium_sulfate_yield": {
+        "type": "triangular",
+        "min": 0.6400000000000001,
+        "mode": 0.8,
+        "max": 0.96
+      },
+      "caco3_yield": {
+        "type": "triangular",
+        "min": 0.48,
+        "mode": 0.6,
+        "max": 0.72
+      }
+    },
+    "PG-REEextract": {
+      "ree_content_ppm": {
+        "type": "triangular",
+        "min": 280.0,
+        "mode": 350.0,
+        "max": 420.0
+      },
+      "moisture_content": {
+        "type": "triangular",
+        "min": 0.16000000000000003,
+        "mode": 0.2,
+        "max": 0.24
+      },
+      "leaching_efficiency": {
+        "type": "triangular",
+        "min": 0.52,
+        "mode": 0.65,
+        "max": 0.78
+      },
+      "purification_efficiency": {
+        "type": "triangular",
+        "min": 0.7200000000000001,
+        "mode": 0.9,
+        "max": 1.08
+      },
+      "h2so4_kg_per_t": {
+        "type": "triangular",
+        "min": 200.0,
+        "mode": 250.0,
+        "max": 300.0
+      },
+      "sodium_hydroxide_kg_per_t": {
+        "type": "triangular",
+        "min": 32.0,
+        "mode": 40.0,
+        "max": 48.0
+      },
+      "extractant_l_per_t": {
+        "type": "triangular",
+        "min": 0.4,
+        "mode": 0.5,
+        "max": 0.6
+      },
+      "process_water_m3_per_t": {
+        "type": "triangular",
+        "min": 4.0,
+        "mode": 5.0,
+        "max": 6.0
+      },
+      "electricity_kwh_per_t": {
+        "type": "triangular",
+        "min": 96.0,
+        "mode": 120.0,
+        "max": 144.0
+      },
+      "steam_mj_per_t": {
+        "type": "triangular",
+        "min": 360.0,
+        "mode": 450.0,
+        "max": 540.0
+      },
+      "residue_treatment_cost_usd_t": {
+        "type": "triangular",
+        "min": 4.0,
+        "mode": 5.0,
+        "max": 6.0
+      },
+      "liquid_effluent_m3_per_t": {
+        "type": "triangular",
+        "min": 3.6,
+        "mode": 4.5,
+        "max": 5.3999999999999995
+      },
+      "ree_market_price_usd_kg": {
+        "type": "triangular",
+        "min": 36.0,
+        "mode": 45.0,
+        "max": 54.0
+      }
+    },
+    "PG-SulfurAcid": {
+      "coal_reducing_kg_per_t": {
+        "type": "triangular",
+        "min": 64.0,
+        "mode": 80.0,
+        "max": 96.0
+      },
+      "coal_heating_kg_per_t": {
+        "type": "triangular",
+        "min": 80.0,
+        "mode": 100.0,
+        "max": 120.0
+      },
+      "additives_kg_per_t": {
+        "type": "triangular",
+        "min": 144.0,
+        "mode": 180.0,
+        "max": 216.0
+      },
+      "electricity_kwh_per_t": {
+        "type": "triangular",
+        "min": 64.0,
+        "mode": 80.0,
+        "max": 96.0
+      },
+      "sulfuric_acid_yield": {
+        "type": "triangular",
+        "min": 0.44000000000000006,
+        "mode": 0.55,
+        "max": 0.66
+      },
+      "sulfur_yield": {
+        "type": "triangular",
+        "min": 0.08000000000000002,
+        "mode": 0.1,
+        "max": 0.12
+      },
+      "clinker_yield": {
+        "type": "triangular",
+        "min": 0.27999999999999997,
+        "mode": 0.35,
+        "max": 0.42
+      },
+      "co2_emissions_kg_per_t": {
+        "type": "triangular",
+        "min": 280.0,
+        "mode": 350.0,
+        "max": 420.0
+      },
+      "moisture_fraction": {
+        "type": "triangular",
+        "min": 0.16000000000000003,
+        "mode": 0.2,
+        "max": 0.24
+      }
+    }
+  }
+}
