@@ -104,6 +104,8 @@ chroma_db/
 logs/**/*.log
 logs/**/*.err
 !logs/**/.gitkeep
+!logs/slurm/pgbot_agent_*.log
+!logs/slurm/pgbot_agent_*.err
 
 # OS files
 .DS_Store
