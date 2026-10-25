@@ -306,33 +306,74 @@ class LLMExtractor:
             )
 
     def _parse_json_response(self, response: str) -> tuple[Dict, List[str]]:
-        """Parse JSON from LLM response."""
+        """Parse JSON from LLM response with robust multi-stage fallbacks."""
         errors = []
+        if not response or not response.strip():
+            errors.append("Empty response from LLM")
+            return {}, errors
 
+        # 1. Direct parse (strict=False handles unescaped control characters)
         try:
-            data = json.loads(response)
+            data = json.loads(response, strict=False)
             return data, errors
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, TypeError):
             pass
 
-        json_match = re.search(r"```(?:json)?\s*\n?(.*?)\n?```", response, re.DOTALL)
+        # 2. Markdown fenced code block
+        json_match = re.search(r"```(?:json)?\s*\n?([\s\S]*?)\n?```", response)
         if json_match:
             try:
-                data = json.loads(json_match.group(1))
+                data = json.loads(json_match.group(1).strip(), strict=False)
                 return data, errors
-            except json.JSONDecodeError:
+            except (json.JSONDecodeError, TypeError):
                 pass
 
-        json_match = re.search(r"\{.*\}", response, re.DOTALL)
-        if json_match:
+        # 3. Outermost curly braces with trailing comma repair
+        first_brace = response.find("{")
+        last_brace = response.rfind("}")
+        if first_brace != -1 and last_brace > first_brace:
+            candidate = response[first_brace : last_brace + 1].strip()
             try:
-                data = json.loads(json_match.group(0))
+                data = json.loads(candidate, strict=False)
                 return data, errors
-            except json.JSONDecodeError:
-                pass
+            except (json.JSONDecodeError, TypeError):
+                cleaned = re.sub(r",\s*([}\]])", r"\1", candidate)
+                try:
+                    data = json.loads(cleaned, strict=False)
+                    return data, errors
+                except (json.JSONDecodeError, TypeError):
+                    pass
+
+        # 4. Truncation repair: auto-close open brackets and braces
+        if first_brace != -1:
+            candidate = response[first_brace:].strip()
+            cleaned = re.sub(r",\s*$", "", candidate)
+            open_braces = cleaned.count("{") - cleaned.count("}")
+            open_brackets = cleaned.count("[") - cleaned.count("]")
+            if open_brackets > 0 or open_braces > 0:
+                repaired = cleaned + ("]" * max(0, open_brackets)) + ("}" * max(0, open_braces))
+                repaired = re.sub(r",\s*([}\]])", r"\1", repaired)
+                try:
+                    data = json.loads(repaired, strict=False)
+                    return data, errors
+                except (json.JSONDecodeError, TypeError):
+                    pass
 
         errors.append("Failed to parse JSON from LLM response")
         return {}, errors
+
+    @staticmethod
+    def _strip_references(text: str) -> str:
+        """Strip references/bibliography section from end of paper to avoid context overflow."""
+        patterns = [
+            r"\n#{1,3}\s*(?:References|REFERENCES|References and Notes|Bibliography|参考文献)[\s\S]*$",
+            r"\n(?:\*\*References\*\*|\*\*REFERENCES\*\*|References\s*\n===+)[\s\S]*$",
+        ]
+        for pat in patterns:
+            match = re.search(pat, text, flags=re.IGNORECASE)
+            if match and match.start() > len(text) * 0.4:
+                return text[: match.start()].strip()
+        return text
 
     def extract_from_document(
         self, document_path: Union[str, Path], extraction_types: List[str] = None
@@ -351,6 +392,9 @@ class LLMExtractor:
 
         with open(document_path, "r", encoding="utf-8") as f:
             text = f.read()
+
+        # Strip reference section to prevent token context overflow
+        text = self._strip_references(text)
 
         types = extraction_types or list(EXTRACTION_PROMPTS.keys())
         results = {}

@@ -1,1 +1,17 @@
-{}
+{
+  "cost": {
+    "capex": null,
+    "opex": {
+      "value": 311.33,
+      "currency": "Yuan",
+      "unit": "per ton"
+    },
+    "revenue": null,
+    "payback_period": null,
+    "irr": null,
+    "npv": null,
+    "chemical_cost": null,
+    "energy_cost": null,
+    "labor_cost": null
+  }
+}

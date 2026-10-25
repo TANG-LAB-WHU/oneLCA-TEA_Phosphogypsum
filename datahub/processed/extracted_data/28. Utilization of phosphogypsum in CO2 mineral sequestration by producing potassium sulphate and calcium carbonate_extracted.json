@@ -1,1 +1,21 @@
-{}
+{
+  "cost": {
+    "capex": null,
+    "opex": null,
+    "revenue": null,
+    "payback_period": null,
+    "irr": null,
+    "npv": null,
+    "chemical_cost": null,
+    "energy_cost": null,
+    "labor_cost": null
+  },
+  "policy": {
+    "subsidy_dependency": null,
+    "carbon_credits": null,
+    "regulatory_status": null,
+    "standards_compliance": [],
+    "trade_exposure": null,
+    "market_status": null
+  }
+}

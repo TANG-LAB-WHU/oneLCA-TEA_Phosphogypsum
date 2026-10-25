@@ -1,1 +1,23 @@
-{}
+{
+  "lci": {
+    "functional_unit": "1 tonne PG",
+    "energy_consumption": null,
+    "chemical_consumption": [],
+    "water_consumption": null,
+    "emissions_air": [],
+    "emissions_water": [],
+    "solid_waste": [],
+    "yield": "5 tonnes PG per tonne P2O5"
+  },
+  "cost": {
+    "capex": null,
+    "opex": null,
+    "revenue": null,
+    "payback_period": null,
+    "irr": null,
+    "npv": null,
+    "chemical_cost": null,
+    "energy_cost": null,
+    "labor_cost": null
+  }
+}
