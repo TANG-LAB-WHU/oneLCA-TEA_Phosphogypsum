@@ -140,7 +140,13 @@ conda activate pgbot 2>/dev/null || conda activate pyrolysis_model_dnn 2>/dev/nu
 # -----------------------------------------------------------------------------
 PORT=11434
 HOST="127.0.0.1"
-LLAMA_DIR="/home/$USER/project/software/llama.cpp"
+if [ -d "/project/$USER/software/llama.cpp" ]; then
+    LLAMA_DIR="/project/$USER/software/llama.cpp"
+elif [ -d "/home/$USER/project/software/llama.cpp" ]; then
+    LLAMA_DIR="/home/$USER/project/software/llama.cpp"
+else
+    LLAMA_DIR="/project/$USER/software/llama.cpp"
+fi
 
 case "$TARGET_MODEL" in
     flash|next|flash-next|moe|auto|"")
@@ -274,15 +280,28 @@ elif [ "$SLURM_JOB_PARTITION" == "gpu" ]; then
 elif [ "$SLURM_JOB_PARTITION" == "9a14a" ]; then
     echo "[Info] Pure CPU partition (AMD EPYC with NUMA interleaving) detected..."
     LLAMA_BIN="${LLAMA_DIR}/build_cpu/bin/llama-server"
-    NUM_THREADS=${SLURM_CPUS_PER_TASK:-64}
-    if [ "$NUM_THREADS" -ge 128 ]; then
-        NUM_THREADS=96
-        echo "[Info] Allocated 96 dedicated compute threads to llama.cpp across NUMA domain."
+    
+    # Optimize CPU threads for AMD EPYC NUMA architecture:
+    # 96+ threads cross dual sockets causes severe OpenMP barrier latency.
+    # 48 threads for token generation and 64 threads for batch prompt prefill achieves optimal throughput.
+    NUM_THREADS=48
+    NUM_BATCH_THREADS=64
+    if [ -n "$SLURM_CPUS_PER_TASK" ] && [ "$SLURM_CPUS_PER_TASK" -lt 48 ]; then
+        NUM_THREADS="$SLURM_CPUS_PER_TASK"
+        NUM_BATCH_THREADS="$SLURM_CPUS_PER_TASK"
     fi
+    echo "[Info] Configured CPU threads: ${NUM_THREADS} (generation), ${NUM_BATCH_THREADS} (batch prompt prefill)."
+
+    # Pin OpenMP threads cleanly to avoid thrashing across CCX
+    export OMP_NUM_THREADS="$NUM_THREADS"
+    export OMP_PROC_BIND=spread
+    export OMP_PLACES=cores
+
+    # Batching parameters (-b 512, -ub 256) and 8192 context window to dramatically reduce KV cache memory bus contention
     if command -v numactl &>/dev/null; then
-        SERVER_CMD=("numactl" "--interleave=all" "$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "16384" "--threads" "$NUM_THREADS" "--n-gpu-layers" "0" "--numa" "distribute")
+        SERVER_CMD=("numactl" "--interleave=all" "$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "8192" "-b" "512" "-ub" "256" "--threads" "$NUM_THREADS" "--threads-batch" "$NUM_BATCH_THREADS" "--n-gpu-layers" "0" "--numa" "distribute")
     else
-        SERVER_CMD=("$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "16384" "--threads" "$NUM_THREADS" "--n-gpu-layers" "0")
+        SERVER_CMD=("$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "8192" "-b" "512" "-ub" "256" "--threads" "$NUM_THREADS" "--threads-batch" "$NUM_BATCH_THREADS" "--n-gpu-layers" "0")
     fi
 else
     echo "[Info] Standard partition fallback..."
@@ -307,17 +326,26 @@ SERVER_READY=false
 
 while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
     if ! kill -0 "$SERVER_PID" 2>/dev/null; then
+        echo ""
         echo "[Error] Server process died unexpectedly. Inspecting logs/services/llama_server_${SLURM_JOB_ID:-local}.log:"
-        tail -n 25 logs/services/llama_server_${SLURM_JOB_ID:-local}.log
+        tail -n 35 "logs/services/llama_server_${SLURM_JOB_ID:-local}.log"
         exit 1
     fi
-    if curl -s "http://${HOST}:${PORT}/health" > /dev/null 2>&1 || curl -s "http://${HOST}:${PORT}/v1/models" > /dev/null 2>&1; then
+
+    # Strictly check for HTTP 200 (HTTP 503 means weights are still loading into memory)
+    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://${HOST}:${PORT}/health" 2>/dev/null)
+    if [ "$HTTP_CODE" = "200" ]; then
         SERVER_READY=true
+        echo " [Ready! Server responded HTTP 200]"
         break
     fi
+
     sleep 5
     RETRY_COUNT=$((RETRY_COUNT + 1))
     echo -n "."
+    if [ $((RETRY_COUNT % 12)) -eq 0 ]; then
+        echo " [Loading weights: $((RETRY_COUNT * 5))s, HTTP status: ${HTTP_CODE:-pending}]"
+    fi
 done
 echo ""
 
@@ -337,6 +365,9 @@ echo "======================================================================="
 # -----------------------------------------------------------------------------
 echo "Launching PhosphogypsumBot Agent..."
 
+# Set extended timeout (30 mins) for CPU inference on large 125B MoE models
+export LLM_TIMEOUT=1800
+
 if [ "$EXEC_MODE" == "chatbot" ]; then
     echo "[Interactive Mode] Launching Chatbot CLI..."
     python -m chat_agent.cli
@@ -348,7 +379,8 @@ from chat_agent.agent import PhosphogypsumAgent
 
 agent = PhosphogypsumAgent(
     base_url=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1"),
-    model=os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next")
+    model=os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next"),
+    timeout=float(os.getenv("LLM_TIMEOUT", "1800.0"))
 )
 
 q = """$CUSTOM_QUERY"""
@@ -366,7 +398,8 @@ from chat_agent.agent import PhosphogypsumAgent
 
 agent = PhosphogypsumAgent(
     base_url=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1"),
-    model=os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next")
+    model=os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next"),
+    timeout=float(os.getenv("LLM_TIMEOUT", "1800.0"))
 )
 
 queries = [

@@ -90,7 +90,13 @@ class PhosphogypsumAgent:
     using a Plan-and-Solve autonomous reasoning cycle.
     """
 
-    def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None, model: Optional[str] = None):
+    def __init__(
+        self,
+        base_url: Optional[str] = None,
+        api_key: Optional[str] = None,
+        model: Optional[str] = None,
+        timeout: Optional[float] = None,
+    ):
         if OpenAI is None:
             raise ImportError(
                 "The 'openai' package is required for the Chat Agent. Install with: pip install openai"
@@ -100,8 +106,9 @@ class PhosphogypsumAgent:
         self.base_url = base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
         self.api_key = api_key or os.getenv("LLM_API_KEY", "sk-no-key-required")
         self.model = model or os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next")
+        self.timeout = timeout if timeout is not None else float(os.getenv("LLM_TIMEOUT", "1800.0"))
 
-        self.client = OpenAI(base_url=self.base_url, api_key=self.api_key)
+        self.client = OpenAI(base_url=self.base_url, api_key=self.api_key, timeout=self.timeout)
 
         self.tools = AVAILABLE_TOOLS
         self.tool_schemas = [function_to_schema(func) for func in self.tools.values()]
