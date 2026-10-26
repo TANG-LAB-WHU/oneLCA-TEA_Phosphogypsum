@@ -1,0 +1,95 @@
+=======================================================================
+Starting Slurm Job: PhosphogypsumBot_Agent (ID: 3772824)
+Node assigned:      n0532
+Submission dir:     /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+Start time:         Sun Oct 25 08:39:40 PM CST 2026
+=======================================================================
+Active workspace root: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+Redirected HF_HOME caching registry to: /scratch/tangsiqi/huggingface_cache
+Initializing Anaconda...
+Activating virtual environment...
+[Model Selection] Active Model ID: Qwen/Qwen3.8-Flash-Next
+[Model Selection] GGUF Weights:    /scratch/tangsiqi/ai_models/qwen/Qwen3.8-Flash-Next-Q8_0/Q8_0/Qwen3.8-Flash-Next-Q8_0-00001-of-00006.gguf
+[Info] Pure CPU partition (AMD EPYC with NUMA interleaving) detected...
+[Info] Configured CPU threads: 48 (generation), 64 (batch prompt prefill).
+[Info] Multimodal vision projector detected: /scratch/tangsiqi/ai_models/qwen/Qwen3.8-Flash-Next-Q8_0/mmproj-BF16.gguf
+Deploying backend server...
+Waiting for local model server to initialize and load weights (PID: 101236)...
+............ [Loading weights: 60s, HTTP status: 503]
+............ [Loading weights: 120s, HTTP status: 503]
+............ [Loading weights: 180s, HTTP status: 503]
+....... [Ready! Server responded HTTP 200]
+
+=======================================================================
+Local Qwen Model Server (Qwen/Qwen3.8-Flash-Next) is ONLINE and READY!
+Server Endpoint: http://127.0.0.1:11434/v1
+=======================================================================
+Launching PhosphogypsumBot Agent...
+[Default Benchmark Mode] Running phosphogypsum domain verification queries...
+
+================================================================================
+[Query 1] 👨‍🔬 研究员提问: 请列出当前支持的所有磷石膏综合利用技术路径代码与名称。
+================================================================================
+
+[PhosphogypsumBot] Analyzing intent & planning actions... (Model: Qwen/Qwen3.8-Flash-Next)
+
+[PhosphogypsumBot 回复]:
+[Agent Error] Connection failed: Request timed out.. (Base URL: http://127.0.0.1:11434/v1, Model: Qwen/Qwen3.8-Flash-Next)
+
+
+================================================================================
+[Query 2] 👨‍🔬 研究员提问: 针对 PG-CementProd（磷石膏制水泥）和 PG-REEextract（磷石膏提取稀土）路径，分别计算 1 吨磷石膏处理下的 LCA 环境影响和 TEA 经济指标，并给出对比分析。
+================================================================================
+
+[PhosphogypsumBot] Analyzing intent & planning actions... (Model: Qwen/Qwen3.8-Flash-Next)
+[Agent Step 1] Calling Tool: get_available_pathways({})
+[Agent Step 1] Calling Tool: calculate_lca_tea({"pathway_code":"PG-CementProd"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-CementProd'...
+[Agent Step 1] Calling Tool: calculate_lca_tea({"pathway_code":"PG-REEextract"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-REEextract'...
+[Agent Step 2] Calling Tool: search_literature({"query":"列出所有支持的磷石膏综合利用技术路径代码与名称：PG-Stack, PG-CementProd, PG-ConstructMat, PG-Soil, PG-ChemReco, PG-REEextract, PG-SulfurAcid","mode":"hybrid"})
+
+[Tool Execution] Searching literature for: '列出所有支持的磷石膏综合利用技术路径代码与名称：PG-Stack, PG-CementProd, PG-ConstructMat, PG-Soil, PG-ChemReco, PG-REEextract, PG-SulfurAcid'...
+Reranked query failed (falling back to standard query): HTTPSConnectionPool(host='openaipublic.blob.core.windows.net', port=443): Max retries exceeded with url: /encodings/o200k_base.tiktoken (Caused by NameResolutionError("HTTPSConnection(host='openaipublic.blob.core.windows.net', port=443): Failed to resolve 'openaipublic.blob.core.windows.net' ([Errno -2] Name or service not known)"))
+
+[PhosphogypsumBot 回复]:
+[Agent Error] Connection failed: Request timed out.. (Base URL: http://127.0.0.1:11434/v1, Model: Qwen/Qwen3.8-Flash-Next)
+
+
+================================================================================
+[Query 3] 👨‍🔬 研究员提问: 在以渣定产政策下，综合考虑 TRL 熟化度、碳减排与经济回报，对所有路径进行多准则优选打分，推荐最具实施价值的方案。
+================================================================================
+
+[PhosphogypsumBot] Analyzing intent & planning actions... (Model: Qwen/Qwen3.8-Flash-Next)
+[Agent Step 1] Calling Tool: rank_all_pathways({})
+
+[Tool Execution] Ranking all pathways...
+[Agent Step 2] Calling Tool: calculate_lca_tea({"pathway_code":"PG-Stack"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-Stack'...
+[Agent Step 2] Calling Tool: calculate_lca_tea({"pathway_code":"PG-Soil"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-Soil'...
+[Agent Step 2] Calling Tool: calculate_lca_tea({"pathway_code":"PG-ConstructMat"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-ConstructMat'...
+[Agent Step 2] Calling Tool: calculate_lca_tea({"pathway_code":"PG-ChemReco"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-ChemReco'...
+[Agent Step 2] Calling Tool: calculate_lca_tea({"pathway_code":"PG-SulfurAcid"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-SulfurAcid'...
+[Agent Step 2] Calling Tool: optimize_benefit_compensation({"pathway_code":"PG-CementProd","target_margin":5})
+
+[Tool Execution] Calculating Benefit Compensation for 'PG-CementProd'...
+
+[PhosphogypsumBot 回复]:
+[Agent Error] Connection failed: Error code: 400 - {'error': {'code': 400, 'message': 'request (8636 tokens) exceeds the available context size (8192 tokens), try increasing it', 'type': 'exceed_context_size_error', 'n_prompt_tokens': 8636, 'n_ctx': 8192}}. (Base URL: http://127.0.0.1:11434/v1, Model: Qwen/Qwen3.8-Flash-Next)
+
+=======================================================================
+All autonomous queries completed successfully! (Job ID: 3772824)
+Finished at: Mon Oct 26 12:43:02 AM CST 2026
+=======================================================================
+[Trap] Terminating llama-server (PID: 101236)...

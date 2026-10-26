@@ -115,6 +115,13 @@ export HF_HOME="/scratch/$USER/huggingface_cache"
 mkdir -p "$HF_HOME"
 echo "Redirected HF_HOME caching registry to: $HF_HOME"
 
+# Set offline tiktoken cache directory for compute nodes (no internet access)
+export TIKTOKEN_CACHE_DIR="/home/$USER/.cache/tiktoken"
+if [ ! -d "$TIKTOKEN_CACHE_DIR" ] && [ -d "/home/tangsiqi/.cache/tiktoken" ]; then
+    export TIKTOKEN_CACHE_DIR="/home/tangsiqi/.cache/tiktoken"
+fi
+echo "Configured offline TIKTOKEN_CACHE_DIR to: $TIKTOKEN_CACHE_DIR"
+
 # -----------------------------------------------------------------------------
 # 2. Conda Environment Activation
 # -----------------------------------------------------------------------------
@@ -297,11 +304,11 @@ elif [ "$SLURM_JOB_PARTITION" == "9a14a" ]; then
     export OMP_PROC_BIND=spread
     export OMP_PLACES=cores
 
-    # Batching parameters (-b 512, -ub 256) and 8192 context window to dramatically reduce KV cache memory bus contention
+    # Context window set to 16384 to support complex multi-hop tool-calling sequences (e.g. 7+ tool calls producing ~8.6k tokens)
     if command -v numactl &>/dev/null; then
-        SERVER_CMD=("numactl" "--interleave=all" "$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "8192" "-b" "512" "-ub" "256" "--threads" "$NUM_THREADS" "--threads-batch" "$NUM_BATCH_THREADS" "--n-gpu-layers" "0" "--numa" "distribute")
+        SERVER_CMD=("numactl" "--interleave=all" "$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "16384" "-b" "512" "-ub" "256" "--threads" "$NUM_THREADS" "--threads-batch" "$NUM_BATCH_THREADS" "--n-gpu-layers" "0" "--numa" "distribute")
     else
-        SERVER_CMD=("$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "8192" "-b" "512" "-ub" "256" "--threads" "$NUM_THREADS" "--threads-batch" "$NUM_BATCH_THREADS" "--n-gpu-layers" "0")
+        SERVER_CMD=("$LLAMA_BIN" "-m" "$GGUF_MODEL" "--host" "$HOST" "--port" "$PORT" "-c" "16384" "-b" "512" "-ub" "256" "--threads" "$NUM_THREADS" "--threads-batch" "$NUM_BATCH_THREADS" "--n-gpu-layers" "0")
     fi
 else
     echo "[Info] Standard partition fallback..."
