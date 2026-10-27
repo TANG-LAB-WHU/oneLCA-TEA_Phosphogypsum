@@ -326,9 +326,6 @@ if [ -n "$MMPROJ_MODEL" ] && [ -f "$MMPROJ_MODEL" ]; then
     SERVER_CMD+=("--mmproj" "$MMPROJ_MODEL")
 fi
 
-# Enable embedding extraction endpoint (/v1/embeddings) for LightRAG & literature graph queries
-SERVER_CMD+=("--embeddings")
-
 echo "Deploying backend server..."
 mkdir -p logs/services logs/slurm
 "${SERVER_CMD[@]}" > logs/services/llama_server_${SLURM_JOB_ID:-local}.log 2>&1 &

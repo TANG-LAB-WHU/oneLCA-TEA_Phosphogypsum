@@ -1,0 +1,61 @@
+=======================================================================
+Starting Slurm Job: PhosphogypsumBot_Agent (ID: 3786985)
+Node assigned:      n0517
+Submission dir:     /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+Start time:         Tue Oct 27 12:50:58 PM CST 2026
+=======================================================================
+Active workspace root: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+Redirected HF_HOME caching registry to: /scratch/tangsiqi/huggingface_cache
+Configured offline TIKTOKEN_CACHE_DIR to: /home/tangsiqi/.cache/tiktoken
+Initializing Anaconda...
+Activating virtual environment...
+[Model Selection] Active Model ID: Qwen/Qwen3.8-Flash-Next
+[Model Selection] GGUF Weights:    /scratch/tangsiqi/ai_models/qwen/Qwen3.8-Flash-Next-Q8_0/Q8_0/Qwen3.8-Flash-Next-Q8_0-00001-of-00006.gguf
+[Info] Pure CPU partition (AMD EPYC with NUMA interleaving) detected...
+[Info] Configured CPU threads: 48 (generation), 64 (batch prompt prefill).
+[Info] Multimodal vision projector detected: /scratch/tangsiqi/ai_models/qwen/Qwen3.8-Flash-Next-Q8_0/mmproj-BF16.gguf
+Deploying backend server...
+Waiting for local model server to initialize and load weights (PID: 4177111)...
+............ [Loading weights: 60s, HTTP status: 503]
+............ [Loading weights: 120s, HTTP status: 503]
+............ [Loading weights: 180s, HTTP status: 503]
+............ [Loading weights: 240s, HTTP status: 503]
+............ [Loading weights: 300s, HTTP status: 503]
+...........
+[Error] Server process died unexpectedly. Inspecting logs/services/llama_server_3786985.log:
+[New LWP 4177365]
+[New LWP 4177366]
+[New LWP 4177367]
+[New LWP 4177368]
+[New LWP 4177369]
+[New LWP 4177370]
+[New LWP 4177371]
+[New LWP 4177372]
+[New LWP 4177373]
+[New LWP 4177374]
+[New LWP 4177375]
+[New LWP 4177376]
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+https://debuginfod.centos.org/ 
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+0x00001507d08d8a3f in wait4 () from /lib64/libc.so.6
+#0  0x00001507d08d8a3f in wait4 () from /lib64/libc.so.6
+#1  0x00001507d158422b in ggml_print_backtrace () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libggml-base.so.0
+#2  0x00001507d158437e in ggml_abort () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libggml-base.so.0
+#3  0x00001507d159ba99 in ggml_backend_tensor_get_async () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libggml-base.so.0
+#4  0x00001507d18fd57f in llama_context::decode(llama_batch const&) () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libllama.so.0
+#5  0x00001507d18fe41b in llama_decode () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libllama.so.0
+#6  0x00001507d1f3174b in common_init_from_params(common_params&, bool) () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libllama-common.so.0
+#7  0x00001507d22e7fe1 in server_context_impl::load_model(common_params&) () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libllama-server-impl.so
+#8  0x00001507d2254ddf in llama_server(common_params&, int, char**) () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libllama-server-impl.so
+#9  0x00001507d2255ece in llama_server(int, char**) () from /project/tangsiqi/software/llama.cpp/build_cpu/bin/libllama-server-impl.so
+#10 0x00001507d0829590 in __libc_start_call_main () from /lib64/libc.so.6
+#11 0x00001507d0829640 in __libc_start_main_impl () from /lib64/libc.so.6
+#12 0x0000000000401075 in _start ()
+[Inferior 1 (process 4177111) detached]
+[Trap] Terminating llama-server (PID: 4177111)...

@@ -1,0 +1,1 @@
+/var/spool/slurm/slurmd/job3786985/slurm_script: line 364: 4177111 Aborted                 (core dumped) "${SERVER_CMD[@]}" > logs/services/llama_server_${SLURM_JOB_ID:-local}.log 2>&1
