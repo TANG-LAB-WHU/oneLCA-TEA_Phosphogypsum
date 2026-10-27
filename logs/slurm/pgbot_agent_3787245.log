@@ -1,0 +1,233 @@
+=======================================================================
+Starting Slurm Job: PhosphogypsumBot_Agent (ID: 3787245)
+Node assigned:      n0517
+Submission dir:     /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+Start time:         Tue Oct 27 01:27:58 PM CST 2026
+=======================================================================
+Active workspace root: /scratch/tangsiqi/liyi_folder/oneLCA-TEA_Phosphogypsum
+Redirected HF_HOME caching registry to: /scratch/tangsiqi/huggingface_cache
+Configured offline TIKTOKEN_CACHE_DIR to: /home/tangsiqi/.cache/tiktoken
+Initializing Anaconda...
+Activating virtual environment...
+[Model Selection] Active Model ID: Qwen/Qwen3.8-Flash-Next
+[Model Selection] GGUF Weights:    /scratch/tangsiqi/ai_models/qwen/Qwen3.8-Flash-Next-Q8_0/Q8_0/Qwen3.8-Flash-Next-Q8_0-00001-of-00006.gguf
+[Info] Pure CPU partition (AMD EPYC with NUMA interleaving) detected...
+[Info] Configured CPU threads: 48 (generation), 64 (batch prompt prefill).
+[Info] Multimodal vision projector detected: /scratch/tangsiqi/ai_models/qwen/Qwen3.8-Flash-Next-Q8_0/mmproj-BF16.gguf
+Deploying backend server...
+Waiting for local model server to initialize and load weights (PID: 4180649)...
+............ [Loading weights: 60s, HTTP status: 503]
+............ [Loading weights: 120s, HTTP status: 503]
+. [Ready! Server responded HTTP 200]
+
+=======================================================================
+Local Qwen Model Server (Qwen/Qwen3.8-Flash-Next) is ONLINE and READY!
+Server Endpoint: http://127.0.0.1:11434/v1
+=======================================================================
+Launching PhosphogypsumBot Agent...
+[Default Benchmark Mode] Running phosphogypsum domain verification queries...
+
+================================================================================
+[Query 1] 👨‍🔬 研究员提问: 请列出当前支持的所有磷石膏综合利用技术路径代码与名称。
+================================================================================
+
+[PhosphogypsumBot] Analyzing intent & planning actions... (Model: Qwen/Qwen3.8-Flash-Next)
+[Agent Step 1] Calling Tool: get_available_pathways({})
+[Agent Step 2] Calling Tool: search_literature({"query":"phosphogypsum valorization pathway definitions: PG-Stack stockpiling, PG-CementProd cement production, PG-ConstructMat construction materials, PG-Soil soil amendment, PG-ChemReco chemical recovery, PG-REEextract rare earth extraction, PG-SulfurAcid sulfuric acid production","mode":"hybrid"})
+
+[Tool Execution] Searching literature for: 'phosphogypsum valorization pathway definitions: PG-Stack stockpiling, PG-CementProd cement production, PG-ConstructMat construction materials, PG-Soil soil amendment, PG-ChemReco chemical recovery, PG-REEextract rare earth extraction, PG-SulfurAcid sulfuric acid production'...
+Reranked query failed (falling back to standard query): 'NoneType' object has no attribute 'split'
+[Agent Step 3] Calling Tool: search_literature({"query":"PG-Stack long-term stockpiling storage, PG-ConstructMat gypsum blocks plaster board, PG-ChemReco chemical recovery ammonium sulfate potassium sulfate recycling: TRL and GWP","mode":"hybrid"})
+
+[Tool Execution] Searching literature for: 'PG-Stack long-term stockpiling storage, PG-ConstructMat gypsum blocks plaster board, PG-ChemReco chemical recovery ammonium sulfate potassium sulfate recycling: TRL and GWP'...
+Reranked query failed (falling back to standard query): 'NoneType' object has no attribute 'split'
+
+[PhosphogypsumBot 回复]:
+## 当前系统支持的磷石膏（PG）综合利用技术路径清单
+
+依据后端路径注册表（Pathway Registry）实时返回结果，共支持 **7 条**技术路径，均已接入 LCA / TEA / VPM 动力学联合求解器：
+
+| # | 路径代码（Pathway Code） | 中文名称 | 英文名称 | 技术内涵 | 技术成熟度 |
+|---|---|---|---|---|---|
+| 1 | `PG-Stack` | 堆存处置（现状基线） | Stockpiling / Disposal | 磷石膏浆体输送至渣库堆存，作为 LCA 对比的"不作为"基线情景 | 基线 |
+| 2 | `PG-CementProd` | 水泥与熟料生产 | Cement & Clinker Production | 替代天然石膏作缓凝剂（3–5 wt%），或与黏土/煤共烧制备硫铝酸盐·硅酸盐水泥熟料（1200–1350 °C） | TRL 9（中国/湖北工业化） |
+| 3 | `PG-ConstructMat` | 建材化利用 | Construction Materials | 制备石膏砌块、纸面石膏板、抹灰石膏、自流平砂浆及无熟料胶凝材料 | 需核算 |
+| 4 | `PG-Soil` | 土壤改良（盐碱地修复） | Saline–Alkali Soil Amendment | 利用 Ca²⁺ 置换胶体吸附性 Na⁺，降低 ESP、提升入渗速率 | TRL 9 |
+| 5 | `PG-ChemReco` | 化学组分回收 | Chemical Recovery | 磷/氟等有价组分回收与化学转化（洗涤—沉淀—联产路线） | 需核算 |
+| 6 | `PG-REEextract` | 稀土元素提取 | Rare Earth Elements Extraction | 稀 H₂SO₄/HCl 浸出（液固比 1:3，60–80 °C），REO 品位 0.04–0.15%，回收率 50–75% | TRL 5（中试示范） |
+| 7 | `PG-SulfurAcid` | 分解制硫酸（硫循环） | Sulfuric Acid Production | CaSO₄ 与煤/焦炭还原热分解（1100–1250 °C）生成 SO₂ + CaO，尾气制工业硫酸 | 能耗密集型 |
+
+### 关键说明
+- **全部 7 个代码均为合法入参**，可直接用于 `calculate_lca_tea`、`run_market_robustness_scenario`、`optimize_reverse_design`、`optimize_benefit_compensation`、`calibrate_process_parameters`。
+- 文献库（GraphRAG，70+ 篇）已对 `PG-CementProd`、`PG-REEextract`、`PG-SulfurAcid`、`PG-Soil` 给出典型区间锚点（如水泥路径 GWP 13.0–15.5 kg CO₂-eq/t PG、CLCC 9.0–11.5 USD/t PG；稀土路径 GWP 24.5–28.0 kg CO₂-eq/t PG、CLCC 14.0–18.5 USD/t PG）。
+- `PG-Stack`、`PG-ConstructMat`、`PG-ChemReco` 的文献摘要检索未返回独立参数条目，**其 GWP/NPV/TRL 数值不做推测**，需调用 `calculate_lca_tea` 由物理—经济求解器确定性计算后给出。
+
+### 建议的下一步
+1. **全谱系比选**：调用 `rank_all_pathways` 做 5D TEPES 多准则（MCDA）帕累托排序。
+2. **单路径深挖**：对候选路径执行 `calculate_lca_tea` 获取 LCA/TEA/VPM 三联足迹。
+3. **约束反演**：若存在"以渣定产"或碳限额约束，对高耗能路径（`PG-SulfurAcid`、`PG-CementProd`）执行 `optimize_reverse_design` 反算窑温/液固比等窗口。
+4. **补贴设计**：对高 CAPEX 低毛利路径（`PG-REEextract`）执行 `optimize_benefit_compensation` 求解碳价、处置费与补贴的可行组合。
+
+请告知需要优先评估的路径代码或决策目标（碳减排最大化 / NPV 最大化 / 合规消纳量），我将展开完整分析链。
+
+
+================================================================================
+[Query 2] 👨‍🔬 研究员提问: 针对 PG-CementProd（磷石膏制水泥）和 PG-REEextract（磷石膏提取稀土）路径，分别计算 1 吨磷石膏处理下的 LCA 环境影响和 TEA 经济指标，并给出对比分析。
+================================================================================
+
+[PhosphogypsumBot] Analyzing intent & planning actions... (Model: Qwen/Qwen3.8-Flash-Next)
+[Agent Step 1] Calling Tool: calculate_lca_tea({"pathway_code":"PG-CementProd"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-CementProd'...
+[Agent Step 1] Calling Tool: calculate_lca_tea({"pathway_code":"PG-REEextract"})
+
+[Tool Execution] Calculating LCA/TEA for pathway: 'PG-REEextract'...
+
+[PhosphogypsumBot 回复]:
+[Agent Error] Connection failed: Request timed out.. (Base URL: http://127.0.0.1:11434/v1, Model: Qwen/Qwen3.8-Flash-Next)
+
+
+================================================================================
+[Query 3] 👨‍🔬 研究员提问: 在以渣定产政策下，综合考虑 TRL 熟化度、碳减排与经济回报，对所有路径进行多准则优选打分，推荐最具实施价值的方案。
+================================================================================
+
+[PhosphogypsumBot] Analyzing intent & planning actions... (Model: Qwen/Qwen3.8-Flash-Next)
+[Agent Step 1] Calling Tool: rank_all_pathways({})
+
+[Tool Execution] Ranking all pathways...
+[Agent Step 1] Calling Tool: search_literature({"query":"\"以渣定产\" policy phosphogypsum zero-growth stockpiling regulation Hubei/Guizhou requirements utilization rate targets","mode":"hybrid"})
+
+[Tool Execution] Searching literature for: '"以渣定产" policy phosphogypsum zero-growth stockpiling regulation Hubei/Guizhou requirements utilization rate targets'...
+Reranked query failed (falling back to standard query): 'NoneType' object has no attribute 'split'
+[Agent Step 2] Calling Tool: optimize_benefit_compensation({"pathway_code":"PG-CementProd","target_margin":5})
+
+[Tool Execution] Calculating Benefit Compensation for 'PG-CementProd'...
+[Agent Step 2] Calling Tool: optimize_benefit_compensation({"pathway_code":"PG-Soil","target_margin":5})
+
+[Tool Execution] Calculating Benefit Compensation for 'PG-Soil'...
+[Agent Step 2] Calling Tool: optimize_benefit_compensation({"pathway_code":"PG-ConstructMat","target_margin":5})
+
+[Tool Execution] Calculating Benefit Compensation for 'PG-ConstructMat'...
+[Agent Step 3] Calling Tool: calibrate_process_parameters({"pathway_code":"PG-CementProd","n_samples":1000})
+
+[Tool Execution] Running MCMC Uncertainty Calibration for 'PG-CementProd'...
+[Agent Step 3] Calling Tool: calibrate_process_parameters({"pathway_code":"PG-Soil","n_samples":1000})
+
+[Tool Execution] Running MCMC Uncertainty Calibration for 'PG-Soil'...
+
+[PhosphogypsumBot 回复]:
+# 磷石膏综合利用路径 5D TEPES 多准则优选决策报告
+**决策情景：以渣定产（消纳量决定磷酸产能）｜功能单位：1 t PG｜评估维度：技术成熟度 / 碳减排 / 经济回报 / 政策合规 / 社会风险**
+
+---
+
+## 一、MCDA 原始排序结果（后端 `rank_all_pathways` 确定性输出）
+
+| 排名 | 路径 | 综合得分 | 帕累托状态 | 求解器标注优势 | 求解器标注劣势 |
+|---|---|---|---|---|---|
+| 1 | PG-Stack（堆存） | **0.979** | ✅ 帕累托最优 | 低碳、技术成熟、低风险 | NPV 为负、回收期长 |
+| 2 | PG-Soil（土壤改良） | **0.949** | ✅ 帕累托最优 | 低碳、技术成熟、低风险 | NPV 为负、回收期长 |
+| 3 | PG-CementProd（水泥） | **0.947** | ✅ 帕累托最优 | 低碳、技术成熟、低风险 | NPV 为负、回收期长 |
+| 4 | PG-ConstructMat（建材） | 0.915 | ✅ 帕累托最优 | 低碳、技术成熟、低风险 | NPV 为负、回收期长 |
+| 5 | PG-ChemReco（化学回收） | 0.543 | ✅ 帕累托最优 | 低碳 | NPV 为负、回收期长 |
+| 6 | PG-REEextract（稀土） | 0.522 | ✅ 帕累托最优 | 低碳 | NPV 为负、**技术成熟度低**、回收期长 |
+| 7 | PG-SulfurAcid（制酸） | 0.276 | ❌ 被支配 | — | NPV 为负、回收期长 |
+
+> ⚠️ **关键方法论警示（必须前置说明）**：原始打分将 `PG-Stack` 列为第 1 名，这是**评分函数的结构性伪优解**，而非工程结论。原因有二：
+> 1. 堆存情景的"碳足迹/风险"以渣库现状核算，**未内化长期渗滤液氟磷污染、库容占用与溃坝尾部风险**，也未计入闭库复垦负债；
+> 2. 打分体系未对"消纳量为零"施加惩罚项。
+>
+> 在**以渣定产**法规下，堆存属于**硬约束不可行集**（新增堆存 = 等量扣减磷酸产能），故必须从可行域中剔除。剔除后，真实可利用路径的排序为：**PG-Soil (0.949) > PG-CementProd (0.947) > PG-ConstructMat (0.915) ≫ PG-ChemReco (0.543) > PG-REEextract (0.522) > PG-SulfurAcid (0.276)**。
+
+---
+
+## 二、可行域内 5D TEPES 深度对比（已核算路径）
+
+| 维度 | 指标 | PG-CementProd | PG-Soil | PG-REEextract |
+|---|---|---|---|---|
+| **T 技术** | TRL | **9（工业化）** | 9 | 5（中试） |
+| | 动力学模型 | VPM α-半水石膏重结晶 | ESP/Ca²⁺-Na⁺ 置换 | 收缩核扩散模型 (SCM) |
+| | 模型验证 | MAE 0.0188，收率 93.1% @120 °C/60 min | — | MAE 1.35%，回收率 66.35% @60 °C/1.5 M 酸 |
+| **E 环境** | 气候变化 GWP (kg CO₂-eq/t) | **13.05** | 最低（近零净足迹） | 25.2（为水泥的 1.93 倍） |
+| | 淡水富营养化 | 200.0 ⚠️ | 0（且产生避免效益） | 0.163 |
+| **E 经济** | CAPEX 总额 (USD) | 2.31 M | 低 | **25.45 M（11.0 倍）** |
+| | CAPEX 年化 (USD) | 185,473 | — | 2,041,973 |
+| | OPEX (USD/t) | 7.19 | — | 86.08 |
+| | CLCC (USD/t) | **9.02** | 最低 | **106.49** |
+| | NPV (USD) | −11.23 M | — | **−132.71 M** |
+| | IRR / 回收期 | 0% / 20 年 | — | 0% / 20 年 |
+| **P 政策** | 以渣定产消纳强度 | **高（可大规模吞吐）** | 中（受耕地半径限制） | 低（仅提 REE，残渣仍需处置） |
+| **S 社会** | 风险评分 / 等级 | **25.0 / LOW** | LOW | 42.8 / **MEDIUM** |
+| | 风险调整折现率 | 9.65% | — | 11.11% |
+
+---
+
+## 三、经济可行性缺口与补偿机制反算（`optimize_benefit_compensation`，目标毛利 5 USD/t）
+
+| 路径 | 所需总补偿 (USD/t) | 碳信用 | 处置费 (Tipping Fee) | 财政补贴 | 避免环境效益 (USD/t) | 净社会收益 | 社会 ROI |
+|---|---|---|---|---|---|---|---|
+| **PG-Soil** | **5.99** | 0.082 | 5.90 | 0 | **0.206** | +0.206 | ∞ |
+| **PG-CementProd** | **13.99** | 6.0×10⁻⁵ | 13.99 | 0 | 0.00015 | +0.00015 | ∞ |
+| PG-ConstructMat | 15.42 | 0.026 | 15.00 | 0.392 | 0.066 | **−0.326** | 0.167 |
+
+**解读：**
+- 三条路径在纯市场条件下均**无法自负盈亏**（IRR = 0，NPV 深度为负），必须依靠**处置费 + 碳定价 + 补贴**的组合工具包。
+- **PG-Soil 的杠杆效率最高**：仅需 5.99 USD/t 补偿即达标，且单位避免环境效益（0.206 USD/t）为三者之最，社会 ROI 最优。
+- **PG-ConstructMat 是唯一净社会收益为负**的路径（−0.326 USD/t），需同时动用处置费与财政补贴，政策成本最高，不宜作为主力消纳手段。
+- 碳信用贡献几乎为零（≤0.082 USD/t），说明**当前碳价水平不足以驱动 PG 资源化**，处置费（Tipping Fee）才是决定性政策杠杆。
+
+---
+
+## 四、不确定性量化（MCMC 后验，n = 1000）
+
+| 参数 | 后验均值 | 后验标准差 | 95% 可信区间 |
+|---|---|---|---|
+| moisture_fraction（含水率） | 0.1774 | 0.0258 | **[0.1313, 0.2300]** |
+| conversion_yield（转化收率） | 0.9184 | 0.0330 | **[0.8546, 0.9963]** |
+
+**工程含义**：含水率在 95% CI 内波动 ±28%（相对值），直接决定洗涤—干燥热耗，是 CLCC 从 9.02 USD/t 向区间上界漂移的**首要敏感变量**。将入窑/入磨含水率从 0.23 压降至 0.13，是降低 CLCC 与所需处置费的最优先工艺抓手。
+
+---
+
+## 五、最终推荐方案
+
+### 🥇 主力路径：**PG-CementProd（磷石膏制水泥/缓凝剂）**
+**推荐理由（三高一确定）**
+1. **TRL 9 唯一可立即规模化**：无需中试放大风险，直接承接以渣定产的年度刚性消纳指标；
+2. **GWP 13.05 kg CO₂-eq/t**，为全部热化学路径中最低（仅为制酸路径 80–120 的 1/6–1/9，为稀土路径的 52%）；
+3. **CLCC 9.02 USD/t**，为热加工类路径中最低成本曲线；
+4. **风险等级 LOW（25.0）**，风险调整折现率仅 9.65%，融资成本最优；
+5. 所需政策杠杆明确且单一：**处置费 13.99 USD/t** 即可实现 5 USD/t 毛利，无需财政补贴。
+
+### 🥈 协同路径：**PG-Soil（盐碱地改良）**
+在**地理半径匹配**（渣场邻近盐碱耕地）且**氟/磷浸出毒性通过 GB 合规检测**的前提下，作为最低成本消纳补充（仅需 5.99 USD/t 补偿，社会 ROI 最优）。
+
+### ⚠️ 需专项整改：**PG-CementProd 的 200.0 淡水富营养化负荷**
+该值为全表最高异常项，源于残余 P₂O₅（0.5–2.0%）随洗涤废水外排。**强制配套洗涤水闭路循环 + 磷回收单元**后方可放行，否则将在富营养化维度被非支配性淘汰。
+
+### 🔭 战略期权（非当期实施）：**PG-REEextract**
+当前 CAPEX 25.45 M USD、CLCC 106.49 USD/t、NPV −132.7 M USD、TRL 5、风险 MEDIUM，**不具备商业部署条件**。建议以"技术期权"形式保留：待 REO 回收率由 66.35% 提升至 >85%、且稀土价格上行时再行启动。其残渣仍需水泥/土壤路径消纳，**不可作为独立消纳方案计入以渣定产台账**。
+
+### ❌ 淘汰：**PG-SulfurAcid**（0.276，唯一被支配解）
+GWP 80–120 kg CO₂-eq/t 与高能耗特征，在碳约束情景下无帕累托位置。
+
+---
+
+## 六、组合实施建议（Portfolio 配置）
+
+$$
+\underbrace{x_{\text{Cement}}}_{\text{主力 } 60\text{–}70\%} \;+\; \underbrace{x_{\text{Soil}}}_{\text{协同 } 20\text{–}30\%} \;+\; \underbrace{x_{\text{ConstructMat}}}_{\text{补充 } \le 10\%} \;=\; 100\% \quad \text{s.t.} \quad x_{\text{Stack}} = 0
+$$
+
+**政策工具包定价建议：**
+- 处置费（Tipping Fee）：**≥ 14 USD/t PG**（覆盖水泥路径达标缺口，为第一杠杆）
+- 碳信用：当前贡献 <0.1 USD/t，**不作为可行性判据**；需碳价提升 2 个数量级方具驱动作用
+- 财政补贴：仅对 PG-ConstructMat 微量配置（0.39 USD/t），其余路径**零补贴可达标**
+
+**核心结论一句话**：剔除堆存伪优解后，**PG-CementProd 是以渣定产约束下技术、碳、经济三维唯一同时达标的即插即用方案**，其落地瓶颈不在技术而在**13.99 USD/t 处置费机制的确立**与**200.0 富营养化负荷的洗涤水闭路治理**。
+
+=======================================================================
+All autonomous queries completed successfully! (Job ID: 3787245)
+Finished at: Tue Oct 27 20:07:13 CST 2026
+=======================================================================
+[Trap] Terminating llama-server (PID: 4180649)...
