@@ -123,24 +123,51 @@ def calculate_lca_tea(pathway_code: str) -> str:
     try:
         print(f"\n[Tool Execution] Calculating LCA/TEA for pathway: '{pathway_code}'...")
         res = assessment_engine.assess(pathway_code)
+
+        def _round_val(v, decimals=2):
+            if isinstance(v, (int, float)):
+                if 0 < abs(v) < 0.01:
+                    return round(float(v), 4)
+                return round(float(v), decimals)
+            return v
+
+        raw_impacts = res.get("lca", {}).get("impacts", {})
+        clean_impacts = {k: _round_val(v, 2) for k, v in raw_impacts.items()}
+
+        raw_tea = res.get("tea", {})
+        clean_tea = {
+            "CAPEX_Total_USD_t": _round_val(raw_tea.get("capex_total", 0.0), 2),
+            "CAPEX_Annualized_USD_t": _round_val(raw_tea.get("capex_annualized", 0.0), 2),
+            "OPEX_Total_USD_t": _round_val(raw_tea.get("opex_total", 0.0), 2),
+            "Revenue_USD_t": _round_val(raw_tea.get("revenue", 0.0), 2),
+            "CLCC_USD_t": _round_val(raw_tea.get("clcc", 0.0), 2),
+            "SLCC_USD_t": _round_val(raw_tea.get("slcc", 0.0), 2),
+            "NPV_USD_t": _round_val(raw_tea.get("npv", 0.0), 2),
+            "IRR_percent": _round_val(raw_tea.get("irr", 0.0) * (100.0 if raw_tea.get("irr", 0.0) < 1.0 else 1.0), 2),
+            "Payback_Years": _round_val(raw_tea.get("payback_years", 0.0), 2),
+        }
+
+        raw_risk = res.get("risk", {})
+        clean_risk = {
+            "composite_risk_score": _round_val(raw_risk.get("overall_score", 0.0), 2),
+            "risk_level": raw_risk.get("overall_level", "MODERATE"),
+        }
+
+        vpm_raw = res.get("vpm", {})
+        clean_vpm = {
+            "status": vpm_raw.get("status", "simulated"),
+            "module_id": vpm_raw.get("vpm_id"),
+        }
+
         result_dict = {
             "pathway_code": res["pathway_code"],
             "pathway_name": res["pathway_name"],
-            "TRL": res["trl"],
-            "LCA_Impacts": res["lca"]["impacts"],
-            "TEA_Metrics": {
-                "CAPEX_Total": res["tea"]["capex_total"],
-                "CAPEX_Annualized": res["tea"]["capex_annualized"],
-                "OPEX_Total": res["tea"]["opex_total"],
-                "Revenue": res["tea"]["revenue"],
-                "CLCC": res["tea"]["clcc"],
-                "SLCC": res["tea"]["slcc"],
-                "NPV": res["tea"]["npv"],
-                "IRR": res["tea"]["irr"],
-                "Payback_Years": res["tea"]["payback_years"],
-            },
-            "VPM_Kinetics": res["vpm"],
-            "Risk_Assessment": res["risk"],
+            "TRL": res.get("trl", 7),
+            "Functional_Unit": "1 tonne phosphogypsum (1000 kg)",
+            "LCA_Impacts": clean_impacts,
+            "TEA_Metrics": clean_tea,
+            "VPM_Kinetics": clean_vpm,
+            "Risk_Assessment": clean_risk,
         }
         return json.dumps(result_dict, indent=2, ensure_ascii=False)
     except Exception as e:

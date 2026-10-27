@@ -327,7 +327,7 @@ if [ -n "$MMPROJ_MODEL" ] && [ -f "$MMPROJ_MODEL" ]; then
 fi
 
 echo "Deploying backend server..."
-mkdir -p logs/services logs/slurm
+mkdir -p logs/services logs/slurm reports
 "${SERVER_CMD[@]}" > logs/services/llama_server_${SLURM_JOB_ID:-local}.log 2>&1 &
 SERVER_PID=$!
 
@@ -377,8 +377,8 @@ echo "======================================================================="
 # -----------------------------------------------------------------------------
 echo "Launching PhosphogypsumBot Agent..."
 
-# Set extended timeout (30 mins) for CPU inference on large 125B MoE models
-export LLM_TIMEOUT=1800
+# Set extended timeout (40 mins) for CPU inference on large 125B MoE models
+export LLM_TIMEOUT=2400
 
 if [ "$EXEC_MODE" == "chatbot" ]; then
     echo "[Interactive Mode] Launching Chatbot CLI..."
@@ -392,7 +392,7 @@ from chat_agent.agent import PhosphogypsumAgent
 agent = PhosphogypsumAgent(
     base_url=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1"),
     model=os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next"),
-    timeout=float(os.getenv("LLM_TIMEOUT", "1800.0"))
+    timeout=float(os.getenv("LLM_TIMEOUT", "2400.0"))
 )
 
 q = """$CUSTOM_QUERY"""
@@ -408,17 +408,31 @@ else
 import os
 from chat_agent.agent import PhosphogypsumAgent
 
+timeout_val = float(os.getenv("LLM_TIMEOUT", "2400.0"))
 agent = PhosphogypsumAgent(
     base_url=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1"),
     model=os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next"),
-    timeout=float(os.getenv("LLM_TIMEOUT", "1800.0"))
+    timeout=timeout_val
 )
 
 queries = [
     "请列出当前支持的所有磷石膏综合利用技术路径代码与名称。",
-    "针对 PG-CementProd（磷石膏制水泥）和 PG-REEextract（磷石膏提取稀土）路径，分别计算 1 吨磷石膏处理下的 LCA 环境影响和 TEA 经济指标，并给出对比分析。",
+    "针对 PG-CementProd（磷石膏制水泥）和 PG-REEextract（磷石膏提取稀土）路径，分别计算 1 吨磷石膏处理下的 LCA 环境影响与 TEA 经济指标，并给出对比分析。",
     "在以渣定产政策下，综合考虑 TRL 熟化度、碳减排与经济回报，对所有路径进行多准则优选打分，推荐最具实施价值的方案。"
 ]
+
+job_id = os.getenv("SLURM_JOB_ID", "local")
+report_file = f"reports/agent_decision_report_{job_id}.md"
+
+with open(report_file, "w", encoding="utf-8") as rf:
+    rf.write(f"# PhosphogypsumBot 自主决策与综合评估报告 (Job ID: {job_id})\n\n")
+    rf.write("> [!NOTE]\n")
+    rf.write("> **计算环境与元数据**\n")
+    rf.write(f"> - **作业编号**：Job ID {job_id}\n")
+    rf.write(f"> - **模型底座**：{os.getenv('LLM_MODEL', 'Qwen/Qwen3.8-Flash-Next')}\n")
+    rf.write(f"> - **执行节点**：{os.getenv('SLURMD_NODENAME', 'n0517')} ({os.getenv('SLURM_JOB_PARTITION', '9a14a')})\n")
+    rf.write(f"> - **推理框架**：llama-server (Qwen3.8-Flash-Next 125B MoE)\n\n")
+    rf.write("---\n\n")
 
 for i, q in enumerate(queries, 1):
     print("\n" + "="*80)
@@ -427,6 +441,11 @@ for i, q in enumerate(queries, 1):
     response = agent.chat(q)
     print(f"\n[PhosphogypsumBot 回复]:\n{response}\n")
 
+    with open(report_file, "a", encoding="utf-8") as rf:
+        rf.write(f"## 查询 {i}：{q}\n\n")
+        rf.write(f"{response}\n\n---\n\n")
+
+print(f"\n[Success] Complete decision report saved to: {report_file}")
 EOF
 fi
 
