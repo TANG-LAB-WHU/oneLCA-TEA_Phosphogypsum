@@ -122,6 +122,11 @@ if [ ! -d "$TIKTOKEN_CACHE_DIR" ] && [ -d "/home/tangsiqi/.cache/tiktoken" ]; th
 fi
 echo "Configured offline TIKTOKEN_CACHE_DIR to: $TIKTOKEN_CACHE_DIR"
 
+# Enforce UTF-8 standard encoding for Python console & log redirection
+export PYTHONIOENCODING=utf-8
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+
 # -----------------------------------------------------------------------------
 # 2. Conda Environment Activation
 # -----------------------------------------------------------------------------
@@ -320,6 +325,9 @@ if [ -n "$MMPROJ_MODEL" ] && [ -f "$MMPROJ_MODEL" ]; then
     echo "[Info] Multimodal vision projector detected: $MMPROJ_MODEL"
     SERVER_CMD+=("--mmproj" "$MMPROJ_MODEL")
 fi
+
+# Enable embedding extraction endpoint (/v1/embeddings) for LightRAG & literature graph queries
+SERVER_CMD+=("--embeddings")
 
 echo "Deploying backend server..."
 mkdir -p logs/services logs/slurm
