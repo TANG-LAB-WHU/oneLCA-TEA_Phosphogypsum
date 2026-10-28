@@ -1,0 +1,228 @@
+INFO: [] Loaded graph from datahub/processed/lightrag_db/graph_chunk_entity_relation.graphml with 24209 nodes, 32693 edges
+2026-10-28 14:20:25,048 [INFO] nano-vectordb: Load (24209, 2560) data
+2026-10-28 14:20:25,288 [INFO] nano-vectordb: Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'datahub/processed/lightrag_db/vdb_entities.json'} 24209 data
+2026-10-28 14:20:34,687 [INFO] nano-vectordb: Load (32693, 2560) data
+2026-10-28 14:20:35,005 [INFO] nano-vectordb: Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'datahub/processed/lightrag_db/vdb_relationships.json'} 32693 data
+2026-10-28 14:20:36,822 [INFO] nano-vectordb: Load (1597, 2560) data
+2026-10-28 14:20:36,831 [INFO] nano-vectordb: Init {'embedding_dim': 2560, 'metric': 'cosine', 'storage_file': 'datahub/processed/lightrag_db/vdb_chunks.json'} 1597 data
+INFO: Role LLM Configuration (initialized):
+INFO:  - extract: None/None, host=None, max_async=4, timeout=2400
+INFO:  - keyword: None/None, host=None, max_async=4, timeout=2400
+INFO:  - query: None/None, host=None, max_async=4, timeout=2400
+INFO:  - vlm: None/None, host=None, max_async=4, timeout=2400
+INFO: [] Process 1819915 KV load full_docs with 74 records
+INFO: [] Process 1819915 KV load text_chunks with 1597 records
+INFO: [] Process 1819915 KV load full_entities with 74 records
+INFO: [] Process 1819915 KV load full_relations with 74 records
+INFO: [] Process 1819915 KV load entity_chunks with 24209 records
+INFO: [] Process 1819915 KV load relation_chunks with 32693 records
+INFO: [] Process 1819915 KV load llm_response_cache with 4592 records
+INFO: [] Process 1819915 doc status load doc_status with 74 records
+INFO: keyword LLM func: 4 new workers initialized (Timeouts: Func: 2400s, Worker: 4800s, Health Check: 4815s)
+INFO:  == LLM cache == saving: hybrid:keywords:c0024caf0c4712c631fca6ce9ff52470
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 30s, Worker: 60s, Health Check: 75s)
+2026-10-28 14:26:05,581 [INFO] openai._base_client: Retrying request to /embeddings in 0.463042 seconds
+2026-10-28 14:26:06,045 [INFO] openai._base_client: Retrying request to /embeddings in 0.914972 seconds
+2026-10-28 14:26:06,963 [INFO] openai._base_client: Retrying request to /embeddings in 0.423725 seconds
+2026-10-28 14:26:07,388 [INFO] openai._base_client: Retrying request to /embeddings in 0.978805 seconds
+2026-10-28 14:26:08,369 [INFO] openai._base_client: Retrying request to /embeddings in 0.484899 seconds
+2026-10-28 14:26:08,856 [INFO] openai._base_client: Retrying request to /embeddings in 0.912587 seconds
+2026-10-28 14:26:09,771 [INFO] openai._base_client: Retrying request to /embeddings in 0.462676 seconds
+2026-10-28 14:26:10,235 [INFO] openai._base_client: Retrying request to /embeddings in 0.978996 seconds
+ERROR: Embedding func: Error in decorated function for task 23229904237760_11055070.686149059: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: PG-Stack, PG-CementProd, PG-ConstructMat, PG-Soil, PG-ChemReco, PG-REEextract, PG-SulfurAcid (top_k:40, cosine:0.2)
+2026-10-28 14:26:11,217 [INFO] openai._base_client: Retrying request to /embeddings in 0.376691 seconds
+2026-10-28 14:26:11,619 [INFO] openai._base_client: Retrying request to /embeddings in 0.988712 seconds
+2026-10-28 14:26:12,611 [INFO] openai._base_client: Retrying request to /embeddings in 0.447208 seconds
+2026-10-28 14:26:13,059 [INFO] openai._base_client: Retrying request to /embeddings in 0.758734 seconds
+ERROR: Embedding func: Error in decorated function for task 23229904237760_11055076.322482608: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+2026-10-28 14:26:13,821 [INFO] openai._base_client: Retrying request to /embeddings in 0.458876 seconds
+2026-10-28 14:26:14,282 [INFO] openai._base_client: Retrying request to /embeddings in 0.777747 seconds
+2026-10-28 14:26:15,062 [INFO] openai._base_client: Retrying request to /embeddings in 0.495042 seconds
+2026-10-28 14:26:15,558 [INFO] openai._base_client: Retrying request to /embeddings in 0.960300 seconds
+2026-10-28 14:26:16,521 [INFO] openai._base_client: Retrying request to /embeddings in 0.466011 seconds
+2026-10-28 14:26:16,989 [INFO] openai._base_client: Retrying request to /embeddings in 0.881637 seconds
+2026-10-28 14:26:17,873 [INFO] openai._base_client: Retrying request to /embeddings in 0.439355 seconds
+2026-10-28 14:26:18,314 [INFO] openai._base_client: Retrying request to /embeddings in 0.837180 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211201984_11055078.927128576: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: PG-Stack, PG-CementProd, PG-ConstructMat, PG-Soil, PG-ChemReco, PG-REEextract, PG-SulfurAcid (top_k:40, cosine:0.2)
+2026-10-28 14:26:19,154 [INFO] openai._base_client: Retrying request to /embeddings in 0.486800 seconds
+2026-10-28 14:26:19,642 [INFO] openai._base_client: Retrying request to /embeddings in 0.919357 seconds
+2026-10-28 14:26:20,564 [INFO] openai._base_client: Retrying request to /embeddings in 0.476841 seconds
+2026-10-28 14:26:21,042 [INFO] openai._base_client: Retrying request to /embeddings in 0.779643 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211201984_11055084.259584423: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO:  == LLM cache == saving: hybrid:keywords:b96ad751b481d851dbb7927ccf242694
+2026-10-28 14:34:14,597 [INFO] openai._base_client: Retrying request to /embeddings in 0.385222 seconds
+2026-10-28 14:34:14,984 [INFO] openai._base_client: Retrying request to /embeddings in 0.968403 seconds
+2026-10-28 14:34:15,955 [INFO] openai._base_client: Retrying request to /embeddings in 0.385998 seconds
+2026-10-28 14:34:16,342 [INFO] openai._base_client: Retrying request to /embeddings in 0.903063 seconds
+2026-10-28 14:34:17,248 [INFO] openai._base_client: Retrying request to /embeddings in 0.430996 seconds
+2026-10-28 14:34:17,680 [INFO] openai._base_client: Retrying request to /embeddings in 0.994557 seconds
+2026-10-28 14:34:18,677 [INFO] openai._base_client: Retrying request to /embeddings in 0.394402 seconds
+2026-10-28 14:34:19,073 [INFO] openai._base_client: Retrying request to /embeddings in 0.936176 seconds
+ERROR: Embedding func: Error in decorated function for task 23206214628928_11055559.703098008: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: PG-ConstructMat, PG-ChemReco, phosphogypsum (top_k:40, cosine:0.2)
+2026-10-28 14:34:20,081 [INFO] openai._base_client: Retrying request to /embeddings in 0.381280 seconds
+2026-10-28 14:34:20,464 [INFO] openai._base_client: Retrying request to /embeddings in 0.988602 seconds
+2026-10-28 14:34:21,455 [INFO] openai._base_client: Retrying request to /embeddings in 0.446843 seconds
+2026-10-28 14:34:21,903 [INFO] openai._base_client: Retrying request to /embeddings in 0.946743 seconds
+ERROR: Embedding func: Error in decorated function for task 23206214628928_11055565.186729861: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+2026-10-28 14:34:22,853 [INFO] openai._base_client: Retrying request to /embeddings in 0.451884 seconds
+2026-10-28 14:34:23,307 [INFO] openai._base_client: Retrying request to /embeddings in 0.884707 seconds
+2026-10-28 14:34:24,194 [INFO] openai._base_client: Retrying request to /embeddings in 0.498189 seconds
+2026-10-28 14:34:24,694 [INFO] openai._base_client: Retrying request to /embeddings in 0.921074 seconds
+2026-10-28 14:34:25,617 [INFO] openai._base_client: Retrying request to /embeddings in 0.375957 seconds
+2026-10-28 14:34:25,995 [INFO] openai._base_client: Retrying request to /embeddings in 0.807698 seconds
+2026-10-28 14:34:26,805 [INFO] openai._base_client: Retrying request to /embeddings in 0.425501 seconds
+2026-10-28 14:34:27,232 [INFO] openai._base_client: Retrying request to /embeddings in 0.878410 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211201600_11055567.959229184: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: PG-ConstructMat, PG-ChemReco, phosphogypsum (top_k:40, cosine:0.2)
+2026-10-28 14:34:28,113 [INFO] openai._base_client: Retrying request to /embeddings in 0.486206 seconds
+2026-10-28 14:34:28,601 [INFO] openai._base_client: Retrying request to /embeddings in 0.934265 seconds
+2026-10-28 14:34:29,537 [INFO] openai._base_client: Retrying request to /embeddings in 0.458002 seconds
+2026-10-28 14:34:29,997 [INFO] openai._base_client: Retrying request to /embeddings in 0.889499 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211201600_11055573.218885493: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO:  == LLM cache == saving: hybrid:keywords:192efd0ae74616f724a43581fd9d0295
+2026-10-28 15:39:26,602 [INFO] openai._base_client: Retrying request to /embeddings in 0.492143 seconds
+2026-10-28 15:39:27,097 [INFO] openai._base_client: Retrying request to /embeddings in 0.863337 seconds
+2026-10-28 15:39:27,969 [INFO] openai._base_client: Retrying request to /embeddings in 0.475550 seconds
+2026-10-28 15:39:28,446 [INFO] openai._base_client: Retrying request to /embeddings in 0.829670 seconds
+2026-10-28 15:39:29,278 [INFO] openai._base_client: Retrying request to /embeddings in 0.473603 seconds
+2026-10-28 15:39:29,753 [INFO] openai._base_client: Retrying request to /embeddings in 0.878686 seconds
+2026-10-28 15:39:30,634 [INFO] openai._base_client: Retrying request to /embeddings in 0.449777 seconds
+2026-10-28 15:39:31,086 [INFO] openai._base_client: Retrying request to /embeddings in 0.894724 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211199680_11059471.706189416: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: Phosphogypsum, GWP (top_k:40, cosine:0.2)
+2026-10-28 15:39:31,984 [INFO] openai._base_client: Retrying request to /embeddings in 0.414943 seconds
+2026-10-28 15:39:32,400 [INFO] openai._base_client: Retrying request to /embeddings in 0.753720 seconds
+2026-10-28 15:39:33,156 [INFO] openai._base_client: Retrying request to /embeddings in 0.381895 seconds
+2026-10-28 15:39:33,540 [INFO] openai._base_client: Retrying request to /embeddings in 0.839151 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211199680_11059477.089129848: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+2026-10-28 15:39:34,382 [INFO] openai._base_client: Retrying request to /embeddings in 0.498287 seconds
+2026-10-28 15:39:34,882 [INFO] openai._base_client: Retrying request to /embeddings in 0.769113 seconds
+2026-10-28 15:39:35,653 [INFO] openai._base_client: Retrying request to /embeddings in 0.470844 seconds
+2026-10-28 15:39:36,126 [INFO] openai._base_client: Retrying request to /embeddings in 0.987284 seconds
+2026-10-28 15:39:37,115 [INFO] openai._base_client: Retrying request to /embeddings in 0.479397 seconds
+2026-10-28 15:39:37,596 [INFO] openai._base_client: Retrying request to /embeddings in 0.774876 seconds
+2026-10-28 15:39:38,374 [INFO] openai._base_client: Retrying request to /embeddings in 0.491296 seconds
+2026-10-28 15:39:38,867 [INFO] openai._base_client: Retrying request to /embeddings in 0.778619 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211202944_11059479.488030717: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: Phosphogypsum, GWP (top_k:40, cosine:0.2)
+2026-10-28 15:39:39,648 [INFO] openai._base_client: Retrying request to /embeddings in 0.425770 seconds
+2026-10-28 15:39:40,075 [INFO] openai._base_client: Retrying request to /embeddings in 0.838025 seconds
+2026-10-28 15:39:40,916 [INFO] openai._base_client: Retrying request to /embeddings in 0.488887 seconds
+2026-10-28 15:39:41,406 [INFO] openai._base_client: Retrying request to /embeddings in 0.895229 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211202944_11059484.753992504: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO:  == LLM cache == saving: hybrid:keywords:4c61f1c84f12160f9419f87937f4f6ad
+2026-10-28 15:44:54,530 [INFO] openai._base_client: Retrying request to /embeddings in 0.378029 seconds
+2026-10-28 15:44:54,910 [INFO] openai._base_client: Retrying request to /embeddings in 0.771858 seconds
+2026-10-28 15:44:55,684 [INFO] openai._base_client: Retrying request to /embeddings in 0.450040 seconds
+2026-10-28 15:44:56,136 [INFO] openai._base_client: Retrying request to /embeddings in 0.832561 seconds
+2026-10-28 15:44:56,971 [INFO] openai._base_client: Retrying request to /embeddings in 0.454024 seconds
+2026-10-28 15:44:57,426 [INFO] openai._base_client: Retrying request to /embeddings in 0.920976 seconds
+2026-10-28 15:44:58,350 [INFO] openai._base_client: Retrying request to /embeddings in 0.492291 seconds
+2026-10-28 15:44:58,843 [INFO] openai._base_client: Retrying request to /embeddings in 0.801531 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211200064_11059799.636053115: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: Phosphogypsum, Rare earth elements, Leaching reagent, Acid, Energy intensity, Technoeconomic (top_k:40, cosine:0.2)
+2026-10-28 15:44:59,648 [INFO] openai._base_client: Retrying request to /embeddings in 0.463510 seconds
+2026-10-28 15:45:00,113 [INFO] openai._base_client: Retrying request to /embeddings in 0.815534 seconds
+2026-10-28 15:45:00,931 [INFO] openai._base_client: Retrying request to /embeddings in 0.404871 seconds
+2026-10-28 15:45:01,337 [INFO] openai._base_client: Retrying request to /embeddings in 0.920436 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211200064_11059804.753518537: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+2026-10-28 15:45:02,261 [INFO] openai._base_client: Retrying request to /embeddings in 0.383547 seconds
+2026-10-28 15:45:02,646 [INFO] openai._base_client: Retrying request to /embeddings in 0.907982 seconds
+2026-10-28 15:45:03,556 [INFO] openai._base_client: Retrying request to /embeddings in 0.486611 seconds
+2026-10-28 15:45:04,044 [INFO] openai._base_client: Retrying request to /embeddings in 0.899618 seconds
+2026-10-28 15:45:04,946 [INFO] openai._base_client: Retrying request to /embeddings in 0.405088 seconds
+2026-10-28 15:45:05,353 [INFO] openai._base_client: Retrying request to /embeddings in 0.951496 seconds
+2026-10-28 15:45:06,307 [INFO] openai._base_client: Retrying request to /embeddings in 0.481676 seconds
+2026-10-28 15:45:06,790 [INFO] openai._base_client: Retrying request to /embeddings in 0.998943 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211204096_11059807.36667026: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: Phosphogypsum, Rare earth elements, Leaching reagent, Acid, Energy intensity, Technoeconomic (top_k:40, cosine:0.2)
+2026-10-28 15:45:07,792 [INFO] openai._base_client: Retrying request to /embeddings in 0.432342 seconds
+2026-10-28 15:45:08,225 [INFO] openai._base_client: Retrying request to /embeddings in 0.869147 seconds
+2026-10-28 15:45:09,097 [INFO] openai._base_client: Retrying request to /embeddings in 0.463723 seconds
+2026-10-28 15:45:09,562 [INFO] openai._base_client: Retrying request to /embeddings in 0.860349 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211204096_11059812.897472387: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO:  == LLM cache == saving: hybrid:keywords:9e055b29d7f24bb5be3346caa020abb9
+2026-10-28 16:25:56,043 [INFO] openai._base_client: Retrying request to /embeddings in 0.477952 seconds
+2026-10-28 16:25:56,522 [INFO] openai._base_client: Retrying request to /embeddings in 0.979448 seconds
+2026-10-28 16:25:57,504 [INFO] openai._base_client: Retrying request to /embeddings in 0.456097 seconds
+2026-10-28 16:25:57,961 [INFO] openai._base_client: Retrying request to /embeddings in 0.996529 seconds
+2026-10-28 16:25:58,960 [INFO] openai._base_client: Retrying request to /embeddings in 0.467796 seconds
+2026-10-28 16:25:59,430 [INFO] openai._base_client: Retrying request to /embeddings in 0.793904 seconds
+2026-10-28 16:26:00,226 [INFO] openai._base_client: Retrying request to /embeddings in 0.465508 seconds
+2026-10-28 16:26:00,693 [INFO] openai._base_client: Retrying request to /embeddings in 0.977219 seconds
+ERROR: Embedding func: Error in decorated function for task 23206214629312_11062261.148386575: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: phosphogypsum, TRL, 以渣定产 (top_k:40, cosine:0.2)
+2026-10-28 16:26:01,673 [INFO] openai._base_client: Retrying request to /embeddings in 0.487331 seconds
+2026-10-28 16:26:02,162 [INFO] openai._base_client: Retrying request to /embeddings in 0.973922 seconds
+2026-10-28 16:26:03,138 [INFO] openai._base_client: Retrying request to /embeddings in 0.418327 seconds
+2026-10-28 16:26:03,558 [INFO] openai._base_client: Retrying request to /embeddings in 0.833627 seconds
+ERROR: Embedding func: Error in decorated function for task 23206214629312_11062266.77892132: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+2026-10-28 16:26:04,395 [INFO] openai._base_client: Retrying request to /embeddings in 0.434402 seconds
+2026-10-28 16:26:04,830 [INFO] openai._base_client: Retrying request to /embeddings in 0.941049 seconds
+2026-10-28 16:26:05,774 [INFO] openai._base_client: Retrying request to /embeddings in 0.413081 seconds
+2026-10-28 16:26:06,189 [INFO] openai._base_client: Retrying request to /embeddings in 0.855537 seconds
+2026-10-28 16:26:07,047 [INFO] openai._base_client: Retrying request to /embeddings in 0.492583 seconds
+2026-10-28 16:26:07,541 [INFO] openai._base_client: Retrying request to /embeddings in 0.846171 seconds
+2026-10-28 16:26:08,389 [INFO] openai._base_client: Retrying request to /embeddings in 0.378059 seconds
+2026-10-28 16:26:08,769 [INFO] openai._base_client: Retrying request to /embeddings in 0.955424 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211193344_11062269.5004925: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 3/3; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=2: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query nodes: phosphogypsum, TRL, 以渣定产 (top_k:40, cosine:0.2)
+2026-10-28 16:26:09,727 [INFO] openai._base_client: Retrying request to /embeddings in 0.473701 seconds
+2026-10-28 16:26:10,202 [INFO] openai._base_client: Retrying request to /embeddings in 0.806057 seconds
+2026-10-28 16:26:11,010 [INFO] openai._base_client: Retrying request to /embeddings in 0.473565 seconds
+2026-10-28 16:26:11,486 [INFO] openai._base_client: Retrying request to /embeddings in 0.765026 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211193344_11062274.83264381: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO:  == LLM cache == saving: global:keywords:1e06b8ca4107a8a40b407c90f557fa1f
+2026-10-28 17:27:23,714 [INFO] openai._base_client: Retrying request to /embeddings in 0.485656 seconds
+2026-10-28 17:27:24,202 [INFO] openai._base_client: Retrying request to /embeddings in 0.943544 seconds
+2026-10-28 17:27:25,165 [INFO] openai._base_client: Retrying request to /embeddings in 0.447771 seconds
+2026-10-28 17:27:25,614 [INFO] openai._base_client: Retrying request to /embeddings in 0.798994 seconds
+2026-10-28 17:27:26,415 [INFO] openai._base_client: Retrying request to /embeddings in 0.468680 seconds
+2026-10-28 17:27:26,885 [INFO] openai._base_client: Retrying request to /embeddings in 0.761958 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211198336_11065948.819142371: Embedding failed after batch retry. Failed inputs: 2/2; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 2/2; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query edges: 以渣定产 policy, Phosphogypsum stockpiling ban, China phosphate industry, Utilization rate, Tipping fee, Carbon credit, Subsidy mechanism (top_k:40, cosine:0.2)
+2026-10-28 17:27:27,651 [INFO] openai._base_client: Retrying request to /embeddings in 0.467991 seconds
+2026-10-28 17:27:28,120 [INFO] openai._base_client: Retrying request to /embeddings in 0.751181 seconds
+2026-10-28 17:27:28,873 [INFO] openai._base_client: Retrying request to /embeddings in 0.469388 seconds
+2026-10-28 17:27:29,344 [INFO] openai._base_client: Retrying request to /embeddings in 0.972057 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211198336_11065952.75594372: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+2026-10-28 17:27:30,320 [INFO] openai._base_client: Retrying request to /embeddings in 0.401097 seconds
+2026-10-28 17:27:30,722 [INFO] openai._base_client: Retrying request to /embeddings in 0.978673 seconds
+2026-10-28 17:27:31,703 [INFO] openai._base_client: Retrying request to /embeddings in 0.442229 seconds
+2026-10-28 17:27:32,147 [INFO] openai._base_client: Retrying request to /embeddings in 0.923773 seconds
+2026-10-28 17:27:33,073 [INFO] openai._base_client: Retrying request to /embeddings in 0.432591 seconds
+2026-10-28 17:27:33,507 [INFO] openai._base_client: Retrying request to /embeddings in 0.896058 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211206976_11065955.425549597: Embedding failed after batch retry. Failed inputs: 2/2; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+WARNING: Failed to batch pre-compute embeddings: Embedding failed after batch retry. Failed inputs: 2/2; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}} | idx=1: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+INFO: Query edges: 以渣定产 policy, Phosphogypsum stockpiling ban, China phosphate industry, Utilization rate, Tipping fee, Carbon credit, Subsidy mechanism (top_k:40, cosine:0.2)
+2026-10-28 17:27:34,406 [INFO] openai._base_client: Retrying request to /embeddings in 0.499912 seconds
+2026-10-28 17:27:34,907 [INFO] openai._base_client: Retrying request to /embeddings in 0.778448 seconds
+2026-10-28 17:27:35,688 [INFO] openai._base_client: Retrying request to /embeddings in 0.496130 seconds
+2026-10-28 17:27:36,186 [INFO] openai._base_client: Retrying request to /embeddings in 0.816566 seconds
+ERROR: Embedding func: Error in decorated function for task 23206211206976_11065959.511712931: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
+ERROR: Query failed: Embedding failed after batch retry. Failed inputs: 1/1; idx=0: Error code: 501 - {'error': {'code': 501, 'message': 'This server does not support embeddings. Start it with `--embeddings`', 'type': 'not_supported_error'}}
