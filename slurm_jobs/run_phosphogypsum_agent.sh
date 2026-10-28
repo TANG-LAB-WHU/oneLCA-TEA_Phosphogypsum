@@ -379,6 +379,7 @@ echo "Launching PhosphogypsumBot Agent..."
 
 # Set extended timeout (40 mins) for CPU inference on large 125B MoE models
 export LLM_TIMEOUT=2400
+export LLM_MAX_TOKENS=1500
 
 if [ "$EXEC_MODE" == "chatbot" ]; then
     echo "[Interactive Mode] Launching Chatbot CLI..."
@@ -438,6 +439,8 @@ for i, q in enumerate(queries, 1):
     print("\n" + "="*80)
     print(f"[Query {i}] 👨‍🔬 研究员提问: {q}")
     print("="*80)
+    # Reset conversation context between queries to avoid context explosion on pure CPU
+    agent.reset_conversation()
     response = agent.chat(q)
     print(f"\n[PhosphogypsumBot 回复]:\n{response}\n")
 

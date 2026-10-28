@@ -107,8 +107,15 @@ class PhosphogypsumAgent:
         self.api_key = api_key or os.getenv("LLM_API_KEY", "sk-no-key-required")
         self.model = model or os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next")
         self.timeout = timeout if timeout is not None else float(os.getenv("LLM_TIMEOUT", "1800.0"))
+        self.max_tokens = int(os.getenv("LLM_MAX_TOKENS", "1500"))
 
-        self.client = OpenAI(base_url=self.base_url, api_key=self.api_key, timeout=self.timeout)
+        # Set max_retries=0 to avoid wasteful 40-minute CPU retry loops upon client timeout
+        self.client = OpenAI(
+            base_url=self.base_url,
+            api_key=self.api_key,
+            timeout=self.timeout,
+            max_retries=0,
+        )
 
         self.tools = AVAILABLE_TOOLS
         self.tool_schemas = [function_to_schema(func) for func in self.tools.values()]
@@ -133,10 +140,17 @@ class PhosphogypsumAgent:
 
         self.messages = [{"role": "system", "content": self.system_prompt}]
 
-    def chat(self, user_input: str) -> str:
+    def reset_conversation(self):
+        """Reset conversation history back to the initial system prompt."""
+        self.messages = [{"role": "system", "content": self.system_prompt}]
+
+    def chat(self, user_input: str, reset_history: bool = False) -> str:
         """
         Process user input, run the tool-calling loop, and return the final text response.
         """
+        if reset_history:
+            self.reset_conversation()
+
         self.messages.append({"role": "user", "content": user_input})
 
         print(f"\n[PhosphogypsumBot] Analyzing intent & planning actions... (Model: {self.model})")
@@ -146,7 +160,12 @@ class PhosphogypsumAgent:
 
         for iteration in range(max_iterations):
             try:
-                api_kwargs = {"model": self.model, "messages": self.messages, "temperature": 0.1}
+                api_kwargs = {
+                    "model": self.model,
+                    "messages": self.messages,
+                    "temperature": 0.1,
+                    "max_tokens": self.max_tokens,
+                }
                 if self.tool_schemas:
                     api_kwargs["tools"] = self.tool_schemas
                     api_kwargs["tool_choice"] = "auto"
