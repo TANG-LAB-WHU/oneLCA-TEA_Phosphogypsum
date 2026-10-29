@@ -377,8 +377,8 @@ echo "======================================================================="
 # -----------------------------------------------------------------------------
 echo "Launching PhosphogypsumBot Agent..."
 
-# Set extended timeout (40 mins) for CPU inference on large 125B MoE models
-export LLM_TIMEOUT=2400
+# Set extended timeout (60 mins) for CPU inference on large 125B MoE models
+export LLM_TIMEOUT=3600
 export LLM_MAX_TOKENS=1500
 
 if [ "$EXEC_MODE" == "chatbot" ]; then
@@ -393,7 +393,7 @@ from chat_agent.agent import PhosphogypsumAgent
 agent = PhosphogypsumAgent(
     base_url=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1"),
     model=os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next"),
-    timeout=float(os.getenv("LLM_TIMEOUT", "2400.0"))
+    timeout=float(os.getenv("LLM_TIMEOUT", "3600.0"))
 )
 
 q = """$CUSTOM_QUERY"""
@@ -409,7 +409,7 @@ else
 import os
 from chat_agent.agent import PhosphogypsumAgent
 
-timeout_val = float(os.getenv("LLM_TIMEOUT", "2400.0"))
+timeout_val = float(os.getenv("LLM_TIMEOUT", "3600.0"))
 agent = PhosphogypsumAgent(
     base_url=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1"),
     model=os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next"),

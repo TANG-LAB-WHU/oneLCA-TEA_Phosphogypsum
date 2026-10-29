@@ -106,7 +106,7 @@ class PhosphogypsumAgent:
         self.base_url = base_url or os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
         self.api_key = api_key or os.getenv("LLM_API_KEY", "sk-no-key-required")
         self.model = model or os.getenv("LLM_MODEL", "Qwen/Qwen3.8-Flash-Next")
-        self.timeout = timeout if timeout is not None else float(os.getenv("LLM_TIMEOUT", "1800.0"))
+        self.timeout = timeout if timeout is not None else float(os.getenv("LLM_TIMEOUT", "3600.0"))
         self.max_tokens = int(os.getenv("LLM_MAX_TOKENS", "1500"))
 
         # Set max_retries=0 to avoid wasteful 40-minute CPU retry loops upon client timeout
