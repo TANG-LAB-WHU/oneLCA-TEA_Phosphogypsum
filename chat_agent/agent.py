@@ -143,6 +143,76 @@ class PhosphogypsumAgent:
         """Reset conversation history back to the initial system prompt."""
         self.messages = [{"role": "system", "content": self.system_prompt}]
 
+    def _synthesize_final_report(self) -> str:
+        """
+        Dedicated report synthesis phase.
+        Executes pure text generation without tools schema to eliminate grammar constraints,
+        and uses multi-turn continuation if output is truncated by length or syntax.
+        """
+        print("\n[PhosphogypsumBot] Synthesizing final decision report (pure text generation mode)...")
+        synthesis_prompt = (
+            "【系统指令：工具数据收集完毕】请基于上述所有工具计算的定量数据与文献事实，不再调用任何工具，直接输出一份结构完整、逻辑严密、数据详实的最终 5D-TEPES 决策评估大报告（Markdown 格式）。\n\n"
+            "【输出格式与内容要求】：\n"
+            "1. 必须包含完整的核心结论速览表、量化指标详细对比（LCA 环境影响与 TEA 经济指标）、工程可行性/TRL 评估与政策落地建议；\n"
+            "2. 严禁中途截断，Markdown 表格与各章节小节必须完整收尾闭合；\n"
+            "3. 直接输出最终报告正文，不再输出任何工具调用或占位符。"
+        )
+        self.messages.append({"role": "user", "content": synthesis_prompt})
+
+        full_response = ""
+        max_continuations = 3
+
+        for cont_step in range(max_continuations):
+            api_kwargs = {
+                "model": self.model,
+                "messages": self.messages,
+                "temperature": 0.1,
+                "max_tokens": self.max_tokens,
+            }
+
+            try:
+                # Omit tools completely so llama-server operates in unrestricted free-form Markdown mode
+                resp = self.client.chat.completions.create(**api_kwargs)
+            except Exception as e:
+                if full_response:
+                    return full_response
+                return f"[Agent Error] Synthesis failed: {e}."
+
+            choice = resp.choices[0]
+            chunk = (choice.message.content or "").strip()
+            finish_reason = getattr(choice, "finish_reason", "stop")
+
+            if chunk:
+                if full_response:
+                    full_response = full_response + "\n\n" + chunk
+                else:
+                    full_response = chunk
+                self.messages.append({"role": "assistant", "content": chunk})
+
+            print(f"[PhosphogypsumBot] Synthesis step {cont_step + 1}: generated {len(chunk)} chars, finish_reason: '{finish_reason}', total: {len(full_response)} chars")
+
+            # Check if output is complete:
+            # - finish_reason is "stop" (not "length")
+            # - text length is at least 350 chars
+            # - text does not end with incomplete punctuation / table border / trailing hyphen
+            is_truncated = (
+                finish_reason == "length"
+                or full_response.endswith(("–", "-", "、", "，", "|", "：", "(", "低"))
+                or full_response.count("```") % 2 != 0
+            )
+
+            if not is_truncated and len(full_response) >= 350:
+                break
+
+            if cont_step < max_continuations - 1:
+                print(f"[PhosphogypsumBot] Output incomplete (finish_reason='{finish_reason}'); triggering seamless continuation...")
+                self.messages.append({
+                    "role": "user",
+                    "content": "请紧接着上文继续输出，严禁重复上文已有内容，直接完整续写未完成的分析、对比表格与结论，直至整篇报告完整收尾。",
+                })
+
+        return full_response
+
     def chat(self, user_input: str, reset_history: bool = False) -> str:
         """
         Process user input, run the tool-calling loop, and return the final text response.
@@ -154,65 +224,51 @@ class PhosphogypsumAgent:
 
         print(f"\n[PhosphogypsumBot] Analyzing intent & planning actions... (Model: {self.model})")
 
-        # Allow up to 4 iterations for focused multi-hop tool execution
-        max_iterations = 4
+        # Allow up to 3 iterations for multi-hop tool execution
+        max_tool_iterations = 3
+        has_executed_tools = False
 
-        for iteration in range(max_iterations):
+        for iteration in range(max_tool_iterations):
             try:
                 api_kwargs = {
                     "model": self.model,
                     "messages": self.messages,
                     "temperature": 0.1,
                     "max_tokens": self.max_tokens,
+                    "tools": self.tool_schemas,
+                    "tool_choice": "auto",
                 }
-                # On the final iteration, omit tools to force the model to write the text synthesis
-                if self.tool_schemas and iteration < max_iterations - 1:
-                    api_kwargs["tools"] = self.tool_schemas
-                    api_kwargs["tool_choice"] = "auto"
-
                 response = self.client.chat.completions.create(**api_kwargs)
             except Exception as e:
                 return f"[Agent Error] Connection failed: {e}. (Base URL: {self.base_url}, Model: {self.model})"
 
-            response_message = response.choices[0].message
+            choice = response.choices[0]
+            response_message = choice.message
 
-            # If the model didn't call any tools, it's formulating a final text response
+            # If the model didn't call any tools
             if not response_message.tool_calls:
-                final_answer = (response_message.content or "").strip()
-                if final_answer:
-                    self.messages.append({"role": "assistant", "content": final_answer})
-                    return final_answer
-                else:
-                    # Model stopped calling tools but returned empty content; force final synthesis without tools
-                    print("\n[PhosphogypsumBot] Finalizing decision report synthesis...")
-                    self.messages.append({
-                        "role": "user",
-                        "content": "请基于以上所有工具计算与数据结果，直接输出一份结构完整、数据详实的最终 5D-TEPES 决策评估大报告（Markdown 格式）。"
-                    })
-                    final_resp = self.client.chat.completions.create(
-                        model=self.model,
-                        messages=self.messages,
-                        temperature=0.1,
-                        max_tokens=self.max_tokens,
-                    )
-                    final_answer = (final_resp.choices[0].message.content or "").strip()
-                    self.messages.append({"role": "assistant", "content": final_answer})
-                    return final_answer
+                content = (response_message.content or "").strip()
+                # If no tools were ever called and content is comprehensive, return directly
+                if not has_executed_tools and len(content) > 100:
+                    self.messages.append({"role": "assistant", "content": content})
+                    return content
+                # If tools were already executed, transition to dedicated synthesis
+                print(f"\n[PhosphogypsumBot] Tool collection finished at step {iteration + 1}; entering dedicated synthesis...")
+                break
 
-            # If it called tools, append the assistant message and execute each tool
+            has_executed_tools = True
             msg_dict = {
                 "role": "assistant",
                 "content": response_message.content,
-            }
-            if response_message.tool_calls:
-                msg_dict["tool_calls"] = [
+                "tool_calls": [
                     {
                         "id": tc.id,
                         "type": "function",
                         "function": {"name": tc.function.name, "arguments": tc.function.arguments},
                     }
                     for tc in response_message.tool_calls
-                ]
+                ],
+            }
             self.messages.append(msg_dict)
 
             for tool_call in response_message.tool_calls:
@@ -221,7 +277,6 @@ class PhosphogypsumAgent:
 
                 print(f"[Agent Step {iteration+1}] Calling Tool: {function_name}({function_args})")
 
-                # Execute the tool
                 try:
                     kwargs = json.loads(function_args) if function_args else {}
                     func = self.tools.get(function_name)
@@ -233,7 +288,6 @@ class PhosphogypsumAgent:
                 except Exception as e:
                     tool_result = f"Error executing '{function_name}': {str(e)}"
 
-                # Append tool result to history
                 self.messages.append(
                     {
                         "role": "tool",
@@ -243,21 +297,5 @@ class PhosphogypsumAgent:
                     }
                 )
 
-        # If max tool iterations reached, force final synthesis without tools
-        print("\n[PhosphogypsumBot] Tool collection finished; synthesizing final executive report...")
-        self.messages.append({
-            "role": "user",
-            "content": "请基于以上所有已获取的计算与工具数据，直接输出一份结构完整、数据详实的最终 5D-TEPES 决策评估大报告（Markdown 格式）。"
-        })
-        try:
-            final_resp = self.client.chat.completions.create(
-                model=self.model,
-                messages=self.messages,
-                temperature=0.1,
-                max_tokens=self.max_tokens,
-            )
-            final_answer = (final_resp.choices[0].message.content or "").strip()
-            self.messages.append({"role": "assistant", "content": final_answer})
-            return final_answer
-        except Exception as e:
-            return f"[Agent Error] Synthesis failed: {e}." 
+        # Transition to dedicated pure-text synthesis for complete long-form output
+        return self._synthesize_final_report()
